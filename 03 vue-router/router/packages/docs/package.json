@@ -1,0 +1,25 @@
+{
+  "name": "@vue/router-docs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "docs": "vitepress dev .",
+    "docs:api": "node run-typedoc.mjs",
+    "docs:translation:compare": "v-translation compare",
+    "docs:translation:update": "v-translation update",
+    "docs:translation:status": "v-translation status",
+    "docs:build": "vitepress build .",
+    "docs:preview": "vitepress preview ."
+  },
+  "dependencies": {
+    "@shikijs/vitepress-twoslash": "^3.22.0",
+    "simple-git": "^3.30.0",
+    "typedoc-vitepress-theme": "^1.1.2",
+    "vitepress": "1.6.4",
+    "vitepress-plugin-group-icons": "^1.7.1",
+    "vitepress-plugin-llms": "^1.11.0",
+    "vitepress-translation-helper": "^0.2.2",
+    "vue-router": "workspace:*"
+  }
+}
