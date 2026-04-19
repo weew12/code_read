@@ -1,11 +1,29 @@
 /**
- * Estimate decoded byte length of a data:// URL *without* allocating large buffers.
- * - For base64: compute exact decoded size using length and padding;
- *               handle %XX at the character-count level (no string allocation).
- * - For non-base64: use UTF-8 byteLength of the encoded body as a safe upper bound.
+ * @file Data URI解码后字节数估算器
+ * 
+ * 功能：在不分配大缓冲区的情况下估算data: URI解码后的字节长度。
+ * 这是axios中处理大文件上传前预检查的关键优化模块，避免在内存中实际解码数据。
+ * 
+ * 算法特点：
+ * 1. base64编码：精确计算解码大小，考虑填充字符和URL编码（%XX）的影响
+ * 2. 非base64编码：使用UTF-8字节长度作为安全上限
+ * 3. 零分配计算：在字符级别处理%XX编码，避免字符串分配
+ */
+
+/**
+ * 估算Data URI解码后的字节长度（零分配算法）
+ * 
+ * 核心算法：
+ * - base64编码：根据字符数计算，考虑填充（'='）和URL编码（%3D表示'='）
+ *   公式：bytes = floor(effectiveLen / 4) * 3 - pad
+ *   其中effectiveLen是排除%XX编码后的实际字符数
+ * 
+ * - 非base64编码：直接使用Buffer.byteLength获取UTF-8字节数
+ * 
+ * 设计目的：在不知道实际解码大小时预先估计内存需求，避免处理超大URI导致内存溢出。
  *
- * @param {string} url
- * @returns {number}
+ * @param {string} url - Data URI字符串
+ * @returns {number} 估算的解码后字节数（无效输入返回0）
  */
 export default function estimateDataURLDecodedBytes(url) {
   if (!url || typeof url !== 'string') return 0;

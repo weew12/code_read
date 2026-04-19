@@ -1,3 +1,22 @@
+/**
+ * @file HTTP状态码常量映射
+ * 
+ * 功能：提供完整的HTTP状态码常量定义，包括标准状态码和扩展状态码。
+ * 这是axios中统一处理HTTP响应状态的核心参考，用于错误处理、状态判断和日志记录。
+ * 
+ * 数据结构：
+ * 1. 名称到数字的映射：HttpStatusCode.Ok = 200
+ * 2. 数字到名称的映射：HttpStatusCode[200] = "Ok"（通过动态添加）
+ * 
+ * 包含状态码范围：
+ * - 1xx: 信息响应
+ * - 2xx: 成功响应
+ * - 3xx: 重定向
+ * - 4xx: 客户端错误
+ * - 5xx: 服务器错误
+ * - 扩展状态码（如Cloudflare的5xx扩展）
+ */
+
 const HttpStatusCode = {
   Continue: 100,
   SwitchingProtocols: 101,
@@ -70,6 +89,8 @@ const HttpStatusCode = {
   InvalidSslCertificate: 526,
 };
 
+// 创建反向映射：状态码数值到名称的映射
+// 例如：HttpStatusCode[200] => "Ok"，便于状态码到可读名称的转换
 Object.entries(HttpStatusCode).forEach(([key, value]) => {
   HttpStatusCode[value] = key;
 });

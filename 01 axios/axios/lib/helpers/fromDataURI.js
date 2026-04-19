@@ -1,5 +1,18 @@
 'use strict';
 
+/**
+ * @file Data URI解析器
+ * 
+ * 功能：将Data URI（RFC 2397格式）解析为Buffer或Blob对象。
+ * 支持解析base64编码和纯文本编码的data: URI，自动处理MIME类型和编码类型。
+ * 
+ * Data URI格式：data:[<mediatype>][;base64],<data>
+ * 示例：data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==
+ * 
+ * 设计目的：在浏览器和Node.js环境中统一处理Data URI，支持按需返回Buffer或Blob，
+ * 为axios的文件上传和数据处理提供基础能力。
+ */
+
 import AxiosError from '../core/AxiosError.js';
 import parseProtocol from './parseProtocol.js';
 import platform from '../platform/index.js';
@@ -7,14 +20,21 @@ import platform from '../platform/index.js';
 const DATA_URL_PATTERN = /^(?:([^;]+);)?(?:[^;]+;)?(base64|),([\s\S]*)$/;
 
 /**
- * Parse data uri to a Buffer or Blob
+ * 将Data URI解析为Buffer或Blob对象
  *
- * @param {String} uri
- * @param {?Boolean} asBlob
- * @param {?Object} options
- * @param {?Function} options.Blob
+ * 解析流程：
+ * 1. 使用parseProtocol检测协议是否为"data"
+ * 2. 通过正则表达式提取MIME类型、编码类型和主体数据
+ * 3. 根据编码类型（base64或utf8）解码数据
+ * 4. 根据asBlob参数和平台支持情况返回Buffer或Blob
  *
- * @returns {Buffer|Blob}
+ * @param {String} uri - 要解析的Data URI字符串
+ * @param {?Boolean} asBlob - 是否返回Blob对象（默认根据平台自动决定）
+ * @param {?Object} options - 配置选项
+ * @param {?Function} options.Blob - 自定义Blob构造函数（用于测试或特定环境）
+ *
+ * @returns {Buffer|Blob} 解析后的数据对象
+ * @throws {AxiosError} 当URI格式无效或协议不支持时抛出错误
  */
 export default function fromDataURI(uri, asBlob, options) {
   const _Blob = (options && options.Blob) || platform.classes.Blob;
