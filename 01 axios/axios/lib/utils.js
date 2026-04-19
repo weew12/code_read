@@ -1,49 +1,103 @@
 'use strict';
 
+/**
+ * @file axios 通用工具函数库
+ * 
+ * 功能：提供与axios核心功能无关的通用工具函数，包括类型检测、对象操作、字符串处理等。
+ * 这些函数被axios的各个模块使用，但本身不依赖axios的其他部分，具有高度的可复用性。
+ * 
+ * 设计原则：
+ * 1. 无副作用：纯函数设计，不修改输入参数
+ * 2. 性能优先：使用缓存、短路计算等优化手段
+ * 3. 类型安全：提供精确的类型检测函数
+ * 4. 跨平台兼容：考虑Node.js和浏览器环境的差异
+ * 5. 渐进增强：优先使用原生API，降级方案保证兼容性
+ * 
+ * 模块结构：
+ * 1. 类型检测：精确的类型判断（kindOf、isArray、isBuffer等）
+ * 2. 对象操作：深度合并、属性遍历、原型链操作等
+ * 3. 函数工具：绑定上下文、函数组合、节流防抖等
+ * 4. 字符串处理：BOM移除、URL编码、格式转换等
+ * 5. 环境检测：浏览器/Node.js环境判断、全局对象访问等
+ * 
+ * 性能优化策略：
+ * 1. 缓存：kindOf函数使用缓存避免重复计算
+ * 2. 惰性计算：仅在需要时执行昂贵操作
+ * 3. 原生API优先：使用原生的Array.isArray、Object.assign等
+ * 4. 短路计算：在可能的情况下提前返回
+ */
+
 import bind from './helpers/bind.js';
 
-// utils is a library of generic helper functions non-specific to axios
+// 常用方法的快捷引用（性能优化：避免重复查找原型链）
+const { toString } = Object.prototype;  // Object.prototype.toString 方法，用于类型检测
+const { getPrototypeOf } = Object;      // Object.getPrototypeOf 方法，用于获取对象原型
+const { iterator, toStringTag } = Symbol; // Symbol.iterator 和 Symbol.toStringTag，用于迭代器和内置标签
 
-const { toString } = Object.prototype;
-const { getPrototypeOf } = Object;
-const { iterator, toStringTag } = Symbol;
-
+/**
+ * 精确类型检测函数（使用 Object.prototype.toString.call()）
+ * 使用缓存提升性能，返回类型字符串的小写形式（如 'array', 'object', 'string' 等）
+ * @param {any} thing - 要检测的值
+ * @returns {string} 类型字符串
+ */
 const kindOf = ((cache) => (thing) => {
-  const str = toString.call(thing);
-  return cache[str] || (cache[str] = str.slice(8, -1).toLowerCase());
-})(Object.create(null));
+  const str = toString.call(thing);  // 例如 "[object Array]"
+  return cache[str] || (cache[str] = str.slice(8, -1).toLowerCase());  // 提取 "Array" 并转为小写
+})(Object.create(null));  // 使用空对象作为缓存，避免原型链干扰
 
+/**
+ * 创建类型检测函数（基于 kindOf）
+ * @param {string} type - 期望的类型名称
+ * @returns {Function} 检测函数，返回布尔值
+ */
 const kindOfTest = (type) => {
-  type = type.toLowerCase();
+  type = type.toLowerCase();  // 统一转为小写
   return (thing) => kindOf(thing) === type;
 };
 
+/**
+ * 创建 typeof 检测函数
+ * @param {string} type - typeof 返回的类型字符串
+ * @returns {Function} 检测函数，返回布尔值
+ */
 const typeOfTest = (type) => (thing) => typeof thing === type;
 
 /**
- * Determine if a value is a non-null object
- *
- * @param {Object} val The value to test
- *
- * @returns {boolean} True if value is an Array, otherwise false
+ * 检测值是否为非空对象（实际上是检测数组）
+ * 
+ * 注意：函数名有误导性，实际返回Array.isArray的结果。
+ * 这是历史遗留命名，保持兼容性。
+ * 
+ * @param {Object} val - 要检测的值
+ * @returns {boolean} 如果是数组则返回true，否则返回false
  */
 const { isArray } = Array;
 
 /**
- * Determine if a value is undefined
- *
- * @param {*} val The value to test
- *
- * @returns {boolean} True if the value is undefined, otherwise false
+ * 检测值是否为undefined
+ * 
+ * 使用typeof检测，这是JavaScript中唯一可靠检测undefined的方式。
+ * 
+ * @param {*} val - 要检测的值
+ * @returns {boolean} 如果是undefined则返回true，否则返回false
  */
 const isUndefined = typeOfTest('undefined');
 
 /**
- * Determine if a value is a Buffer
- *
- * @param {*} val The value to test
- *
- * @returns {boolean} True if value is a Buffer, otherwise false
+ * 检测值是否为Buffer（Node.js环境的Buffer对象）
+ * 
+ * 检测逻辑（安全链式调用）：
+ * 1. 值不为null
+ * 2. 值不为undefined
+ * 3. 值的constructor不为null
+ * 4. 值的constructor不为undefined
+ * 5. constructor有isBuffer方法
+ * 6. isBuffer方法返回true
+ * 
+ * 设计目的：安全地检测Buffer对象，避免在非Node.js环境中抛出异常。
+ * 
+ * @param {*} val - 要检测的值
+ * @returns {boolean} 如果是Buffer则返回true，否则返回false
  */
 function isBuffer(val) {
   return (
@@ -57,20 +111,26 @@ function isBuffer(val) {
 }
 
 /**
- * Determine if a value is an ArrayBuffer
- *
- * @param {*} val The value to test
- *
- * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ * 检测值是否为ArrayBuffer
+ * 
+ * 使用kindOfTest工厂函数创建检测器，检测内置类型'ArrayBuffer'。
+ * 
+ * @param {*} val - 要检测的值
+ * @returns {boolean} 如果是ArrayBuffer则返回true，否则返回false
  */
 const isArrayBuffer = kindOfTest('ArrayBuffer');
 
 /**
- * Determine if a value is a view on an ArrayBuffer
- *
- * @param {*} val The value to test
- *
- * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ * 检测值是否为ArrayBuffer的视图（如TypedArray、DataView）
+ * 
+ * 检测策略（渐进增强）：
+ * 1. 优先使用原生ArrayBuffer.isView API（现代浏览器/Node.js）
+ * 2. 降级方案：检查值是否有buffer属性且该buffer是ArrayBuffer
+ * 
+ * 设计目的：跨平台兼容，在不支持ArrayBuffer.isView的环境中提供降级检测。
+ * 
+ * @param {*} val - 要检测的值
+ * @returns {boolean} 如果是ArrayBuffer视图则返回true，否则返回false
  */
 function isArrayBufferView(val) {
   let result;
