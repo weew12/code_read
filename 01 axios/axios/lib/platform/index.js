@@ -1,6 +1,36 @@
-import platform from './node/index.js';
-import * as utils from './common/utils.js';
+/**
+ * @file 平台检测入口模块
+ * 
+ * 功能：聚合平台相关的工具函数和特性检测。
+ * 
+ * 架构设计：
+ * 1. 通用工具：从./common/utils.js导入跨平台工具函数
+ * 2. 平台实现：从./node/index.js导入Node.js平台特定实现
+ * 3. 合并导出：使用对象展开符合并两个模块的导出
+ * 
+ * 设计目的：
+ * 1. 模块化：分离通用逻辑和平台特定逻辑
+ * 2. 可扩展性：易于添加新的平台支持（浏览器、React Native等）
+ * 3. 代码复用：通用工具函数在所有平台间共享
+ * 
+ * 注意：当前默认使用Node.js平台实现。
+ * 在浏览器构建时，构建工具会替换为浏览器平台实现。
+ * 这是通过构建时的模块别名或条件导入实现的。
+ */
 
+import platform from './node/index.js';      // Node.js平台实现
+import * as utils from './common/utils.js';  // 跨平台工具函数
+
+/**
+ * 默认平台导出
+ * 
+ * 合并策略：
+ * 1. 首先展开通用工具函数（utils.*）
+ * 2. 然后展开平台特定实现（platform.*）
+ * 3. 平台特定实现会覆盖同名的通用函数（如果需要）
+ * 
+ * 对象展开语法 (...) 创建新对象，保持模块的不可变性。
+ */
 export default {
   ...utils,
   ...platform,
