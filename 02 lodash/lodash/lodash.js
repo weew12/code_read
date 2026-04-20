@@ -4071,11 +4071,11 @@
     }
 
     /**
-     * The base implementation of `_.matches` which doesn't clone `source`.
+     * _.matches 的基础实现，不克隆 `source`。
      *
      * @private
-     * @param {Object} source The object of property values to match.
-     * @returns {Function} Returns the new spec function.
+     * @param {Object} source 要匹配的属性值的对象。
+     * @returns {Function} 返回新的规范函数。
      */
     function baseMatches(source) {
       var matchData = getMatchData(source);
@@ -4088,12 +4088,12 @@
     }
 
     /**
-     * The base implementation of `_.matchesProperty` which doesn't clone `srcValue`.
+     * _.matchesProperty 的基础实现，不克隆 `srcValue`。
      *
      * @private
-     * @param {string} path The path of the property to get.
-     * @param {*} srcValue The value to match.
-     * @returns {Function} Returns the new spec function.
+     * @param {string} path 要获取的属性的路径。
+     * @param {*} srcValue 要匹配的值。
+     * @returns {Function} 返回新的规范函数。
      */
     function baseMatchesProperty(path, srcValue) {
       if (isKey(path) && isStrictComparable(srcValue)) {
@@ -4165,19 +4165,17 @@
     }
 
     /**
-     * A specialized version of `baseMerge` for arrays and objects which performs
-     * deep merges and tracks traversed objects enabling objects with circular
-     * references to be merged.
+     * baseMerge 的专用版本，用于数组和对象，
+     * 执行深度合并并跟踪遍历的对象，使具有循环引用的对象能够被合并。
      *
      * @private
-     * @param {Object} object The destination object.
-     * @param {Object} source The source object.
-     * @param {string} key The key of the value to merge.
-     * @param {number} srcIndex The index of `source`.
-     * @param {Function} mergeFunc The function to merge values.
-     * @param {Function} [customizer] The function to customize assigned values.
-     * @param {Object} [stack] Tracks traversed source values and their merged
-     *  counterparts.
+     * @param {Object} object 目标对象。
+     * @param {Object} source 源对象。
+     * @param {string} key 要合并的值的键。
+     * @param {number} srcIndex `source` 的索引。
+     * @param {Function} mergeFunc 用于合并值的函数。
+     * @param {Function} [customizer] 用于自定义分配值的函数。
+     * @param {Object} [stack] 跟踪遍历的源值及其合并对应物。
      *
      * baseMergeDeep 实现原理：
      *
@@ -4268,12 +4266,12 @@
     }
 
     /**
-     * The base implementation of `_.nth` which doesn't coerce arguments.
+     * _.nth 的基础实现，不强制转换参数。
      *
      * @private
-     * @param {Array} array The array to query.
-     * @param {number} n The index of the element to return.
-     * @returns {*} Returns the nth element of `array`.
+     * @param {Array} array 要查询的数组。
+     * @param {number} n 要返回的元素的索引。
+     * @returns {*} 返回 `array` 的第 n 个元素。
      */
     function baseNth(array, n) {
       var length = array.length;
@@ -4285,13 +4283,13 @@
     }
 
     /**
-     * The base implementation of `_.orderBy` without param guards.
+     * _.orderBy 的基础实现，没有参数保护。
      *
      * @private
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function[]|Object[]|string[]} iteratees The iteratees to sort by.
-     * @param {string[]} orders The sort orders of `iteratees`.
-     * @returns {Array} Returns the new sorted array.
+     * @param {Array|Object} collection 要遍历的集合。
+     * @param {Function[]|Object[]|string[]} iteratees 要排序的迭代器。
+     * @param {string[]} orders `iteratees` 的排序顺序。
+     * @returns {Array} 返回排序后的新数组。
      */
     function baseOrderBy(collection, iteratees, orders) {
       if (iteratees.length) {
@@ -4323,13 +4321,12 @@
     }
 
     /**
-     * The base implementation of `_.pick` without support for individual
-     * property identifiers.
+     * _.pick 的基础实现，不支持单个属性标识符。
      *
      * @private
-     * @param {Object} object The source object.
-     * @param {string[]} paths The property paths to pick.
-     * @returns {Object} Returns the new object.
+     * @param {Object} object 源对象。
+     * @param {string[]} paths 要选取的属性路径。
+     * @returns {Object} 返回新对象。
      */
     function basePick(object, paths) {
       return basePickBy(object, paths, function(value, path) {
@@ -4338,13 +4335,13 @@
     }
 
     /**
-     * The base implementation of  `_.pickBy` without support for iteratee shorthands.
+     * _.pickBy 的基础实现，不支持迭代器简写。
      *
      * @private
-     * @param {Object} object The source object.
-     * @param {string[]} paths The property paths to pick.
-     * @param {Function} predicate The function invoked per property.
-     * @returns {Object} Returns the new object.
+     * @param {Object} object 源对象。
+     * @param {string[]} paths 要选取的属性路径。
+     * @param {Function} predicate 每个属性调用的函数。
+     * @returns {Object} 返回新对象。
      */
     function basePickBy(object, paths, predicate) {
       var index = -1,
@@ -4363,11 +4360,11 @@
     }
 
     /**
-     * A specialized version of `baseProperty` which supports deep paths.
+     * baseProperty 的专用版本，支持深层路径。
      *
      * @private
-     * @param {Array|string} path The path of the property to get.
-     * @returns {Function} Returns the new accessor function.
+     * @param {Array|string} path 要获取的属性的路径。
+     * @returns {Function} 返回新的访问器函数。
      */
     function basePropertyDeep(path) {
       return function(object) {
@@ -4376,15 +4373,14 @@
     }
 
     /**
-     * The base implementation of `_.pullAllBy` without support for iteratee
-     * shorthands.
+     * _.pullAllBy 的基础实现，不支持迭代器简写。
      *
      * @private
-     * @param {Array} array The array to modify.
-     * @param {Array} values The values to remove.
-     * @param {Function} [iteratee] The iteratee invoked per element.
-     * @param {Function} [comparator] The comparator invoked per element.
-     * @returns {Array} Returns `array`.
+     * @param {Array} array 要修改的数组。
+     * @param {Array} values 要移除的值。
+     * @param {Function} [iteratee] 每个元素调用的迭代器函数。
+     * @param {Function} [comparator] 每个元素调用的比较器函数。
+     * @returns {Array} 返回 `array`。
      */
     function basePullAll(array, values, iteratee, comparator) {
       var indexOf = comparator ? baseIndexOfWith : baseIndexOf,
@@ -4414,13 +4410,12 @@
     }
 
     /**
-     * The base implementation of `_.pullAt` without support for individual
-     * indexes or capturing the removed elements.
+     * _.pullAt 的基础实现，不支持单个索引或捕获移除的元素。
      *
      * @private
-     * @param {Array} array The array to modify.
-     * @param {number[]} indexes The indexes of elements to remove.
-     * @returns {Array} Returns `array`.
+     * @param {Array} array 要修改的数组。
+     * @param {number[]} indexes 要移除的元素的索引。
+     * @returns {Array} 返回 `array`。
      */
     function basePullAt(array, indexes) {
       var length = array ? indexes.length : 0,
@@ -4441,28 +4436,26 @@
     }
 
     /**
-     * The base implementation of `_.random` without support for returning
-     * floating-point numbers.
+     * _.random 的基础实现，不支持返回浮点数。
      *
      * @private
-     * @param {number} lower The lower bound.
-     * @param {number} upper The upper bound.
-     * @returns {number} Returns the random number.
+     * @param {number} lower 下界。
+     * @param {number} upper 上界。
+     * @returns {number} 返回随机数。
      */
     function baseRandom(lower, upper) {
       return lower + nativeFloor(nativeRandom() * (upper - lower + 1));
     }
 
     /**
-     * The base implementation of `_.range` and `_.rangeRight` which doesn't
-     * coerce arguments.
+     * _.range 和 _.rangeRight 的基础实现，不强制转换参数。
      *
      * @private
-     * @param {number} start The start of the range.
-     * @param {number} end The end of the range.
-     * @param {number} step The value to increment or decrement by.
-     * @param {boolean} [fromRight] Specify iterating from right to left.
-     * @returns {Array} Returns the range of numbers.
+     * @param {number} start 范围的起始值。
+     * @param {number} end 范围的结束值。
+     * @param {number} step 递增或递减的值。
+     * @param {boolean} [fromRight] 指定从右到左迭代。
+     * @returns {Array} 返回数字范围。
      */
     function baseRange(start, end, step, fromRight) {
       var index = -1,
@@ -4477,12 +4470,12 @@
     }
 
     /**
-     * The base implementation of `_.repeat` which doesn't coerce arguments.
+     * _.repeat 的基础实现，不强制转换参数。
      *
      * @private
-     * @param {string} string The string to repeat.
-     * @param {number} n The number of times to repeat the string.
-     * @returns {string} Returns the repeated string.
+     * @param {string} string 要重复的字符串。
+     * @param {number} n 重复字符串的次数。
+     * @returns {string} 返回重复后的字符串。
      */
     function baseRepeat(string, n) {
       var result = '';
@@ -4505,35 +4498,35 @@
     }
 
     /**
-     * The base implementation of `_.rest` which doesn't validate or coerce arguments.
+     * _.rest 的基础实现，不验证或强制转换参数。
      *
      * @private
-     * @param {Function} func The function to apply a rest parameter to.
-     * @param {number} [start=func.length-1] The start position of the rest parameter.
-     * @returns {Function} Returns the new function.
+     * @param {Function} func 要应用 rest 参数的函数。
+     * @param {number} [start=func.length-1] rest 参数的起始位置。
+     * @returns {Function} 返回新函数。
      */
     function baseRest(func, start) {
       return setToString(overRest(func, start, identity), func + '');
     }
 
     /**
-     * The base implementation of `_.sample`.
+     * _.sample 的基础实现。
      *
      * @private
-     * @param {Array|Object} collection The collection to sample.
-     * @returns {*} Returns the random element.
+     * @param {Array|Object} collection 要采样的集合。
+     * @returns {*} 返回随机元素。
      */
     function baseSample(collection) {
       return arraySample(values(collection));
     }
 
     /**
-     * The base implementation of `_.sampleSize` without param guards.
+     * _.sampleSize 的基础实现，没有参数保护。
      *
      * @private
-     * @param {Array|Object} collection The collection to sample.
-     * @param {number} n The number of elements to sample.
-     * @returns {Array} Returns the random elements.
+     * @param {Array|Object} collection 要采样的集合。
+     * @param {number} n 要采样的元素数量。
+     * @returns {Array} 返回随机元素数组。
      */
     function baseSampleSize(collection, n) {
       var array = values(collection);
@@ -4541,14 +4534,14 @@
     }
 
     /**
-     * The base implementation of `_.set`.
+     * _.set 的基础实现。
      *
      * @private
-     * @param {Object} object The object to modify.
-     * @param {Array|string} path The path of the property to set.
-     * @param {*} value The value to set.
-     * @param {Function} [customizer] The function to customize path creation.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 要修改的对象。
+     * @param {Array|string} path 要设置的属性的路径。
+     * @param {*} value 要设置的值。
+     * @param {Function} [customizer] 用于自定义路径创建的函数。
+     * @returns {Object} 返回 `object`。
      */
     function baseSet(object, path, value, customizer) {
       if (!isObject(object)) {
@@ -4585,12 +4578,12 @@
     }
 
     /**
-     * The base implementation of `setData` without support for hot loop shorting.
+     * setData 的基础实现，不支持热循环短路。
      *
      * @private
-     * @param {Function} func The function to associate metadata with.
-     * @param {*} data The metadata.
-     * @returns {Function} Returns `func`.
+     * @param {Function} func 要关联元数据的函数。
+     * @param {*} data 元数据。
+     * @returns {Function} 返回 `func`。
      */
     var baseSetData = !metaMap ? identity : function(func, data) {
       metaMap.set(func, data);
@@ -4598,12 +4591,12 @@
     };
 
     /**
-     * The base implementation of `setToString` without support for hot loop shorting.
+     * setToString 的基础实现，不支持热循环短路。
      *
      * @private
-     * @param {Function} func The function to modify.
-     * @param {Function} string The `toString` result.
-     * @returns {Function} Returns `func`.
+     * @param {Function} func 要修改的函数。
+     * @param {Function} string `toString` 结果。
+     * @returns {Function} 返回 `func`。
      */
     var baseSetToString = !defineProperty ? identity : function(func, string) {
       return defineProperty(func, 'toString', {
@@ -4615,24 +4608,24 @@
     };
 
     /**
-     * The base implementation of `_.shuffle`.
+     * _.shuffle 的基础实现。
      *
      * @private
-     * @param {Array|Object} collection The collection to shuffle.
-     * @returns {Array} Returns the new shuffled array.
+     * @param {Array|Object} collection 要打乱的集合。
+     * @returns {Array} 返回打乱后的新数组。
      */
     function baseShuffle(collection) {
       return shuffleSelf(values(collection));
     }
 
     /**
-     * The base implementation of `_.slice` without an iteratee call guard.
+     * _.slice 的基础实现，没有迭代器调用保护。
      *
      * @private
-     * @param {Array} array The array to slice.
-     * @param {number} [start=0] The start position.
-     * @param {number} [end=array.length] The end position.
-     * @returns {Array} Returns the slice of `array`.
+     * @param {Array} array 要切片的数组。
+     * @param {number} [start=0] 起始位置。
+     * @param {number} [end=array.length] 结束位置。
+     * @returns {Array} 返回 `array` 的切片。
      */
     function baseSlice(array, start, end) {
       var index = -1,
@@ -4656,13 +4649,13 @@
     }
 
     /**
-     * The base implementation of `_.some` without support for iteratee shorthands.
+     * _.some 的基础实现，不支持迭代器简写。
      *
      * @private
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} predicate The function invoked per iteration.
-     * @returns {boolean} Returns `true` if any element passes the predicate check,
-     *  else `false`.
+     * @param {Array|Object} collection 要遍历的集合。
+     * @param {Function} predicate 每次迭代调用的谓词函数。
+     * @returns {boolean} 如果任何元素通过谓词检查返回 `true`，
+     *  否则返回 `false`。
      *
      * baseSome 实现原理：
      *
@@ -4693,16 +4686,14 @@
     }
 
     /**
-     * The base implementation of `_.sortedIndex` and `_.sortedLastIndex` which
-     * performs a binary search of `array` to determine the index at which `value`
-     * should be inserted into `array` in order to maintain its sort order.
+     * _.sortedIndex 和 _.sortedLastIndex 的基础实现，
+     * 执行数组的二分搜索以确定 `value` 应被插入 `array` 的索引位置，以维持其排序顺序。
      *
      * @private
-     * @param {Array} array The sorted array to inspect.
-     * @param {*} value The value to evaluate.
-     * @param {boolean} [retHighest] Specify returning the highest qualified index.
-     * @returns {number} Returns the index at which `value` should be inserted
-     *  into `array`.
+     * @param {Array} array 要检查的已排序数组。
+     * @param {*} value 要评估的值。
+     * @param {boolean} [retHighest] 指定返回最高限定索引。
+     * @returns {number} 返回 `value` 应被插入 `array` 的索引。
      */
     function baseSortedIndex(array, value, retHighest) {
       var low = 0,
@@ -4726,17 +4717,16 @@
     }
 
     /**
-     * The base implementation of `_.sortedIndexBy` and `_.sortedLastIndexBy`
-     * which invokes `iteratee` for `value` and each element of `array` to compute
-     * their sort ranking. The iteratee is invoked with one argument; (value).
+     * _.sortedIndexBy 和 _.sortedLastIndexBy 的基础实现，
+     * 为 `value` 和 `array` 的每个元素调用 `iteratee` 来计算它们的排序排名。
+     * 迭代器使用一个参数调用：(value)。
      *
      * @private
-     * @param {Array} array The sorted array to inspect.
-     * @param {*} value The value to evaluate.
-     * @param {Function} iteratee The iteratee invoked per element.
-     * @param {boolean} [retHighest] Specify returning the highest qualified index.
-     * @returns {number} Returns the index at which `value` should be inserted
-     *  into `array`.
+     * @param {Array} array 要检查的已排序数组。
+     * @param {*} value 要评估的值。
+     * @param {Function} iteratee 每个元素调用的迭代器。
+     * @param {boolean} [retHighest] 指定返回最高限定索引。
+     * @returns {number} 返回 `value` 应被插入 `array` 的索引。
      */
     function baseSortedIndexBy(array, value, iteratee, retHighest) {
       var low = 0,
@@ -4782,13 +4772,12 @@
     }
 
     /**
-     * The base implementation of `_.sortedUniq` and `_.sortedUniqBy` without
-     * support for iteratee shorthands.
+     * _.sortedUniq 和 _.sortedUniqBy 的基础实现，不支持迭代器简写。
      *
      * @private
-     * @param {Array} array The array to inspect.
-     * @param {Function} [iteratee] The iteratee invoked per element.
-     * @returns {Array} Returns the new duplicate free array.
+     * @param {Array} array 要检查的数组。
+     * @param {Function} [iteratee] 每个元素调用的迭代器。
+     * @returns {Array} 返回新的无重复值数组。
      */
     function baseSortedUniq(array, iteratee) {
       var index = -1,
@@ -4809,12 +4798,11 @@
     }
 
     /**
-     * The base implementation of `_.toNumber` which doesn't ensure correct
-     * conversions of binary, hexadecimal, or octal string values.
+     * _.toNumber 的基础实现，不确保二进制、十六进制或八进制字符串值的正确转换。
      *
      * @private
-     * @param {*} value The value to process.
-     * @returns {number} Returns the number.
+     * @param {*} value 要处理的值。
+     * @returns {number} 返回数字。
      */
     function baseToNumber(value) {
       if (typeof value == 'number') {
@@ -4827,12 +4815,11 @@
     }
 
     /**
-     * The base implementation of `_.toString` which doesn't convert nullish
-     * values to empty strings.
+     * _.toString 的基础实现，不将 nullish 值转换为空字符串。
      *
      * @private
-     * @param {*} value The value to process.
-     * @returns {string} Returns the string.
+     * @param {*} value 要处理的值。
+     * @returns {string} 返回字符串。
      */
     function baseToString(value) {
       // Exit early for strings to avoid a performance hit in some environments.
@@ -4855,9 +4842,9 @@
      *
      * @private
      * @param {Array} array The array to inspect.
-     * @param {Function} [iteratee] The iteratee invoked per element.
-     * @param {Function} [comparator] The comparator invoked per element.
-     * @returns {Array} Returns the new duplicate free array.
+     * @param {Function} [iteratee] 每个元素调用的迭代器。
+     * @param {Function} [comparator] 每个元素调用的比较器。
+     * @returns {Array} 返回新的无重复值数组。
      */
     function baseUniq(array, iteratee, comparator) {
       var index = -1,
@@ -4912,12 +4899,12 @@
     }
 
     /**
-     * The base implementation of `_.unset`.
+     * _.unset 的基础实现。
      *
      * @private
-     * @param {Object} object The object to modify.
-     * @param {Array|string} path The property path to unset.
-     * @returns {boolean} Returns `true` if the property is deleted, else `false`.
+     * @param {Object} object 要修改的对象。
+     * @param {Array|string} path 要删除的属性路径。
+     * @returns {boolean} 如果属性被删除返回 `true`，否则返回 `false`。
      */
     function baseUnset(object, path) {
       path = castPath(path, object);
@@ -4955,26 +4942,25 @@
      * The base implementation of `_.update`.
      *
      * @private
-     * @param {Object} object The object to modify.
-     * @param {Array|string} path The path of the property to update.
-     * @param {Function} updater The function to produce the updated value.
-     * @param {Function} [customizer] The function to customize path creation.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 要修改的对象。
+     * @param {Array|string} path 要更新的属性的路径。
+     * @param {Function} updater 生成更新值的函数。
+     * @param {Function} [customizer] 用于自定义路径创建的函数。
+     * @returns {Object} 返回 `object`。
      */
     function baseUpdate(object, path, updater, customizer) {
       return baseSet(object, path, updater(baseGet(object, path)), customizer);
     }
 
     /**
-     * The base implementation of methods like `_.dropWhile` and `_.takeWhile`
-     * without support for iteratee shorthands.
+     * _.dropWhile 和 _.takeWhile 方法的基础实现，不支持迭代器简写。
      *
      * @private
-     * @param {Array} array The array to query.
-     * @param {Function} predicate The function invoked per iteration.
-     * @param {boolean} [isDrop] Specify dropping elements instead of taking them.
-     * @param {boolean} [fromRight] Specify iterating from right to left.
-     * @returns {Array} Returns the slice of `array`.
+     * @param {Array} array 要查询的数组。
+     * @param {Function} predicate 每次迭代调用的函数。
+     * @param {boolean} [isDrop] 指定删除元素而不是获取元素。
+     * @param {boolean} [fromRight] 指定从右到左迭代。
+     * @returns {Array} 返回 `array` 的切片。
      */
     function baseWhile(array, predicate, isDrop, fromRight) {
       var length = array.length,
@@ -4989,14 +4975,13 @@
     }
 
     /**
-     * The base implementation of `wrapperValue` which returns the result of
-     * performing a sequence of actions on the unwrapped `value`, where each
-     * successive action is supplied the return value of the previous.
+     * wrapperValue 的基础实现，返回在未包装的 `value` 上执行一系列操作的结果，
+     * 其中每个后续操作都使用前一个的返回值。
      *
      * @private
-     * @param {*} value The unwrapped value.
-     * @param {Array} actions Actions to perform to resolve the unwrapped value.
-     * @returns {*} Returns the resolved value.
+     * @param {*} value 未包装的值。
+     * @param {Array} actions 用于解析未包装值的操作。
+     * @returns {*} 返回解析后的值。
      */
     function baseWrapperValue(value, actions) {
       var result = value;
@@ -5009,14 +4994,14 @@
     }
 
     /**
-     * The base implementation of methods like `_.xor`, without support for
-     * iteratee shorthands, that accepts an array of arrays to inspect.
+     * _.xor 方法的基础实现，不支持迭代器简写，
+     * 接受要检查的数组数组。
      *
      * @private
-     * @param {Array} arrays The arrays to inspect.
-     * @param {Function} [iteratee] The iteratee invoked per element.
-     * @param {Function} [comparator] The comparator invoked per element.
-     * @returns {Array} Returns the new array of values.
+     * @param {Array} arrays 要检查的数组。
+     * @param {Function} [iteratee] 每个元素调用的迭代器。
+     * @param {Function} [comparator] 每个元素调用的比较器。
+     * @returns {Array} 返回新值数组。
      */
     function baseXor(arrays, iteratee, comparator) {
       var length = arrays.length;
@@ -5040,13 +5025,13 @@
     }
 
     /**
-     * This base implementation of `_.zipObject` which assigns values using `assignFunc`.
+     * _.zipObject 的基础实现，使用 `assignFunc` 分配值。
      *
      * @private
-     * @param {Array} props The property identifiers.
-     * @param {Array} values The property values.
-     * @param {Function} assignFunc The function to assign values.
-     * @returns {Object} Returns the new object.
+     * @param {Array} props 属性标识符。
+     * @param {Array} values 属性值。
+     * @param {Function} assignFunc 用于分配值的函数。
+     * @returns {Object} 返回新对象。
      */
     function baseZipObject(props, values, assignFunc) {
       var index = -1,
@@ -5062,34 +5047,34 @@
     }
 
     /**
-     * Casts `value` to an empty array if it's not an array like object.
+     * 如果 `value` 不是类数组对象，则将其转换为空数组。
      *
      * @private
-     * @param {*} value The value to inspect.
-     * @returns {Array|Object} Returns the cast array-like object.
+     * @param {*} value 要检查的值。
+     * @returns {Array|Object} 返回转换后的类数组对象。
      */
     function castArrayLikeObject(value) {
       return isArrayLikeObject(value) ? value : [];
     }
 
     /**
-     * Casts `value` to `identity` if it's not a function.
+     * 如果 `value` 不是函数，则将其转换为 `identity`。
      *
      * @private
-     * @param {*} value The value to inspect.
-     * @returns {Function} Returns cast function.
+     * @param {*} value 要检查的值。
+     * @returns {Function} 返回转换后的函数。
      */
     function castFunction(value) {
       return typeof value == 'function' ? value : identity;
     }
 
     /**
-     * Casts `value` to a path array if it's not one.
+     * 如果 `value` 不是路径数组，则将其转换为路径数组。
      *
      * @private
-     * @param {*} value The value to inspect.
-     * @param {Object} [object] The object to query keys on.
-     * @returns {Array} Returns the cast property path array.
+     * @param {*} value 要检查的值。
+     * @param {Object} [object] 要查询键的对象。
+     * @returns {Array} 返回转换后的属性路径数组。
      */
     function castPath(value, object) {
       if (isArray(value)) {
@@ -5099,24 +5084,23 @@
     }
 
     /**
-     * A `baseRest` alias which can be replaced with `identity` by module
-     * replacement plugins.
+     * baseRest 的别名，可以被模块替换插件替换为 `identity`。
      *
      * @private
      * @type {Function}
-     * @param {Function} func The function to apply a rest parameter to.
-     * @returns {Function} Returns the new function.
+     * @param {Function} func 要应用 rest 参数的函数。
+     * @returns {Function} 返回新函数。
      */
     var castRest = baseRest;
 
     /**
-     * Casts `array` to a slice if it's needed.
+     * 如果需要，将 `array` 转换为切片。
      *
      * @private
-     * @param {Array} array The array to inspect.
-     * @param {number} start The start position.
-     * @param {number} [end=array.length] The end position.
-     * @returns {Array} Returns the cast slice.
+     * @param {Array} array 要检查的数组。
+     * @param {number} start 起始位置。
+     * @param {number} [end=array.length] 结束位置。
+     * @returns {Array} 返回转换后的切片。
      */
     function castSlice(array, start, end) {
       var length = array.length;
@@ -5125,22 +5109,22 @@
     }
 
     /**
-     * A simple wrapper around the global [`clearTimeout`](https://mdn.io/clearTimeout).
+     * 全局 [`clearTimeout`](https://mdn.io/clearTimeout) 的简单包装器。
      *
      * @private
-     * @param {number|Object} id The timer id or timeout object of the timer to clear.
+     * @param {number|Object} id 要清除的定时器的定时器 id 或超时对象。
      */
     var clearTimeout = ctxClearTimeout || function(id) {
       return root.clearTimeout(id);
     };
 
     /**
-     * Creates a clone of  `buffer`.
+     * 创建 `buffer` 的克隆。
      *
      * @private
-     * @param {Buffer} buffer The buffer to clone.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Buffer} Returns the cloned buffer.
+     * @param {Buffer} buffer 要克隆的缓冲区。
+     * @param {boolean} [isDeep] 指定深度克隆。
+     * @returns {Buffer} 返回克隆的缓冲区。
      */
     function cloneBuffer(buffer, isDeep) {
       if (isDeep) {
@@ -5158,7 +5142,7 @@
      *
      * @private
      * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
-     * @returns {ArrayBuffer} Returns the cloned array buffer.
+     * @returns {ArrayBuffer} 返回克隆的数组缓冲区。
      */
     function cloneArrayBuffer(arrayBuffer) {
       var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
@@ -5167,12 +5151,12 @@
     }
 
     /**
-     * Creates a clone of `dataView`.
+     * 创建 `dataView` 的克隆。
      *
      * @private
-     * @param {Object} dataView The data view to clone.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the cloned data view.
+     * @param {Object} dataView 要克隆的数据视图。
+     * @param {boolean} [isDeep] 指定深度克隆。
+     * @returns {Object} 返回克隆的数据视图。
      */
     function cloneDataView(dataView, isDeep) {
       var buffer = isDeep ? cloneArrayBuffer(dataView.buffer) : dataView.buffer;
@@ -5180,11 +5164,11 @@
     }
 
     /**
-     * Creates a clone of `regexp`.
+     * 创建 `regexp` 的克隆。
      *
      * @private
-     * @param {Object} regexp The regexp to clone.
-     * @returns {Object} Returns the cloned regexp.
+     * @param {Object} regexp 要克隆的正则表达式。
+     * @returns {Object} 返回克隆的正则表达式。
      */
     function cloneRegExp(regexp) {
       var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
@@ -5193,23 +5177,23 @@
     }
 
     /**
-     * Creates a clone of the `symbol` object.
+     * 创建 `symbol` 对象的克隆。
      *
      * @private
-     * @param {Object} symbol The symbol object to clone.
-     * @returns {Object} Returns the cloned symbol object.
+     * @param {Object} symbol 要克隆的 symbol 对象。
+     * @returns {Object} 返回克隆的 symbol 对象。
      */
     function cloneSymbol(symbol) {
       return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
     }
 
     /**
-     * Creates a clone of `typedArray`.
+     * 创建 `typedArray` 的克隆。
      *
      * @private
-     * @param {Object} typedArray The typed array to clone.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the cloned typed array.
+     * @param {Object} typedArray 要克隆的 TypedArray。
+     * @param {boolean} [isDeep] 指定深度克隆。
+     * @returns {Object} 返回克隆的 TypedArray。
      */
     function cloneTypedArray(typedArray, isDeep) {
       var buffer = isDeep ? cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
@@ -5217,12 +5201,12 @@
     }
 
     /**
-     * Compares values to sort them in ascending order.
+     * 比较值以按升序排序。
      *
      * @private
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @returns {number} Returns the sort order indicator for `value`.
+     * @param {*} value 要比较的值。
+     * @param {*} other 要比较的其他值。
+     * @returns {number} 返回 `value` 的排序顺序指示符。
      */
     function compareAscending(value, other) {
       if (value !== other) {
@@ -5258,16 +5242,15 @@
      * Used by `_.orderBy` to compare multiple properties of a value to another
      * and stable sort them.
      *
-     * If `orders` is unspecified, all values are sorted in ascending order. Otherwise,
-     * specify an order of "desc" for descending or "asc" for ascending sort order
-     * of corresponding values.
-     *
-     * @private
-     * @param {Object} object The object to compare.
-     * @param {Object} other The other object to compare.
-     * @param {boolean[]|string[]} orders The order to sort by for each property.
-     * @returns {number} Returns the sort order indicator for `object`.
-     */
+      * 如果未指定 `orders`，所有值按升序排序。否则，
+      * 指定 "desc" 为降序或 "asc" 为相应值的升序排序顺序。
+      *
+      * @private
+      * @param {Object} object 要比较的对象。
+      * @param {Object} other 要比较的其他对象。
+      * @param {boolean[]|string[]} orders 每个属性要排序的顺序。
+      * @returns {number} 返回 `object` 的排序顺序指示符。
+      */
     function compareMultiple(object, other, orders) {
       var index = -1,
           objCriteria = object.criteria,
@@ -5296,15 +5279,15 @@
     }
 
     /**
-     * Creates an array that is the composition of partially applied arguments,
-     * placeholders, and provided arguments into a single array of arguments.
+     * 创建由部分应用的参数、占位符和提供的参数组成的数组，
+     * 作为单个参数数组。
      *
      * @private
-     * @param {Array} args The provided arguments.
-     * @param {Array} partials The arguments to prepend to those provided.
-     * @param {Array} holders The `partials` placeholder indexes.
-     * @params {boolean} [isCurried] Specify composing for a curried function.
-     * @returns {Array} Returns the new array of composed arguments.
+     * @param {Array} args 提供的参数。
+     * @param {Array} partials 要预先添加到提供的参数前面的参数。
+     * @param {Array} holders `partials` 占位符索引。
+     * @params {boolean} [isCurried] 指定为柯里化函数组合。
+     * @returns {Array} 返回组合参数的新数组。
      */
     function composeArgs(args, partials, holders, isCurried) {
       var argsIndex = -1,
@@ -5331,15 +5314,14 @@
     }
 
     /**
-     * This function is like `composeArgs` except that the arguments composition
-     * is tailored for `_.partialRight`.
+     * 此函数类似于 `composeArgs`，但参数组合是为 `_.partialRight` 量身定制的。
      *
      * @private
-     * @param {Array} args The provided arguments.
-     * @param {Array} partials The arguments to append to those provided.
-     * @param {Array} holders The `partials` placeholder indexes.
-     * @params {boolean} [isCurried] Specify composing for a curried function.
-     * @returns {Array} Returns the new array of composed arguments.
+     * @param {Array} args 提供的参数。
+     * @param {Array} partials 要追加到提供的参数后面的参数。
+     * @param {Array} holders `partials` 占位符索引。
+     * @params {boolean} [isCurried] 指定为柯里化函数组合。
+     * @returns {Array} 返回组合参数的新数组。
      */
     function composeArgsRight(args, partials, holders, isCurried) {
       var argsIndex = -1,
@@ -5368,12 +5350,12 @@
     }
 
     /**
-     * Copies the values of `source` to `array`.
+     * 将 `source` 的值复制到 `array`。
      *
      * @private
-     * @param {Array} source The array to copy values from.
-     * @param {Array} [array=[]] The array to copy values to.
-     * @returns {Array} Returns `array`.
+     * @param {Array} source 要复制值的数组。
+     * @param {Array} [array=[]] 要复制值到的数组。
+     * @returns {Array} 返回 `array`。
      */
     function copyArray(source, array) {
       var index = -1,
@@ -5387,14 +5369,14 @@
     }
 
     /**
-     * Copies properties of `source` to `object`.
+     * 将 `source` 的属性复制到 `object`。
      *
      * @private
-     * @param {Object} source The object to copy properties from.
-     * @param {Array} props The property identifiers to copy.
-     * @param {Object} [object={}] The object to copy properties to.
-     * @param {Function} [customizer] The function to customize copied values.
-     * @returns {Object} Returns `object`.
+     * @param {Object} source 要复制属性的源对象。
+     * @param {Array} props 要复制的属性标识符。
+     * @param {Object} [object={}] 要复制属性到的目标对象。
+     * @param {Function} [customizer] 用于自定义复制值的函数。
+     * @returns {Object} 返回 `object`。
      */
     function copyObject(source, props, object, customizer) {
       var isNew = !object;
@@ -5423,36 +5405,36 @@
     }
 
     /**
-     * Copies own symbols of `source` to `object`.
+     * 将 `source` 的自有符号复制到 `object`。
      *
      * @private
-     * @param {Object} source The object to copy symbols from.
-     * @param {Object} [object={}] The object to copy symbols to.
-     * @returns {Object} Returns `object`.
+     * @param {Object} source 要复制符号的源对象。
+     * @param {Object} [object={}] 要复制符号到的目标对象。
+     * @returns {Object} 返回 `object`。
      */
     function copySymbols(source, object) {
       return copyObject(source, getSymbols(source), object);
     }
 
     /**
-     * Copies own and inherited symbols of `source` to `object`.
+     * 将 `source` 的自有和继承符号复制到 `object`。
      *
      * @private
-     * @param {Object} source The object to copy symbols from.
-     * @param {Object} [object={}] The object to copy symbols to.
-     * @returns {Object} Returns `object`.
+     * @param {Object} source 要复制符号的源对象。
+     * @param {Object} [object={}] 要复制符号到的目标对象。
+     * @returns {Object} 返回 `object`。
      */
     function copySymbolsIn(source, object) {
       return copyObject(source, getSymbolsIn(source), object);
     }
 
     /**
-     * Creates a function like `_.groupBy`.
+     * 创建一个类似 `_.groupBy` 的函数。
      *
      * @private
-     * @param {Function} setter The function to set accumulator values.
-     * @param {Function} [initializer] The accumulator object initializer.
-     * @returns {Function} Returns the new aggregator function.
+     * @param {Function} setter 用于设置累加器值的函数。
+     * @param {Function} [initializer] 累加器对象初始化函数。
+     * @returns {Function} 返回新的聚合器函数。
      */
     function createAggregator(setter, initializer) {
       return function(collection, iteratee) {
@@ -5464,11 +5446,11 @@
     }
 
     /**
-     * Creates a function like `_.assign`.
+     * 创建一个类似 `_.assign` 的函数。
      *
      * @private
-     * @param {Function} assigner The function to assign values.
-     * @returns {Function} Returns the new assigner function.
+     * @param {Function} assigner 用于分配值的函数。
+     * @returns {Function} 返回新的分配器函数。
      */
     function createAssigner(assigner) {
       return baseRest(function(object, sources) {
@@ -5497,12 +5479,12 @@
     }
 
     /**
-     * Creates a `baseEach` or `baseEachRight` function.
+     * 创建 `baseEach` 或 `baseEachRight` 函数。
      *
      * @private
-     * @param {Function} eachFunc The function to iterate over a collection.
-     * @param {boolean} [fromRight] Specify iterating from right to left.
-     * @returns {Function} Returns the new base function.
+     * @param {Function} eachFunc 用于遍历集合的函数。
+     * @param {boolean} [fromRight] 指定从右到左迭代。
+     * @returns {Function} 返回新的基础函数。
      */
     function createBaseEach(eachFunc, fromRight) {
       return function(collection, iteratee) {
@@ -5526,11 +5508,11 @@
     }
 
     /**
-     * Creates a base function for methods like `_.forIn` and `_.forOwn`.
+     * 为 `_.forIn` 和 `_.forOwn` 方法创建基础函数。
      *
      * @private
-     * @param {boolean} [fromRight] Specify iterating from right to left.
-     * @returns {Function} Returns the new base function.
+     * @param {boolean} [fromRight] 指定从右到左迭代。
+     * @returns {Function} 返回新的基础函数。
      *
      * createBaseFor 实现原理：
      *
@@ -5584,14 +5566,13 @@
     }
 
     /**
-     * Creates a function that wraps `func` to invoke it with the optional `this`
-     * binding of `thisArg`.
+     * 创建一个包装 `func` 的函数，使用 `thisArg` 的可选 `this` 绑定调用它。
      *
      * @private
-     * @param {Function} func The function to wrap.
-     * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
-     * @param {*} [thisArg] The `this` binding of `func`.
-     * @returns {Function} Returns the new wrapped function.
+     * @param {Function} func 要包装的函数。
+     * @param {number} bitmask 位掩码标志。详见 `createWrap`。
+     * @param {*} [thisArg] `func` 的 `this` 绑定。
+     * @returns {Function} 返回包装后的新函数。
      */
     function createBind(func, bitmask, thisArg) {
       var isBind = bitmask & WRAP_BIND_FLAG,
@@ -5605,11 +5586,11 @@
     }
 
     /**
-     * Creates a function like `_.lowerFirst`.
+     * 创建一个类似 `_.lowerFirst` 的函数。
      *
      * @private
-     * @param {string} methodName The name of the `String` case method to use.
-     * @returns {Function} Returns the new case function.
+     * @param {string} methodName 要使用的 `String` 大小写方法的名称。
+     * @returns {Function} 返回新的大小写函数。
      */
     function createCaseFirst(methodName) {
       return function(string) {
@@ -5632,11 +5613,11 @@
     }
 
     /**
-     * Creates a function like `_.camelCase`.
+     * 创建一个类似 `_.camelCase` 的函数。
      *
      * @private
-     * @param {Function} callback The function to combine each word.
-     * @returns {Function} Returns the new compounder function.
+     * @param {Function} callback 用于组合每个单词的函数。
+     * @returns {Function} 返回新的组合函数。
      */
     function createCompounder(callback) {
       return function(string) {
@@ -5645,12 +5626,12 @@
     }
 
     /**
-     * Creates a function that produces an instance of `Ctor` regardless of
-     * whether it was invoked as part of a `new` expression or by `call` or `apply`.
+     * 创建一个无论是否作为 `new` 表达式还是通过 `call` 或 `apply` 调用，
+     * 都产生 `Ctor` 实例的函数。
      *
      * @private
-     * @param {Function} Ctor The constructor to wrap.
-     * @returns {Function} Returns the new wrapped function.
+     * @param {Function} Ctor 要包装的构造函数。
+     * @returns {Function} 返回包装后的新函数。
      */
     function createCtor(Ctor) {
       return function() {
@@ -5678,13 +5659,13 @@
     }
 
     /**
-     * Creates a function that wraps `func` to enable currying.
+     * 创建一个包装 `func` 以启用柯里化的函数。
      *
      * @private
-     * @param {Function} func The function to wrap.
-     * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
-     * @param {number} arity The arity of `func`.
-     * @returns {Function} Returns the new wrapped function.
+     * @param {Function} func 要包装的函数。
+     * @param {number} bitmask 位掩码标志。详见 `createWrap`。
+     * @param {number} arity `func` 的参数数量。
+     * @returns {Function} 返回包装后的新函数。
      */
     function createCurry(func, bitmask, arity) {
       var Ctor = createCtor(func);
@@ -5796,23 +5777,21 @@
     }
 
     /**
-     * Creates a function that wraps `func` to invoke it with optional `this`
-     * binding of `thisArg`, partial application, and currying.
+     * 创建一个包装函数，用于调用 `func`，可选绑定 `thisArg`、
+     * 应用部分参数和进行柯里化。
      *
      * @private
-     * @param {Function|string} func The function or method name to wrap.
-     * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
-     * @param {*} [thisArg] The `this` binding of `func`.
-     * @param {Array} [partials] The arguments to prepend to those provided to
-     *  the new function.
-     * @param {Array} [holders] The `partials` placeholder indexes.
-     * @param {Array} [partialsRight] The arguments to append to those provided
-     *  to the new function.
-     * @param {Array} [holdersRight] The `partialsRight` placeholder indexes.
-     * @param {Array} [argPos] The argument positions of the new function.
-     * @param {number} [ary] The arity cap of `func`.
-     * @param {number} [arity] The arity of `func`.
-     * @returns {Function} Returns the new wrapped function.
+     * @param {Function|string} func 要包装的函数或方法名。
+     * @param {number} bitmask 位掩码标志。详见 `createWrap`。
+     * @param {*} [thisArg] `func` 的 `this` 绑定。
+     * @param {Array} [partials] 要预置到新函数参数前的参数。
+     * @param {Array} [holders] `partials` 的占位符索引。
+     * @param {Array} [partialsRight] 要追加到新函数参数后的参数。
+     * @param {Array} [holdersRight] `partialsRight` 的占位符索引。
+     * @param {Array} [argPos] 新函数的参数位置。
+     * @param {number} [ary] `func` 的参数数量上限。
+     * @param {number} [arity] `func` 的参数数量。
+     * @returns {Function} 返回新的包装函数。
      */
     function createHybrid(func, bitmask, thisArg, partials, holders, partialsRight, holdersRight, argPos, ary, arity) {
       var isAry = bitmask & WRAP_ARY_FLAG,
@@ -5869,12 +5848,12 @@
     }
 
     /**
-     * Creates a function like `_.invertBy`.
+     * 创建一个类似于 `_.invertBy` 的函数。
      *
      * @private
-     * @param {Function} setter The function to set accumulator values.
-     * @param {Function} toIteratee The function to resolve iteratees.
-     * @returns {Function} Returns the new inverter function.
+     * @param {Function} setter 用于设置累加器值的函数。
+     * @param {Function} toIteratee 用于解析迭代器的函数。
+     * @returns {Function} 返回新的反转函数。
      */
     function createInverter(setter, toIteratee) {
       return function(object, iteratee) {
@@ -5883,12 +5862,12 @@
     }
 
     /**
-     * Creates a function that performs a mathematical operation on two values.
+     * 创建一个对两个值执行数学运算的函数。
      *
      * @private
-     * @param {Function} operator The function to perform the operation.
-     * @param {number} [defaultValue] The value used for `undefined` arguments.
-     * @returns {Function} Returns the new mathematical operation function.
+     * @param {Function} operator 用于执行运算的函数。
+     * @param {number} [defaultValue] 用于 `undefined` 参数的值。
+     * @returns {Function} 返回新的数学运算函数。
      */
     function createMathOperation(operator, defaultValue) {
       return function(value, other) {
@@ -5917,11 +5896,11 @@
     }
 
     /**
-     * Creates a function like `_.over`.
+     * 创建一个类似于 `_.over` 的函数。
      *
      * @private
-     * @param {Function} arrayFunc The function to iterate over iteratees.
-     * @returns {Function} Returns the new over function.
+     * @param {Function} arrayFunc 迭代迭代器的函数。
+     * @returns {Function} 返回新的 over 函数。
      */
     function createOver(arrayFunc) {
       return flatRest(function(iteratees) {
@@ -5936,13 +5915,13 @@
     }
 
     /**
-     * Creates the padding for `string` based on `length`. The `chars` string
-     * is truncated if the number of characters exceeds `length`.
+     * 根据 `length` 为 `string` 创建填充。如果字符数超过 `length`，
+     * 则截断 `chars` 字符串。
      *
      * @private
-     * @param {number} length The padding length.
-     * @param {string} [chars=' '] The string used as padding.
-     * @returns {string} Returns the padding for `string`.
+     * @param {number} length 填充长度。
+     * @param {string} [chars=' '] 用作填充的字符串。
+     * @returns {string} 返回 `string` 的填充。
      */
     function createPadding(length, chars) {
       chars = chars === undefined ? ' ' : baseToString(chars);
@@ -5958,16 +5937,15 @@
     }
 
     /**
-     * Creates a function that wraps `func` to invoke it with the `this` binding
-     * of `thisArg` and `partials` prepended to the arguments it receives.
+     * 创建一个包装函数，用 `thisArg` 的 `this` 绑定和预置到其接收参数前的
+     * `partials` 来调用 `func`。
      *
      * @private
-     * @param {Function} func The function to wrap.
-     * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
-     * @param {*} thisArg The `this` binding of `func`.
-     * @param {Array} partials The arguments to prepend to those provided to
-     *  the new function.
-     * @returns {Function} Returns the new wrapped function.
+     * @param {Function} func 要包装的函数。
+     * @param {number} bitmask 位掩码标志。详见 `createWrap`。
+     * @param {*} thisArg `func` 的 `this` 绑定。
+     * @param {Array} partials 要预置到新函数参数前的参数。
+     * @returns {Function} 返回新的包装函数。
      */
     function createPartial(func, bitmask, thisArg, partials) {
       var isBind = bitmask & WRAP_BIND_FLAG,
@@ -5993,11 +5971,11 @@
     }
 
     /**
-     * Creates a `_.range` or `_.rangeRight` function.
+     * 创建一个 `_.range` 或 `_.rangeRight` 函数。
      *
      * @private
-     * @param {boolean} [fromRight] Specify iterating from right to left.
-     * @returns {Function} Returns the new range function.
+     * @param {boolean} [fromRight] 指定从右到左迭代。
+     * @returns {Function} 返回新的 range 函数。
      */
     function createRange(fromRight) {
       return function(start, end, step) {
@@ -6018,11 +5996,11 @@
     }
 
     /**
-     * Creates a function that performs a relational operation on two values.
+     * 创建一个对两个值执行关系运算的函数。
      *
      * @private
-     * @param {Function} operator The function to perform the operation.
-     * @returns {Function} Returns the new relational operation function.
+     * @param {Function} operator 用于执行运算的函数。
+     * @returns {Function} 返回新的关系运算函数。
      */
     function createRelationalOperation(operator) {
       return function(value, other) {
@@ -6035,21 +6013,20 @@
     }
 
     /**
-     * Creates a function that wraps `func` to continue currying.
+     * 创建一个继续柯里化 `func` 的包装函数。
      *
      * @private
-     * @param {Function} func The function to wrap.
-     * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
-     * @param {Function} wrapFunc The function to create the `func` wrapper.
-     * @param {*} placeholder The placeholder value.
-     * @param {*} [thisArg] The `this` binding of `func`.
-     * @param {Array} [partials] The arguments to prepend to those provided to
-     *  the new function.
-     * @param {Array} [holders] The `partials` placeholder indexes.
-     * @param {Array} [argPos] The argument positions of the new function.
-     * @param {number} [ary] The arity cap of `func`.
-     * @param {number} [arity] The arity of `func`.
-     * @returns {Function} Returns the new wrapped function.
+     * @param {Function} func 要包装的函数。
+     * @param {number} bitmask 位掩码标志。详见 `createWrap`。
+     * @param {Function} wrapFunc 用于创建 `func` 包装器的函数。
+     * @param {*} placeholder 占位符值。
+     * @param {*} [thisArg] `func` 的 `this` 绑定。
+     * @param {Array} [partials] 要预置到新函数参数前的参数。
+     * @param {Array} [holders] `partials` 的占位符索引。
+     * @param {Array} [argPos] 新函数的参数位置。
+     * @param {number} [ary] `func` 的参数数量上限。
+     * @param {number} [arity] `func` 的参数数量。
+     * @returns {Function} 返回新的包装函数。
      */
     function createRecurry(func, bitmask, wrapFunc, placeholder, thisArg, partials, holders, argPos, ary, arity) {
       var isCurry = bitmask & WRAP_CURRY_FLAG,
@@ -6078,11 +6055,11 @@
     }
 
     /**
-     * Creates a function like `_.round`.
+     * 创建一个类似于 `_.round` 的函数。
      *
      * @private
-     * @param {string} methodName The name of the `Math` method to use when rounding.
-     * @returns {Function} Returns the new round function.
+     * @param {string} methodName 四舍五入时使用的 `Math` 方法名。
+     * @returns {Function} 返回新的 round 函数。
      */
     function createRound(methodName) {
       var func = Math[methodName];
@@ -6103,22 +6080,22 @@
     }
 
     /**
-     * Creates a set object of `values`.
+     * 创建一个包含 `values` 的 set 对象。
      *
      * @private
-     * @param {Array} values The values to add to the set.
-     * @returns {Object} Returns the new set.
+     * @param {Array} values 要添加到 set 的值。
+     * @returns {Object} 返回新的 set。
      */
     var createSet = !(Set && (1 / setToArray(new Set([,-0]))[1]) == INFINITY) ? noop : function(values) {
       return new Set(values);
     };
 
     /**
-     * Creates a `_.toPairs` or `_.toPairsIn` function.
+     * 创建一个 `_.toPairs` 或 `_.toPairsIn` 函数。
      *
      * @private
-     * @param {Function} keysFunc The function to get the keys of a given object.
-     * @returns {Function} Returns the new pairs function.
+     * @param {Function} keysFunc 获取给定对象键的函数。
+     * @returns {Function} 返回新的 pairs 函数。
      */
     function createToPairs(keysFunc) {
       return function(object) {
@@ -6134,15 +6111,14 @@
     }
 
     /**
-     * Creates a function that either curries or invokes `func` with optional
-     * `this` binding and partially applied arguments.
+     * 创建一个要么柯里化要么调用 `func` 的函数，可选绑定 `this` 和应用部分参数。
      *
      * @private
-     * @param {Function|string} func The function or method name to wrap.
-     * @param {number} bitmask The bitmask flags.
+     * @param {Function|string} func 要包装的函数或方法名。
+     * @param {number} bitmask 位掩码标志。
      *    1 - `_.bind`
      *    2 - `_.bindKey`
-     *    4 - `_.curry` or `_.curryRight` of a bound function
+     *    4 - `_.curry` 或绑定函数的 `_.curryRight`
      *    8 - `_.curry`
      *   16 - `_.curryRight`
      *   32 - `_.partial`
@@ -6150,13 +6126,13 @@
      *  128 - `_.rearg`
      *  256 - `_.ary`
      *  512 - `_.flip`
-     * @param {*} [thisArg] The `this` binding of `func`.
-     * @param {Array} [partials] The arguments to be partially applied.
-     * @param {Array} [holders] The `partials` placeholder indexes.
-     * @param {Array} [argPos] The argument positions of the new function.
-     * @param {number} [ary] The arity cap of `func`.
-     * @param {number} [arity] The arity of `func`.
-     * @returns {Function} Returns the new wrapped function.
+     * @param {*} [thisArg] `func` 的 `this` 绑定。
+     * @param {Array} [partials] 要部分应用的参数。
+     * @param {Array} [holders] `partials` 的占位符索引。
+     * @param {Array} [argPos] 新函数的参数位置。
+     * @param {number} [ary] `func` 的参数数量上限。
+     * @param {number} [arity] `func` 的参数数量。
+     * @returns {Function} 返回新的包装函数。
      */
     function createWrap(func, bitmask, thisArg, partials, holders, argPos, ary, arity) {
       var isBindKey = bitmask & WRAP_BIND_KEY_FLAG;
@@ -6214,16 +6190,15 @@
     }
 
     /**
-     * Used by `_.defaults` to customize its `_.assignIn` use to assign properties
-     * of source objects to the destination object for all destination properties
-     * that resolve to `undefined`.
+     * `_.defaults` 使用此函数自定义其 `_.assignIn` 的用法，将源对象的属性分配到
+     * 目标对象上，对于所有解析为 `undefined` 的目标属性生效。
      *
      * @private
-     * @param {*} objValue The destination value.
-     * @param {*} srcValue The source value.
-     * @param {string} key The key of the property to assign.
-     * @param {Object} object The parent object of `objValue`.
-     * @returns {*} Returns the value to assign.
+     * @param {*} objValue 目标值。
+     * @param {*} srcValue 源值。
+     * @param {string} key 要分配的属性的键。
+     * @param {Object} object `objValue` 的父对象。
+     * @returns {*} 返回要分配的值。
      */
     function customDefaultsAssignIn(objValue, srcValue, key, object) {
       if (objValue === undefined ||
@@ -6234,18 +6209,17 @@
     }
 
     /**
-     * Used by `_.defaultsDeep` to customize its `_.merge` use to merge source
-     * objects into destination objects that are passed thru.
+     * `_.defaultsDeep` 使用此函数自定义其 `_.merge` 的用法，将源对象合并到
+     * 通过的目标对象中。
      *
      * @private
-     * @param {*} objValue The destination value.
-     * @param {*} srcValue The source value.
-     * @param {string} key The key of the property to merge.
-     * @param {Object} object The parent object of `objValue`.
-     * @param {Object} source The parent object of `srcValue`.
-     * @param {Object} [stack] Tracks traversed source values and their merged
-     *  counterparts.
-     * @returns {*} Returns the value to assign.
+     * @param {*} objValue 目标值。
+     * @param {*} srcValue 源值。
+     * @param {string} key 要合并的属性的键。
+     * @param {Object} object `objValue` 的父对象。
+     * @param {Object} source `srcValue` 的父对象。
+     * @param {Object} [stack] 跟踪遍历的源值及其合并对应物。
+     * @returns {*} 返回要分配的值。
      */
     function customDefaultsMerge(objValue, srcValue, key, object, source, stack) {
       if (isObject(objValue) && isObject(srcValue)) {
@@ -6258,30 +6232,28 @@
     }
 
     /**
-     * Used by `_.omit` to customize its `_.cloneDeep` use to only clone plain
-     * objects.
+     * `_.omit` 使用此函数自定义其 `_.cloneDeep` 的用法，仅克隆普通对象。
      *
      * @private
-     * @param {*} value The value to inspect.
-     * @param {string} key The key of the property to inspect.
-     * @returns {*} Returns the uncloned value or `undefined` to defer cloning to `_.cloneDeep`.
+     * @param {*} value 要检查的值。
+     * @param {string} key 要检查的属性的键。
+     * @returns {*} 返回未克隆的值或 `undefined` 以将克隆推迟到 `_.cloneDeep`。
      */
     function customOmitClone(value) {
       return isPlainObject(value) ? undefined : value;
     }
 
     /**
-     * A specialized version of `baseIsEqualDeep` for arrays with support for
-     * partial deep comparisons.
+     * `baseIsEqualDeep` 的专用版本，用于数组比较，支持部分深度比较。
      *
      * @private
-     * @param {Array} array The array to compare.
-     * @param {Array} other The other array to compare.
-     * @param {number} bitmask The bitmask flags. See `baseIsEqual` for more details.
-     * @param {Function} customizer The function to customize comparisons.
-     * @param {Function} equalFunc The function to determine equivalents of values.
-     * @param {Object} stack Tracks traversed `array` and `other` objects.
-     * @returns {boolean} Returns `true` if the arrays are equivalent, else `false`.
+     * @param {Array} array 要比较的数组。
+     * @param {Array} other 要比较的另一个数组。
+     * @param {number} bitmask 位掩码标志。详见 `baseIsEqual`。
+     * @param {Function} customizer 用于自定义比较的函数。
+     * @param {Function} equalFunc 用于确定值等价的函数。
+     * @param {Object} stack 跟踪遍历的 `array` 和 `other` 对象。
+     * @returns {boolean} 如果数组等价则返回 `true`，否则返回 `false`。
      */
     function equalArrays(array, other, bitmask, customizer, equalFunc, stack) {
       var isPartial = bitmask & COMPARE_PARTIAL_FLAG,
@@ -6346,21 +6318,20 @@
     }
 
     /**
-     * A specialized version of `baseIsEqualDeep` for comparing objects of
-     * the same `toStringTag`.
+     * `baseIsEqualDeep` 的专用版本，用于比较具有相同 `toStringTag` 的对象。
      *
-     * **Note:** This function only supports comparing values with tags of
-     * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+     * **注意：** 此函数仅支持比较具有 `Boolean`、`Date`、`Error`、`Number`、
+     * `RegExp` 或 `String` 标签的值。
      *
      * @private
-     * @param {Object} object The object to compare.
-     * @param {Object} other The other object to compare.
-     * @param {string} tag The `toStringTag` of the objects to compare.
-     * @param {number} bitmask The bitmask flags. See `baseIsEqual` for more details.
-     * @param {Function} customizer The function to customize comparisons.
-     * @param {Function} equalFunc The function to determine equivalents of values.
-     * @param {Object} stack Tracks traversed `object` and `other` objects.
-     * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
+     * @param {Object} object 要比较的对象。
+     * @param {Object} other 要比较的另一个对象。
+     * @param {string} tag 要比较的对象的 `toStringTag`。
+     * @param {number} bitmask 位掩码标志。详见 `baseIsEqual`。
+     * @param {Function} customizer 用于自定义比较的函数。
+     * @param {Function} equalFunc 用于确定值等价的函数。
+     * @param {Object} stack 跟踪遍历的 `object` 和 `other` 对象。
+     * @returns {boolean} 如果对象等价则返回 `true`，否则返回 `false`。
      */
     function equalByTag(object, other, tag, bitmask, customizer, equalFunc, stack) {
       switch (tag) {
@@ -6428,17 +6399,16 @@
     }
 
     /**
-     * A specialized version of `baseIsEqualDeep` for objects with support for
-     * partial deep comparisons.
+     * `baseIsEqualDeep` 的专用版本，用于对象比较，支持部分深度比较。
      *
      * @private
-     * @param {Object} object The object to compare.
-     * @param {Object} other The other object to compare.
-     * @param {number} bitmask The bitmask flags. See `baseIsEqual` for more details.
-     * @param {Function} customizer The function to customize comparisons.
-     * @param {Function} equalFunc The function to determine equivalents of values.
-     * @param {Object} stack Tracks traversed `object` and `other` objects.
-     * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
+     * @param {Object} object 要比较的对象。
+     * @param {Object} other 要比较的另一个对象。
+     * @param {number} bitmask 位掩码标志。详见 `baseIsEqual`。
+     * @param {Function} customizer 用于自定义比较的函数。
+     * @param {Function} equalFunc 用于确定值等价的函数。
+     * @param {Object} stack 跟踪遍历的 `object` 和 `other` 对象。
+     * @returns {boolean} 如果对象等价则返回 `true`，否则返回 `false`。
      */
     function equalObjects(object, other, bitmask, customizer, equalFunc, stack) {
       var isPartial = bitmask & COMPARE_PARTIAL_FLAG,
@@ -6506,56 +6476,55 @@
     }
 
     /**
-     * A specialized version of `baseRest` which flattens the rest array.
+     * `baseRest` 的专用版本，用于展平 rest 参数数组。
      *
      * @private
-     * @param {Function} func The function to apply a rest parameter to.
-     * @returns {Function} Returns the new function.
+     * @param {Function} func 要应用 rest 参数的函数。
+     * @returns {Function} 返回新的函数。
      */
     function flatRest(func) {
       return setToString(overRest(func, undefined, flatten), func + '');
     }
 
     /**
-     * Creates an array of own enumerable property names and symbols of `object`.
+     * 创建 `object` 自身可枚举属性名和符号的数组。
      *
      * @private
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of property names and symbols.
+     * @param {Object} object 要查询的对象。
+     * @returns {Array} 返回属性名和符号的数组。
      */
     function getAllKeys(object) {
       return baseGetAllKeys(object, keys, getSymbols);
     }
 
     /**
-     * Creates an array of own and inherited enumerable property names and
-     * symbols of `object`.
+     * 创建 `object` 自身和继承的可枚举属性名和符号的数组。
      *
      * @private
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of property names and symbols.
+     * @param {Object} object 要查询的对象。
+     * @returns {Array} 返回属性名和符号的数组。
      */
     function getAllKeysIn(object) {
       return baseGetAllKeys(object, keysIn, getSymbolsIn);
     }
 
     /**
-     * Gets metadata for `func`.
+     * 获取 `func` 的元数据。
      *
      * @private
-     * @param {Function} func The function to query.
-     * @returns {*} Returns the metadata for `func`.
+     * @param {Function} func 要查询的函数。
+     * @returns {*} 返回 `func` 的元数据。
      */
     var getData = !metaMap ? noop : function(func) {
       return metaMap.get(func);
     };
 
     /**
-     * Gets the name of `func`.
+     * 获取 `func` 的名称。
      *
      * @private
-     * @param {Function} func The function to query.
-     * @returns {string} Returns the function name.
+     * @param {Function} func 要查询的函数。
+     * @returns {string} 返回函数名称。
      */
     function getFuncName(func) {
       var result = (func.name + ''),
@@ -6573,11 +6542,11 @@
     }
 
     /**
-     * Gets the argument placeholder value for `func`.
+     * 获取 `func` 的参数占位符值。
      *
      * @private
-     * @param {Function} func The function to inspect.
-     * @returns {*} Returns the placeholder value.
+     * @param {Function} func 要检查的函数。
+     * @returns {*} 返回占位符值。
      */
     function getHolder(func) {
       var object = hasOwnProperty.call(lodash, 'placeholder') ? lodash : func;
@@ -6585,15 +6554,14 @@
     }
 
     /**
-     * Gets the appropriate "iteratee" function. If `_.iteratee` is customized,
-     * this function returns the custom method, otherwise it returns `baseIteratee`.
-     * If arguments are provided, the chosen function is invoked with them and
-     * its result is returned.
+     * 获取适当的 "iteratee" 函数。如果 `_.iteratee` 被自定义，
+     * 此函数返回自定义方法，否则返回 `baseIteratee`。
+     * 如果提供了参数，则调用所选函数并返回其结果。
      *
      * @private
-     * @param {*} [value] The value to convert to an iteratee.
-     * @param {number} [arity] The arity of the created iteratee.
-     * @returns {Function} Returns the chosen function or its result.
+     * @param {*} [value] 要转换为迭代器的值。
+     * @param {number} [arity] 创建的迭代器的参数数量。
+     * @returns {Function} 返回所选函数或其结果。
      */
     function getIteratee() {
       var result = lodash.iteratee || iteratee;
@@ -6602,12 +6570,12 @@
     }
 
     /**
-     * Gets the data for `map`.
+     * 获取 `map` 的数据。
      *
      * @private
-     * @param {Object} map The map to query.
-     * @param {string} key The reference key.
-     * @returns {*} Returns the map data.
+     * @param {Object} map 要查询的 map。
+     * @param {string} key 引用键。
+     * @returns {*} 返回 map 数据。
      */
     function getMapData(map, key) {
       var data = map.__data__;
@@ -6617,11 +6585,11 @@
     }
 
     /**
-     * Gets the property names, values, and compare flags of `object`.
+     * 获取 `object` 的属性名、值和比较标志。
      *
      * @private
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the match data of `object`.
+     * @param {Object} object 要查询的对象。
+     * @returns {Array} 返回 `object` 的匹配数据。
      */
     function getMatchData(object) {
       var result = keys(object),
@@ -6637,12 +6605,12 @@
     }
 
     /**
-     * Gets the native function at `key` of `object`.
+     * 获取 `object` 上 `key` 处的原生函数。
      *
      * @private
-     * @param {Object} object The object to query.
-     * @param {string} key The key of the method to get.
-     * @returns {*} Returns the function if it's native, else `undefined`.
+     * @param {Object} object 要查询的对象。
+     * @param {string} key 要获取的方法的键。
+     * @returns {*} 如果是原生函数则返回该函数，否则返回 `undefined`。
      */
     function getNative(object, key) {
       var value = getValue(object, key);
@@ -6650,11 +6618,11 @@
     }
 
     /**
-     * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+     * 忽略 `Symbol.toStringTag` 值的 `baseGetTag` 专用版本。
      *
      * @private
-     * @param {*} value The value to query.
-     * @returns {string} Returns the raw `toStringTag`.
+     * @param {*} value 要查询的值。
+     * @returns {string} 返回原始的 `toStringTag`。
      */
     function getRawTag(value) {
       var isOwn = hasOwnProperty.call(value, symToStringTag),
@@ -6677,11 +6645,11 @@
     }
 
     /**
-     * Creates an array of the own enumerable symbols of `object`.
+     * 创建 `object` 自身可枚举符号的数组。
      *
      * @private
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of symbols.
+     * @param {Object} object 要查询的对象。
+     * @returns {Array} 返回符号数组。
      */
     var getSymbols = !nativeGetSymbols ? stubArray : function(object) {
       if (object == null) {
@@ -6694,11 +6662,11 @@
     };
 
     /**
-     * Creates an array of the own and inherited enumerable symbols of `object`.
+     * 创建 `object` 自身和继承的可枚举符号的数组。
      *
      * @private
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of symbols.
+     * @param {Object} object 要查询的对象。
+     * @returns {Array} 返回符号数组。
      */
     var getSymbolsIn = !nativeGetSymbols ? stubArray : function(object) {
       var result = [];
@@ -6710,11 +6678,11 @@
     };
 
     /**
-     * Gets the `toStringTag` of `value`.
+     * 获取 `value` 的 `toStringTag`。
      *
      * @private
-     * @param {*} value The value to query.
-     * @returns {string} Returns the `toStringTag`.
+     * @param {*} value 要查询的值。
+     * @returns {string} 返回 `toStringTag`。
      */
     var getTag = baseGetTag;
 
@@ -6743,14 +6711,13 @@
     }
 
     /**
-     * Gets the view, applying any `transforms` to the `start` and `end` positions.
+     * 获取视图，对 `start` 和 `end` 位置应用任何 `transforms`。
      *
      * @private
-     * @param {number} start The start of the view.
-     * @param {number} end The end of the view.
-     * @param {Array} transforms The transformations to apply to the view.
-     * @returns {Object} Returns an object containing the `start` and `end`
-     *  positions of the view.
+     * @param {number} start 视图的开始位置。
+     * @param {number} end 视图的结束位置。
+     * @param {Array} transforms 要应用于视图的转换。
+     * @returns {Object} 返回包含视图 `start` 和 `end` 位置的对象。
      */
     function getView(start, end, transforms) {
       var index = -1,
@@ -6771,11 +6738,11 @@
     }
 
     /**
-     * Extracts wrapper details from the `source` body comment.
+     * 从 `source` 主体注释中提取包装器详情。
      *
      * @private
-     * @param {string} source The source to inspect.
-     * @returns {Array} Returns the wrapper details.
+     * @param {string} source 要检查的源代码。
+     * @returns {Array} 返回包装器详情。
      */
     function getWrapDetails(source) {
       var match = source.match(reWrapDetails);
@@ -6783,13 +6750,13 @@
     }
 
     /**
-     * Checks if `path` exists on `object`.
+     * 检查 `path` 是否存在于 `object` 上。
      *
      * @private
-     * @param {Object} object The object to query.
-     * @param {Array|string} path The path to check.
-     * @param {Function} hasFunc The function to check properties.
-     * @returns {boolean} Returns `true` if `path` exists, else `false`.
+     * @param {Object} object 要查询的对象。
+     * @param {Array|string} path 要检查的路径。
+     * @param {Function} hasFunc 用于检查属性的函数。
+     * @returns {boolean} 如果 `path` 存在则返回 `true`，否则返回 `false`。
      */
     function hasPath(object, path, hasFunc) {
       path = castPath(path, object);
@@ -6814,11 +6781,11 @@
     }
 
     /**
-     * Initializes an array clone.
+     * 初始化数组克隆。
      *
      * @private
-     * @param {Array} array The array to clone.
-     * @returns {Array} Returns the initialized clone.
+     * @param {Array} array 要克隆的数组。
+     * @returns {Array} 返回初始化后的克隆。
      */
     function initCloneArray(array) {
       var length = array.length,
@@ -6833,11 +6800,11 @@
     }
 
     /**
-     * Initializes an object clone.
+     * 初始化对象克隆。
      *
      * @private
-     * @param {Object} object The object to clone.
-     * @returns {Object} Returns the initialized clone.
+     * @param {Object} object 要克隆的对象。
+     * @returns {Object} 返回初始化后的克隆。
      */
     function initCloneObject(object) {
       return (typeof object.constructor == 'function' && !isPrototype(object))
@@ -6846,16 +6813,16 @@
     }
 
     /**
-     * Initializes an object clone based on its `toStringTag`.
+     * 根据其 `toStringTag` 初始化对象克隆。
      *
-     * **Note:** This function only supports cloning values with tags of
-     * `Boolean`, `Date`, `Error`, `Map`, `Number`, `RegExp`, `Set`, or `String`.
+     * **注意：** 此函数仅支持克隆具有 `Boolean`、`Date`、`Error`、`Map`、
+     * `Number`、`RegExp`、`Set` 或 `String` 标签的值。
      *
      * @private
-     * @param {Object} object The object to clone.
-     * @param {string} tag The `toStringTag` of the object to clone.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the initialized clone.
+     * @param {Object} object 要克隆的对象。
+     * @param {string} tag 要克隆的对象的 `toStringTag`。
+     * @param {boolean} [isDeep] 指定深度克隆。
+     * @returns {Object} 返回初始化后的克隆。
      */
     function initCloneByTag(object, tag, isDeep) {
       var Ctor = object.constructor;
@@ -6894,12 +6861,12 @@
     }
 
     /**
-     * Inserts wrapper `details` in a comment at the top of the `source` body.
+     * 在 `source` 主体顶部的注释中插入包装器 `details`。
      *
      * @private
-     * @param {string} source The source to modify.
-     * @returns {Array} details The details to insert.
-     * @returns {string} Returns the modified source.
+     * @param {string} source 要修改的源代码。
+     * @returns {Array} details 要插入的详情。
+     * @returns {string} 返回修改后的源代码。
      */
     function insertWrapDetails(source, details) {
       var length = details.length;
@@ -6913,11 +6880,11 @@
     }
 
     /**
-     * Checks if `value` is a flattenable `arguments` object or array.
+     * 检查 `value` 是否是可选平的 `arguments` 对象或数组。
      *
      * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is flattenable, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 可展平则返回 `true`，否则返回 `false`。
      */
     function isFlattenable(value) {
       return isArray(value) || isArguments(value) ||
@@ -6925,12 +6892,12 @@
     }
 
     /**
-     * Checks if `value` is a valid array-like index.
+     * 检查 `value` 是否是有效的类数组索引。
      *
      * @private
-     * @param {*} value The value to check.
-     * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
-     * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+     * @param {*} value 要检查的值。
+     * @param {number} [length=MAX_SAFE_INTEGER] 有效索引的上界。
+     * @returns {boolean} 如果 `value` 是有效索引则返回 `true`，否则返回 `false`。
      */
     function isIndex(value, length) {
       var type = typeof value;
@@ -6943,14 +6910,13 @@
     }
 
     /**
-     * Checks if the given arguments are from an iteratee call.
+     * 检查给定的参数是否来自迭代器调用。
      *
      * @private
-     * @param {*} value The potential iteratee value argument.
-     * @param {*} index The potential iteratee index or key argument.
-     * @param {*} object The potential iteratee object argument.
-     * @returns {boolean} Returns `true` if the arguments are from an iteratee call,
-     *  else `false`.
+     * @param {*} value 潜在的迭代器值参数。
+     * @param {*} index 潜在的迭代器索引或键参数。
+     * @param {*} object 潜在的迭代器对象参数。
+     * @returns {boolean} 如果参数来自迭代器调用则返回 `true`，否则返回 `false`。
      */
     function isIterateeCall(value, index, object) {
       if (!isObject(object)) {
@@ -6967,12 +6933,12 @@
     }
 
     /**
-     * Checks if `value` is a property name and not a property path.
+     * 检查 `value` 是否是属性名而不是属性路径。
      *
      * @private
-     * @param {*} value The value to check.
-     * @param {Object} [object] The object to query keys on.
-     * @returns {boolean} Returns `true` if `value` is a property name, else `false`.
+     * @param {*} value 要检查的值。
+     * @param {Object} [object] 要查询键的对象。
+     * @returns {boolean} 如果 `value` 是属性名则返回 `true`，否则返回 `false`。
      */
     function isKey(value, object) {
       if (isArray(value)) {
@@ -6988,11 +6954,11 @@
     }
 
     /**
-     * Checks if `value` is suitable for use as unique object key.
+     * 检查 `value` 是否适合用作唯一对象键。
      *
      * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 适合则返回 `true`，否则返回 `false`。
      */
     function isKeyable(value) {
       var type = typeof value;
@@ -7002,12 +6968,11 @@
     }
 
     /**
-     * Checks if `func` has a lazy counterpart.
+     * 检查 `func` 是否有惰性对应物。
      *
      * @private
-     * @param {Function} func The function to check.
-     * @returns {boolean} Returns `true` if `func` has a lazy counterpart,
-     *  else `false`.
+     * @param {Function} func 要检查的函数。
+     * @returns {boolean} 如果 `func` 有惰性对应物则返回 `true`，否则返回 `false`。
      */
     function isLaziable(func) {
       var funcName = getFuncName(func),
@@ -7024,31 +6989,31 @@
     }
 
     /**
-     * Checks if `func` has its source masked.
+     * 检查 `func` 的源代码是否被屏蔽。
      *
      * @private
-     * @param {Function} func The function to check.
-     * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+     * @param {Function} func 要检查的函数。
+     * @returns {boolean} 如果 `func` 被屏蔽则返回 `true`，否则返回 `false`。
      */
     function isMasked(func) {
       return !!maskSrcKey && (maskSrcKey in func);
     }
 
     /**
-     * Checks if `func` is capable of being masked.
+     * 检查 `func` 是否可以被屏蔽。
      *
      * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `func` is maskable, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `func` 可屏蔽则返回 `true`，否则返回 `false`。
      */
     var isMaskable = coreJsData ? isFunction : stubFalse;
 
     /**
-     * Checks if `value` is likely a prototype object.
+     * 检查 `value` 是否可能是原型对象。
      *
      * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是原型则返回 `true`，否则返回 `false`。
      */
     function isPrototype(value) {
       var Ctor = value && value.constructor,
@@ -7058,25 +7023,23 @@
     }
 
     /**
-     * Checks if `value` is suitable for strict equality comparisons, i.e. `===`.
+     * 检查 `value` 是否适合严格相等比较，即 `===`。
      *
      * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` if suitable for strict
-     *  equality comparisons, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 适合严格相等比较则返回 `true`，否则返回 `false`。
      */
     function isStrictComparable(value) {
       return value === value && !isObject(value);
     }
 
     /**
-     * A specialized version of `matchesProperty` for source values suitable
-     * for strict equality comparisons, i.e. `===`.
+     * 适用于严格相等比较（即 `===`）的源值的 `matchesProperty` 专用版本。
      *
      * @private
-     * @param {string} key The key of the property to get.
-     * @param {*} srcValue The value to match.
-     * @returns {Function} Returns the new spec function.
+     * @param {string} key 要获取的属性的键。
+     * @param {*} srcValue 要匹配的值。
+     * @returns {Function} 返回新的 spec 函数。
      */
     function matchesStrictComparable(key, srcValue) {
       return function(object) {
@@ -7089,12 +7052,11 @@
     }
 
     /**
-     * A specialized version of `_.memoize` which clears the memoized function's
-     * cache when it exceeds `MAX_MEMOIZE_SIZE`.
+     * 当超过 `MAX_MEMOIZE_SIZE` 时清除记忆函数缓存的 `_.memoize` 专用版本。
      *
      * @private
-     * @param {Function} func The function to have its output memoized.
-     * @returns {Function} Returns the new memoized function.
+     * @param {Function} func 要记忆输出的函数。
+     * @returns {Function} 返回新的记忆函数。
      */
     function memoizeCapped(func) {
       var result = memoize(func, function(key) {
@@ -7109,20 +7071,18 @@
     }
 
     /**
-     * Merges the function metadata of `source` into `data`.
+     * 将 `source` 的函数元数据合并到 `data` 中。
      *
-     * Merging metadata reduces the number of wrappers used to invoke a function.
-     * This is possible because methods like `_.bind`, `_.curry`, and `_.partial`
-     * may be applied regardless of execution order. Methods like `_.ary` and
-     * `_.rearg` modify function arguments, making the order in which they are
-     * executed important, preventing the merging of metadata. However, we make
-     * an exception for a safe combined case where curried functions have `_.ary`
-     * and or `_.rearg` applied.
+     * 合并元数据可以减少调用函数时使用的包装器数量。
+     * 这是可能的，因为像 `_.bind`、`_.curry` 和 `_.partial` 这样的方法可以
+     * 不考虑执行顺序应用。像 `_.ary` 和 `_.rearg` 这样的方法会修改函数参数，
+     * 使它们的执行顺序变得重要，从而阻止元数据的合并。但是，我们为安全组合
+     * 的情况做了一个例外，即柯里化函数应用了 `_.ary` 和/或 `_.rearg`。
      *
      * @private
-     * @param {Array} data The destination metadata.
-     * @param {Array} source The source metadata.
-     * @returns {Array} Returns `data`.
+     * @param {Array} data 目标元数据。
+     * @param {Array} source 源元数据。
+     * @returns {Array} 返回 `data`。
      */
     function mergeData(data, source) {
       var bitmask = data[1],
@@ -7180,13 +7140,13 @@
     }
 
     /**
-     * This function is like
-     * [`Object.keys`](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
-     * except that it includes inherited enumerable properties.
+     * 这个函数类似于
+     * [`Object.keys`](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)，
+     * 但它包括继承的可枚举属性。
      *
      * @private
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of property names.
+     * @param {Object} object 要查询的对象。
+     * @returns {Array} 返回属性名的数组。
      */
     function nativeKeysIn(object) {
       var result = [];
@@ -7199,24 +7159,24 @@
     }
 
     /**
-     * Converts `value` to a string using `Object.prototype.toString`.
+     * 使用 `Object.prototype.toString` 将 `value` 转换为字符串。
      *
      * @private
-     * @param {*} value The value to convert.
-     * @returns {string} Returns the converted string.
+     * @param {*} value 要转换的值。
+     * @returns {string} 返回转换后的字符串。
      */
     function objectToString(value) {
       return nativeObjectToString.call(value);
     }
 
     /**
-     * A specialized version of `baseRest` which transforms the rest array.
+     * 转换 rest 数组的 `baseRest` 专用版本。
      *
      * @private
-     * @param {Function} func The function to apply a rest parameter to.
-     * @param {number} [start=func.length-1] The start position of the rest parameter.
-     * @param {Function} transform The rest array transform.
-     * @returns {Function} Returns the new function.
+     * @param {Function} func 要应用 rest 参数的函数。
+     * @param {number} [start=func.length-1] rest 参数的起始位置。
+     * @param {Function} transform rest 数组的转换函数。
+     * @returns {Function} 返回新的函数。
      */
     function overRest(func, start, transform) {
       start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
@@ -7240,26 +7200,25 @@
     }
 
     /**
-     * Gets the parent value at `path` of `object`.
+     * 获取 `object` 在 `path` 处的父值。
      *
      * @private
-     * @param {Object} object The object to query.
-     * @param {Array} path The path to get the parent value of.
-     * @returns {*} Returns the parent value.
+     * @param {Object} object 要查询的对象。
+     * @param {Array} path 要获取父值的路径。
+     * @returns {*} 返回父值。
      */
     function parent(object, path) {
       return path.length < 2 ? object : baseGet(object, baseSlice(path, 0, -1));
     }
 
     /**
-     * Reorder `array` according to the specified indexes where the element at
-     * the first index is assigned as the first element, the element at
-     * the second index is assigned as the second element, and so on.
+     * 根据指定的索引重新排序 `array`，其中第一个索引处的元素被分配为第一个元素，
+     * 第二个索引处的元素被分配为第二个元素，以此类推。
      *
      * @private
-     * @param {Array} array The array to reorder.
-     * @param {Array} indexes The arranged array indexes.
-     * @returns {Array} Returns `array`.
+     * @param {Array} array 要重新排序的数组。
+     * @param {Array} indexes 排列后的数组索引。
+     * @returns {Array} 返回 `array`。
      */
     function reorder(array, indexes) {
       var arrLength = array.length,
@@ -7274,12 +7233,12 @@
     }
 
     /**
-     * Gets the value at `key`, unless `key` is "__proto__" or "constructor".
+     * 获取 `key` 处的值，除非 `key` 是 "__proto__" 或 "constructor"。
      *
      * @private
-     * @param {Object} object The object to query.
-     * @param {string} key The key of the property to get.
-     * @returns {*} Returns the property value.
+     * @param {Object} object 要查询的对象。
+     * @param {string} key 要获取的属性的键。
+     * @returns {*} 返回属性值。
      */
     function safeGet(object, key) {
       if (key === 'constructor' && typeof object[key] === 'function') {
@@ -7294,52 +7253,50 @@
     }
 
     /**
-     * Sets metadata for `func`.
+     * 为 `func` 设置元数据。
      *
-     * **Note:** If this function becomes hot, i.e. is invoked a lot in a short
-     * period of time, it will trip its breaker and transition to an identity
-     * function to avoid garbage collection pauses in V8. See
-     * [V8 issue 2070](https://bugs.chromium.org/p/v8/issues/detail?id=2070)
-     * for more details.
+     * **注意：** 如果此函数变得热门，即在很短的时间内被频繁调用，
+     * 它将触发其断路器并转换为一个恒等函数，以避免 V8 中的垃圾回收暂停。
+     * 详见 [V8 issue 2070](https://bugs.chromium.org/p/v8/issues/detail?id=2070)。
      *
      * @private
-     * @param {Function} func The function to associate metadata with.
-     * @param {*} data The metadata.
-     * @returns {Function} Returns `func`.
+     * @param {Function} func 要关联元数据的函数。
+     * @param {*} data 元数据。
+     * @returns {Function} 返回 `func`。
      */
     var setData = shortOut(baseSetData);
 
     /**
-     * A simple wrapper around the global [`setTimeout`](https://mdn.io/setTimeout).
+     * 全局 [`setTimeout`](https://mdn.io/setTimeout) 的简单包装器。
      *
      * @private
-     * @param {Function} func The function to delay.
-     * @param {number} wait The number of milliseconds to delay invocation.
-     * @returns {number|Object} Returns the timer id or timeout object.
+     * @param {Function} func 要延迟的函数。
+     * @param {number} wait 延迟调用的毫秒数。
+     * @returns {number|Object} 返回定时器 id 或超时对象。
      */
     var setTimeout = ctxSetTimeout || function(func, wait) {
       return root.setTimeout(func, wait);
     };
 
     /**
-     * Sets the `toString` method of `func` to return `string`.
+     * 将 `func` 的 `toString` 方法设置为返回 `string`。
      *
      * @private
-     * @param {Function} func The function to modify.
-     * @param {Function} string The `toString` result.
-     * @returns {Function} Returns `func`.
+     * @param {Function} func 要修改的函数。
+     * @param {Function} string `toString` 的结果。
+     * @returns {Function} 返回 `func`。
      */
     var setToString = shortOut(baseSetToString);
 
     /**
-     * Sets the `toString` method of `wrapper` to mimic the source of `reference`
-     * with wrapper details in a comment at the top of the source body.
+     * 将 `wrapper` 的 `toString` 方法设置为模仿 `reference` 的源代码，
+     * 在源代码主体顶部的注释中包含包装器详情。
      *
      * @private
-     * @param {Function} wrapper The function to modify.
-     * @param {Function} reference The reference function.
-     * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
-     * @returns {Function} Returns `wrapper`.
+     * @param {Function} wrapper 要修改的函数。
+     * @param {Function} reference 参考函数。
+     * @param {number} bitmask 位掩码标志。详见 `createWrap`。
+     * @returns {Function} 返回 `wrapper`。
      */
     function setWrapToString(wrapper, reference, bitmask) {
       var source = (reference + '');
@@ -7347,13 +7304,12 @@
     }
 
     /**
-     * Creates a function that'll short out and invoke `identity` instead
-     * of `func` when it's called `HOT_COUNT` or more times in `HOT_SPAN`
-     * milliseconds.
+     * 创建一个函数，当在 `HOT_SPAN` 毫秒内被调用 `HOT_COUNT` 次或更多次时，
+     * 会短路并调用 `identity` 而不是 `func`。
      *
      * @private
-     * @param {Function} func The function to restrict.
-     * @returns {Function} Returns the new shortable function.
+     * @param {Function} func 要限制的函数。
+     * @returns {Function} 返回新的可短路函数。
      */
     function shortOut(func) {
       var count = 0,
@@ -7376,12 +7332,12 @@
     }
 
     /**
-     * A specialized version of `_.shuffle` which mutates and sets the size of `array`.
+     * 变异并设置 `array` 大小的 `_.shuffle` 专用版本。
      *
      * @private
-     * @param {Array} array The array to shuffle.
-     * @param {number} [size=array.length] The size of `array`.
-     * @returns {Array} Returns `array`.
+     * @param {Array} array 要打乱的数组。
+     * @param {number} [size=array.length] `array` 的大小。
+     * @returns {Array} 返回 `array`。
      */
     function shuffleSelf(array, size) {
       var index = -1,
@@ -7401,11 +7357,11 @@
     }
 
     /**
-     * Converts `string` to a property path array.
+     * 将 `string` 转换为属性路径数组。
      *
      * @private
-     * @param {string} string The string to convert.
-     * @returns {Array} Returns the property path array.
+     * @param {string} string 要转换的字符串。
+     * @returns {Array} 返回属性路径数组。
      */
     var stringToPath = memoizeCapped(function(string) {
       var result = [];
@@ -7419,11 +7375,11 @@
     });
 
     /**
-     * Converts `value` to a string key if it's not a string or symbol.
+     * 如果 `value` 不是字符串或符号，则将其转换为字符串键。
      *
      * @private
-     * @param {*} value The value to inspect.
-     * @returns {string|symbol} Returns the key.
+     * @param {*} value 要检查的值。
+     * @returns {string|symbol} 返回键。
      */
     function toKey(value) {
       if (typeof value == 'string' || isSymbol(value)) {
@@ -7434,11 +7390,11 @@
     }
 
     /**
-     * Converts `func` to its source code.
+     * 将 `func` 转换为其源代码。
      *
      * @private
-     * @param {Function} func The function to convert.
-     * @returns {string} Returns the source code.
+     * @param {Function} func 要转换的函数。
+     * @returns {string} 返回源代码。
      */
     function toSource(func) {
       if (func != null) {
@@ -7453,12 +7409,12 @@
     }
 
     /**
-     * Updates wrapper `details` based on `bitmask` flags.
+     * 根据 `bitmask` 标志更新包装器 `details`。
      *
      * @private
-     * @returns {Array} details The details to modify.
-     * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
-     * @returns {Array} Returns `details`.
+     * @returns {Array} details 要修改的详情。
+     * @param {number} bitmask 位掩码标志。详见 `createWrap`。
+     * @returns {Array} 返回 `details`。
      */
     function updateWrapDetails(details, bitmask) {
       arrayEach(wrapFlags, function(pair) {
@@ -7471,11 +7427,11 @@
     }
 
     /**
-     * Creates a clone of `wrapper`.
-     *
-     * @private
-     * @param {Object} wrapper The wrapper to clone.
-     * @returns {Object} Returns the cloned wrapper.
+      * 创建一个 `wrapper` 的克隆。
+      *
+      * @private
+      * @param {Object} wrapper 要克隆的包装器。
+      * @returns {Object} 返回克隆的包装器。
      */
     function wrapperClone(wrapper) {
       if (wrapper instanceof LazyWrapper) {
@@ -7491,18 +7447,17 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * Creates an array of elements split into groups the length of `size`.
-     * If `array` can't be split evenly, the final chunk will be the remaining
-     * elements.
+     * 创建一个数组，分割成 `size` 长度的组。如果 `array` 不能被均匀分割，
+     * 最后的元素组将是剩余的元素。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Array
-     * @param {Array} array The array to process.
-     * @param {number} [size=1] The length of each chunk
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {Array} Returns the new array of chunks.
+     * @param {Array} array 要处理的数组。
+     * @param {number} [size=1] 每个元素组的长度
+     * @param- {Object} [guard] 允许用作像 `_.map` 这样的方法的迭代器。
+     * @returns {Array} 返回新的元素组数组。
      * @example
      *
      * _.chunk(['a', 'b', 'c', 'd'], 2);
@@ -7532,15 +7487,15 @@
     }
 
     /**
-     * Creates an array with all falsey values removed. The values `false`, `null`,
-     * `0`, `-0`, `0n`, `""`, `undefined`, and `NaN` are falsy.
+     * 创建一个移除了所有假值的数组。`false`、`null`、`0`、`-0`、`0n`、`""`、
+     * `undefined` 和 `NaN` 都是假值。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Array
-     * @param {Array} array The array to compact.
-     * @returns {Array} Returns the new array of filtered values.
+     * @param {Array} array 要过滤的数组。
+     * @returns {Array} 返回新的过滤值数组。
      * @example
      *
      * _.compact([0, 1, false, 2, '', 3]);
@@ -7562,16 +7517,15 @@
     }
 
     /**
-     * Creates a new array concatenating `array` with any additional arrays
-     * and/or values.
+     * 创建一个新数组，将 `array` 与任何其他数组和/或值连接在一起。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The array to concatenate.
-     * @param {...*} [values] The values to concatenate.
-     * @returns {Array} Returns the new concatenated array.
+     * @param {Array} array 要连接的数组。
+     * @param {...*} [values] 要连接的值。
+     * @returns {Array} 返回新的连接后的数组。
      * @example
      *
      * var array = [1];
@@ -7599,20 +7553,19 @@
     }
 
     /**
-     * Creates an array of `array` values not included in the other given arrays
-     * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-     * for equality comparisons. The order and references of result values are
-     * determined by the first array.
+     * 创建一个数组，包含 `array` 中的值，但不包含在其他给定的数组中。
+     * 使用 [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+     * 进行相等比较。结果值的顺序和引用由第一个数组决定。
      *
-     * **Note:** Unlike `_.pullAll`, this method returns a new array.
+     * **注意：** 与 `_.pullAll` 不同，此方法返回一个新数组。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Array
-     * @param {Array} array The array to inspect.
-     * @param {...Array} [values] The values to exclude.
-     * @returns {Array} Returns the new array of filtered values.
+     * @param {Array} array 要检查的数组。
+     * @param {...Array} [values] 要排除的值。
+     * @returns {Array} 返回新的过滤值数组。
      * @see _.without, _.xor
      * @example
      *
@@ -7626,22 +7579,20 @@
     });
 
     /**
-     * This method is like `_.difference` except that it accepts `iteratee` which
-     * is invoked for each element of `array` and `values` to generate the criterion
-     * by which they're compared. The order and references of result values are
-     * determined by the first array. The iteratee is invoked with one argument:
-     * (value).
+     * 这个方法类似 `_.difference`，但它接受一个 `iteratee`，该函数对 `array`
+     * 和 `values` 中的每个元素调用，生成比较的标准。结果值的顺序和引用由第一个数组决定。
+     * 迭代器接受一个参数：(value)。
      *
-     * **Note:** Unlike `_.pullAllBy`, this method returns a new array.
+     * **注意：** 与 `_.pullAllBy` 不同，此方法返回一个新数组。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The array to inspect.
-     * @param {...Array} [values] The values to exclude.
-     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
-     * @returns {Array} Returns the new array of filtered values.
+     * @param {Array} array 要检查的数组。
+     * @param {...Array} [values] 要排除的值。
+     * @param {Function} [iteratee=_.identity] 每个元素调用的迭代器。
+     * @returns {Array} 返回新的过滤值数组。
      * @example
      *
      * _.differenceBy([2.1, 1.2], [2.3, 3.4], Math.floor);
@@ -7662,21 +7613,20 @@
     });
 
     /**
-     * This method is like `_.difference` except that it accepts `comparator`
-     * which is invoked to compare elements of `array` to `values`. The order and
-     * references of result values are determined by the first array. The comparator
-     * is invoked with two arguments: (arrVal, othVal).
+     * 这个方法类似 `_.difference`，但它接受一个 `comparator` 来比较
+     * `array` 和 `values` 的元素。结果值的顺序和引用由第一个数组决定。
+     * 比较器接受两个参数：(arrVal, othVal)。
      *
-     * **Note:** Unlike `_.pullAllWith`, this method returns a new array.
+     * **注意：** 与 `_.pullAllWith` 不同，此方法返回一个新数组。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The array to inspect.
-     * @param {...Array} [values] The values to exclude.
-     * @param {Function} [comparator] The comparator invoked per element.
-     * @returns {Array} Returns the new array of filtered values.
+     * @param {Array} array 要检查的数组。
+     * @param {...Array} [values] 要排除的值。
+     * @param {Function} [comparator] 每个元素调用的比较器。
+     * @returns {Array} 返回新的过滤值数组。
      * @example
      *
      * var objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }];
@@ -7695,16 +7645,16 @@
     });
 
     /**
-     * Creates a slice of `array` with `n` elements dropped from the beginning.
+     * 创建一个数组切片，从开头移除 `n` 个元素。
      *
      * @static
      * @memberOf _
      * @since 0.5.0
      * @category Array
-     * @param {Array} array The array to query.
-     * @param {number} [n=1] The number of elements to drop.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {Array} Returns the slice of `array`.
+     * @param {Array} array 要查询的数组。
+     * @param {number} [n=1] 要移除的元素数量。
+     * @param- {Object} [guard] 允许用作像 `_.map` 这样的方法的迭代器。
+     * @returns {Array} 返回 `array` 的切片。
      * @example
      *
      * _.drop([1, 2, 3]);
@@ -7729,16 +7679,16 @@
     }
 
     /**
-     * Creates a slice of `array` with `n` elements dropped from the end.
+     * 创建一个数组切片，从末尾移除 `n` 个元素。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Array
-     * @param {Array} array The array to query.
-     * @param {number} [n=1] The number of elements to drop.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {Array} Returns the slice of `array`.
+     * @param {Array} array 要查询的数组。
+     * @param {number} [n=1] 要移除的元素数量。
+     * @param- {Object} [guard] 允许用作像 `_.map` 这样的方法的迭代器。
+     * @returns {Array} 返回 `array` 的切片。
      * @example
      *
      * _.dropRight([1, 2, 3]);
@@ -7764,17 +7714,16 @@
     }
 
     /**
-     * Creates a slice of `array` excluding elements dropped from the end.
-     * Elements are dropped until `predicate` returns falsey. The predicate is
-     * invoked with three arguments: (value, index, array).
+     * 创建一个 `array` 的切片，排除从末尾丢弃的元素。丢弃元素直到 `predicate`
+     * 返回假值。断言接受三个参数：(value, index, array)。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Array
-     * @param {Array} array The array to query.
-     * @param {Function} [predicate=_.identity] The function invoked per iteration.
-     * @returns {Array} Returns the slice of `array`.
+     * @param {Array} array 要查询的数组。
+     * @param {Function} [predicate=_.identity] 每次迭代调用的函数。
+     * @returns {Array} 返回 `array` 的切片。
      * @example
      *
      * var users = [
@@ -7805,17 +7754,16 @@
     }
 
     /**
-     * Creates a slice of `array` excluding elements dropped from the beginning.
-     * Elements are dropped until `predicate` returns falsey. The predicate is
-     * invoked with three arguments: (value, index, array).
+     * 创建一个 `array` 的切片，排除从开头丢弃的元素。丢弃元素直到 `predicate`
+     * 返回假值。断言接受三个参数：(value, index, array)。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Array
-     * @param {Array} array The array to query.
-     * @param {Function} [predicate=_.identity] The function invoked per iteration.
-     * @returns {Array} Returns the slice of `array`.
+     * @param {Array} array 要查询的数组。
+     * @param {Function} [predicate=_.identity] 每次迭代调用的函数。
+     * @returns {Array} 返回 `array` 的切片。
      * @example
      *
      * var users = [
@@ -7846,20 +7794,19 @@
     }
 
     /**
-     * Fills elements of `array` with `value` from `start` up to, but not
-     * including, `end`.
+     * 使用 `value` 填充 `array` 中从 `start` 到但不包括 `end` 的元素。
      *
-     * **Note:** This method mutates `array`.
+     * **注意：** 此方法会改变 `array`。
      *
      * @static
      * @memberOf _
      * @since 3.2.0
      * @category Array
-     * @param {Array} array The array to fill.
-     * @param {*} value The value to fill `array` with.
-     * @param {number} [start=0] The start position.
-     * @param {number} [end=array.length] The end position.
-     * @returns {Array} Returns `array`.
+     * @param {Array} array 要填充的数组。
+     * @param {*} value 用什么值填充 `array`。
+     * @param {number} [start=0] 起始位置。
+     * @param {number} [end=array.length] 结束位置。
+     * @returns {Array} 返回 `array`。
      * @example
      *
      * var array = [1, 2, 3];
@@ -7887,17 +7834,17 @@
     }
 
     /**
-     * This method is like `_.find` except that it returns the index of the first
-     * element `predicate` returns truthy for instead of the element itself.
+     * 这个方法类似 `_.find`，但它返回 `predicate` 返回真值的第一个元素的索引，
+     * 而不是元素本身。
      *
      * @static
      * @memberOf _
      * @since 1.1.0
      * @category Array
-     * @param {Array} array The array to inspect.
-     * @param {Function} [predicate=_.identity] The function invoked per iteration.
-     * @param {number} [fromIndex=0] The index to search from.
-     * @returns {number} Returns the index of the found element, else `-1`.
+     * @param {Array} array 要检查的数组。
+     * @param {Function} [predicate=_.identity] 每次迭代调用的函数。
+     * @param {number} [fromIndex=0] 从哪里开始搜索的索引。
+     * @returns {number} 返回找到的元素的索引，否则为 `-1`。
      * @example
      *
      * var users = [
@@ -7934,17 +7881,16 @@
     }
 
     /**
-     * This method is like `_.findIndex` except that it iterates over elements
-     * of `collection` from right to left.
+     * 这个方法类似 `_.findIndex`，但它从右到左迭代 `collection` 的元素。
      *
      * @static
      * @memberOf _
      * @since 2.0.0
      * @category Array
-     * @param {Array} array The array to inspect.
-     * @param {Function} [predicate=_.identity] The function invoked per iteration.
-     * @param {number} [fromIndex=array.length-1] The index to search from.
-     * @returns {number} Returns the index of the found element, else `-1`.
+     * @param {Array} array 要检查的数组。
+     * @param {Function} [predicate=_.identity] 每次迭代调用的函数。
+     * @param {number} [fromIndex=array.length-1] 从哪里开始搜索的索引。
+     * @returns {number} 返回找到的元素的索引，否则为 `-1`。
      * @example
      *
      * var users = [
@@ -7984,14 +7930,14 @@
     }
 
     /**
-     * Flattens `array` a single level deep.
+     * 将 `array` 展平一层。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Array
-     * @param {Array} array The array to flatten.
-     * @returns {Array} Returns the new flattened array.
+     * @param {Array} array 要展平的数组。
+     * @returns {Array} 返回新的展平后的数组。
      * @example
      *
      * _.flatten([1, [2, [3, [4]], 5]]);
@@ -8003,14 +7949,14 @@
     }
 
     /**
-     * Recursively flattens `array`.
+     * 递归展平 `array`。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Array
-     * @param {Array} array The array to flatten.
-     * @returns {Array} Returns the new flattened array.
+     * @param {Array} array 要展平的数组。
+     * @returns {Array} 返回新的展平后的数组。
      * @example
      *
      * _.flattenDeep([1, [2, [3, [4]], 5]]);
@@ -8022,15 +7968,15 @@
     }
 
     /**
-     * Recursively flatten `array` up to `depth` times.
+     * 递归展平 `array` 最多 `depth` 次。
      *
      * @static
      * @memberOf _
      * @since 4.4.0
      * @category Array
-     * @param {Array} array The array to flatten.
-     * @param {number} [depth=1] The maximum recursion depth.
-     * @returns {Array} Returns the new flattened array.
+     * @param {Array} array 要展平的数组。
+     * @param {number} [depth=1] 最大递归深度。
+     * @returns {Array} 返回新的展平后的数组。
      * @example
      *
      * var array = [1, [2, [3, [4]], 5]];
@@ -8051,15 +7997,14 @@
     }
 
     /**
-     * The inverse of `_.toPairs`; this method returns an object composed
-     * from key-value `pairs`.
+     * `_.toPairs` 的反向方法；此方法返回一个由键值对 `pairs` 构成的对象。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} pairs The key-value pairs.
-     * @returns {Object} Returns the new object.
+     * @param {Array} pairs 键值对。
+     * @returns {Object} 返回新的对象。
      * @example
      *
      * _.fromPairs([['a', 1], ['b', 2]]);
@@ -8078,15 +8023,15 @@
     }
 
     /**
-     * Gets the first element of `array`.
+     * 获取 `array` 的第一个元素。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @alias first
      * @category Array
-     * @param {Array} array The array to query.
-     * @returns {*} Returns the first element of `array`.
+     * @param {Array} array 要查询的数组。
+     * @returns {*} 返回 `array` 的第一个元素。
      * @example
      *
      * _.head([1, 2, 3]);
@@ -8100,19 +8045,18 @@
     }
 
     /**
-     * Gets the index at which the first occurrence of `value` is found in `array`
-     * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-     * for equality comparisons. If `fromIndex` is negative, it's used as the
-     * offset from the end of `array`.
+     * 返回 `value` 在 `array` 中首次出现的索引，使用
+     * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+     * 进行相等比较。如果 `fromIndex` 为负，则作为从 `array` 末尾开始的偏移量。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Array
-     * @param {Array} array The array to inspect.
-     * @param {*} value The value to search for.
-     * @param {number} [fromIndex=0] The index to search from.
-     * @returns {number} Returns the index of the matched value, else `-1`.
+     * @param {Array} array 要检查的数组。
+     * @param {*} value 要搜索的值。
+     * @param {number} [fromIndex=0] 从哪里开始搜索的索引。
+     * @returns {number} 返回匹配值的索引，否则为 `-1`。
      * @example
      *
      * _.indexOf([1, 2, 1, 2], 2);
@@ -8135,14 +8079,14 @@
     }
 
     /**
-     * Gets all but the last element of `array`.
+     * 获取 `array` 除最后一个元素外的所有元素。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Array
-     * @param {Array} array The array to query.
-     * @returns {Array} Returns the slice of `array`.
+     * @param {Array} array 要查询的数组。
+     * @returns {Array} 返回 `array` 的切片。
      * @example
      *
      * _.initial([1, 2, 3]);
@@ -8154,17 +8098,16 @@
     }
 
     /**
-     * Creates an array of unique values that are included in all given arrays
-     * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-     * for equality comparisons. The order and references of result values are
-     * determined by the first array.
+     * 创建一个包含所有给定数组中唯一值的数组，使用
+     * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+     * 进行相等比较。结果值的顺序和引用由第一个数组决定。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Array
-     * @param {...Array} [arrays] The arrays to inspect.
-     * @returns {Array} Returns the new array of intersecting values.
+     * @param {...Array} [arrays] 要检查的数组。
+     * @returns {Array} 返回新的交集值数组。
      * @example
      *
      * _.intersection([2, 1], [2, 3]);
@@ -8178,19 +8121,17 @@
     });
 
     /**
-     * This method is like `_.intersection` except that it accepts `iteratee`
-     * which is invoked for each element of each `arrays` to generate the criterion
-     * by which they're compared. The order and references of result values are
-     * determined by the first array. The iteratee is invoked with one argument:
-     * (value).
+     * 这个方法类似 `_.intersection`，但它接受 `iteratee`，为每个 `arrays`
+     * 的每个元素调用，生成比较的标准。结果值的顺序和引用由第一个数组决定。
+     * 迭代器接受一个参数：(value)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {...Array} [arrays] The arrays to inspect.
-     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
-     * @returns {Array} Returns the new array of intersecting values.
+     * @param {...Array} [arrays] 要检查的数组。
+     * @param {Function} [iteratee=_.identity] 每个元素调用的迭代器。
+     * @returns {Array} 返回新的交集值数组。
      * @example
      *
      * _.intersectionBy([2.1, 1.2], [2.3, 3.4], Math.floor);
@@ -8215,18 +8156,17 @@
     });
 
     /**
-     * This method is like `_.intersection` except that it accepts `comparator`
-     * which is invoked to compare elements of `arrays`. The order and references
-     * of result values are determined by the first array. The comparator is
-     * invoked with two arguments: (arrVal, othVal).
+     * 这个方法类似 `_.intersection`，但它接受 `comparator` 来比较
+     * `arrays` 的元素。结果值的顺序和引用由第一个数组决定。
+     * 比较器接受两个参数：(arrVal, othVal)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {...Array} [arrays] The arrays to inspect.
-     * @param {Function} [comparator] The comparator invoked per element.
-     * @returns {Array} Returns the new array of intersecting values.
+     * @param {...Array} [arrays] 要检查的数组。
+     * @param {Function} [comparator] 每个元素调用的比较器。
+     * @returns {Array} 返回新的交集值数组。
      * @example
      *
      * var objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }];
@@ -8249,15 +8189,15 @@
     });
 
     /**
-     * Converts all elements in `array` into a string separated by `separator`.
+     * 将 `array` 中的所有元素转换为由 `separator` 分隔的字符串。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The array to convert.
-     * @param {string} [separator=','] The element separator.
-     * @returns {string} Returns the joined string.
+     * @param {Array} array 要转换的数组。
+     * @param {string} [separator=','] 元素分隔符。
+     * @returns {string} 返回连接的字符串。
      * @example
      *
      * _.join(['a', 'b', 'c'], '~');
@@ -8268,14 +8208,14 @@
     }
 
     /**
-     * Gets the last element of `array`.
+     * 获取 `array` 的最后一个元素。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Array
-     * @param {Array} array The array to query.
-     * @returns {*} Returns the last element of `array`.
+     * @param {Array} array 要查询的数组。
+     * @returns {*} 返回 `array` 的最后一个元素。
      * @example
      *
      * _.last([1, 2, 3]);
@@ -8287,17 +8227,16 @@
     }
 
     /**
-     * This method is like `_.indexOf` except that it iterates over elements of
-     * `array` from right to left.
+     * 这个方法类似 `_.indexOf`，但它从右到左迭代 `array` 的元素。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Array
-     * @param {Array} array The array to inspect.
-     * @param {*} value The value to search for.
-     * @param {number} [fromIndex=array.length-1] The index to search from.
-     * @returns {number} Returns the index of the matched value, else `-1`.
+     * @param {Array} array 要检查的数组。
+     * @param {*} value 要搜索的值。
+     * @param {number} [fromIndex=array.length-1] 从哪里开始搜索的索引。
+     * @returns {number} 返回匹配值的索引，否则为 `-1`。
      * @example
      *
      * _.lastIndexOf([1, 2, 1, 2], 2);
@@ -8323,16 +8262,15 @@
     }
 
     /**
-     * Gets the element at index `n` of `array`. If `n` is negative, the nth
-     * element from the end is returned.
+     * 获取 `array` 索引 `n` 处的元素。如果 `n` 为负，则返回从末尾开始的第 n 个元素。
      *
      * @static
      * @memberOf _
      * @since 4.11.0
      * @category Array
-     * @param {Array} array The array to query.
-     * @param {number} [n=0] The index of the element to return.
-     * @returns {*} Returns the nth element of `array`.
+     * @param {Array} array 要查询的数组。
+     * @param {number} [n=0] 要返回的元素的索引。
+     * @returns {*} 返回 `array` 的第 n 个元素。
      * @example
      *
      * var array = ['a', 'b', 'c', 'd'];
@@ -8348,20 +8286,19 @@
     }
 
     /**
-     * Removes all given values from `array` using
-     * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-     * for equality comparisons.
+     * 使用 [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+     * 进行相等比较，从 `array` 中移除所有给定的值。
      *
-     * **Note:** Unlike `_.without`, this method mutates `array`. Use `_.remove`
-     * to remove elements from an array by predicate.
+     * **注意：** 与 `_.without` 不同，此方法会改变 `array`。使用 `_.remove`
+     * 通过谓词从数组中移除元素。
      *
      * @static
      * @memberOf _
      * @since 2.0.0
      * @category Array
-     * @param {Array} array The array to modify.
-     * @param {...*} [values] The values to remove.
-     * @returns {Array} Returns `array`.
+     * @param {Array} array 要修改的数组。
+     * @param {...*} [values] 要移除的值。
+     * @returns {Array} 返回 `array`。
      * @example
      *
      * var array = ['a', 'b', 'c', 'a', 'b', 'c'];
@@ -8373,17 +8310,17 @@
     var pull = baseRest(pullAll);
 
     /**
-     * This method is like `_.pull` except that it accepts an array of values to remove.
+     * 这个方法类似 `_.pull`，但它接受要移除的值数组。
      *
-     * **Note:** Unlike `_.difference`, this method mutates `array`.
+     * **注意：** 与 `_.difference` 不同，此方法会改变 `array`。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The array to modify.
-     * @param {Array} values The values to remove.
-     * @returns {Array} Returns `array`.
+     * @param {Array} array 要修改的数组。
+     * @param {Array} values 要移除的值。
+     * @returns {Array} 返回 `array`。
      * @example
      *
      * var array = ['a', 'b', 'c', 'a', 'b', 'c'];
@@ -8399,20 +8336,19 @@
     }
 
     /**
-     * This method is like `_.pullAll` except that it accepts `iteratee` which is
-     * invoked for each element of `array` and `values` to generate the criterion
-     * by which they're compared. The iteratee is invoked with one argument: (value).
+     * 这个方法类似 `_.pullAll`，但它接受 `iteratee`，为 `array` 和 `values`
+     * 的每个元素调用，生成比较的标准。迭代器接受一个参数：(value)。
      *
-     * **Note:** Unlike `_.differenceBy`, this method mutates `array`.
+     * **注意：** 与 `_.differenceBy` 不同，此方法会改变 `array`。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The array to modify.
-     * @param {Array} values The values to remove.
-     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
-     * @returns {Array} Returns `array`.
+     * @param {Array} array 要修改的数组。
+     * @param {Array} values 要移除的值。
+     * @param {Function} [iteratee=_.identity] 每个元素调用的迭代器。
+     * @returns {Array} 返回 `array`。
      * @example
      *
      * var array = [{ 'x': 1 }, { 'x': 2 }, { 'x': 3 }, { 'x': 1 }];
@@ -8441,7 +8377,7 @@
      * @param {Array} array The array to modify.
      * @param {Array} values The values to remove.
      * @param {Function} [comparator] The comparator invoked per element.
-     * @returns {Array} Returns `array`.
+     * @returns {Array} 返回 `array`。
      * @example
      *
      * var array = [{ 'x': 1, 'y': 2 }, { 'x': 3, 'y': 4 }, { 'x': 5, 'y': 6 }];
@@ -8457,18 +8393,17 @@
     }
 
     /**
-     * Removes elements from `array` corresponding to `indexes` and returns an
-     * array of removed elements.
+     * 移除 `array` 中与 `indexes` 对应的元素，并返回已移除元素的数组。
      *
-     * **Note:** Unlike `_.at`, this method mutates `array`.
+     * **注意：** 与 `_.at` 不同，此方法会改变 `array`。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Array
-     * @param {Array} array The array to modify.
-     * @param {...(number|number[])} [indexes] The indexes of elements to remove.
-     * @returns {Array} Returns the new array of removed elements.
+     * @param {Array} array 要修改的数组。
+     * @param {...(number|number[])} [indexes] 要移除的元素的索引。
+     * @returns {Array} 返回新的已移除元素数组。
      * @example
      *
      * var array = ['a', 'b', 'c', 'd'];
@@ -8492,20 +8427,19 @@
     });
 
     /**
-     * Removes all elements from `array` that `predicate` returns truthy for
-     * and returns an array of the removed elements. The predicate is invoked
-     * with three arguments: (value, index, array).
+     * 移除 `array` 中 `predicate` 返回真值的所有元素，并返回已移除元素的数组。
+     * 断言接受三个参数：(value, index, array)。
      *
-     * **Note:** Unlike `_.filter`, this method mutates `array`. Use `_.pull`
-     * to pull elements from an array by value.
+     * **注意：** 与 `_.filter` 不同，此方法会改变 `array`。使用 `_.pull`
+     * 按值从数组中拉出元素。
      *
      * @static
      * @memberOf _
      * @since 2.0.0
      * @category Array
-     * @param {Array} array The array to modify.
-     * @param {Function} [predicate=_.identity] The function invoked per iteration.
-     * @returns {Array} Returns the new array of removed elements.
+     * @param {Array} array 要修改的数组。
+     * @param {Function} [predicate=_.identity] 每次迭代调用的函数。
+     * @returns {Array} 返回新的已移除元素数组。
      * @example
      *
      * var array = [1, 2, 3, 4];
@@ -8541,18 +8475,17 @@
     }
 
     /**
-     * Reverses `array` so that the first element becomes the last, the second
-     * element becomes the second to last, and so on.
+     * 反转 `array`，使第一个元素成为最后一个，第二个元素成为倒数第二个，以此类推。
      *
-     * **Note:** This method mutates `array` and is based on
-     * [`Array#reverse`](https://mdn.io/Array/reverse).
+     * **注意：** 此方法会改变 `array`，基于
+     * [`Array#reverse`](https://mdn.io/Array/reverse)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The array to modify.
-     * @returns {Array} Returns `array`.
+     * @param {Array} array 要修改的数组。
+     * @returns {Array} 返回 `array`。
      * @example
      *
      * var array = [1, 2, 3];
@@ -8568,20 +8501,19 @@
     }
 
     /**
-     * Creates a slice of `array` from `start` up to, but not including, `end`.
+     * 创建一个 `array` 的切片，从 `start` 到但不包括 `end`。
      *
-     * **Note:** This method is used instead of
-     * [`Array#slice`](https://mdn.io/Array/slice) to ensure dense arrays are
-     * returned.
+     * **注意：** 此方法用于替代
+     * [`Array#slice`](https://mdn.io/Array/slice) 以确保返回密集数组。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Array
-     * @param {Array} array The array to slice.
-     * @param {number} [start=0] The start position.
-     * @param {number} [end=array.length] The end position.
-     * @returns {Array} Returns the slice of `array`.
+     * @param {Array} array 要切片的数组。
+     * @param {number} [start=0] 起始位置。
+     * @param {number} [end=array.length] 结束位置。
+     * @returns {Array} 返回 `array` 的切片。
      */
     function slice(array, start, end) {
       var length = array == null ? 0 : array.length;
@@ -8600,17 +8532,16 @@
     }
 
     /**
-     * Uses a binary search to determine the lowest index at which `value`
-     * should be inserted into `array` in order to maintain its sort order.
+     * 使用二分搜索来确定 `value` 应该被插入到 `array` 中的最低索引，
+     * 以便维持其排序顺序。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Array
-     * @param {Array} array The sorted array to inspect.
-     * @param {*} value The value to evaluate.
-     * @returns {number} Returns the index at which `value` should be inserted
-     *  into `array`.
+     * @param {Array} array 要检查的已排序数组。
+     * @param {*} value 要评估的值。
+     * @returns {number} 返回 `value` 应该被插入 `array` 的索引。
      * @example
      *
      * _.sortedIndex([30, 50], 40);
@@ -8621,19 +8552,17 @@
     }
 
     /**
-     * This method is like `_.sortedIndex` except that it accepts `iteratee`
-     * which is invoked for `value` and each element of `array` to compute their
-     * sort ranking. The iteratee is invoked with one argument: (value).
+     * 这个方法类似 `_.sortedIndex`，但它接受 `iteratee`，为 `value` 和
+     * `array` 的每个元素调用，计算它们的排序排名。迭代器接受一个参数：(value)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The sorted array to inspect.
-     * @param {*} value The value to evaluate.
-     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
-     * @returns {number} Returns the index at which `value` should be inserted
-     *  into `array`.
+     * @param {Array} array 要检查的已排序数组。
+     * @param {*} value 要评估的值。
+     * @param {Function} [iteratee=_.identity] 每个元素调用的迭代器。
+     * @returns {number} 返回 `value` 应该被插入 `array` 的索引。
      * @example
      *
      * var objects = [{ 'x': 4 }, { 'x': 5 }];
@@ -8650,16 +8579,15 @@
     }
 
     /**
-     * This method is like `_.indexOf` except that it performs a binary
-     * search on a sorted `array`.
+     * 这个方法类似 `_.indexOf`，但它对已排序的 `array` 执行二分搜索。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The array to inspect.
-     * @param {*} value The value to search for.
-     * @returns {number} Returns the index of the matched value, else `-1`.
+     * @param {Array} array 要检查的数组。
+     * @param {*} value 要搜索的值。
+     * @returns {number} 返回匹配值的索引，否则为 `-1`。
      * @example
      *
      * _.sortedIndexOf([4, 5, 5, 5, 6], 5);
@@ -8677,18 +8605,16 @@
     }
 
     /**
-     * This method is like `_.sortedIndex` except that it returns the highest
-     * index at which `value` should be inserted into `array` in order to
-     * maintain its sort order.
+     * 这个方法类似 `_.sortedIndex`，但它返回 `value` 应该被插入 `array`
+     * 的最高索引，以维持其排序顺序。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Array
-     * @param {Array} array The sorted array to inspect.
-     * @param {*} value The value to evaluate.
-     * @returns {number} Returns the index at which `value` should be inserted
-     *  into `array`.
+     * @param {Array} array 要检查的已排序数组。
+     * @param {*} value 要评估的值。
+     * @returns {number} 返回 `value` 应该被插入 `array` 的索引。
      * @example
      *
      * _.sortedLastIndex([4, 5, 5, 5, 6], 5);
@@ -8699,19 +8625,17 @@
     }
 
     /**
-     * This method is like `_.sortedLastIndex` except that it accepts `iteratee`
-     * which is invoked for `value` and each element of `array` to compute their
-     * sort ranking. The iteratee is invoked with one argument: (value).
+     * 这个方法类似 `_.sortedLastIndex`，但它接受 `iteratee`，为 `value` 和
+     * `array` 的每个元素调用，计算它们的排序排名。迭代器接受一个参数：(value)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The sorted array to inspect.
-     * @param {*} value The value to evaluate.
-     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
-     * @returns {number} Returns the index at which `value` should be inserted
-     *  into `array`.
+     * @param {Array} array 要检查的已排序数组。
+     * @param {*} value 要评估的值。
+     * @param {Function} [iteratee=_.identity] 每个元素调用的迭代器。
+     * @returns {number} 返回 `value` 应该被插入 `array` 的索引。
      * @example
      *
      * var objects = [{ 'x': 4 }, { 'x': 5 }];
@@ -8728,16 +8652,15 @@
     }
 
     /**
-     * This method is like `_.lastIndexOf` except that it performs a binary
-     * search on a sorted `array`.
+     * 这个方法类似 `_.lastIndexOf`，但它对已排序的 `array` 执行二分搜索。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The array to inspect.
-     * @param {*} value The value to search for.
-     * @returns {number} Returns the index of the matched value, else `-1`.
+     * @param {Array} array 要检查的数组。
+     * @param {*} value 要搜索的值。
+     * @returns {number} 返回匹配值的索引，否则为 `-1`。
      * @example
      *
      * _.sortedLastIndexOf([4, 5, 5, 5, 6], 5);
@@ -8755,15 +8678,14 @@
     }
 
     /**
-     * This method is like `_.uniq` except that it's designed and optimized
-     * for sorted arrays.
+     * 这个方法类似 `_.uniq`，但它针对已排序数组进行了设计和优化。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The array to inspect.
-     * @returns {Array} Returns the new duplicate free array.
+     * @param {Array} array 要检查的数组。
+     * @returns {Array} 返回新的无重复值数组。
      * @example
      *
      * _.sortedUniq([1, 1, 2]);
@@ -8776,16 +8698,15 @@
     }
 
     /**
-     * This method is like `_.uniqBy` except that it's designed and optimized
-     * for sorted arrays.
+     * 这个方法类似 `_.uniqBy`，但它针对已排序数组进行了设计和优化。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The array to inspect.
-     * @param {Function} [iteratee] The iteratee invoked per element.
-     * @returns {Array} Returns the new duplicate free array.
+     * @param {Array} array 要检查的数组。
+     * @param {Function} [iteratee] 每个元素调用的迭代器。
+     * @returns {Array} 返回新的无重复值数组。
      * @example
      *
      * _.sortedUniqBy([1.1, 1.2, 2.3, 2.4], Math.floor);
@@ -8798,14 +8719,14 @@
     }
 
     /**
-     * Gets all but the first element of `array`.
+     * 获取 `array` 除第一个元素外的所有元素。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The array to query.
-     * @returns {Array} Returns the slice of `array`.
+     * @param {Array} array 要查询的数组。
+     * @returns {Array} 返回 `array` 的切片。
      * @example
      *
      * _.tail([1, 2, 3]);
@@ -8817,16 +8738,16 @@
     }
 
     /**
-     * Creates a slice of `array` with `n` elements taken from the beginning.
+     * 创建一个从开头取 `n` 个元素的 `array` 切片。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Array
-     * @param {Array} array The array to query.
-     * @param {number} [n=1] The number of elements to take.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {Array} Returns the slice of `array`.
+     * @param {Array} array 要查询的数组。
+     * @param {number} [n=1] 要取的元素数量。
+     * @param- {Object} [guard] 允许用作像 `_.map` 这样的方法的迭代器。
+     * @returns {Array} 返回 `array` 的切片。
      * @example
      *
      * _.take([1, 2, 3]);
@@ -8850,16 +8771,16 @@
     }
 
     /**
-     * Creates a slice of `array` with `n` elements taken from the end.
+     * 创建一个从末尾取 `n` 个元素的 `array` 切片。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Array
-     * @param {Array} array The array to query.
-     * @param {number} [n=1] The number of elements to take.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {Array} Returns the slice of `array`.
+     * @param {Array} array 要查询的数组。
+     * @param {number} [n=1] 要取的元素数量。
+     * @param- {Object} [guard] 允许用作像 `_.map` 这样的方法的迭代器。
+     * @returns {Array} 返回 `array` 的切片。
      * @example
      *
      * _.takeRight([1, 2, 3]);
@@ -8895,7 +8816,7 @@
      * @category Array
      * @param {Array} array The array to query.
      * @param {Function} [predicate=_.identity] The function invoked per iteration.
-     * @returns {Array} Returns the slice of `array`.
+     * @returns {Array} 返回 `array` 的切片。
      * @example
      *
      * var users = [
@@ -8903,9 +8824,6 @@
      *   { 'user': 'fred',    'active': false },
      *   { 'user': 'pebbles', 'active': false }
      * ];
-     *
-     * _.takeRightWhile(users, function(o) { return !o.active; });
-     * // => objects for ['fred', 'pebbles']
      *
      * // The `_.matches` iteratee shorthand.
      * _.takeRightWhile(users, { 'user': 'pebbles', 'active': false });
@@ -8926,17 +8844,16 @@
     }
 
     /**
-     * Creates a slice of `array` with elements taken from the beginning. Elements
-     * are taken until `predicate` returns falsey. The predicate is invoked with
-     * three arguments: (value, index, array).
+     * 创建一个从开头取元素的 `array` 切片。元素取自开头，直到 `predicate`
+     * 返回假值。断言接受三个参数：(value, index, array)。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Array
-     * @param {Array} array The array to query.
-     * @param {Function} [predicate=_.identity] The function invoked per iteration.
-     * @returns {Array} Returns the slice of `array`.
+     * @param {Array} array 要查询的数组。
+     * @param {Function} [predicate=_.identity] 每次迭代调用的函数。
+     * @returns {Array} 返回 `array` 的切片。
      * @example
      *
      * var users = [
@@ -8967,16 +8884,16 @@
     }
 
     /**
-     * Creates an array of unique values, in order, from all given arrays using
+     * 创建一个包含来自所有给定数组的唯一值的数组，按顺序排列，使用
      * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-     * for equality comparisons.
+     * 进行相等比较。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Array
-     * @param {...Array} [arrays] The arrays to inspect.
-     * @returns {Array} Returns the new array of combined values.
+     * @param {...Array} [arrays] 要检查的数组。
+     * @returns {Array} 返回新的组合值数组。
      * @example
      *
      * _.union([2], [1, 2]);
@@ -8987,19 +8904,17 @@
     });
 
     /**
-     * This method is like `_.union` except that it accepts `iteratee` which is
-     * invoked for each element of each `arrays` to generate the criterion by
-     * which uniqueness is computed. Result values are chosen from the first
-     * array in which the value occurs. The iteratee is invoked with one argument:
-     * (value).
+     * 这个方法类似 `_.union`，但它接受 `iteratee`，为每个 `arrays` 的每个元素调用，
+     * 生成计算唯一性的标准。结果值从第一个出现该值的数组中选择。
+     * 迭代器接受一个参数：(value)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {...Array} [arrays] The arrays to inspect.
-     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
-     * @returns {Array} Returns the new array of combined values.
+     * @param {...Array} [arrays] 要检查的数组。
+     * @param {Function} [iteratee=_.identity] 每个元素调用的迭代器。
+     * @returns {Array} 返回新的组合值数组。
      * @example
      *
      * _.unionBy([2.1], [1.2, 2.3], Math.floor);
@@ -9018,18 +8933,17 @@
     });
 
     /**
-     * This method is like `_.union` except that it accepts `comparator` which
-     * is invoked to compare elements of `arrays`. Result values are chosen from
-     * the first array in which the value occurs. The comparator is invoked
-     * with two arguments: (arrVal, othVal).
+     * 这个方法类似 `_.union`，但它接受 `comparator` 来比较 `arrays` 的元素。
+     * 结果值从第一个出现该值的数组中选择。
+     * 比较器接受两个参数：(arrVal, othVal)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {...Array} [arrays] The arrays to inspect.
-     * @param {Function} [comparator] The comparator invoked per element.
-     * @returns {Array} Returns the new array of combined values.
+     * @param {...Array} [arrays] 要检查的数组。
+     * @param {Function} [comparator] 每个元素调用的比较器。
+     * @returns {Array} 返回新的组合值数组。
      * @example
      *
      * var objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }];
@@ -9055,8 +8969,8 @@
      * @memberOf _
      * @since 0.1.0
      * @category Array
-     * @param {Array} array The array to inspect.
-     * @returns {Array} Returns the new duplicate free array.
+     * @param {Array} array 要检查的数组。
+     * @returns {Array} 返回新的无重复值数组。
      * @example
      *
      * _.uniq([2, 1, 2]);
@@ -9067,19 +8981,17 @@
     }
 
     /**
-     * This method is like `_.uniq` except that it accepts `iteratee` which is
-     * invoked for each element in `array` to generate the criterion by which
-     * uniqueness is computed. The order of result values is determined by the
-     * order they occur in the array. The iteratee is invoked with one argument:
-     * (value).
+     * 这个方法类似 `_.uniq`，但它接受 `iteratee`，为 `array` 中的每个元素调用，
+     * 生成计算唯一性的标准。结果值的顺序由它们在数组中出现的顺序决定。
+     * 迭代器接受一个参数：(value)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The array to inspect.
-     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
-     * @returns {Array} Returns the new duplicate free array.
+     * @param {Array} array 要检查的数组。
+     * @param {Function} [iteratee=_.identity] 每个元素调用的迭代器。
+     * @returns {Array} 返回新的无重复值数组。
      * @example
      *
      * _.uniqBy([2.1, 1.2, 2.3], Math.floor);
@@ -9094,18 +9006,17 @@
     }
 
     /**
-     * This method is like `_.uniq` except that it accepts `comparator` which
-     * is invoked to compare elements of `array`. The order of result values is
-     * determined by the order they occur in the array.The comparator is invoked
-     * with two arguments: (arrVal, othVal).
+     * 这个方法类似 `_.uniq`，但它接受 `comparator` 来比较 `array` 的元素。
+     * 结果值的顺序由它们在数组中出现的顺序决定。
+     * 比较器接受两个参数：(arrVal, othVal)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The array to inspect.
-     * @param {Function} [comparator] The comparator invoked per element.
-     * @returns {Array} Returns the new duplicate free array.
+     * @param {Array} array 要检查的数组。
+     * @param {Function} [comparator] 每个元素调用的比较器。
+     * @returns {Array} 返回新的无重复值数组。
      * @example
      *
      * var objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }, { 'x': 1, 'y': 2 }];
@@ -9119,16 +9030,15 @@
     }
 
     /**
-     * This method is like `_.zip` except that it accepts an array of grouped
-     * elements and creates an array regrouping the elements to their pre-zip
-     * configuration.
+     * 这个方法类似 `_.zip`，但接受一个分组成元素的数组，
+     * 并创建一个重新分组的数组，将元素恢复为预压缩配置。
      *
      * @static
      * @memberOf _
      * @since 1.2.0
      * @category Array
-     * @param {Array} array The array of grouped elements to process.
-     * @returns {Array} Returns the new array of regrouped elements.
+     * @param {Array} array 要处理的分组成元素的数组。
+     * @returns {Array} 返回新的重新分组元素数组。
      * @example
      *
      * var zipped = _.zip(['a', 'b'], [1, 2], [true, false]);
@@ -9154,18 +9064,16 @@
     }
 
     /**
-     * This method is like `_.unzip` except that it accepts `iteratee` to specify
-     * how regrouped values should be combined. The iteratee is invoked with the
-     * elements of each group: (...group).
+     * 这个方法类似 `_.unzip`，但接受 `iteratee` 来指定如何组合重新分组的值。
+     * 迭代器接受每个组的元素调用：(...group)。
      *
      * @static
      * @memberOf _
      * @since 3.8.0
      * @category Array
-     * @param {Array} array The array of grouped elements to process.
-     * @param {Function} [iteratee=_.identity] The function to combine
-     *  regrouped values.
-     * @returns {Array} Returns the new array of regrouped elements.
+     * @param {Array} array 要处理的分组成元素的数组。
+     * @param {Function} [iteratee=_.identity] 用于组合重新分组值的函数。
+     * @returns {Array} 返回新的重新分组元素数组。
      * @example
      *
      * var zipped = _.zip([1, 2], [10, 20], [100, 200]);
@@ -9188,19 +9096,18 @@
     }
 
     /**
-     * Creates an array excluding all given values using
-     * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-     * for equality comparisons.
+     * 使用 [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+     * 进行相等比较，创建一个排除所有给定值的新数组。
      *
-     * **Note:** Unlike `_.pull`, this method returns a new array.
+     * **注意：** 与 `_.pull` 不同，此方法返回一个新数组。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Array
-     * @param {Array} array The array to inspect.
-     * @param {...*} [values] The values to exclude.
-     * @returns {Array} Returns the new array of filtered values.
+     * @param {Array} array 要检查的数组。
+     * @param {...*} [values] 要排除的值。
+     * @returns {Array} 返回新的过滤值数组。
      * @see _.difference, _.xor
      * @example
      *
@@ -9214,17 +9121,16 @@
     });
 
     /**
-     * Creates an array of unique values that is the
-     * [symmetric difference](https://en.wikipedia.org/wiki/Symmetric_difference)
-     * of the given arrays. The order of result values is determined by the order
-     * they occur in the arrays.
+     * 创建一个包含给定数组的
+     * [对称差集](https://en.wikipedia.org/wiki/Symmetric_difference)
+     * 的唯一值数组。结果值的顺序由它们在数组中出现的顺序决定。
      *
      * @static
      * @memberOf _
      * @since 2.4.0
      * @category Array
-     * @param {...Array} [arrays] The arrays to inspect.
-     * @returns {Array} Returns the new array of filtered values.
+     * @param {...Array} [arrays] 要检查的数组。
+     * @returns {Array} 返回新的过滤值数组。
      * @see _.difference, _.without
      * @example
      *
@@ -9236,19 +9142,17 @@
     });
 
     /**
-     * This method is like `_.xor` except that it accepts `iteratee` which is
-     * invoked for each element of each `arrays` to generate the criterion by
-     * which by which they're compared. The order of result values is determined
-     * by the order they occur in the arrays. The iteratee is invoked with one
-     * argument: (value).
+     * 这个方法类似 `_.xor`，但它接受 `iteratee`，为每个 `arrays` 的每个元素调用，
+     * 生成计算比较的标准。结果值的顺序由它们在数组中出现的顺序决定。
+     * 迭代器接受一个参数：(value)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {...Array} [arrays] The arrays to inspect.
-     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
-     * @returns {Array} Returns the new array of filtered values.
+     * @param {...Array} [arrays] 要检查的数组。
+     * @param {Function} [iteratee=_.identity] 每个元素调用的迭代器。
+     * @returns {Array} 返回新的过滤值数组。
      * @example
      *
      * _.xorBy([2.1, 1.2], [2.3, 3.4], Math.floor);
@@ -9267,18 +9171,17 @@
     });
 
     /**
-     * This method is like `_.xor` except that it accepts `comparator` which is
-     * invoked to compare elements of `arrays`. The order of result values is
-     * determined by the order they occur in the arrays. The comparator is invoked
-     * with two arguments: (arrVal, othVal).
+     * 这个方法类似 `_.xor`，但它接受 `comparator` 来比较 `arrays` 的元素。
+     * 结果值的顺序由它们在数组中出现的顺序决定。
+     * 比较器接受两个参数：(arrVal, othVal)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {...Array} [arrays] The arrays to inspect.
-     * @param {Function} [comparator] The comparator invoked per element.
-     * @returns {Array} Returns the new array of filtered values.
+     * @param {...Array} [arrays] 要检查的数组。
+     * @param {Function} [comparator] 每个元素调用的比较器。
+     * @returns {Array} 返回新的过滤值数组。
      * @example
      *
      * var objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }];
@@ -9294,16 +9197,15 @@
     });
 
     /**
-     * Creates an array of grouped elements, the first of which contains the
-     * first elements of the given arrays, the second of which contains the
-     * second elements of the given arrays, and so on.
+     * 创建一个分组成元素的数组，其中第一个分组成元素包含给定数组的第一个元素，
+     * 第二个分组成元素包含给定数组的第二个元素，以此类推。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Array
-     * @param {...Array} [arrays] The arrays to process.
-     * @returns {Array} Returns the new array of grouped elements.
+     * @param {...Array} [arrays] 要处理的数组。
+     * @returns {Array} 返回新的分组成元素数组。
      * @example
      *
      * _.zip(['a', 'b'], [1, 2], [true, false]);
@@ -9319,9 +9221,9 @@
      * @memberOf _
      * @since 0.4.0
      * @category Array
-     * @param {Array} [props=[]] The property identifiers.
-     * @param {Array} [values=[]] The property values.
-     * @returns {Object} Returns the new object.
+     * @param {Array} [props=[]] 属性标识符。
+     * @param {Array} [values=[]] 属性值。
+     * @returns {Object} 返回新的对象。
      * @example
      *
      * _.zipObject(['a', 'b'], [1, 2]);
@@ -9332,15 +9234,15 @@
     }
 
     /**
-     * This method is like `_.zipObject` except that it supports property paths.
+     * 这个方法类似 `_.zipObject`，但它支持属性路径。
      *
      * @static
      * @memberOf _
      * @since 4.1.0
      * @category Array
-     * @param {Array} [props=[]] The property identifiers.
-     * @param {Array} [values=[]] The property values.
-     * @returns {Object} Returns the new object.
+     * @param {Array} [props=[]] 属性标识符。
+     * @param {Array} [values=[]] 属性值。
+     * @returns {Object} 返回新的对象。
      * @example
      *
      * _.zipObjectDeep(['a.b[0].c', 'a.b[1].d'], [1, 2]);
@@ -9351,18 +9253,16 @@
     }
 
     /**
-     * This method is like `_.zip` except that it accepts `iteratee` to specify
-     * how grouped values should be combined. The iteratee is invoked with the
-     * elements of each group: (...group).
+     * 这个方法类似 `_.zip`，但接受 `iteratee` 来指定如何组合分组的值。
+     * 迭代器接受每个组的元素调用：(...group)。
      *
      * @static
      * @memberOf _
      * @since 3.8.0
      * @category Array
-     * @param {...Array} [arrays] The arrays to process.
-     * @param {Function} [iteratee=_.identity] The function to combine
-     *  grouped values.
-     * @returns {Array} Returns the new array of grouped elements.
+     * @param {...Array} [arrays] 要处理的数组。
+     * @param {Function} [iteratee=_.identity] 用于组合分组值的函数。
+     * @returns {Array} 返回新的分组成元素数组。
      * @example
      *
      * _.zipWith([1, 2], [10, 20], [100, 200], function(a, b, c) {
@@ -9381,16 +9281,15 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * Creates a `lodash` wrapper instance that wraps `value` with explicit method
-     * chain sequences enabled. The result of such sequences must be unwrapped
-     * with `_#value`.
+     * 创建一个包装 `value` 的 `lodash` 包装器实例，启用显式方法链序列。
+     * 这种序列的结果必须用 `_#value` 解包。
      *
      * @static
      * @memberOf _
      * @since 1.3.0
      * @category Seq
-     * @param {*} value The value to wrap.
-     * @returns {Object} Returns the new `lodash` wrapper instance.
+     * @param {*} value 要包装的值。
+     * @returns {Object} 返回新的 `lodash` 包装器实例。
      * @example
      *
      * var users = [
@@ -9424,9 +9323,9 @@
      * @memberOf _
      * @since 0.1.0
      * @category Seq
-     * @param {*} value The value to provide to `interceptor`.
-     * @param {Function} interceptor The function to invoke.
-     * @returns {*} Returns `value`.
+     * @param {*} value 要提供给 `interceptor` 的值。
+     * @param {Function} interceptor 要调用的函数。
+     * @returns {*} 返回 `value`。
      * @example
      *
      * _([1, 2, 3])
@@ -9444,17 +9343,16 @@
     }
 
     /**
-     * This method is like `_.tap` except that it returns the result of `interceptor`.
-     * The purpose of this method is to "pass thru" values replacing intermediate
-     * results in a method chain sequence.
+     * 这个方法类似 `_.tap`，但它返回 `interceptor` 的结果。
+     * 此方法的目的是在方法链序列中"传递"值，替换中间结果。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Seq
-     * @param {*} value The value to provide to `interceptor`.
-     * @param {Function} interceptor The function to invoke.
-     * @returns {*} Returns the result of `interceptor`.
+     * @param {*} value 要提供给 `interceptor` 的值。
+     * @param {Function} interceptor 要调用的函数。
+     * @returns {*} 返回 `interceptor` 的结果。
      * @example
      *
      * _('  abc  ')
@@ -9471,14 +9369,14 @@
     }
 
     /**
-     * This method is the wrapper version of `_.at`.
+     * 这是 `_.at` 的包装器版本。
      *
      * @name at
      * @memberOf _
      * @since 1.0.0
      * @category Seq
-     * @param {...(string|string[])} [paths] The property paths to pick.
-     * @returns {Object} Returns the new `lodash` wrapper instance.
+     * @param {...(string|string[])} [paths] 要选择的属性路径。
+     * @returns {Object} 返回新的 `lodash` 包装器实例。
      * @example
      *
      * var object = { 'a': [{ 'b': { 'c': 3 } }, 4] };
@@ -9517,7 +9415,7 @@
      * @memberOf _
      * @since 0.1.0
      * @category Seq
-     * @returns {Object} Returns the new `lodash` wrapper instance.
+     * @returns {Object} 返回新的 `lodash` 包装器实例。
      * @example
      *
      * var users = [
@@ -9542,13 +9440,13 @@
     }
 
     /**
-     * Executes the chain sequence and returns the wrapped result.
+     * 执行链序列并返回包装后的结果。
      *
      * @name commit
      * @memberOf _
      * @since 3.2.0
      * @category Seq
-     * @returns {Object} Returns the new `lodash` wrapper instance.
+     * @returns {Object} 返回新的 `lodash` 包装器实例。
      * @example
      *
      * var array = [1, 2];
@@ -9572,14 +9470,14 @@
     }
 
     /**
-     * Gets the next value on a wrapped object following the
-     * [iterator protocol](https://mdn.io/iteration_protocols#iterator).
+     * 获取包装对象上的下一个值，遵循
+     * [迭代器协议](https://mdn.io/iteration_protocols#iterator)。
      *
      * @name next
      * @memberOf _
      * @since 4.0.0
      * @category Seq
-     * @returns {Object} Returns the next iterator value.
+     * @returns {Object} 返回下一个迭代器值。
      * @example
      *
      * var wrapped = _([1, 2]);
@@ -9604,13 +9502,13 @@
     }
 
     /**
-     * Enables the wrapper to be iterable.
+     * 启用包装器可迭代。
      *
      * @name Symbol.iterator
      * @memberOf _
      * @since 4.0.0
      * @category Seq
-     * @returns {Object} Returns the wrapper object.
+     * @returns {Object} 返回包装器对象。
      * @example
      *
      * var wrapped = _([1, 2]);
@@ -9626,14 +9524,14 @@
     }
 
     /**
-     * Creates a clone of the chain sequence planting `value` as the wrapped value.
+     * 创建链序列的克隆，将 `value` 作为包装值植入。
      *
      * @name plant
      * @memberOf _
      * @since 3.2.0
      * @category Seq
-     * @param {*} value The value to plant.
-     * @returns {Object} Returns the new `lodash` wrapper instance.
+     * @param {*} value 要植入的值。
+     * @returns {Object} 返回新的 `lodash` 包装器实例。
      * @example
      *
      * function square(n) {
@@ -9678,7 +9576,7 @@
      * @memberOf _
      * @since 0.1.0
      * @category Seq
-     * @returns {Object} Returns the new `lodash` wrapper instance.
+     * @returns {Object} 返回新的 `lodash` 包装器实例。
      * @example
      *
      * var array = [1, 2, 3];
@@ -9708,14 +9606,14 @@
     }
 
     /**
-     * Executes the chain sequence to resolve the unwrapped value.
+     * 执行链序列以解析解包的值。
      *
      * @name value
      * @memberOf _
      * @since 0.1.0
      * @alias toJSON, valueOf
      * @category Seq
-     * @returns {*} Returns the resolved unwrapped value.
+     * @returns {*} 返回解析后的解包值。
      * @example
      *
      * _([1, 2, 3]).value();
@@ -9728,18 +9626,16 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * Creates an object composed of keys generated from the results of running
-     * each element of `collection` thru `iteratee`. The corresponding value of
-     * each key is the number of times the key was returned by `iteratee`. The
-     * iteratee is invoked with one argument: (value).
+     * 创建一个对象，键由将 `collection` 的每个元素通过 `iteratee` 运行的结果生成。
+     * 每个键对应的值是 `iteratee` 返回该键的次数。迭代器接受一个参数：(value)。
      *
      * @static
      * @memberOf _
      * @since 0.5.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} [iteratee=_.identity] The iteratee to transform keys.
-     * @returns {Object} Returns the composed aggregate object.
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Function} [iteratee=_.identity] 用于转换键的迭代器。
+     * @returns {Object} 返回组合的聚合对象。
      * @example
      *
      * _.countBy([6.1, 4.2, 6.3], Math.floor);
@@ -9758,24 +9654,23 @@
     });
 
     /**
-     * Checks if `predicate` returns truthy for **all** elements of `collection`.
-     * Iteration is stopped once `predicate` returns falsey. The predicate is
-     * invoked with three arguments: (value, index|key, collection).
+     * 检查 `predicate` 是否对 `collection` 的**所有**元素都返回真值。
+     * 一旦 `predicate` 返回假值，迭代就会停止。断言接受三个参数：
+     * (value, index|key, collection)。
      *
-     * **Note:** This method returns `true` for
-     * [empty collections](https://en.wikipedia.org/wiki/Empty_set) because
-     * [everything is true](https://en.wikipedia.org/wiki/Vacuous_truth) of
-     * elements of empty collections.
+     * **注意：** 此方法对
+     * [空集合](https://en.wikipedia.org/wiki/Empty_set) 返回 `true`，
+     * 因为空集合的每个元素
+     * [都是真的](https://en.wikipedia.org/wiki/Vacuous_truth)。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} [predicate=_.identity] The function invoked per iteration.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {boolean} Returns `true` if all elements pass the predicate check,
-     *  else `false`.
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Function} [predicate=_.identity] 每次迭代调用的函数。
+     * @param- {Object} [guard] 允许用作像 `_.map` 这样的方法的迭代器。
+     * @returns {boolean} 如果所有元素通过谓词检查则返回 `true`，否则返回 `false`。
      * @example
      *
      * _.every([true, 1, null, 'yes'], Boolean);
@@ -9853,18 +9748,17 @@
     }
 
     /**
-     * Iterates over elements of `collection`, returning the first element
-     * `predicate` returns truthy for. The predicate is invoked with three
-     * arguments: (value, index|key, collection).
+     * 迭代 `collection` 的元素，返回 `predicate` 第一次返回真值的元素。
+     * 断言接受三个参数：(value, index|key, collection)。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Collection
-     * @param {Array|Object} collection The collection to inspect.
-     * @param {Function} [predicate=_.identity] The function invoked per iteration.
-     * @param {number} [fromIndex=0] The index to search from.
-     * @returns {*} Returns the matched element, else `undefined`.
+     * @param {Array|Object} collection 要检查的集合。
+     * @param {Function} [predicate=_.identity] 每次迭代调用的函数。
+     * @param {number} [fromIndex=0] 从哪里开始搜索的索引。
+     * @returns {*} 返回匹配的元素，否则为 `undefined`。
      * @example
      *
      * var users = [
@@ -9891,17 +9785,16 @@
     var find = createFind(findIndex);
 
     /**
-     * This method is like `_.find` except that it iterates over elements of
-     * `collection` from right to left.
+     * 这个方法类似 `_.find`，但它从右到左迭代 `collection` 的元素。
      *
      * @static
      * @memberOf _
      * @since 2.0.0
      * @category Collection
-     * @param {Array|Object} collection The collection to inspect.
-     * @param {Function} [predicate=_.identity] The function invoked per iteration.
-     * @param {number} [fromIndex=collection.length-1] The index to search from.
-     * @returns {*} Returns the matched element, else `undefined`.
+     * @param {Array|Object} collection 要检查的集合。
+     * @param {Function} [predicate=_.identity] 每次迭代调用的函数。
+     * @param {number} [fromIndex=collection.length-1] 从哪里开始搜索的索引。
+     * @returns {*} 返回匹配的元素，否则为 `undefined`。
      * @example
      *
      * _.findLast([1, 2, 3, 4], function(n) {
@@ -9912,17 +9805,16 @@
     var findLast = createFind(findLastIndex);
 
     /**
-     * Creates a flattened array of values by running each element in `collection`
-     * thru `iteratee` and flattening the mapped results. The iteratee is invoked
-     * with three arguments: (value, index|key, collection).
+     * 通过 `iteratee` 运行 `collection` 的每个元素并展平映射结果来创建一个扁平化数组。
+     * 迭代器接受三个参数：(value, index|key, collection)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
-     * @returns {Array} Returns the new flattened array.
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Function} [iteratee=_.identity] 每次迭代调用的函数。
+     * @returns {Array} 返回新的扁平化数组。
      * @example
      *
      * function duplicate(n) {
@@ -9937,16 +9829,15 @@
     }
 
     /**
-     * This method is like `_.flatMap` except that it recursively flattens the
-     * mapped results.
+     * 这个方法类似 `_.flatMap`，但它递归地展平映射的结果。
      *
      * @static
      * @memberOf _
      * @since 4.7.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
-     * @returns {Array} Returns the new flattened array.
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Function} [iteratee=_.identity] 每次迭代调用的函数。
+     * @returns {Array} 返回新的扁平化数组。
      * @example
      *
      * function duplicate(n) {
@@ -9961,17 +9852,16 @@
     }
 
     /**
-     * This method is like `_.flatMap` except that it recursively flattens the
-     * mapped results up to `depth` times.
+     * 这个方法类似 `_.flatMap`，但它递归地展平映射的结果最多 `depth` 次。
      *
      * @static
      * @memberOf _
      * @since 4.7.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
-     * @param {number} [depth=1] The maximum recursion depth.
-     * @returns {Array} Returns the new flattened array.
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Function} [iteratee=_.identity] 每次迭代调用的函数。
+     * @param {number} [depth=1] 最大递归深度。
+     * @returns {Array} 返回新的扁平化数组。
      * @example
      *
      * function duplicate(n) {
@@ -9987,22 +9877,21 @@
     }
 
     /**
-     * Iterates over elements of `collection` and invokes `iteratee` for each element.
-     * The iteratee is invoked with three arguments: (value, index|key, collection).
-     * Iteratee functions may exit iteration early by explicitly returning `false`.
+     * 迭代 `collection` 的每个元素并为每个元素调用 `iteratee`。
+     * 迭代器接受三个参数：(value, index|key, collection)。
+     * 迭代器函数可以通过明确返回 `false` 提前退出迭代。
      *
-     * **Note:** As with other "Collections" methods, objects with a "length"
-     * property are iterated like arrays. To avoid this behavior use `_.forIn`
-     * or `_.forOwn` for object iteration.
+     * **注意：** 与其他"Collections"方法一样，具有"length"属性的对象会被像数组一样迭代。
+     * 要避免这种行为，请使用 `_.forIn` 或 `_.forOwn` 进行对象迭代。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @alias each
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
-     * @returns {Array|Object} Returns `collection`.
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Function} [iteratee=_.identity] 每次迭代调用的函数。
+     * @returns {Array|Object} 返回 `collection`。
      * @see _.forEachRight
      * @example
      *
@@ -10022,18 +9911,16 @@
     }
 
     /**
-     * This method is like `_.forEach` except that it iterates over elements of
-     * `collection` from right to left.
+     * 这个方法类似 `_.forEach`，但它从右到左迭代 `collection` 的元素。
      *
      * @static
      * @memberOf _
      * @since 2.0.0
      * @alias eachRight
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
-     * @returns {Array|Object} Returns `collection`.
-     * @see _.forEach
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Function} [iteratee=_.identity] 每次迭代调用的函数。
+     * @returns {Array|Object} 返回 `collection`。
      * @example
      *
      * _.forEachRight([1, 2], function(value) {
@@ -10047,19 +9934,17 @@
     }
 
     /**
-     * Creates an object composed of keys generated from the results of running
-     * each element of `collection` thru `iteratee`. The order of grouped values
-     * is determined by the order they occur in `collection`. The corresponding
-     * value of each key is an array of elements responsible for generating the
-     * key. The iteratee is invoked with one argument: (value).
+     * 创建一个对象，键由将 `collection` 的每个元素通过 `iteratee` 运行的结果生成。
+     * 分组值的顺序由它们在 `collection` 中出现的顺序决定。
+     * 每个键对应的值是负责生成该键的元素数组。迭代器接受一个参数：(value)。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} [iteratee=_.identity] The iteratee to transform keys.
-     * @returns {Object} Returns the composed aggregate object.
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Function} [iteratee=_.identity] 用于转换键的迭代器。
+     * @returns {Object} 返回组合的聚合对象。
      * @example
      *
      * _.groupBy([6.1, 4.2, 6.3], Math.floor);
@@ -10078,21 +9963,20 @@
     });
 
     /**
-     * Checks if `value` is in `collection`. If `collection` is a string, it's
-     * checked for a substring of `value`, otherwise
+     * 检查 `value` 是否在 `collection` 中。如果 `collection` 是字符串，
+     * 则检查 `value` 的子字符串，否则使用
      * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-     * is used for equality comparisons. If `fromIndex` is negative, it's used as
-     * the offset from the end of `collection`.
+     * 进行相等比较。如果 `fromIndex` 为负，则作为从 `collection` 末尾开始的偏移量。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Collection
-     * @param {Array|Object|string} collection The collection to inspect.
-     * @param {*} value The value to search for.
-     * @param {number} [fromIndex=0] The index to search from.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.reduce`.
-     * @returns {boolean} Returns `true` if `value` is found, else `false`.
+     * @param {Array|Object|string} collection 要检查的集合。
+     * @param {*} value 要搜索的值。
+     * @param {number} [fromIndex=0] 从哪里开始搜索的索引。
+     * @param- {Object} [guard] 允许用作像 `_.reduce` 这样的方法的迭代器。
+     * @returns {boolean} 如果找到 `value` 则返回 `true`，否则返回 `false`。
      * @example
      *
      * _.includes([1, 2, 3], 1);
@@ -10121,20 +10005,18 @@
     }
 
     /**
-     * Invokes the method at `path` of each element in `collection`, returning
-     * an array of the results of each invoked method. Any additional arguments
-     * are provided to each invoked method. If `path` is a function, it's invoked
-     * for, and `this` bound to, each element in `collection`.
+     * 调用 `collection` 中每个元素的 `path` 上的方法，返回每个调用结果组成的数组。
+     * 任何额外的参数都会传递给每个调用的方法。如果 `path` 是一个函数，
+     * 则为 `collection` 中的每个元素调用它，并绑定 `this`。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Array|Function|string} path The path of the method to invoke or
-     *  the function invoked per iteration.
-     * @param {...*} [args] The arguments to invoke each method with.
-     * @returns {Array} Returns the array of results.
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Array|Function|string} path 要调用的方法的路径，或每次迭代调用的函数。
+     * @param {...*} [args] 传递给每个方法的参数。
+     * @returns {Array} 返回结果数组。
      * @example
      *
      * _.invokeMap([[5, 1, 7], [3, 2, 1]], 'sort');
@@ -10155,18 +10037,16 @@
     });
 
     /**
-     * Creates an object composed of keys generated from the results of running
-     * each element of `collection` thru `iteratee`. The corresponding value of
-     * each key is the last element responsible for generating the key. The
-     * iteratee is invoked with one argument: (value).
+     * 创建一个对象，键由将 `collection` 的每个元素通过 `iteratee` 运行的结果生成。
+     * 每个键对应的值是负责生成该键的最后一个元素。迭代器接受一个参数：(value)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} [iteratee=_.identity] The iteratee to transform keys.
-     * @returns {Object} Returns the composed aggregate object.
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Function} [iteratee=_.identity] 用于转换键的迭代器。
+     * @returns {Object} 返回组合的聚合对象。
      * @example
      *
      * var array = [
@@ -10187,26 +10067,25 @@
     });
 
     /**
-     * Creates an array of values by running each element in `collection` thru
-     * `iteratee`. The iteratee is invoked with three arguments:
-     * (value, index|key, collection).
+     * 通过 `iteratee` 运行 `collection` 的每个元素来创建一个值数组。
+     * 迭代器接受三个参数：(value, index|key, collection)。
      *
-     * Many lodash methods are guarded to work as iteratees for methods like
-     * `_.every`, `_.filter`, `_.map`, `_.mapValues`, `_.reject`, and `_.some`.
+     * 许多 lodash 方法被保护为可以作为像 `_.every`、`_.filter`、`_.map`、
+     * `_.mapValues`、`_.reject` 和 `_.some` 等方法的迭代器。
      *
-     * The guarded methods are:
-     * `ary`, `chunk`, `curry`, `curryRight`, `drop`, `dropRight`, `every`,
-     * `fill`, `invert`, `parseInt`, `random`, `range`, `rangeRight`, `repeat`,
-     * `sampleSize`, `slice`, `some`, `sortBy`, `split`, `take`, `takeRight`,
-     * `template`, `trim`, `trimEnd`, `trimStart`, and `words`
+     * 受保护的方法有：
+     * `ary`、`chunk`、`curry`、`curryRight`、`drop`、`dropRight`、`every`、
+     * `fill`、`invert`、`parseInt`、`random`、`range`、`rangeRight`、`repeat`、
+     * `sampleSize`、`slice`、`some`、`sortBy`、`split`、`take`、`takeRight`、
+     * `template`、`trim`、`trimEnd`、`trimStart` 和 `words`
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
-     * @returns {Array} Returns the new mapped array.
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Function} [iteratee=_.identity] 每次迭代调用的函数。
+     * @returns {Array} 返回新的映射数组。
      * @example
      *
      * function square(n) {
@@ -10234,21 +10113,20 @@
     }
 
     /**
-     * This method is like `_.sortBy` except that it allows specifying the sort
-     * orders of the iteratees to sort by. If `orders` is unspecified, all values
-     * are sorted in ascending order. Otherwise, specify an order of "desc" for
-     * descending or "asc" for ascending sort order of corresponding values.
+     * 这个方法类似 `_.sortBy`，但它允许指定要排序的迭代器的排序顺序。
+     * 如果 `orders` 未指定，所有值按升序排序。否则，
+     * 指定 "desc" 为降序，"asc" 为对应值的升序排序。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
+     * @param {Array|Object} collection 要迭代的集合。
      * @param {Array[]|Function[]|Object[]|string[]} [iteratees=[_.identity]]
-     *  The iteratees to sort by.
-     * @param {string[]} [orders] The sort orders of `iteratees`.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.reduce`.
-     * @returns {Array} Returns the new sorted array.
+     *  要排序的迭代器。
+     * @param {string[]} [orders] `iteratees` 的排序顺序。
+     * @param- {Object} [guard] 允许用作像 `_.reduce` 这样的方法的迭代器。
+     * @returns {Array} 返回新的排序数组。
      * @example
      *
      * var users = [
@@ -10277,18 +10155,16 @@
     }
 
     /**
-     * Creates an array of elements split into two groups, the first of which
-     * contains elements `predicate` returns truthy for, the second of which
-     * contains elements `predicate` returns falsey for. The predicate is
-     * invoked with one argument: (value).
+     * 创建一个包含两个分组的数组，第一个分组包含 `predicate` 返回真值的元素，
+     * 第二个分组包含 `predicate` 返回假值的元素。断言接受一个参数：(value)。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} [predicate=_.identity] The function invoked per iteration.
-     * @returns {Array} Returns the array of grouped elements.
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Function} [predicate=_.identity] 每次迭代调用的函数。
+     * @returns {Array} 返回分组元素的数组。
      * @example
      *
      * var users = [
@@ -10317,28 +10193,25 @@
     }, function() { return [[], []]; });
 
     /**
-     * Reduces `collection` to a value which is the accumulated result of running
-     * each element in `collection` thru `iteratee`, where each successive
-     * invocation is supplied the return value of the previous. If `accumulator`
-     * is not given, the first element of `collection` is used as the initial
-     * value. The iteratee is invoked with four arguments:
-     * (accumulator, value, index|key, collection).
+     * 将 `collection` 归约为一个值，该值是依次将每个元素通过 `iteratee`
+     * 运行的结果，每次后续调用都接收前一个返回值。如果未提供 `accumulator`，
+     * `collection` 的第一个元素用作初始值。迭代器接受四个参数：
+     * (accumulator, value, index|key, collection)。
      *
-     * Many lodash methods are guarded to work as iteratees for methods like
-     * `_.reduce`, `_.reduceRight`, and `_.transform`.
+     * 许多 lodash 方法被保护为可以作为像 `_.reduce`、`_.reduceRight`
+     * 和 `_.transform` 等方法的迭代器。
      *
-     * The guarded methods are:
-     * `assign`, `defaults`, `defaultsDeep`, `includes`, `merge`, `orderBy`,
-     * and `sortBy`
+     * 受保护的方法有：
+     * `assign`、`defaults`、`defaultsDeep`、`includes`、`merge`、`orderBy` 和 `sortBy`
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
-     * @param {*} [accumulator] The initial value.
-     * @returns {*} Returns the accumulated value.
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Function} [iteratee=_.identity] 每次迭代调用的函数。
+     * @param {*} [accumulator] 初始值。
+     * @returns {*} 返回累计的值。
      * @see _.reduceRight
      * @example
      *
@@ -10361,17 +10234,16 @@
     }
 
     /**
-     * This method is like `_.reduce` except that it iterates over elements of
-     * `collection` from right to left.
+     * 这个方法类似 `_.reduce`，但它从右到左迭代 `collection` 的元素。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
-     * @param {*} [accumulator] The initial value.
-     * @returns {*} Returns the accumulated value.
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Function} [iteratee=_.identity] 每次迭代调用的函数。
+     * @param {*} [accumulator] 初始值。
+     * @returns {*} 返回累计的值。
      * @see _.reduce
      * @example
      *
@@ -10390,16 +10262,16 @@
     }
 
     /**
-     * The opposite of `_.filter`; this method returns the elements of `collection`
-     * that `predicate` does **not** return truthy for.
+     * `_.filter` 的反向方法；此方法返回 `collection` 中 `predicate`
+     * **不**返回真值的元素。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} [predicate=_.identity] The function invoked per iteration.
-     * @returns {Array} Returns the new filtered array.
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Function} [predicate=_.identity] 每次迭代调用的函数。
+     * @returns {Array} 返回新的过滤数组。
      * @see _.filter
      * @example
      *
@@ -10429,14 +10301,14 @@
     }
 
     /**
-     * Gets a random element from `collection`.
+     * 从 `collection` 中获取一个随机元素。
      *
      * @static
      * @memberOf _
      * @since 2.0.0
      * @category Collection
-     * @param {Array|Object} collection The collection to sample.
-     * @returns {*} Returns the random element.
+     * @param {Array|Object} collection 要采样的集合。
+     * @returns {*} 返回随机元素。
      * @example
      *
      * _.sample([1, 2, 3, 4]);
@@ -10448,17 +10320,16 @@
     }
 
     /**
-     * Gets `n` random elements at unique keys from `collection` up to the
-     * size of `collection`.
+     * 从 `collection` 中获取 `n` 个随机元素，键唯一，一直到 `collection` 的大小。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Collection
-     * @param {Array|Object} collection The collection to sample.
-     * @param {number} [n=1] The number of elements to sample.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {Array} Returns the random elements.
+     * @param {Array|Object} collection 要采样的集合。
+     * @param {number} [n=1] 要采样的元素数量。
+     * @param- {Object} [guard] 允许用作像 `_.map` 这样的方法的迭代器。
+     * @returns {Array} 返回随机元素。
      * @example
      *
      * _.sampleSize([1, 2, 3], 2);
@@ -10478,15 +10349,15 @@
     }
 
     /**
-     * Creates an array of shuffled values, using a version of the
-     * [Fisher-Yates shuffle](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle).
+     * 创建一个打乱顺序后的值数组，使用的是
+     * [Fisher-Yates shuffle](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) 的版本。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Collection
-     * @param {Array|Object} collection The collection to shuffle.
-     * @returns {Array} Returns the new shuffled array.
+     * @param {Array|Object} collection 要打乱的集合。
+     * @returns {Array} 返回新的打乱后的数组。
      * @example
      *
      * _.shuffle([1, 2, 3, 4]);
@@ -10498,15 +10369,15 @@
     }
 
     /**
-     * Gets the size of `collection` by returning its length for array-like
-     * values or the number of own enumerable string keyed properties for objects.
+     * 通过返回其长度获取 `collection` 的大小，对于类数组值，
+     * 或返回对象自身可枚举字符串键属性的数量。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Collection
-     * @param {Array|Object|string} collection The collection to inspect.
-     * @returns {number} Returns the collection size.
+     * @param {Array|Object|string} collection 要检查的集合。
+     * @returns {number} 返回集合的大小。
      * @example
      *
      * _.size([1, 2, 3]);
@@ -10533,19 +10404,18 @@
     }
 
     /**
-     * Checks if `predicate` returns truthy for **any** element of `collection`.
-     * Iteration is stopped once `predicate` returns truthy. The predicate is
-     * invoked with three arguments: (value, index|key, collection).
+     * 检查 `predicate` 是否对 `collection` 的**任意**元素返回真值。
+     * 一旦 `predicate` 返回真值，迭代就会停止。断言接受三个参数：
+     * (value, index|key, collection)。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} [predicate=_.identity] The function invoked per iteration.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {boolean} Returns `true` if any element passes the predicate check,
-     *  else `false`.
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Function} [predicate=_.identity] 每次迭代调用的函数。
+     * @param- {Object} [guard] 允许用作像 `_.map` 这样的方法的迭代器。
+     * @returns {boolean} 如果任意元素通过谓词检查则返回 `true`，否则返回 `false`。
      * @example
      *
      * _.some([null, 0, 'yes', false], Boolean);
@@ -10577,19 +10447,18 @@
     }
 
     /**
-     * Creates an array of elements, sorted in ascending order by the results of
-     * running each element in a collection thru each iteratee. This method
-     * performs a stable sort, that is, it preserves the original sort order of
-     * equal elements. The iteratees are invoked with one argument: (value).
+     * 创建一个元素数组，按升序根据每个元素在 collection 中通过每个迭代器运行的结果排序。
+     * 此方法执行稳定排序，即保留相等元素的原始排序顺序。
+     * 迭代器接受一个参数：(value)。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
+     * @param {Array|Object} collection 要迭代的集合。
      * @param {...(Function|Function[])} [iteratees=[_.identity]]
-     *  The iteratees to sort by.
-     * @returns {Array} Returns the new sorted array.
+     *  要排序的迭代器。
+     * @returns {Array} 返回新的排序数组。
      * @example
      *
      * var users = [
@@ -10600,10 +10469,15 @@
      * ];
      *
      * _.sortBy(users, [function(o) { return o.user; }]);
-     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 30]]
+     * // => objects for [['barney', 34], ['barney', 36], ['fred', 30], ['fred', 48]]
      *
      * _.sortBy(users, ['user', 'age']);
      * // => objects for [['barney', 34], ['barney', 36], ['fred', 30], ['fred', 48]]
+     *
+     * _.sortBy(users, 'user', function(o) {
+     *   return Math.floor(o.age / 10);
+     * });
+     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 30]]
      */
     var sortBy = baseRest(function(collection, iteratees) {
       if (collection == null) {
@@ -10621,14 +10495,13 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * Gets the timestamp of the number of milliseconds that have elapsed since
-     * the Unix epoch (1 January 1970 00:00:00 UTC).
+     * 获取自 Unix 纪元（1970年1月1日 00:00:00 UTC）以来所经过的毫秒数的时间戳。
      *
      * @static
      * @memberOf _
      * @since 2.4.0
      * @category Date
-     * @returns {number} Returns the timestamp.
+     * @returns {number} 返回时间戳。
      * @example
      *
      * _.defer(function(stamp) {
@@ -10643,16 +10516,15 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * The opposite of `_.before`; this method creates a function that invokes
-     * `func` once it's called `n` or more times.
+     * `_.before` 的反向方法；此方法创建一个函数，当调用 `n` 次或更多次后才会调用 `func`。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Function
-     * @param {number} n The number of calls before `func` is invoked.
-     * @param {Function} func The function to restrict.
-     * @returns {Function} Returns the new restricted function.
+     * @param {number} n 调用 `func` 之前的调用次数。
+     * @param {Function} func 要限制的函数。
+     * @returns {Function} 返回新的受限函数。
      * @example
      *
      * var saves = ['profile', 'settings'];
@@ -10679,17 +10551,16 @@
     }
 
     /**
-     * Creates a function that invokes `func`, with up to `n` arguments,
-     * ignoring any additional arguments.
+     * 创建一个函数，该函数调用 `func`，最多接受 `n` 个参数，忽略任何附加参数。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Function
-     * @param {Function} func The function to cap arguments for.
-     * @param {number} [n=func.length] The arity cap.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {Function} Returns the new capped function.
+     * @param {Function} func 要限制参数的函数。
+     * @param {number} [n=func.length] 参数数量上限。
+     * @param- {Object} [guard] 允许用作像 `_.map` 这样的方法的迭代器。
+     * @returns {Function} 返回新的限制参数后的函数。
      * @example
      *
      * _.map(['6', '8', '10'], _.ary(parseInt, 1));
@@ -10702,17 +10573,16 @@
     }
 
     /**
-     * Creates a function that invokes `func`, with the `this` binding and arguments
-     * of the created function, while it's called less than `n` times. Subsequent
-     * calls to the created function return the result of the last `func` invocation.
+     * 创建一个函数，该函数调用 `func`，绑定 `this` 和创建函数时接收的参数，
+     * 当调用次数少于 `n` 次时。后续调用返回最后一次 `func` 调用的结果。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Function
-     * @param {number} n The number of calls at which `func` is no longer invoked.
-     * @param {Function} func The function to restrict.
-     * @returns {Function} Returns the new restricted function.
+     * @param {number} n 不再调用 `func` 的调用次数。
+     * @param {Function} func 要限制的函数。
+     * @returns {Function} 返回新的受限函数。
      * @example
      *
      * jQuery(element).on('click', _.before(5, addContactToList));
@@ -10736,23 +10606,21 @@
     }
 
     /**
-     * Creates a function that invokes `func` with the `this` binding of `thisArg`
-     * and `partials` prepended to the arguments it receives.
+     * 创建一个函数，调用 `func`，绑定 `thisArg` 的 `this`，
+     * 并将 `partials` 预置到它接收的参数前。
      *
-     * The `_.bind.placeholder` value, which defaults to `_` in monolithic builds,
-     * may be used as a placeholder for partially applied arguments.
+     * `_.bind.placeholder` 值，在整体构建中默认为 `_`，可用作部分应用参数的占位符。
      *
-     * **Note:** Unlike native `Function#bind`, this method doesn't set the "length"
-     * property of bound functions.
+     * **注意：** 与原生的 `Function#bind` 不同，此方法不会设置绑定函数的 "length" 属性。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Function
-     * @param {Function} func The function to bind.
-     * @param {*} thisArg The `this` binding of `func`.
-     * @param {...*} [partials] The arguments to be partially applied.
-     * @returns {Function} Returns the new bound function.
+     * @param {Function} func 要绑定的函数。
+     * @param {*} thisArg `func` 的 `this` 绑定。
+     * @param {...*} [partials] 要部分应用的参数。
+     * @returns {Function} 返回新的绑定函数。
      * @example
      *
      * function greet(greeting, punctuation) {
@@ -10780,25 +10648,22 @@
     });
 
     /**
-     * Creates a function that invokes the method at `object[key]` with `partials`
-     * prepended to the arguments it receives.
+     * 创建一个函数，在 `object[key]` 上调用方法，`partials` 预置到它接收的参数前。
      *
-     * This method differs from `_.bind` by allowing bound functions to reference
-     * methods that may be redefined or don't yet exist. See
-     * [Peter Michaux's article](http://peter.michaux.ca/articles/lazy-function-definition-pattern)
-     * for more details.
+     * 此方法与 `_.bind` 的区别在于允许绑定函数引用可能已被重新定义
+     * 或尚不存在的方法。详见
+     * [Peter Michaux's article](http://peter.michaux.ca/articles/lazy-function-definition-pattern)。
      *
-     * The `_.bindKey.placeholder` value, which defaults to `_` in monolithic
-     * builds, may be used as a placeholder for partially applied arguments.
+     * `_.bindKey.placeholder` 值，在整体构建中默认为 `_`，可用作部分应用参数的占位符。
      *
      * @static
      * @memberOf _
      * @since 0.10.0
      * @category Function
-     * @param {Object} object The object to invoke the method on.
-     * @param {string} key The key of the method.
-     * @param {...*} [partials] The arguments to be partially applied.
-     * @returns {Function} Returns the new bound function.
+     * @param {Object} object 要调用方法的对象。
+     * @param {string} key 方法的键。
+     * @param {...*} [partials] 要部分应用的参数。
+     * @returns {Function} 返回新的绑定函数。
      * @example
      *
      * var object = {
@@ -10834,25 +10699,22 @@
     });
 
     /**
-     * Creates a function that accepts arguments of `func` and either invokes
-     * `func` returning its result, if at least `arity` number of arguments have
-     * been provided, or returns a function that accepts the remaining `func`
-     * arguments, and so on. The arity of `func` may be specified if `func.length`
-     * is not sufficient.
+     * 创建一个函数，该函数接受 `func` 的参数，如果至少提供了 `arity` 个参数，
+     * 则调用 `func` 返回其结果，或者返回一个接受 `func` 剩余参数的函数，以此类推。
+     * 如果 `func.length` 不够用，可以指定 `func` 的参数数量。
      *
-     * The `_.curry.placeholder` value, which defaults to `_` in monolithic builds,
-     * may be used as a placeholder for provided arguments.
+     * `_.curry.placeholder` 值，在整体构建中默认为 `_`，可用作提供参数的占位符。
      *
-     * **Note:** This method doesn't set the "length" property of curried functions.
+     * **注意：** 此方法不会设置柯里化函数的 "length" 属性。
      *
      * @static
      * @memberOf _
      * @since 2.0.0
      * @category Function
-     * @param {Function} func The function to curry.
-     * @param {number} [arity=func.length] The arity of `func`.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {Function} Returns the new curried function.
+     * @param {Function} func 要柯里化的函数。
+     * @param {number} [arity=func.length] `func` 的参数数量。
+     * @param- {Object} [guard] 允许用作像 `_.map` 这样的方法的迭代器。
+     * @returns {Function} 返回新的柯里化函数。
      * @example
      *
      * var abc = function(a, b, c) {
@@ -10882,22 +10744,20 @@
     }
 
     /**
-     * This method is like `_.curry` except that arguments are applied to `func`
-     * in the manner of `_.partialRight` instead of `_.partial`.
+     * 这个方法类似 `_.curry`，但参数以 `_.partialRight` 的方式应用给 `func`，而不是 `_.partial`。
      *
-     * The `_.curryRight.placeholder` value, which defaults to `_` in monolithic
-     * builds, may be used as a placeholder for provided arguments.
+     * `_.curryRight.placeholder` 值，在整体构建中默认为 `_`，可用作提供参数的占位符。
      *
-     * **Note:** This method doesn't set the "length" property of curried functions.
+     * **注意：** 此方法不会设置柯里化函数的 "length" 属性。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Function
-     * @param {Function} func The function to curry.
-     * @param {number} [arity=func.length] The arity of `func`.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {Function} Returns the new curried function.
+     * @param {Function} func 要柯里化的函数。
+     * @param {number} [arity=func.length] `func` 的参数数量。
+     * @param- {Object} [guard] 允许用作像 `_.map` 这样的方法的迭代器。
+     * @returns {Function} 返回新的柯里化函数。
      * @example
      *
      * var abc = function(a, b, c) {
@@ -10927,40 +10787,35 @@
     }
 
     /**
-     * Creates a debounced function that delays invoking `func` until after `wait`
-     * milliseconds have elapsed since the last time the debounced function was
-     * invoked. The debounced function comes with a `cancel` method to cancel
-     * delayed `func` invocations and a `flush` method to immediately invoke them.
-     * Provide `options` to indicate whether `func` should be invoked on the
-     * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
-     * with the last arguments provided to the debounced function. Subsequent
-     * calls to the debounced function return the result of the last `func`
-     * invocation.
+     * 创建一个防抖函数，该函数延迟调用 `func`，直到自上次防抖函数被调用后
+     * 过去了 `wait` 毫秒。防抖函数带有一个 `cancel` 方法来取消延迟的 `func` 调用，
+     * 以及一个 `flush` 方法来立即调用它们。可以提供 `options` 来指示是否应在
+     * `wait` 超时的领先和/或尾随边缘调用 `func`。使用传递给防抖函数的最后参数调用 `func`。
+     * 对防抖函数的后续调用返回最后一次 `func` 调用的结果。
      *
-     * **Note:** If `leading` and `trailing` options are `true`, `func` is
-     * invoked on the trailing edge of the timeout only if the debounced function
-     * is invoked more than once during the `wait` timeout.
+     * **注意：** 如果 `leading` 和 `trailing` 选项都是 `true`，则仅在 `wait` 超时期间
+     * 防抖函数被调用多次时，才在超时的尾随边缘调用 `func`。
      *
-     * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
-     * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+     * 如果 `wait` 为 `0` 且 `leading` 为 `false`，则 `func` 调用被延迟到下一个 tick，
+     * 类似于 timeout 为 `0` 的 `setTimeout`。
      *
-     * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
-     * for details over the differences between `_.debounce` and `_.throttle`.
+     * 有关 `_.debounce` 和 `_.throttle` 之间差异的详细信息，
+     * 请参见 [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Function
-     * @param {Function} func The function to debounce.
-     * @param {number} [wait=0] The number of milliseconds to delay.
-     * @param {Object} [options={}] The options object.
+     * @param {Function} func 要防抖的函数。
+     * @param {number} [wait=0] 延迟的毫秒数。
+     * @param {Object} [options={}] 选项对象。
      * @param {boolean} [options.leading=false]
-     *  Specify invoking on the leading edge of the timeout.
+     *  指定在超时领先边缘调用。
      * @param {number} [options.maxWait]
-     *  The maximum time `func` is allowed to be delayed before it's invoked.
+     *  在调用之前允许 `func` 被延迟的最大时间。
      * @param {boolean} [options.trailing=true]
-     *  Specify invoking on the trailing edge of the timeout.
-     * @returns {Function} Returns the new debounced function.
+     *  指定在超时尾随边缘调用。
+     * @returns {Function} 返回新的防抖函数。
      * @example
      *
      * // Avoid costly calculations while the window size is in flux.
@@ -11106,16 +10961,15 @@
     }
 
     /**
-     * Defers invoking the `func` until the current call stack has cleared. Any
-     * additional arguments are provided to `func` when it's invoked.
+     * 延迟调用 `func`，直到当前调用栈被清除后。调用时，任何附加的参数都会传递给 `func`。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Function
-     * @param {Function} func The function to defer.
-     * @param {...*} [args] The arguments to invoke `func` with.
-     * @returns {number} Returns the timer id.
+     * @param {Function} func 要延迟的函数。
+     * @param {...*} [args] 传递给 `func` 的参数。
+     * @returns {number} 返回定时器 id。
      * @example
      *
      * _.defer(function(text) {
@@ -11128,17 +10982,16 @@
     });
 
     /**
-     * Invokes `func` after `wait` milliseconds. Any additional arguments are
-     * provided to `func` when it's invoked.
+     * 在 `wait` 毫秒后调用 `func`。调用时会将任何附加的参数传递给 `func`。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Function
-     * @param {Function} func The function to delay.
-     * @param {number} wait The number of milliseconds to delay invocation.
-     * @param {...*} [args] The arguments to invoke `func` with.
-     * @returns {number} Returns the timer id.
+     * @param {Function} func 要延迟的函数。
+     * @param {number} wait 延迟调用的毫秒数。
+     * @param {...*} [args] 传递给 `func` 的参数。
+     * @returns {number} 返回定时器 id。
      * @example
      *
      * _.delay(function(text) {
@@ -11151,14 +11004,14 @@
     });
 
     /**
-     * Creates a function that invokes `func` with arguments reversed.
+     * 创建一个函数，调用时反转传递给 `func` 的参数。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Function
-     * @param {Function} func The function to flip arguments for.
-     * @returns {Function} Returns the new flipped function.
+     * @param {Function} func 要反转参数的函数。
+     * @returns {Function} 返回新的反转参数后的函数。
      * @example
      *
      * var flipped = _.flip(function() {
@@ -11173,25 +11026,23 @@
     }
 
     /**
-     * Creates a function that memoizes the result of `func`. If `resolver` is
-     * provided, it determines the cache key for storing the result based on the
-     * arguments provided to the memoized function. By default, the first argument
-     * provided to the memoized function is used as the map cache key. The `func`
-     * is invoked with the `this` binding of the memoized function.
+     * 创建一个函数，对 `func` 的结果进行记忆化。如果提供了 `resolver`，
+     * 它会基于记忆化函数接收的参数决定缓存键来存储结果。
+     * 默认情况下，记忆化函数的第一个参数用作 map 缓存键。
+     * 使用记忆化函数的 `this` 绑定调用 `func`。
      *
-     * **Note:** The cache is exposed as the `cache` property on the memoized
-     * function. Its creation may be customized by replacing the `_.memoize.Cache`
-     * constructor with one whose instances implement the
+     * **注意：** 缓存作为 `cache` 属性暴露在记忆化函数上。
+     * 可以通过将 `_.memoize.Cache` 构造函数替换为实现了
      * [`Map`](http://ecma-international.org/ecma-262/7.0/#sec-properties-of-the-map-prototype-object)
-     * method interface of `clear`, `delete`, `get`, `has`, and `set`.
+     * 方法接口（`clear`、`delete`、`get`、`has` 和 `set`）的实例来自定义其创建。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Function
-     * @param {Function} func The function to have its output memoized.
-     * @param {Function} [resolver] The function to resolve the cache key.
-     * @returns {Function} Returns the new memoized function.
+     * @param {Function} func 要记忆化输出的函数。
+     * @param {Function} [resolver] 用于解析缓存键的函数。
+     * @returns {Function} 返回新的记忆化函数。
      * @example
      *
      * var object = { 'a': 1, 'b': 2 };
@@ -11240,16 +11091,15 @@
     memoize.Cache = MapCache;
 
     /**
-     * Creates a function that negates the result of the predicate `func`. The
-     * `func` predicate is invoked with the `this` binding and arguments of the
-     * created function.
+     * 创建一个函数，该函数对 `func` 谓词的结果求反。`func` 谓词使用创建函数的
+     * `this` 绑定和参数调用。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Function
-     * @param {Function} predicate The predicate to negate.
-     * @returns {Function} Returns the new negated function.
+     * @param {Function} predicate 要求反的谓词。
+     * @returns {Function} 返回新的求反函数。
      * @example
      *
      * function isEven(n) {
@@ -11276,16 +11126,15 @@
     }
 
     /**
-     * Creates a function that is restricted to invoking `func` once. Repeat calls
-     * to the function return the value of the first invocation. The `func` is
-     * invoked with the `this` binding and arguments of the created function.
+     * 创建一个只能调用 `func` 一次的函数。重复调用该函数返回第一次调用的值。
+     * 使用创建函数的 `this` 绑定和参数调用 `func`。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Function
-     * @param {Function} func The function to restrict.
-     * @returns {Function} Returns the new restricted function.
+     * @param {Function} func 要限制的函数。
+     * @returns {Function} 返回新的受限函数。
      * @example
      *
      * var initialize = _.once(createApplication);
@@ -11298,16 +11147,16 @@
     }
 
     /**
-     * Creates a function that invokes `func` with its arguments transformed.
+     * 创建一个使用转换后的参数调用 `func` 的函数。
      *
      * @static
      * @since 4.0.0
      * @memberOf _
      * @category Function
-     * @param {Function} func The function to wrap.
+     * @param {Function} func 要包装的函数。
      * @param {...(Function|Function[])} [transforms=[_.identity]]
-     *  The argument transforms.
-     * @returns {Function} Returns the new function.
+     *  参数转换器。
+     * @returns {Function} 返回新的函数。
      * @example
      *
      * function doubled(n) {
@@ -11346,23 +11195,20 @@
     });
 
     /**
-     * Creates a function that invokes `func` with `partials` prepended to the
-     * arguments it receives. This method is like `_.bind` except it does **not**
-     * alter the `this` binding.
+     * 创建一个函数，该函数调用 `func`，`partials` 预置到它接收的参数前。
+     * 此方法类似 `_.bind`，但**不会**改变 `this` 绑定。
      *
-     * The `_.partial.placeholder` value, which defaults to `_` in monolithic
-     * builds, may be used as a placeholder for partially applied arguments.
+     * `_.partial.placeholder` 值，在整体构建中默认为 `_`，可用作部分应用参数的占位符。
      *
-     * **Note:** This method doesn't set the "length" property of partially
-     * applied functions.
+     * **注意：** 此方法不会设置部分应用函数的 "length" 属性。
      *
      * @static
      * @memberOf _
      * @since 0.2.0
      * @category Function
-     * @param {Function} func The function to partially apply arguments to.
-     * @param {...*} [partials] The arguments to be partially applied.
-     * @returns {Function} Returns the new partially applied function.
+     * @param {Function} func 要部分应用参数的函数。
+     * @param {...*} [partials] 要部分应用的参数。
+     * @returns {Function} 返回新的部分应用函数。
      * @example
      *
      * function greet(greeting, name) {
@@ -11384,22 +11230,19 @@
     });
 
     /**
-     * This method is like `_.partial` except that partially applied arguments
-     * are appended to the arguments it receives.
+     * 这个方法类似 `_.partial`，但部分应用的参数被追加到它接收的参数后。
      *
-     * The `_.partialRight.placeholder` value, which defaults to `_` in monolithic
-     * builds, may be used as a placeholder for partially applied arguments.
+     * `_.partialRight.placeholder` 值，在整体构建中默认为 `_`，可用作部分应用参数的占位符。
      *
-     * **Note:** This method doesn't set the "length" property of partially
-     * applied functions.
+     * **注意：** 此方法不会设置部分应用函数的 "length" 属性。
      *
      * @static
      * @memberOf _
      * @since 1.0.0
      * @category Function
-     * @param {Function} func The function to partially apply arguments to.
-     * @param {...*} [partials] The arguments to be partially applied.
-     * @returns {Function} Returns the new partially applied function.
+     * @param {Function} func 要部分应用参数的函数。
+     * @param {...*} [partials] 要部分应用的参数。
+     * @returns {Function} 返回新的部分应用函数。
      * @example
      *
      * function greet(greeting, name) {
@@ -11421,18 +11264,17 @@
     });
 
     /**
-     * Creates a function that invokes `func` with arguments arranged according
-     * to the specified `indexes` where the argument value at the first index is
-     * provided as the first argument, the argument value at the second index is
-     * provided as the second argument, and so on.
+     * 创建一个函数，调用 `func`，参数根据指定的 `indexes` 排列，
+     * 其中第一个索引处的参数值作为第一个参数提供，
+     * 第二个索引处的参数值作为第二个参数提供，以此类推。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Function
-     * @param {Function} func The function to rearrange arguments for.
-     * @param {...(number|number[])} indexes The arranged argument indexes.
-     * @returns {Function} Returns the new function.
+     * @param {Function} func 要重新排列参数的函数。
+     * @param {...(number|number[])} indexes 排列的参数索引。
+     * @returns {Function} 返回新的函数。
      * @example
      *
      * var rearged = _.rearg(function(a, b, c) {
@@ -11447,20 +11289,19 @@
     });
 
     /**
-     * Creates a function that invokes `func` with the `this` binding of the
-     * created function and arguments from `start` and beyond provided as
-     * an array.
+     * 创建一个函数，调用 `func`，绑定创建函数的 `this` 绑定，
+     * 并将 `start` 及之后的参数作为数组提供。
      *
-     * **Note:** This method is based on the
-     * [rest parameter](https://mdn.io/rest_parameters).
+     * **注意：** 此方法基于
+     * [rest 参数](https://mdn.io/rest_parameters)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Function
-     * @param {Function} func The function to apply a rest parameter to.
-     * @param {number} [start=func.length-1] The start position of the rest parameter.
-     * @returns {Function} Returns the new function.
+     * @param {Function} func 要应用 rest 参数的函数。
+     * @param {number} [start=func.length-1] rest 参数的起始位置。
+     * @returns {Function} 返回新的函数。
      * @example
      *
      * var say = _.rest(function(what, names) {
@@ -11480,20 +11321,21 @@
     }
 
     /**
-     * Creates a function that invokes `func` with the `this` binding of the
-     * create function and an array of arguments much like
-     * [`Function#apply`](http://www.ecma-international.org/ecma-262/7.0/#sec-function.prototype.apply).
+     * 创建一个函数，调用 `func`，绑定创建函数的 `this` 绑定，
+     * 并使用类似
+     * [`Function#apply`](http://www.ecma-international.org/ecma-262/7.0/#sec-function.prototype.apply)
+     * 的参数数组。
      *
-     * **Note:** This method is based on the
-     * [spread operator](https://mdn.io/spread_operator).
+     * **注意：** 此方法基于
+     * [展开运算符](https://mdn.io/spread_operator)。
      *
      * @static
      * @memberOf _
      * @since 3.2.0
      * @category Function
-     * @param {Function} func The function to spread arguments over.
-     * @param {number} [start=0] The start position of the spread.
-     * @returns {Function} Returns the new function.
+     * @param {Function} func 要展开参数的函数。
+     * @param {number} [start=0] 展开的起始位置。
+     * @returns {Function} 返回新的函数。
      * @example
      *
      * var say = _.spread(function(who, what) {
@@ -11611,18 +11453,17 @@
     }
 
     /**
-     * Creates a function that provides `value` to `wrapper` as its first
-     * argument. Any additional arguments provided to the function are appended
-     * to those provided to the `wrapper`. The wrapper is invoked with the `this`
-     * binding of the created function.
+     * 创建一个函数,将该函数的第一个参数提供给 `wrapper` 作为其第一个参数。
+     * 提供给该函数的任何额外参数会附加到提供给 `wrapper` 的参数之后。
+     * `wrapper` 会以创建函数的 `this` 绑定来调用。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Function
-     * @param {*} value The value to wrap.
-     * @param {Function} [wrapper=identity] The wrapper function.
-     * @returns {Function} Returns the new function.
+     * @param {*} value 要包装的值。
+     * @param {Function} [wrapper=identity] 包装函数。
+     * @returns {Function} 返回新函数。
      * @example
      *
      * var p = _.wrap(_.escape, function(func, text) {
@@ -11639,14 +11480,14 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * Casts `value` as an array if it's not one.
+     * 如果 `value` 不是数组,则将其转换为数组。
      *
      * @static
      * @memberOf _
      * @since 4.4.0
      * @category Lang
-     * @param {*} value The value to inspect.
-     * @returns {Array} Returns the cast array.
+     * @param {*} value 要检查的值。
+     * @returns {Array} 返回转换后的数组。
      * @example
      *
      * _.castArray(1);
@@ -11680,22 +11521,19 @@
     }
 
     /**
-     * Creates a shallow clone of `value`.
+     * 创建 `value` 的浅拷贝。
      *
-     * **Note:** This method is loosely based on the
-     * [structured clone algorithm](https://mdn.io/Structured_clone_algorithm)
-     * and supports cloning arrays, array buffers, booleans, date objects, maps,
-     * numbers, `Object` objects, regexes, sets, strings, symbols, and typed
-     * arrays. The own enumerable properties of `arguments` objects are cloned
-     * as plain objects. An empty object is returned for uncloneable values such
-     * as error objects, functions, DOM nodes, and WeakMaps.
+     * **注意:** 此方法基于结构化克隆算法,并支持克隆数组、ArrayBuffer、布尔值、
+     * 日期对象、Map、数字、`Object` 对象、正则表达式、Set、字符串、Symbol 和类型化数组。
+     * `arguments` 对象的自有可枚举属性会被克隆为普通对象。
+     * 对于不可克隆的值(如错误对象、函数、DOM 节点和 WeakMap),会返回空对象。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Lang
-     * @param {*} value The value to clone.
-     * @returns {*} Returns the cloned value.
+     * @param {*} value 要克隆的值。
+     * @returns {*} 返回克隆后的值。
      * @see _.cloneDeep
      * @example
      *
@@ -11710,18 +11548,17 @@
     }
 
     /**
-     * This method is like `_.clone` except that it accepts `customizer` which
-     * is invoked to produce the cloned value. If `customizer` returns `undefined`,
-     * cloning is handled by the method instead. The `customizer` is invoked with
-     * up to four arguments; (value [, index|key, object, stack]).
+     * 此方法类似 `_.clone`,但它接受一个 `customizer` 来自定义克隆。
+     * 如果 `customizer` 返回 `undefined`,则由该方法处理克隆。
+     * `customizer` 最多接受四个参数;(value [, index|key, object, stack])。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to clone.
-     * @param {Function} [customizer] The function to customize cloning.
-     * @returns {*} Returns the cloned value.
+     * @param {*} value 要克隆的值。
+     * @param {Function} [customizer] 自定义克隆的函数。
+     * @returns {*} 返回克隆后的值。
      * @see _.cloneDeepWith
      * @example
      *
@@ -11746,14 +11583,14 @@
     }
 
     /**
-     * This method is like `_.clone` except that it recursively clones `value`.
+     * 此方法类似 `_.clone`,但它是递归克隆 `value`。
      *
      * @static
      * @memberOf _
      * @since 1.0.0
      * @category Lang
-     * @param {*} value The value to recursively clone.
-     * @returns {*} Returns the deep cloned value.
+     * @param {*} value 要递归克隆的值。
+     * @returns {*} 返回深克隆后的值。
      * @see _.clone
      * @example
      *
@@ -11768,15 +11605,15 @@
     }
 
     /**
-     * This method is like `_.cloneWith` except that it recursively clones `value`.
+     * 此方法类似 `_.cloneWith`,但它是递归克隆 `value`。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to recursively clone.
-     * @param {Function} [customizer] The function to customize cloning.
-     * @returns {*} Returns the deep cloned value.
+     * @param {*} value 要递归克隆的值。
+     * @param {Function} [customizer] 自定义克隆的函数。
+     * @returns {*} 返回深克隆后的值。
      * @see _.cloneWith
      * @example
      *
@@ -11801,19 +11638,17 @@
     }
 
     /**
-     * Checks if `object` conforms to `source` by invoking the predicate
-     * properties of `source` with the corresponding property values of `object`.
+     * 通过调用 `source` 的断言属性来检查 `object` 是否符合 `source`。
      *
-     * **Note:** This method is equivalent to `_.conforms` when `source` is
-     * partially applied.
+     * **注意:** 当 `source` 被部分应用时,此方法等价于 `_.conforms`。
      *
      * @static
      * @memberOf _
      * @since 4.14.0
      * @category Lang
-     * @param {Object} object The object to inspect.
-     * @param {Object} source The object of property predicates to conform to.
-     * @returns {boolean} Returns `true` if `object` conforms, else `false`.
+     * @param {Object} object 要检查的对象。
+     * @param {Object} source 符合属性的源对象。
+     * @returns {boolean} 如果 `object` 符合则返回 `true`,否则返回 `false`。
      * @example
      *
      * var object = { 'a': 1, 'b': 2 };
@@ -11829,17 +11664,17 @@
     }
 
     /**
-     * Performs a
+     * 对两个值执行
      * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-     * comparison between two values to determine if they are equivalent.
+     * 比较,判断它们是否相等。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+     * @param {*} value 要比较的值。
+     * @param {*} other 要比较的另一个值。
+     * @returns {boolean} 如果值相等则返回 `true`,否则返回 `false`。
      * @example
      *
      * var object = { 'a': 1 };
@@ -11865,16 +11700,15 @@
     }
 
     /**
-     * Checks if `value` is greater than `other`.
+     * 检查 `value` 是否大于 `other`。
      *
      * @static
      * @memberOf _
      * @since 3.9.0
      * @category Lang
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @returns {boolean} Returns `true` if `value` is greater than `other`,
-     *  else `false`.
+     * @param {*} value 要比较的值。
+     * @param {*} other 要比较的另一个值。
+     * @returns {boolean} 如果 `value` 大于 `other` 则返回 `true`,否则返回 `false`。
      * @see _.lt
      * @example
      *
@@ -11890,16 +11724,15 @@
     var gt = createRelationalOperation(baseGt);
 
     /**
-     * Checks if `value` is greater than or equal to `other`.
+     * 检查 `value` 是否大于或等于 `other`。
      *
      * @static
      * @memberOf _
      * @since 3.9.0
      * @category Lang
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @returns {boolean} Returns `true` if `value` is greater than or equal to
-     *  `other`, else `false`.
+     * @param {*} value 要比较的值。
+     * @param {*} other 要比较的另一个值。
+     * @returns {boolean} 如果 `value` 大于或等于 `other` 则返回 `true`,否则返回 `false`。
      * @see _.lte
      * @example
      *
@@ -11917,15 +11750,14 @@
     });
 
     /**
-     * Checks if `value` is likely an `arguments` object.
+     * 检查 `value` 是否可能是 `arguments` 对象。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an `arguments` object,
-     *  else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是 `arguments` 对象则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isArguments(function() { return arguments; }());
@@ -11940,14 +11772,14 @@
     };
 
     /**
-     * Checks if `value` is classified as an `Array` object.
+     * 检查 `value` 是否被分类为 `Array` 对象。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是数组则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isArray([1, 2, 3]);
@@ -11965,14 +11797,14 @@
     var isArray = Array.isArray;
 
     /**
-     * Checks if `value` is classified as an `ArrayBuffer` object.
+     * 检查 `value` 是否被分类为 `ArrayBuffer` 对象。
      *
      * @static
      * @memberOf _
      * @since 4.3.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an array buffer, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是 ArrayBuffer 则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isArrayBuffer(new ArrayBuffer(2));
@@ -11984,16 +11816,16 @@
     var isArrayBuffer = nodeIsArrayBuffer ? baseUnary(nodeIsArrayBuffer) : baseIsArrayBuffer;
 
     /**
-     * Checks if `value` is array-like. A value is considered array-like if it's
-     * not a function and has a `value.length` that's an integer greater than or
-     * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+     * 检查 `value` 是否是类数组值。如果值不是函数且 `value.length`
+     * 是大于等于 `0` 且小于等于 `Number.MAX_SAFE_INTEGER` 的整数,
+     * 则视为类数组值。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是类数组则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isArrayLike([1, 2, 3]);
@@ -12013,16 +11845,14 @@
     }
 
     /**
-     * This method is like `_.isArrayLike` except that it also checks if `value`
-     * is an object.
+     * 此方法类似 `_.isArrayLike`,但它还检查 `value` 是否是对象。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an array-like object,
-     *  else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是类数组对象则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isArrayLikeObject([1, 2, 3]);
@@ -12042,14 +11872,14 @@
     }
 
     /**
-     * Checks if `value` is classified as a boolean primitive or object.
+     * 检查 `value` 是否被分类为布尔原始类型或对象。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a boolean, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是布尔值则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isBoolean(false);
@@ -12064,14 +11894,14 @@
     }
 
     /**
-     * Checks if `value` is a buffer.
+     * 检查 `value` 是否是 Buffer。
      *
      * @static
      * @memberOf _
      * @since 4.3.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是 Buffer 则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isBuffer(new Buffer(2));
@@ -12083,14 +11913,14 @@
     var isBuffer = nativeIsBuffer || stubFalse;
 
     /**
-     * Checks if `value` is classified as a `Date` object.
+     * 检查 `value` 是否被分类为 `Date` 对象。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a date object, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是日期对象则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isDate(new Date);
@@ -12102,14 +11932,14 @@
     var isDate = nodeIsDate ? baseUnary(nodeIsDate) : baseIsDate;
 
     /**
-     * Checks if `value` is likely a DOM element.
+     * 检查 `value` 是否可能是 DOM 元素。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a DOM element, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是 DOM 元素则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isElement(document.body);
@@ -12123,21 +11953,19 @@
     }
 
     /**
-     * Checks if `value` is an empty object, collection, map, or set.
+     * 检查 `value` 是否是空对象、集合、Map 或 Set。
      *
-     * Objects are considered empty if they have no own enumerable string keyed
-     * properties.
+     * 如果对象没有自己的可枚举字符串键属性,则视为空。
      *
-     * Array-like values such as `arguments` objects, arrays, buffers, strings, or
-     * jQuery-like collections are considered empty if they have a `length` of `0`.
-     * Similarly, maps and sets are considered empty if they have a `size` of `0`.
+     * 类似数组的值(如 `arguments` 对象、数组、Buffer、字符串或类 jQuery 集合)
+     * 如果 `length` 为 `0` 则视为空。同样,Map 和 Set 如果 `size` 为 `0` 也视为空。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is empty, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 为空则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isEmpty(null);
@@ -12180,22 +12008,20 @@
     }
 
     /**
-     * Performs a deep comparison between two values to determine if they are
-     * equivalent.
+     * 执行两个值的深度比较,确定它们是否相等。
      *
-     * **Note:** This method supports comparing arrays, array buffers, booleans,
-     * date objects, error objects, maps, numbers, `Object` objects, regexes,
-     * sets, strings, symbols, and typed arrays. `Object` objects are compared
-     * by their own, not inherited, enumerable properties. Functions and DOM
-     * nodes are compared by strict equality, i.e. `===`.
+     * **注意:** 此方法支持比较数组、ArrayBuffer、布尔值、日期对象、错误对象、Map、
+     * 数字、`Object` 对象、正则表达式、Set、字符串、Symbol 和类型化数组。
+     * `Object` 对象通过自身的可枚举属性进行比较,而不是继承的属性。
+     * 函数和 DOM 节点通过严格相等比较,即 `===`。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Lang
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+     * @param {*} value 要比较的值。
+     * @param {*} other 要比较的另一个值。
+     * @returns {boolean} 如果值相等则返回 `true`,否则返回 `false`。
      * @example
      *
      * var object = { 'a': 1 };
@@ -12212,19 +12038,18 @@
     }
 
     /**
-     * This method is like `_.isEqual` except that it accepts `customizer` which
-     * is invoked to compare values. If `customizer` returns `undefined`, comparisons
-     * are handled by the method instead. The `customizer` is invoked with up to
-     * six arguments: (objValue, othValue [, index|key, object, other, stack]).
+     * 此方法类似 `_.isEqual`,但它接受一个 `customizer` 来比较值。
+     * 如果 `customizer` 返回 `undefined`,则由该方法处理比较。
+     * `customizer` 最多接受六个参数:(objValue, othValue [, index|key, object, other, stack])。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @param {Function} [customizer] The function to customize comparisons.
-     * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+     * @param {*} value 要比较的值。
+     * @param {*} other 要比较的另一个值。
+     * @param {Function} [customizer] 自定义比较的函数。
+     * @returns {boolean} 如果值相等则返回 `true`,否则返回 `false`。
      * @example
      *
      * function isGreeting(value) {
@@ -12250,15 +12075,15 @@
     }
 
     /**
-     * Checks if `value` is an `Error`, `EvalError`, `RangeError`, `ReferenceError`,
-     * `SyntaxError`, `TypeError`, or `URIError` object.
+     * 检查 `value` 是否是 `Error`、`EvalError`、`RangeError`、`ReferenceError`、
+     * `SyntaxError`、`TypeError` 或 `URIError` 对象。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an error object, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是错误对象则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isError(new Error);
@@ -12277,17 +12102,17 @@
     }
 
     /**
-     * Checks if `value` is a finite primitive number.
+     * 检查 `value` 是否是有限原始数字。
      *
-     * **Note:** This method is based on
-     * [`Number.isFinite`](https://mdn.io/Number/isFinite).
+     * **注意:** 此方法基于
+     * [`Number.isFinite`](https://mdn.io/Number/isFinite)。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a finite number, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是有限数字则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isFinite(3);
@@ -12307,14 +12132,14 @@
     }
 
     /**
-     * Checks if `value` is classified as a `Function` object.
+     * 检查 `value` 是否被分类为 `Function` 对象。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是函数则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isFunction(_);
@@ -12334,17 +12159,17 @@
     }
 
     /**
-     * Checks if `value` is an integer.
+     * 检查 `value` 是否是整数。
      *
-     * **Note:** This method is based on
-     * [`Number.isInteger`](https://mdn.io/Number/isInteger).
+     * **注意:** 此方法基于
+     * [`Number.isInteger`](https://mdn.io/Number/isInteger)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an integer, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是整数则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isInteger(3);
@@ -12364,17 +12189,17 @@
     }
 
     /**
-     * Checks if `value` is a valid array-like length.
+     * 检查 `value` 是否是有效的类数组长度。
      *
-     * **Note:** This method is loosely based on
-     * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+     * **注意:** 此方法松散地基于
+     * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是有效长度则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isLength(3);
@@ -12395,16 +12220,16 @@
     }
 
     /**
-     * Checks if `value` is the
-     * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
-     * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+     * 检查 `value` 是否是
+     * [语言类型](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+     * 的 `Object`。(例如数组、函数、对象、正则表达式、`new Number(0)` 和 `new String('')`)
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是对象则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isObject({});
@@ -12425,15 +12250,15 @@
     }
 
     /**
-     * Checks if `value` is object-like. A value is object-like if it's not `null`
-     * and has a `typeof` result of "object".
+     * 检查 `value` 是否像对象。如果值不是 `null` 且 `typeof` 结果为 "object",
+     * 则视为像对象。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 像对象则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isObjectLike({});
@@ -12453,14 +12278,14 @@
     }
 
     /**
-     * Checks if `value` is classified as a `Map` object.
+     * 检查 `value` 是否被分类为 `Map` 对象。
      *
      * @static
      * @memberOf _
      * @since 4.3.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a map, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是 Map 则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isMap(new Map);
@@ -12472,23 +12297,20 @@
     var isMap = nodeIsMap ? baseUnary(nodeIsMap) : baseIsMap;
 
     /**
-     * Performs a partial deep comparison between `object` and `source` to
-     * determine if `object` contains equivalent property values.
+     * 执行 `object` 和 `source` 的深度部分比较,确定 `object` 是否包含等价的属性值。
      *
-     * **Note:** This method is equivalent to `_.matches` when `source` is
-     * partially applied.
+     * **注意:** 当 `source` 被部分应用时,此方法等价于 `_.matches`。
      *
-     * Partial comparisons will match empty array and empty object `source`
-     * values against any array or object value, respectively. See `_.isEqual`
-     * for a list of supported value comparisons.
+     * 部分比较会将空数组和空对象 `source` 值分别与任何数组或对象值进行匹配。
+     * 有关支持的值比较列表,请参见 `_.isEqual`。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Lang
-     * @param {Object} object The object to inspect.
-     * @param {Object} source The object of property values to match.
-     * @returns {boolean} Returns `true` if `object` is a match, else `false`.
+     * @param {Object} object 要检查的对象。
+     * @param {Object} source 要匹配的属性值的源对象。
+     * @returns {boolean} 如果 `object` 匹配则返回 `true`,否则返回 `false`。
      * @example
      *
      * var object = { 'a': 1, 'b': 2 };
@@ -12504,19 +12326,18 @@
     }
 
     /**
-     * This method is like `_.isMatch` except that it accepts `customizer` which
-     * is invoked to compare values. If `customizer` returns `undefined`, comparisons
-     * are handled by the method instead. The `customizer` is invoked with five
-     * arguments: (objValue, srcValue, index|key, object, source).
+     * 此方法类似 `_.isMatch`,但它接受一个 `customizer` 来比较值。
+     * 如果 `customizer` 返回 `undefined`,则由该方法处理比较。
+     * `customizer` 接受五个参数:(objValue, srcValue, index|key, object, source)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {Object} object The object to inspect.
-     * @param {Object} source The object of property values to match.
-     * @param {Function} [customizer] The function to customize comparisons.
-     * @returns {boolean} Returns `true` if `object` is a match, else `false`.
+     * @param {Object} object 要检查的对象。
+     * @param {Object} source 要匹配的属性值的源对象。
+     * @param {Function} [customizer] 自定义比较的函数。
+     * @returns {boolean} 如果 `object` 匹配则返回 `true`,否则返回 `false`。
      * @example
      *
      * function isGreeting(value) {
@@ -12541,19 +12362,18 @@
     }
 
     /**
-     * Checks if `value` is `NaN`.
+     * 检查 `value` 是否是 `NaN`。
      *
-     * **Note:** This method is based on
-     * [`Number.isNaN`](https://mdn.io/Number/isNaN) and is not the same as
-     * global [`isNaN`](https://mdn.io/isNaN) which returns `true` for
-     * `undefined` and other non-number values.
+     * **注意:** 此方法基于
+     * [`Number.isNaN`](https://mdn.io/Number/isNaN),与全局
+     * [`isNaN`](https://mdn.io/isNaN) 不同,后者对 `undefined` 和其他非数字值返回 `true`。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是 `NaN` 则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isNaN(NaN);
@@ -12576,23 +12396,19 @@
     }
 
     /**
-     * Checks if `value` is a pristine native function.
+     * 检查 `value` 是否是原始的原生函数。
      *
-     * **Note:** This method can't reliably detect native functions in the presence
-     * of the core-js package because core-js circumvents this kind of detection.
-     * Despite multiple requests, the core-js maintainer has made it clear: any
-     * attempt to fix the detection will be obstructed. As a result, we're left
-     * with little choice but to throw an error. Unfortunately, this also affects
-     * packages, like [babel-polyfill](https://www.npmjs.com/package/babel-polyfill),
-     * which rely on core-js.
+     * **注意:** 在存在 core-js 包的情况下,此方法无法可靠地检测原生函数,
+     * 因为 core-js 绕过了这种检测。尽管多次请求,core-js 维护者已明确表示:
+     * 任何修复检测的尝试都将被阻止。因此,我们几乎没有选择,只能抛出错误。
+     * 不幸的是,这也影响了依赖 core-js 的包,如 [babel-polyfill](https://www.npmjs.com/package/babel-polyfill)。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a native function,
-     *  else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是原生函数则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isNative(Array.prototype.push);
@@ -12609,14 +12425,14 @@
     }
 
     /**
-     * Checks if `value` is `null`.
+     * 检查 `value` 是否是 `null`。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is `null`, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是 `null` 则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isNull(null);
@@ -12630,14 +12446,14 @@
     }
 
     /**
-     * Checks if `value` is `null` or `undefined`.
+     * 检查 `value` 是否是 `null` 或 `undefined`。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is nullish, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是 null/undefined 则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isNil(null);
@@ -12654,17 +12470,17 @@
     }
 
     /**
-     * Checks if `value` is classified as a `Number` primitive or object.
+     * 检查 `value` 是否被分类为数字原始类型或对象。
      *
-     * **Note:** To exclude `Infinity`, `-Infinity`, and `NaN`, which are
-     * classified as numbers, use the `_.isFinite` method.
+     * **注意:** 要排除被分类为数字的 `Infinity`、`-Infinity` 和 `NaN`,
+     * 请使用 `_.isFinite` 方法。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a number, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是数字则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isNumber(3);
@@ -12685,15 +12501,15 @@
     }
 
     /**
-     * Checks if `value` is a plain object, that is, an object created by the
-     * `Object` constructor or one with a `[[Prototype]]` of `null`.
+     * 检查 `value` 是否是普通对象,即由 `Object` 构造函数创建的对象,
+     * 或者 `[[Prototype]]` 为 `null` 的对象。
      *
      * @static
      * @memberOf _
      * @since 0.8.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是普通对象则返回 `true`,否则返回 `false`。
      * @example
      *
      * function Foo() {
@@ -12726,14 +12542,14 @@
     }
 
     /**
-     * Checks if `value` is classified as a `RegExp` object.
+     * 检查 `value` 是否被分类为 `RegExp` 对象。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a regexp, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是正则表达式则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isRegExp(/abc/);
@@ -12745,18 +12561,18 @@
     var isRegExp = nodeIsRegExp ? baseUnary(nodeIsRegExp) : baseIsRegExp;
 
     /**
-     * Checks if `value` is a safe integer. An integer is safe if it's an IEEE-754
-     * double precision number which isn't the result of a rounded unsafe integer.
+     * 检查 `value` 是否是安全整数。安全整数是可以精确表示为 IEEE-754 双精度数字,
+     * 且不是舍入不安全整数的结果。
      *
-     * **Note:** This method is based on
-     * [`Number.isSafeInteger`](https://mdn.io/Number/isSafeInteger).
+     * **注意:** 此方法基于
+     * [`Number.isSafeInteger`](https://mdn.io/Number/isSafeInteger)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a safe integer, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是安全整数则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isSafeInteger(3);
@@ -12776,14 +12592,14 @@
     }
 
     /**
-     * Checks if `value` is classified as a `Set` object.
+     * 检查 `value` 是否被分类为 `Set` 对象。
      *
      * @static
      * @memberOf _
      * @since 4.3.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a set, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是 Set 则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isSet(new Set);
@@ -12795,14 +12611,14 @@
     var isSet = nodeIsSet ? baseUnary(nodeIsSet) : baseIsSet;
 
     /**
-     * Checks if `value` is classified as a `String` primitive or object.
+     * 检查 `value` 是否被分类为字符串原始类型或对象。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a string, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是字符串则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isString('abc');
@@ -12817,14 +12633,14 @@
     }
 
     /**
-     * Checks if `value` is classified as a `Symbol` primitive or object.
+     * 检查 `value` 是否被分类为 Symbol 原始类型或对象。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是 Symbol 则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isSymbol(Symbol.iterator);
@@ -12839,14 +12655,14 @@
     }
 
     /**
-     * Checks if `value` is classified as a typed array.
+     * 检查 `value` 是否被分类为类型化数组。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是类型化数组则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isTypedArray(new Uint8Array);
@@ -12858,14 +12674,14 @@
     var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedArray;
 
     /**
-     * Checks if `value` is `undefined`.
+     * 检查 `value` 是否是 `undefined`。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is `undefined`, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是 `undefined` 则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isUndefined(void 0);
@@ -12879,14 +12695,14 @@
     }
 
     /**
-     * Checks if `value` is classified as a `WeakMap` object.
+     * 检查 `value` 是否被分类为 `WeakMap` 对象。
      *
      * @static
      * @memberOf _
      * @since 4.3.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a weak map, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是 WeakMap 则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isWeakMap(new WeakMap);
@@ -12900,14 +12716,14 @@
     }
 
     /**
-     * Checks if `value` is classified as a `WeakSet` object.
+     * 检查 `value` 是否被分类为 `WeakSet` 对象。
      *
      * @static
      * @memberOf _
      * @since 4.3.0
      * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a weak set, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是 WeakSet 则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.isWeakSet(new WeakSet);
@@ -12921,16 +12737,15 @@
     }
 
     /**
-     * Checks if `value` is less than `other`.
+     * 检查 `value` 是否小于 `other`。
      *
      * @static
      * @memberOf _
      * @since 3.9.0
      * @category Lang
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @returns {boolean} Returns `true` if `value` is less than `other`,
-     *  else `false`.
+     * @param {*} value 要比较的值。
+     * @param {*} other 要比较的另一个值。
+     * @returns {boolean} 如果 `value` 小于 `other` 则返回 `true`,否则返回 `false`。
      * @see _.gt
      * @example
      *
@@ -12946,16 +12761,15 @@
     var lt = createRelationalOperation(baseLt);
 
     /**
-     * Checks if `value` is less than or equal to `other`.
+     * 检查 `value` 是否小于或等于 `other`。
      *
      * @static
      * @memberOf _
      * @since 3.9.0
      * @category Lang
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @returns {boolean} Returns `true` if `value` is less than or equal to
-     *  `other`, else `false`.
+     * @param {*} value 要比较的值。
+     * @param {*} other 要比较的另一个值。
+     * @returns {boolean} 如果 `value` 小于或等于 `other` 则返回 `true`,否则返回 `false`。
      * @see _.gte
      * @example
      *
@@ -12973,14 +12787,14 @@
     });
 
     /**
-     * Converts `value` to an array.
+     * 将 `value` 转换为数组。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Lang
-     * @param {*} value The value to convert.
-     * @returns {Array} Returns the converted array.
+     * @param {*} value 要转换的值。
+     * @returns {Array} 返回转换后的数组。
      * @example
      *
      * _.toArray({ 'a': 1, 'b': 2 });
@@ -13012,14 +12826,14 @@
     }
 
     /**
-     * Converts `value` to a finite number.
+     * 将 `value` 转换为有限数字。
      *
      * @static
      * @memberOf _
      * @since 4.12.0
      * @category Lang
-     * @param {*} value The value to convert.
-     * @returns {number} Returns the converted number.
+     * @param {*} value 要转换的值。
+     * @returns {number} 返回转换后的数字。
      * @example
      *
      * _.toFinite(3.2);
@@ -13047,17 +12861,17 @@
     }
 
     /**
-     * Converts `value` to an integer.
+     * 将 `value` 转换为整数。
      *
-     * **Note:** This method is loosely based on
-     * [`ToInteger`](http://www.ecma-international.org/ecma-262/7.0/#sec-tointeger).
+     * **注意:** 此方法松散地基于
+     * [`ToInteger`](http://www.ecma-international.org/ecma-262/7.0/#sec-tointeger)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to convert.
-     * @returns {number} Returns the converted integer.
+     * @param {*} value 要转换的值。
+     * @returns {number} 返回转换后的整数。
      * @example
      *
      * _.toInteger(3.2);
@@ -13080,18 +12894,17 @@
     }
 
     /**
-     * Converts `value` to an integer suitable for use as the length of an
-     * array-like object.
+     * 将 `value` 转换为适合用作类数组对象长度的整数。
      *
-     * **Note:** This method is based on
-     * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+     * **注意:** 此方法基于
+     * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to convert.
-     * @returns {number} Returns the converted integer.
+     * @param {*} value 要转换的值。
+     * @returns {number} 返回转换后的整数。
      * @example
      *
      * _.toLength(3.2);
@@ -13111,14 +12924,14 @@
     }
 
     /**
-     * Converts `value` to a number.
+     * 将 `value` 转换为数字。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to process.
-     * @returns {number} Returns the number.
+     * @param {*} value 要处理的值。
+     * @returns {number} 返回数字。
      * @example
      *
      * _.toNumber(3.2);
@@ -13155,15 +12968,14 @@
     }
 
     /**
-     * Converts `value` to a plain object flattening inherited enumerable string
-     * keyed properties of `value` to own properties of the plain object.
+     * 将 `value` 转换为普通对象,将 `value` 继承的可枚举字符串键属性展平为普通对象的自有属性。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Lang
-     * @param {*} value The value to convert.
-     * @returns {Object} Returns the converted plain object.
+     * @param {*} value 要转换的值。
+     * @returns {Object} 返回转换后的普通对象。
      * @example
      *
      * function Foo() {
@@ -13183,15 +12995,14 @@
     }
 
     /**
-     * Converts `value` to a safe integer. A safe integer can be compared and
-     * represented correctly.
+     * 将 `value` 转换为安全整数。安全整数可以正确比较和表示。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to convert.
-     * @returns {number} Returns the converted integer.
+     * @param {*} value 要转换的值。
+     * @returns {number} 返回转换后的整数。
      * @example
      *
      * _.toSafeInteger(3.2);
@@ -13213,15 +13024,15 @@
     }
 
     /**
-     * Converts `value` to a string. An empty string is returned for `null`
-     * and `undefined` values. The sign of `-0` is preserved.
+     * 将 `value` 转换为字符串。`null` 和 `undefined` 返回空字符串。
+     * `-0` 的符号会被保留。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
-     * @param {*} value The value to convert.
-     * @returns {string} Returns the converted string.
+     * @param {*} value 要转换的值。
+     * @returns {string} 返回转换后的字符串。
      * @example
      *
      * _.toString(null);
