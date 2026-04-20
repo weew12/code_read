@@ -930,6 +930,20 @@
    * @param {Function} predicate The function invoked per iteration.
    * @param {Function} eachFunc The function to iterate over `collection`.
    * @returns {*} Returns the found element or its key, else `undefined`.
+   *
+   * baseFindKey 实现原理：
+   *
+   * 1. 遍历集合：委托给 eachFunc 进行遍历（可以是 arrayEach 或 collectionEach）
+   * 2. 谓词检测：对每个元素调用 predicate(value, key, collection)
+   * 3. 短路返回：当 predicate 返回 true 时，立即返回当前 key
+   * 4. 默认返回：如果未找到，返回 undefined
+   *
+   * 设计模式：
+   * - 委托模式：遍历逻辑委托给 eachFunc
+   * - early exit：通过返回 false 提前终止遍历
+   *
+   * 示例：
+   * baseFindKey({a: 1, b: 2}, v => v > 1, collectionEach) // => 'b'
    */
   function baseFindKey(collection, predicate, eachFunc) {
     var result;
@@ -952,6 +966,23 @@
    * @param {number} fromIndex The index to search from.
    * @param {boolean} [fromRight] Specify iterating from right to left.
    * @returns {number} Returns the index of the matched value, else `-1`.
+   *
+   * baseFindIndex 实现原理：
+   *
+   * 1. 方向感知：根据 fromRight 参数调整遍历方向
+   *    - 从左到右：index 从 fromIndex 开始递增
+   *    - 从右到左：index 从 fromIndex 开始递减
+   * 2. 谓词匹配：对每个元素调用 predicate(element, index, array)
+   * 3. 短路返回：找到第一个匹配立即返回索引
+   * 4. 默认返回：未找到返回 -1
+   *
+   * 性能优化：
+   * - while 循环比 for 循环更快
+   * - 单一条件判断结合方向控制
+   *
+   * 示例：
+   * baseFindIndex([1, 2, 3, 4], x => x > 2, 0, false)  // => 2
+   * baseFindIndex([1, 2, 3, 4], x => x > 2, 3, true)   // => 2 (从右向左)
    */
   function baseFindIndex(array, predicate, fromIndex, fromRight) {
     var length = array.length,
@@ -1065,6 +1096,25 @@
    *  `collection` as the initial value.
    * @param {Function} eachFunc The function to iterate over `collection`.
    * @returns {*} Returns the accumulated value.
+   *
+   * baseReduce 实现原理：
+   *
+   * 核心算法：
+   * 1. 初始化检测：如果 initAccum 为 true，使用集合的第一个/最后一个元素作为初始值
+   * 2. 迭代累积：对每个元素调用 iteratee(accumulator, value, index, collection)
+   * 3. 结果返回：返回最终的 accumulator 值
+   *
+   * 实现技巧：
+   * - initAccum 作为哨兵值：第一次迭代后将其设为 false，确保只使用一次
+   * - 利用闭包：accumulator 在迭代过程中被更新
+   *
+   * reduce vs reduceRight：
+   * - reduce：使用 arrayEach，从左到右遍历
+   * - reduceRight：使用 arrayEachRight，从右到左遍历
+   *
+   * 示例：
+   * baseReduce([1, 2, 3], (acc, x) => acc + x, 0, false, arrayEach)  // => 6
+   * baseReduce([1, 2, 3], (acc, x) => acc + x, 0, true, arrayEachRight) // => 6
    */
   function baseReduce(collection, iteratee, accumulator, initAccum, eachFunc) {
     eachFunc(collection, function(value, index, collection) {
@@ -3065,6 +3115,24 @@
      * @param {Function} predicate The function invoked per iteration.
      * @returns {boolean} Returns `true` if all elements pass the predicate check,
      *  else `false`
+     *
+     * baseEvery 实现原理：
+     *
+     * 短路求值（Short-circuit evaluation）：
+     * - 只要有一个元素不满足谓词，立即返回 false
+     * - 不需要遍历整个集合
+     *
+     * 实现细节：
+     * 1. !! 运算符：确保返回值是布尔值（true/false）
+     * 2. return result：当 result 为 false 时，baseEach 会立即返回
+     *
+     * 性能优势：
+     * - 最佳情况：第一个元素就不满足，只遍历一次
+     * - 最坏情况：所有元素都满足，需要完整遍历
+     *
+     * 示例：
+     * baseEvery([2, 4, 6], x => x % 2 === 0)  // => true
+     * baseEvery([2, 3, 4], x => x % 2 === 0)   // => false
      */
     function baseEvery(collection, predicate) {
       var result = true;
@@ -3139,6 +3207,25 @@
      * @param {Array|Object} collection The collection to iterate over.
      * @param {Function} predicate The function invoked per iteration.
      * @returns {Array} Returns the new filtered array.
+     *
+     * baseFilter 实现原理：
+     *
+     * 1. 初始化结果数组：创建空数组存储满足条件的元素
+     *
+     * 2. 遍历集合：使用 baseEach 遍历每个元素
+     *
+     * 3. 谓词检测：对每个元素调用 predicate(value, index, collection)
+     *    - 如果返回 true，将元素 push 到结果数组
+     *
+     * 4. 返回结果：返回所有满足条件的元素组成的新数组
+     *
+     * 注意：
+     * - 与 baseEvery 不同，filter 需要遍历所有元素
+     * - 结果数组使用 push 添加元素（不需要预分配长度）
+     *
+     * 示例：
+     * baseFilter([1, 2, 3, 4], x => x % 2 === 0)  // => [2, 4]
+     * baseFilter({a: 1, b: 2}, v => v > 1)        // => [2]
      */
     function baseFilter(collection, predicate) {
       var result = [];
@@ -3522,6 +3609,30 @@
      * @param {Function} [customizer] The function to customize comparisons.
      * @param {Object} [stack] Tracks traversed `value` and `other` objects.
      * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+     *
+     * baseIsEqual 实现原理：
+     *
+     * 快速路径（短路检查）：
+     * 1. 严格相等（===）：如果 value === other，直接返回 true
+     *    - 包括 NaN !== NaN 的情况处理
+     *
+     * 2. 基础类型检测：
+     *    - 如果任一值为 null/undefined 且两者不等，返回 false
+     *    - 如果两者都不是对象类型（!isObjectLike），使用严格比较 NaN
+     *      这是为了处理 NaN === NaN 返回 false 的情况
+     *
+     * 3. 委托深度比较：
+     *    - 将实际的深度比较委托给 baseIsEqualDeep
+     *    - 传递回调函数 baseIsEqual 以支持递归
+     *
+     * 位掩码标志：
+     * - COMPARE_UNORDERED_FLAG (1): 无序比较（用于 Set、Array 比较）
+     * - COMPARE_PARTIAL_FLAG (2): 部分比较（_.isMatch 使用）
+     *
+     * 示例：
+     * baseIsEqual(1, 1)                    // => true
+     * baseIsEqual(NaN, NaN)                // => true（特殊处理）
+     * baseIsEqual({a: 1}, {a: 1})         // => true
      */
     function baseIsEqual(value, other, bitmask, customizer, stack) {
       if (value === other) {
@@ -3546,6 +3657,38 @@
      * @param {Function} equalFunc The function to determine equivalents of values.
      * @param {Object} [stack] Tracks traversed `object` and `other` objects.
      * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
+     *
+     * baseIsEqualDeep 实现原理：
+     *
+     * 1. 类型检测：
+     *    - isArray 检测：区分数组和普通对象
+     *    - getTag 获取 toStringTag：用于精确类型比较
+     *    - argsTag 归一化：arguments 对象归为 objectTag
+     *
+     * 2. Buffer 处理：
+     *    - Buffer 需要特殊比较（内容比较而非引用）
+     *    - 如果一个是 Buffer 另一个不是，直接返回 false
+     *
+     * 3. 分支策略：
+     *    - 相同类型 + 数组：使用 equalArrays 比较
+     *    - 相同类型 + TypedArray：使用 equalArrays 比较
+     *    - 其他：使用 equalByTag 比较（如 Date、RegExp、Map、Set 等）
+     *
+     * 4. 循环引用处理：
+     *    - 使用 Stack 数据结构跟踪已访问的对象
+     *    - 比较前先检查是否已比较过
+     *    - 比较后将当前对象入栈
+     *
+     * 5. 包装对象（_.chain）支持：
+     *    - 如果对象被 _.chain 包装，提取其值进行比较
+     *
+     * 6. 类型不同：直接返回 false
+     *
+     * 循环引用示例：
+     * var obj = {a: 1};
+     * obj.self = obj;  // 循环引用
+     * var obj2 = {a: 1, self: obj2};  // 另一个循环引用
+     * baseIsEqual(obj, obj2) // => true（正确处理循环引用）
      */
     function baseIsEqualDeep(object, other, bitmask, customizer, equalFunc, stack) {
       var objIsArr = isArray(object),
@@ -3737,6 +3880,28 @@
      * @private
      * @param {Object} object The object to query.
      * @returns {Array} Returns the array of property names.
+     *
+     * baseKeys 实现原理：
+     *
+     * 1. 原型检测：检查是否是原型对象（Object.prototype 等）
+     *
+     * 2. 快速路径：
+     *    - 如果不是原型对象，直接使用 nativeKeys（Object.keys）
+     *    - 这是常见的普通对象情况
+     *
+     * 3. 慢速路径（原型对象）：
+     *    - 使用 for...in 遍历
+     *    - 过滤：只包含 hasOwnProperty 为 true 的属性
+     *    - 排除：key !== 'constructor'（避免包含继承的属性）
+     *
+     * 设计考虑：
+     * - 避免遍历稀疏数组的空洞
+     * - 跳过继承自原型的属性
+     *
+     * 示例：
+     * baseKeys({a: 1, b: 2})           // => ['a', 'b']
+     * baseKeys([1, 2, 3])              // => ['0', '1', '2']
+     * baseKeys(Object.prototype)       // => []（空，原型无自有属性）
      */
     function baseKeys(object) {
       if (!isPrototype(object)) {
@@ -3757,6 +3922,25 @@
      * @private
      * @param {Object} object The object to query.
      * @returns {Array} Returns the array of property names.
+     *
+     * baseKeysIn 实现原理：
+     *
+     * 与 baseKeys 的区别：
+     * - baseKeys：只返回自有属性（own properties）
+     * - baseKeysIn：返回自有属性 + 继承属性
+     *
+     * 1. 非对象检测：如果不是对象（如 undefined、null、原始值），返回空数组
+     *
+     * 2. 原型检测：检查是否是原型对象
+     *
+     * 3. 遍历策略：
+     *    - 使用 for...in（包含继承属性）
+     *    - 排除构造函数属性
+     *    - 当是原型对象时，还要排除非 hasOwnProperty 的继承属性
+     *
+     * 示例：
+     * baseKeysIn({a: 1, b: 2})                    // => ['a', 'b']
+     * baseKeysIn(Object.create({c: 3}, {d: {value: 4}})) // => ['d', 'c']
      */
     function baseKeysIn(object) {
       if (!isObject(object)) {
@@ -3793,6 +3977,27 @@
      * @param {Array|Object} collection The collection to iterate over.
      * @param {Function} iteratee The function invoked per iteration.
      * @returns {Array} Returns the new mapped array.
+     *
+     * baseMap 实现原理：
+     *
+     * 1. 预分配数组：
+     *    - 如果是类数组（isArrayLike），预分配正确长度的数组
+     *    - 否则使用空数组（适用于 Set、Map 等）
+     *
+     * 2. 遍历集合：使用 baseEach 进行遍历
+     *
+     * 3. 转换元素：对每个元素调用 iteratee(value, key, collection)
+     *    - key：如果是数组则是索引，如果是对象则是属性名
+     *
+     * 4. 返回结果：返回填充好的新数组
+     *
+     * 性能优化：
+     * - 预分配数组比 push 更快
+     * - 使用 ++index 而非 index++ 避免额外赋值
+     *
+     * 示例：
+     * baseMap([1, 2, 3], x => x * 2)  // => [2, 4, 6]
+     * baseMap({a: 1, b: 2}, (v, k) => k + v)  // => ['a1', 'b2']
      */
     function baseMap(collection, iteratee) {
       var index = -1,
@@ -3851,6 +4056,30 @@
      * @param {Function} [customizer] The function to customize merged values.
      * @param {Object} [stack] Tracks traversed source values and their merged
      *  counterparts.
+     *
+     * baseMerge 实现原理：
+     *
+     * 合并策略：
+     * 1. 自引用检测：如果 object === source，直接返回（避免无限循环）
+     *
+     * 2. 遍历源对象：使用 baseFor 遍历 source 的所有属性（包含继承属性）
+     *
+     * 3. 分类处理：
+     *    - 对象类型：递归调用 baseMergeDeep 进行深度合并
+     *    - 基本类型：
+     *      a. 如果有 customizer，调用它获取新值
+     *      b. 否则使用源值作为新值
+     *      c. 调用 assignMergeValue 赋值到目标对象
+     *
+     * 4. Stack 用于循环引用检测：
+     *    - 避免死循环（如合并两个相互引用的对象）
+     *
+     * 与 Object.assign 的区别：
+     * - Object.assign：浅拷贝，直接替换属性值
+     * - _.merge：深度合并，递归合并嵌套对象
+     *
+     * 示例：
+     * baseMerge({a: {x: 1}}, {a: {y: 2}})  // => {a: {x: 1, y: 2}}
      */
     function baseMerge(object, source, srcIndex, customizer, stack) {
       if (object === source) {
@@ -3888,6 +4117,32 @@
      * @param {Function} [customizer] The function to customize assigned values.
      * @param {Object} [stack] Tracks traversed source values and their merged
      *  counterparts.
+     *
+     * baseMergeDeep 实现原理：
+     *
+     * 1. 循环引用检测：
+     *    - 使用 Stack 检查 srcValue 是否已访问
+     *    - 如果已访问，直接使用缓存的副本（避免无限循环）
+     *
+     * 2. Customizer 优先：
+     *    - 如果提供了 customizer，调用它决定新值
+     *    - isCommon 标记 customizer 是否返回了有效值
+     *
+     * 3. 类型判断与处理策略：
+     *    - 数组：合并数组而非替换
+     *    - Buffer：深拷贝 Buffer
+     *    - TypedArray：深拷贝 TypedArray
+     *    - 普通对象/arguments：递归合并
+     *    - 其他类型（如函数）：直接替换
+     *
+     * 4. 递归合并：
+     *    - 将新值入栈（标记为已访问）
+     *    - 递归调用 mergeFunc 合并嵌套对象
+     *    - 合并完成后从栈中删除（允许后续重新访问）
+     *
+     * 示例：
+     * baseMergeDeep({a: {}}, {a: {b: 1}}, 'a', 0, baseMerge)
+     * // => {a: {b: 1}}（a 对象被合并，而非替换）
      */
     function baseMergeDeep(object, source, key, srcIndex, mergeFunc, customizer, stack) {
       var objValue = safeGet(object, key),
@@ -4347,6 +4602,24 @@
      * @param {Function} predicate The function invoked per iteration.
      * @returns {boolean} Returns `true` if any element passes the predicate check,
      *  else `false`.
+     *
+     * baseSome 实现原理：
+     *
+     * 短路求值（Short-circuit evaluation）：
+     * - 只要有一个元素满足谓词，立即返回 true
+     * - 不需要遍历整个集合
+     *
+     * 实现技巧：
+     * 1. return !result：当 result 为 true 时，返回 false，终止 baseEach
+     * 2. !!result：确保返回值是布尔值
+     *
+     * 与 baseEvery 的区别：
+     * - baseEvery：所有元素都满足才返回 true
+     * - baseSome：任一元素满足就返回 true
+     *
+     * 示例：
+     * baseSome([1, 2, 3], x => x > 2)  // => true
+     * baseSome([1, 2, 3], x => x > 3)   // => false
      */
     function baseSome(collection, predicate) {
       var result;
@@ -5197,6 +5470,40 @@
      * @private
      * @param {boolean} [fromRight] Specify iterating from right to left.
      * @returns {Function} Returns the new base function.
+     *
+     * createBaseFor 实现原理：
+     *
+     * 工厂模式：
+     * - 创建一个工厂函数，根据 fromRight 参数生成不同方向的遍历函数
+     * - fromRight = false：创建 baseFor（从左到右遍历）
+     * - fromRight = true：创建 baseForRight（从右到左遍历）
+     *
+     * 核心算法：
+     * 1. 获取属性列表：keysFunc(object) 返回要遍历的属性数组
+     *    - keys()：自有可枚举属性
+     *    - keysIn()：自有 + 继承属性
+     *
+     * 2. while 循环 + 长度递减：
+     *    - 比 for 循环性能更好
+     *    - 通过 length-- 控制迭代次数
+     *
+     * 3. 方向控制：
+     *    - 从左到右：++index（先增后用）
+     *    - 从右到左：length--（从末尾开始）
+     *
+     * 4. early exit：
+     *    - 如果 iteratee 返回 false，立即终止遍历
+     *
+     * 性能优化：
+     * - while 循环比 for 循环更快
+     * - 预获取 props.length 避免重复计算
+     *
+     * 示例：
+     * var forIn = createBaseFor(false);
+     * forIn({a: 1, b: 2}, (v, k) => console.log(k), keys); // a, b
+     *
+     * var forInRight = createBaseFor(true);
+     * forInRight({a: 1, b: 2}, (v, k) => console.log(k), keys); // b, a
      */
     function createBaseFor(fromRight) {
       return function(object, iteratee, keysFunc) {
