@@ -14580,14 +14580,14 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * Converts `string` to [camel case](https://en.wikipedia.org/wiki/CamelCase).
+     * 将 `string` 转换为[驼峰命名](https://en.wikipedia.org/wiki/CamelCase)。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category String
-     * @param {string} [string=''] The string to convert.
-     * @returns {string} Returns the camel cased string.
+     * @param {string} [string=''] 要转换的字符串。
+     * @returns {string} 返回驼峰命名的字符串。
      * @example
      *
      * _.camelCase('Foo Bar');
@@ -14605,15 +14605,14 @@
     });
 
     /**
-     * Converts the first character of `string` to upper case and the remaining
-     * to lower case.
+     * 将 `string` 的第一个字符转换为大写,其余字符转换为小写。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category String
-     * @param {string} [string=''] The string to capitalize.
-     * @returns {string} Returns the capitalized string.
+     * @param {string} [string=''] 要大写的字符串。
+     * @returns {string} 返回大写后的字符串。
      * @example
      *
      * _.capitalize('FRED');
@@ -14624,18 +14623,19 @@
     }
 
     /**
-     * Deburrs `string` by converting
-     * [Latin-1 Supplement](https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)#Character_table)
-     * and [Latin Extended-A](https://en.wikipedia.org/wiki/Latin_Extended-A)
-     * letters to basic Latin letters and removing
-     * [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks).
+     * 通过将
+     * [Latin-1 补充](https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)#Character_table)
+     * 和 [Latin Extended-A](https://en.wikipedia.org/wiki/Latin_Extended-A)
+     * 字母转换为基本拉丁字母,并移除
+     * [组合变音符号](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks),
+     * 来减轻 `string` 的发音。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category String
-     * @param {string} [string=''] The string to deburr.
-     * @returns {string} Returns the deburred string.
+     * @param {string} [string=''] 要减轻发音的字符串。
+     * @returns {string} 返回减轻发音后的字符串。
      * @example
      *
      * _.deburr('déjà vu');
@@ -14647,17 +14647,16 @@
     }
 
     /**
-     * Checks if `string` ends with the given target string.
+     * 检查 `string` 是否以 `target` 结尾。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category String
-     * @param {string} [string=''] The string to inspect.
-     * @param {string} [target] The string to search for.
-     * @param {number} [position=string.length] The position to search up to.
-     * @returns {boolean} Returns `true` if `string` ends with `target`,
-     *  else `false`.
+     * @param {string} [string=''] 要检查的字符串。
+     * @param {string} [target] 要搜索的字符串。
+     * @param {number} [position=string.length] 搜索的位置。
+     * @returns {boolean} 如果 `string` 以 `target` 结尾则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.endsWith('abc', 'c');
@@ -14684,28 +14683,23 @@
     }
 
     /**
-     * Converts the characters "&", "<", ">", '"', and "'" in `string` to their
-     * corresponding HTML entities.
+     * 将 `string` 中的字符 "&", "<", ">", '"', 和 "'" 转换为对应的 HTML 实体。
      *
-     * **Note:** No other characters are escaped. To escape additional
-     * characters use a third-party library like [_he_](https://mths.be/he).
+     * **注意:** 不转义其他字符。要转义其他字符,请使用第三方库如 [_he_](https://mths.be/he)。
      *
-     * Though the ">" character is escaped for symmetry, characters like
-     * ">" and "/" don't need escaping in HTML and have no special meaning
-     * unless they're part of a tag or unquoted attribute value. See
-     * [Mathias Bynens's article](https://mathiasbynens.be/notes/ambiguous-ampersands)
-     * (under "semi-related fun fact") for more details.
+     * 虽然出于对称性转义了 ">" 字符,但在 HTML 中 ">" 和 "/" 等字符不需要转义,
+     * 除非它们是标签或未加引号的属性值的一部分。详见
+     * [Mathias Bynens 的文章](https://mathiasbynens.be/notes/ambiguous-ampersands)
+     * (在 "semi-related fun fact" 下)。
      *
-     * When working with HTML you should always
-     * [quote attribute values](http://wonko.com/post/html-escaping) to reduce
-     * XSS vectors.
+     * 处理 HTML 时,应始终[引用属性值](http://wonko.com/post/html-escaping)以减少 XSS 攻击向量。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category String
-     * @param {string} [string=''] The string to escape.
-     * @returns {string} Returns the escaped string.
+     * @param {string} [string=''] 要转义的字符串。
+     * @returns {string} 返回转义后的字符串。
      * @example
      *
      * _.escape('fred, barney, & pebbles');
@@ -14719,15 +14713,15 @@
     }
 
     /**
-     * Escapes the `RegExp` special characters "^", "$", "\", ".", "*", "+",
-     * "?", "(", ")", "[", "]", "{", "}", and "|" in `string`.
+     * 转义 `string` 中的 `RegExp` 特殊字符 "^", "$", "\", ".", "*", "+",
+     * "?", "(", ")", "[", "]", "{", "}", 和 "|"。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category String
-     * @param {string} [string=''] The string to escape.
-     * @returns {string} Returns the escaped string.
+     * @param {string} [string=''] 要转义的字符串。
+     * @returns {string} 返回转义后的字符串。
      * @example
      *
      * _.escapeRegExp('[lodash](https://lodash.com/)');
@@ -14741,15 +14735,15 @@
     }
 
     /**
-     * Converts `string` to
-     * [kebab case](https://en.wikipedia.org/wiki/Letter_case#Special_case_styles).
+     * 将 `string` 转换为
+     * [短横线命名(kebab case)](https://en.wikipedia.org/wiki/Letter_case#Special_case_styles)。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category String
-     * @param {string} [string=''] The string to convert.
-     * @returns {string} Returns the kebab cased string.
+     * @param {string} [string=''] 要转换的字符串。
+     * @returns {string} 返回短横线命名的字符串。
      * @example
      *
      * _.kebabCase('Foo Bar');
@@ -14766,14 +14760,14 @@
     });
 
     /**
-     * Converts `string`, as space separated words, to lower case.
+     * 将 `string`(以空格分隔的单词)转换为小写。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category String
-     * @param {string} [string=''] The string to convert.
-     * @returns {string} Returns the lower cased string.
+     * @param {string} [string=''] 要转换的字符串。
+     * @returns {string} 返回小写后的字符串。
      * @example
      *
      * _.lowerCase('--Foo-Bar--');
@@ -14790,14 +14784,14 @@
     });
 
     /**
-     * Converts the first character of `string` to lower case.
+     * 将 `string` 的第一个字符转换为小写。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category String
-     * @param {string} [string=''] The string to convert.
-     * @returns {string} Returns the converted string.
+     * @param {string} [string=''] 要转换的字符串。
+     * @returns {string} 返回转换后的字符串。
      * @example
      *
      * _.lowerFirst('Fred');
@@ -14809,17 +14803,17 @@
     var lowerFirst = createCaseFirst('toLowerCase');
 
     /**
-     * Pads `string` on the left and right sides if it's shorter than `length`.
-     * Padding characters are truncated if they can't be evenly divided by `length`.
+     * 如果 `string` 比 `length` 短,则在左右两侧填充。
+     * 如果填充字符不能被 `length` 整除,则截断填充字符。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category String
-     * @param {string} [string=''] The string to pad.
-     * @param {number} [length=0] The padding length.
-     * @param {string} [chars=' '] The string used as padding.
-     * @returns {string} Returns the padded string.
+     * @param {string} [string=''] 要填充的字符串。
+     * @param {number} [length=0] 填充长度。
+     * @param {string} [chars=' '] 用作填充的字符串。
+     * @returns {string} 返回填充后的字符串。
      * @example
      *
      * _.pad('abc', 8);
@@ -14848,17 +14842,17 @@
     }
 
     /**
-     * Pads `string` on the right side if it's shorter than `length`. Padding
-     * characters are truncated if they exceed `length`.
+     * 如果 `string` 比 `length` 短,则在右侧填充。
+     * 如果填充字符超过 `length`,则截断填充字符。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category String
-     * @param {string} [string=''] The string to pad.
-     * @param {number} [length=0] The padding length.
-     * @param {string} [chars=' '] The string used as padding.
-     * @returns {string} Returns the padded string.
+     * @param {string} [string=''] 要填充的字符串。
+     * @param {number} [length=0] 填充长度。
+     * @param {string} [chars=' '] 用作填充的字符串。
+     * @returns {string} 返回填充后的字符串。
      * @example
      *
      * _.padEnd('abc', 6);
@@ -14881,17 +14875,17 @@
     }
 
     /**
-     * Pads `string` on the left side if it's shorter than `length`. Padding
-     * characters are truncated if they exceed `length`.
+     * 如果 `string` 比 `length` 短,则在左侧填充。
+     * 如果填充字符超过 `length`,则截断填充字符。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category String
-     * @param {string} [string=''] The string to pad.
-     * @param {number} [length=0] The padding length.
-     * @param {string} [chars=' '] The string used as padding.
-     * @returns {string} Returns the padded string.
+     * @param {string} [string=''] 要填充的字符串。
+     * @param {number} [length=0] 填充长度。
+     * @param {string} [chars=' '] 用作填充的字符串。
+     * @returns {string} 返回填充后的字符串。
      * @example
      *
      * _.padStart('abc', 6);
@@ -14914,21 +14908,21 @@
     }
 
     /**
-     * Converts `string` to an integer of the specified radix. If `radix` is
-     * `undefined` or `0`, a `radix` of `10` is used unless `value` is a
-     * hexadecimal, in which case a `radix` of `16` is used.
+     * 将 `string` 转换为指定进制的整数。如果 `radix` 是 `undefined` 或 `0`,
+     * 则使用 `10` 作为 `radix`,除非 `value` 是十六进制,
+     * 在这种情况下使用 `16` 作为 `radix`。
      *
-     * **Note:** This method aligns with the
-     * [ES5 implementation](https://es5.github.io/#x15.1.2.2) of `parseInt`.
+     * **注意:** 此方法与 `parseInt` 的
+     * [ES5 实现](https://es5.github.io/#x15.1.2.2) 对齐。
      *
      * @static
      * @memberOf _
      * @since 1.1.0
      * @category String
-     * @param {string} string The string to convert.
-     * @param {number} [radix=10] The radix to interpret `value` by.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {number} Returns the converted integer.
+     * @param {string} string 要转换的字符串。
+     * @param {number} [radix=10] 解释 `value` 的进制。
+     * @param- {Object} [guard] 启用作为类似 `_.map` 方法的迭代器。
+     * @returns {number} 返回转换后的整数。
      * @example
      *
      * _.parseInt('08');
@@ -14947,16 +14941,16 @@
     }
 
     /**
-     * Repeats the given string `n` times.
+     * 将给定字符串重复 `n` 次。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category String
-     * @param {string} [string=''] The string to repeat.
-     * @param {number} [n=1] The number of times to repeat the string.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {string} Returns the repeated string.
+     * @param {string} [string=''] 要重复的字符串。
+     * @param {number} [n=1] 重复字符串的次数。
+     * @param- {Object} [guard] 启用作为类似 `_.map` 方法的迭代器。
+     * @returns {string} 返回重复后的字符串。
      * @example
      *
      * _.repeat('*', 3);
@@ -14978,19 +14972,19 @@
     }
 
     /**
-     * Replaces matches for `pattern` in `string` with `replacement`.
+     * 用 `replacement` 替换 `string` 中匹配 `pattern` 的部分。
      *
-     * **Note:** This method is based on
-     * [`String#replace`](https://mdn.io/String/replace).
+     * **注意:** 此方法基于
+     * [`String#replace`](https://mdn.io/String/replace)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category String
-     * @param {string} [string=''] The string to modify.
-     * @param {RegExp|string} pattern The pattern to replace.
-     * @param {Function|string} replacement The match replacement.
-     * @returns {string} Returns the modified string.
+     * @param {string} [string=''] 要修改的字符串。
+     * @param {RegExp|string} pattern 要替换的模式。
+     * @param {Function|string} replacement 匹配项的替换内容。
+     * @returns {string} 返回修改后的字符串。
      * @example
      *
      * _.replace('Hi Fred', 'Fred', 'Barney');
@@ -15004,15 +14998,15 @@
     }
 
     /**
-     * Converts `string` to
-     * [snake case](https://en.wikipedia.org/wiki/Snake_case).
+     * 将 `string` 转换为
+     * [蛇形命名(snake case)](https://en.wikipedia.org/wiki/Snake_case)。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category String
-     * @param {string} [string=''] The string to convert.
-     * @returns {string} Returns the snake cased string.
+     * @param {string} [string=''] 要转换的字符串。
+     * @returns {string} 返回蛇形命名的字符串。
      * @example
      *
      * _.snakeCase('Foo Bar');
@@ -15029,19 +15023,19 @@
     });
 
     /**
-     * Splits `string` by `separator`.
+     * 通过 `separator` 分隔 `string`。
      *
-     * **Note:** This method is based on
-     * [`String#split`](https://mdn.io/String/split).
+     * **注意:** 此方法基于
+     * [`String#split`](https://mdn.io/String/split)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category String
-     * @param {string} [string=''] The string to split.
-     * @param {RegExp|string} separator The separator pattern to split by.
-     * @param {number} [limit] The length to truncate results to.
-     * @returns {Array} Returns the string segments.
+     * @param {string} [string=''] 要分隔的字符串。
+     * @param {RegExp|string} separator 分隔的模式。
+     * @param {number} [limit] 截断结果的长度。
+     * @returns {Array} 返回字符串段。
      * @example
      *
      * _.split('a-b-c', '-', 2);
@@ -15069,15 +15063,15 @@
     }
 
     /**
-     * Converts `string` to
-     * [start case](https://en.wikipedia.org/wiki/Letter_case#Stylistic_or_specialised_usage).
+     * 将 `string` 转换为
+     * [首字母大写(start case)](https://en.wikipedia.org/wiki/Letter_case#Stylistic_or_specialised_usage)。
      *
      * @static
      * @memberOf _
      * @since 3.1.0
      * @category String
-     * @param {string} [string=''] The string to convert.
-     * @returns {string} Returns the start cased string.
+     * @param {string} [string=''] 要转换的字符串。
+     * @returns {string} 返回首字母大写后的字符串。
      * @example
      *
      * _.startCase('--foo-bar--');
@@ -15094,17 +15088,16 @@
     });
 
     /**
-     * Checks if `string` starts with the given target string.
+     * 检查 `string` 是否以 `target` 开头。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category String
-     * @param {string} [string=''] The string to inspect.
-     * @param {string} [target] The string to search for.
-     * @param {number} [position=0] The position to search from.
-     * @returns {boolean} Returns `true` if `string` starts with `target`,
-     *  else `false`.
+     * @param {string} [string=''] 要检查的字符串。
+     * @param {string} [target] 要搜索的字符串。
+     * @param {number} [position=0] 开始搜索的位置。
+     * @returns {boolean} 如果 `string` 以 `target` 开头则返回 `true`,否则返回 `false`。
      * @example
      *
      * _.startsWith('abc', 'a');
@@ -15127,91 +15120,90 @@
     }
 
     /**
-     * Creates a compiled template function that can interpolate data properties
-     * in "interpolate" delimiters, HTML-escape interpolated data properties in
-     * "escape" delimiters, and execute JavaScript in "evaluate" delimiters. Data
-     * properties may be accessed as free variables in the template. If a setting
-     * object is given, it takes precedence over `_.templateSettings` values.
+     * 创建一个编译后的模板函数,可以在 "interpolate" 分隔符中插入数据属性,
+     * 在 "escape" 分隔符中对插入的数据属性进行 HTML 转义,
+     * 在 "evaluate" 分隔符中执行 JavaScript。数据属性可以作为自由变量在模板中访问。
+     * 如果提供了设置对象,它将优先于 `_.templateSettings` 值。
      *
-     * **Security:** `_.template` is insecure and should not be used. It will be
-     * removed in Lodash v5. Avoid untrusted input. See
-     * [threat model](https://github.com/lodash/lodash/blob/main/threat-model.md).
+     * **安全性:** `_.template` 不安全,不应使用。它将在 Lodash v5 中移除。
+     * 避免不受信任的输入。详见
+     * [威胁模型](https://github.com/lodash/lodash/blob/main/threat-model.md)。
      *
-     * **Note:** In the development build `_.template` utilizes
+     * **注意:** 在开发构建中,`_.template` 使用
      * [sourceURLs](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/#toc-sourceurl)
-     * for easier debugging.
+     * 以便于调试。
      *
-     * For more information on precompiling templates see
-     * [lodash's custom builds documentation](https://lodash.com/custom-builds).
+     * 有关预编译模板的更多信息,请参阅
+     * [lodash 自定义构建文档](https://lodash.com/custom-builds)。
      *
-     * For more information on Chrome extension sandboxes see
-     * [Chrome's extensions documentation](https://developer.chrome.com/extensions/sandboxingEval).
+     * 有关 Chrome 扩展沙箱的更多信息,请参阅
+     * [Chrome 扩展文档](https://developer.chrome.com/extensions/sandboxingEval)。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category String
-     * @param {string} [string=''] The template string.
-     * @param {Object} [options={}] The options object.
+     * @param {string} [string=''] 模板字符串。
+     * @param {Object} [options={}] 选项对象。
      * @param {RegExp} [options.escape=_.templateSettings.escape]
-     *  The HTML "escape" delimiter.
+     *  HTML "escape" 分隔符。
      * @param {RegExp} [options.evaluate=_.templateSettings.evaluate]
-     *  The "evaluate" delimiter.
+     *  "evaluate" 分隔符。
      * @param {Object} [options.imports=_.templateSettings.imports]
-     *  An object to import into the template as free variables.
+     *  导入到模板中作为自由变量的对象。
      * @param {RegExp} [options.interpolate=_.templateSettings.interpolate]
-     *  The "interpolate" delimiter.
+     *  "interpolate" 分隔符。
      * @param {string} [options.sourceURL='lodash.templateSources[n]']
-     *  The sourceURL of the compiled template.
+     *  编译后模板的 sourceURL。
      * @param {string} [options.variable='obj']
-     *  The data object variable name.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {Function} Returns the compiled template function.
+     *  数据对象变量名。
+     * @param- {Object} [guard] 启用作为类似 `_.map` 方法的迭代器。
+     * @returns {Function} 返回编译后的模板函数。
      * @example
      *
-     * // Use the "interpolate" delimiter to create a compiled template.
+     * // 使用 "interpolate" 分隔符创建编译后的模板。
      * var compiled = _.template('hello <%= user %>!');
      * compiled({ 'user': 'fred' });
      * // => 'hello fred!'
      *
-     * // Use the HTML "escape" delimiter to escape data property values.
+     * // 使用 HTML "escape" 分隔符转义数据属性值。
      * var compiled = _.template('<b><%- value %></b>');
      * compiled({ 'value': '<script>' });
      * // => '<b>&lt;script&gt;</b>'
      *
-     * // Use the "evaluate" delimiter to execute JavaScript and generate HTML.
+     * // 使用 "evaluate" 分隔符执行 JavaScript 并生成 HTML。
      * var compiled = _.template('<% _.forEach(users, function(user) { %><li><%- user %></li><% }); %>');
      * compiled({ 'users': ['fred', 'barney'] });
      * // => '<li>fred</li><li>barney</li>'
      *
-     * // Use the internal `print` function in "evaluate" delimiters.
+     * // 使用内部 `print` 函数在 "evaluate" 分隔符中。
      * var compiled = _.template('<% print("hello " + user); %>!');
      * compiled({ 'user': 'barney' });
      * // => 'hello barney!'
      *
-     * // Use the ES template literal delimiter as an "interpolate" delimiter.
-     * // Disable support by replacing the "interpolate" delimiter.
+     * // 使用 ES 模板字面量分隔符作为 "interpolate" 分隔符。
+     * // 通过替换 "interpolate" 分隔符来禁用支持。
      * var compiled = _.template('hello ${ user }!');
      * compiled({ 'user': 'pebbles' });
      * // => 'hello pebbles!'
      *
-     * // Use backslashes to treat delimiters as plain text.
+     * // 使用反斜杠将分隔符作为纯文本处理。
      * var compiled = _.template('<%= "\\<%- value %\\>" %>');
      * compiled({ 'value': 'ignored' });
      * // => '<%- value %>'
      *
-     * // Use the `imports` option to import `jQuery` as `jq`.
+     * // 使用 `imports` 选项将 `jQuery` 作为 `jq` 导入。
      * var text = '<% jq.each(users, function(user) { %><li><%- user %></li><% }); %>';
      * var compiled = _.template(text, { 'imports': { 'jq': jQuery } });
      * compiled({ 'users': ['fred', 'barney'] });
      * // => '<li>fred</li><li>barney</li>'
      *
-     * // Use the `sourceURL` option to specify a custom sourceURL for the template.
+     * // 使用 `sourceURL` 选项为模板指定自定义 sourceURL。
      * var compiled = _.template('hello <%= user %>!', { 'sourceURL': '/basic/greeting.jst' });
      * compiled(data);
-     * // => Find the source of "greeting.jst" under the Sources tab or Resources panel of the web inspector.
+     * // => 在 web 检查器的 Sources 选项卡或 Resources 面板中找到 "greeting.jst" 的源代码。
      *
-     * // Use the `variable` option to ensure a with-statement isn't used in the compiled template.
+     * // 使用 `variable` 选项确保编译后的模板中不使用 with 语句。
      * var compiled = _.template('hi <%= data.user %>!', { 'variable': 'data' });
      * compiled.source;
      * // => function(data) {
@@ -15220,14 +15212,13 @@
      * //   return __p;
      * // }
      *
-     * // Use custom template delimiters.
+     * // 使用自定义模板分隔符。
      * _.templateSettings.interpolate = /{{([\s\S]+?)}}/g;
      * var compiled = _.template('hello {{ user }}!');
      * compiled({ 'user': 'mustache' });
      * // => 'hello mustache!'
      *
-     * // Use the `source` property to inline compiled templates for meaningful
-     * // line numbers in error messages and stack traces.
+     * // 使用 `source` 属性将编译后的模板内联,以便在错误消息和堆栈跟踪中获得有意义的行号。
      * fs.writeFileSync(path.join(process.cwd(), 'jst.js'), '\
      *   var JST = {\
      *     "main": ' + _.template(mainText).source + '\
@@ -15358,15 +15349,15 @@
     }
 
     /**
-     * Converts `string`, as a whole, to lower case just like
-     * [String#toLowerCase](https://mdn.io/toLowerCase).
+     * 将 `string` 整体转换为小写,类似于
+     * [String#toLowerCase](https://mdn.io/toLowerCase)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category String
-     * @param {string} [string=''] The string to convert.
-     * @returns {string} Returns the lower cased string.
+     * @param {string} [string=''] 要转换的字符串。
+     * @returns {string} 返回小写后的字符串。
      * @example
      *
      * _.toLower('--Foo-Bar--');
@@ -15383,15 +15374,15 @@
     }
 
     /**
-     * Converts `string`, as a whole, to upper case just like
-     * [String#toUpperCase](https://mdn.io/toUpperCase).
+     * 将 `string` 整体转换为大写,类似于
+     * [String#toUpperCase](https://mdn.io/toUpperCase)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category String
-     * @param {string} [string=''] The string to convert.
-     * @returns {string} Returns the upper cased string.
+     * @param {string} [string=''] 要转换的字符串。
+     * @returns {string} 返回大写后的字符串。
      * @example
      *
      * _.toUpper('--foo-bar--');
@@ -15408,16 +15399,16 @@
     }
 
     /**
-     * Removes leading and trailing whitespace or specified characters from `string`.
+     * 从 `string` 移除前后空白或指定字符。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category String
-     * @param {string} [string=''] The string to trim.
-     * @param {string} [chars=whitespace] The characters to trim.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {string} Returns the trimmed string.
+     * @param {string} [string=''] 要修剪的字符串。
+     * @param {string} [chars=whitespace] 要修剪的字符。
+     * @param- {Object} [guard] 启用作为类似 `_.map` 方法的迭代器。
+     * @returns {string} 返回修剪后的字符串。
      * @example
      *
      * _.trim('  abc  ');
@@ -15446,16 +15437,16 @@
     }
 
     /**
-     * Removes trailing whitespace or specified characters from `string`.
+     * 从 `string` 移除尾部空白或指定字符。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category String
-     * @param {string} [string=''] The string to trim.
-     * @param {string} [chars=whitespace] The characters to trim.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {string} Returns the trimmed string.
+     * @param {string} [string=''] 要修剪的字符串。
+     * @param {string} [chars=whitespace] 要修剪的字符。
+     * @param- {Object} [guard] 启用作为类似 `_.map` 方法的迭代器。
+     * @returns {string} 返回修剪后的字符串。
      * @example
      *
      * _.trimEnd('  abc  ');
@@ -15479,16 +15470,16 @@
     }
 
     /**
-     * Removes leading whitespace or specified characters from `string`.
+     * 从 `string` 移除首部空白或指定字符。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category String
-     * @param {string} [string=''] The string to trim.
-     * @param {string} [chars=whitespace] The characters to trim.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {string} Returns the trimmed string.
+     * @param {string} [string=''] 要修剪的字符串。
+     * @param {string} [chars=whitespace] 要修剪的字符。
+     * @param- {Object} [guard] 启用作为类似 `_.map` 方法的迭代器。
+     * @returns {string} 返回修剪后的字符串。
      * @example
      *
      * _.trimStart('  abc  ');
@@ -15512,20 +15503,19 @@
     }
 
     /**
-     * Truncates `string` if it's longer than the given maximum string length.
-     * The last characters of the truncated string are replaced with the omission
-     * string which defaults to "...".
+     * 如果 `string` 长度超过了最大字符串长度,则截断 `string`。
+     * 截断后字符串的末尾字符会被省略字符串替换,省略字符串默认为 "..."。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category String
-     * @param {string} [string=''] The string to truncate.
-     * @param {Object} [options={}] The options object.
-     * @param {number} [options.length=30] The maximum string length.
-     * @param {string} [options.omission='...'] The string to indicate text is omitted.
-     * @param {RegExp|string} [options.separator] The separator pattern to truncate to.
-     * @returns {string} Returns the truncated string.
+     * @param {string} [string=''] 要截断的字符串。
+     * @param {Object} [options={}] 选项对象。
+     * @param {number} [options.length=30] 最大字符串长度。
+     * @param {string} [options.omission='...'] 指示省略文本的字符串。
+     * @param {RegExp|string} [options.separator] 要截断的分隔符模式。
+     * @returns {string} 返回截断后的字符串。
      * @example
      *
      * _.truncate('hi-diddly-ho there, neighborino');
@@ -15605,19 +15595,18 @@
     }
 
     /**
-     * The inverse of `_.escape`; this method converts the HTML entities
-     * `&amp;`, `&lt;`, `&gt;`, `&quot;`, and `&#39;` in `string` to
-     * their corresponding characters.
+     * `_.escape` 的反向操作;此方法将 `string` 中的 HTML 实体
+     * `&amp;`, `&lt;`, `&gt;`, `&quot;`, 和 `&#39;` 转换为其对应的字符。
      *
-     * **Note:** No other HTML entities are unescaped. To unescape additional
-     * HTML entities use a third-party library like [_he_](https://mths.be/he).
+     * **注意:** 不反转义其他 HTML 实体。要反转义其他 HTML 实体,
+     * 请使用第三方库如 [_he_](https://mths.be/he)。
      *
      * @static
      * @memberOf _
      * @since 0.6.0
      * @category String
-     * @param {string} [string=''] The string to unescape.
-     * @returns {string} Returns the unescaped string.
+     * @param {string} [string=''] 要反转义的字符串。
+     * @returns {string} 返回反转义后的字符串。
      * @example
      *
      * _.unescape('fred, barney, &amp; pebbles');
@@ -15631,14 +15620,14 @@
     }
 
     /**
-     * Converts `string`, as space separated words, to upper case.
+     * 将 `string`(以空格分隔的单词)转换为大写。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category String
-     * @param {string} [string=''] The string to convert.
-     * @returns {string} Returns the upper cased string.
+     * @param {string} [string=''] 要转换的字符串。
+     * @returns {string} 返回大写后的字符串。
      * @example
      *
      * _.upperCase('--foo-bar');
@@ -15655,14 +15644,14 @@
     });
 
     /**
-     * Converts the first character of `string` to upper case.
+     * 将 `string` 的第一个字符转换为大写。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category String
-     * @param {string} [string=''] The string to convert.
-     * @returns {string} Returns the converted string.
+     * @param {string} [string=''] 要转换的字符串。
+     * @returns {string} 返回转换后的字符串。
      * @example
      *
      * _.upperFirst('fred');
@@ -15680,10 +15669,10 @@
      * @memberOf _
      * @since 3.0.0
      * @category String
-     * @param {string} [string=''] The string to inspect.
-     * @param {RegExp|string} [pattern] The pattern to match words.
-     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-     * @returns {Array} Returns the words of `string`.
+     * @param {string} [string=''] 要检查的字符串。
+     * @param {RegExp|string} [pattern] 匹配单词的模式。
+     * @param- {Object} [guard] 启用作为类似 `_.map` 方法的迭代器。
+     * @returns {Array} 返回 `string` 的单词数组。
      * @example
      *
      * _.words('fred, barney, & pebbles');
@@ -15705,19 +15694,19 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * Attempts to invoke `func`, returning either the result or the caught error
-     * object. Any additional arguments are provided to `func` when it's invoked.
+     * 尝试调用 `func`,返回结果或捕获的错误对象。
+     * 调用时,任何额外的参数都会被提供给 `func`。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Util
-     * @param {Function} func The function to attempt.
-     * @param {...*} [args] The arguments to invoke `func` with.
-     * @returns {*} Returns the `func` result or error object.
+     * @param {Function} func 要尝试调用的函数。
+     * @param {...*} [args] 调用 `func` 时传入的参数。
+     * @returns {*} 返回 `func` 的结果或错误对象。
      * @example
      *
-     * // Avoid throwing errors for invalid selectors.
+     * // 避免为无效选择器抛出错误。
      * var elements = _.attempt(function(selector) {
      *   return document.querySelectorAll(selector);
      * }, '>_>');
@@ -15735,18 +15724,17 @@
     });
 
     /**
-     * Binds methods of an object to the object itself, overwriting the existing
-     * method.
+     * 将对象的方法绑定到对象本身,覆盖现有方法。
      *
-     * **Note:** This method doesn't set the "length" property of bound functions.
+     * **注意:** 此方法不设置绑定函数的 "length" 属性。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Util
-     * @param {Object} object The object to bind and assign the bound methods to.
-     * @param {...(string|string[])} methodNames The object method names to bind.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 要绑定并分配绑定方法的对象。
+     * @param {...(string|string[])} methodNames 要绑定的对象方法名。
+     * @returns {Object} 返回 `object`。
      * @example
      *
      * var view = {
@@ -15758,7 +15746,7 @@
      *
      * _.bindAll(view, ['click']);
      * jQuery(element).on('click', view.click);
-     * // => Logs 'clicked docs' when clicked.
+     * // => 点击时记录 'clicked docs'。
      */
     var bindAll = flatRest(function(object, methodNames) {
       arrayEach(methodNames, function(key) {
@@ -15769,17 +15757,15 @@
     });
 
     /**
-     * Creates a function that iterates over `pairs` and invokes the corresponding
-     * function of the first predicate to return truthy. The predicate-function
-     * pairs are invoked with the `this` binding and arguments of the created
-     * function.
+     * 创建一个函数,遍历 `pairs`,并调用第一个返回真值的谓词对应的函数。
+     * 谓词-函数对使用创建函数的 `this` 绑定和参数调用。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Util
-     * @param {Array} pairs The predicate-function pairs.
-     * @returns {Function} Returns the new composite function.
+     * @param {Array} pairs 谓词-函数对。
+     * @returns {Function} 返回新的组合函数。
      * @example
      *
      * var func = _.cond([
@@ -15820,19 +15806,18 @@
     }
 
     /**
-     * Creates a function that invokes the predicate properties of `source` with
-     * the corresponding property values of a given object, returning `true` if
-     * all predicates return truthy, else `false`.
+     * 创建一个函数,使用给定对象的对应属性值调用 `source` 的谓词属性,
+     * 如果所有谓词都返回真值则返回 `true`,否则返回 `false`。
      *
-     * **Note:** The created function is equivalent to `_.conformsTo` with
-     * `source` partially applied.
+     * **注意:** 创建的函数等价于 `_.conformsTo`,
+     * 其中 `source` 被部分应用。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Util
-     * @param {Object} source The object of property predicates to conform to.
-     * @returns {Function} Returns the new spec function.
+     * @param {Object} source 符合属性的源对象。
+     * @returns {Function} 返回新的 spec 函数。
      * @example
      *
      * var objects = [
@@ -15848,14 +15833,14 @@
     }
 
     /**
-     * Creates a function that returns `value`.
+     * 创建一个返回 `value` 的函数。
      *
      * @static
      * @memberOf _
      * @since 2.4.0
      * @category Util
-     * @param {*} value The value to return from the new function.
-     * @returns {Function} Returns the new constant function.
+     * @param {*} value 新函数返回的值。
+     * @returns {Function} 返回新的常量函数。
      * @example
      *
      * var objects = _.times(2, _.constant({ 'a': 1 }));
@@ -15873,17 +15858,16 @@
     }
 
     /**
-     * Checks `value` to determine whether a default value should be returned in
-     * its place. The `defaultValue` is returned if `value` is `NaN`, `null`,
-     * or `undefined`.
+     * 检查 `value` 以确定是否应返回其位置的默认值。
+     * 如果 `value` 是 `NaN`、`null` 或 `undefined`,则返回 `defaultValue`。
      *
      * @static
      * @memberOf _
      * @since 4.14.0
      * @category Util
-     * @param {*} value The value to check.
-     * @param {*} defaultValue The default value.
-     * @returns {*} Returns the resolved value.
+     * @param {*} value 要检查的值。
+     * @param {*} defaultValue 默认值。
+     * @returns {*} 返回解析后的值。
      * @example
      *
      * _.defaultTo(1, 10);
