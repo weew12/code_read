@@ -1721,7 +1721,7 @@
    * lodash.isFunction(lodash.bar);
    * // => true
    *
-   * // Create a suped-up `defer` in Node.js.
+   * // 在 Node.js 中创建一个增强版的 `defer`。
    * var defer = _.runInContext({ 'setTimeout': setImmediate }).defer;
    */
   var runInContext = (function runInContext(context) {
@@ -15882,15 +15882,14 @@
 
     /**
      * Creates a function that returns the result of invoking the given functions
-     * with the `this` binding of the created function, where each successive
-     * invocation is supplied the return value of the previous.
+     * 创建函数的 `this` 绑定,其中每个后续调用都提供前一个调用的返回值。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Util
-     * @param {...(Function|Function[])} [funcs] The functions to invoke.
-     * @returns {Function} Returns the new composite function.
+     * @param {...(Function|Function[])} [funcs] 要调用的函数。
+     * @returns {Function} 返回新的组合函数。
      * @see _.flowRight
      * @example
      *
@@ -15905,15 +15904,14 @@
     var flow = createFlow();
 
     /**
-     * This method is like `_.flow` except that it creates a function that
-     * invokes the given functions from right to left.
+     * 此方法类似 `_.flow`,但它创建一个从右到左调用给定函数的函数。
      *
      * @static
      * @since 3.0.0
      * @memberOf _
      * @category Util
-     * @param {...(Function|Function[])} [funcs] The functions to invoke.
-     * @returns {Function} Returns the new composite function.
+     * @param {...(Function|Function[])} [funcs] 要调用的函数。
+     * @returns {Function} 返回新的组合函数。
      * @see _.flow
      * @example
      *
@@ -15928,14 +15926,14 @@
     var flowRight = createFlow(true);
 
     /**
-     * This method returns the first argument it receives.
+     * 返回接收到的第一个参数。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Util
-     * @param {*} value Any value.
-     * @returns {*} Returns `value`.
+     * @param {*} value 任意值。
+     * @returns {*} 返回 `value`。
      * @example
      *
      * var object = { 'a': 1 };
@@ -15948,18 +15946,17 @@
     }
 
     /**
-     * Creates a function that invokes `func` with the arguments of the created
-     * function. If `func` is a property name, the created function returns the
-     * property value for a given element. If `func` is an array or object, the
-     * created function returns `true` for elements that contain the equivalent
-     * source properties, otherwise it returns `false`.
+     * 创建一个函数,使用创建函数的参数调用 `func`。
+     * 如果 `func` 是属性名,创建函数返回给定元素的属性值。
+     * 如果 `func` 是数组或对象,创建函数对包含等价源属性的元素返回 `true`,
+     * 否则返回 `false`。
      *
      * @static
      * @since 4.0.0
      * @memberOf _
      * @category Util
-     * @param {*} [func=_.identity] The value to convert to a callback.
-     * @returns {Function} Returns the callback.
+     * @param {*} [func=_.identity] 要转换为回调的值。
+     * @returns {Function} 返回回调函数。
      * @example
      *
      * var users = [
@@ -15994,26 +15991,23 @@
     }
 
     /**
-     * Creates a function that performs a partial deep comparison between a given
-     * object and `source`, returning `true` if the given object has equivalent
-     * property values, else `false`.
+     * 创建一个函数,执行给定对象和 `source` 的部分深度比较,
+     * 如果给定对象具有等价的属性值则返回 `true`,否则返回 `false`。
      *
-     * **Note:** The created function is equivalent to `_.isMatch` with `source`
-     * partially applied.
+     * **注意:** 创建的函数等价于 `_.isMatch`,
+     * 其中 `source` 被部分应用。
      *
-     * Partial comparisons will match empty array and empty object `source`
-     * values against any array or object value, respectively. See `_.isEqual`
-     * for a list of supported value comparisons.
+     * 部分比较会将空数组和空对象 `source` 值分别与任何数组或对象值进行匹配。
+     * 有关支持的值比较列表,请参见 `_.isEqual`。
      *
-     * **Note:** Multiple values can be checked by combining several matchers
-     * using `_.overSome`
+     * **注意:** 可以使用 `_.overSome` 组合多个匹配器来检查多个值。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Util
-     * @param {Object} source The object of property values to match.
-     * @returns {Function} Returns the new spec function.
+     * @param {Object} source 要匹配的属性值的源对象。
+     * @returns {Function} 返回新的 spec 函数。
      * @example
      *
      * var objects = [
@@ -16024,7 +16018,7 @@
      * _.filter(objects, _.matches({ 'a': 4, 'c': 6 }));
      * // => [{ 'a': 4, 'b': 5, 'c': 6 }]
      *
-     * // Checking for several possible values
+     * // 检查多个可能的值
      * _.filter(objects, _.overSome([_.matches({ 'a': 1 }), _.matches({ 'a': 4 })]));
      * // => [{ 'a': 1, 'b': 2, 'c': 3 }, { 'a': 4, 'b': 5, 'c': 6 }]
      */
@@ -16033,24 +16027,21 @@
     }
 
     /**
-     * Creates a function that performs a partial deep comparison between the
-     * value at `path` of a given object to `srcValue`, returning `true` if the
-     * object value is equivalent, else `false`.
+     * 创建一个函数,执行给定对象 `path` 处值与 `srcValue` 的部分深度比较,
+     * 如果对象值等价则返回 `true`,否则返回 `false`。
      *
-     * **Note:** Partial comparisons will match empty array and empty object
-     * `srcValue` values against any array or object value, respectively. See
-     * `_.isEqual` for a list of supported value comparisons.
+     * **注意:** 部分比较会将空数组和空对象 `srcValue` 值分别与任何数组或对象值进行匹配。
+     * 详见 `_.isEqual` 了解支持的值比较列表。
      *
-     * **Note:** Multiple values can be checked by combining several matchers
-     * using `_.overSome`
+     * **注意:** 可以使用 `_.overSome` 组合多个匹配器来检查多个值。
      *
      * @static
      * @memberOf _
      * @since 3.2.0
      * @category Util
-     * @param {Array|string} path The path of the property to get.
-     * @param {*} srcValue The value to match.
-     * @returns {Function} Returns the new spec function.
+     * @param {Array|string} path 要获取的属性路径。
+     * @param {*} srcValue 要匹配的值。
+     * @returns {Function} 返回新的 spec 函数。
      * @example
      *
      * var objects = [
@@ -16061,7 +16052,7 @@
      * _.find(objects, _.matchesProperty('a', 4));
      * // => { 'a': 4, 'b': 5, 'c': 6 }
      *
-     * // Checking for several possible values
+     * // 检查多个可能的值
      * _.filter(objects, _.overSome([_.matchesProperty('a', 1), _.matchesProperty('a', 4)]));
      * // => [{ 'a': 1, 'b': 2, 'c': 3 }, { 'a': 4, 'b': 5, 'c': 6 }]
      */
@@ -16070,16 +16061,16 @@
     }
 
     /**
-     * Creates a function that invokes the method at `path` of a given object.
-     * Any additional arguments are provided to the invoked method.
+     * 创建一个函数,调用给定对象的 `path` 处的方法。
+     * 任何额外参数都会提供给调用的方法。
      *
      * @static
      * @memberOf _
      * @since 3.7.0
      * @category Util
-     * @param {Array|string} path The path of the method to invoke.
-     * @param {...*} [args] The arguments to invoke the method with.
-     * @returns {Function} Returns the new invoker function.
+     * @param {Array|string} path 要调用的方法路径。
+     * @param {...*} [args] 调用方法时传入的参数。
+     * @returns {Function} 返回新的调用者函数。
      * @example
      *
      * var objects = [
@@ -16100,17 +16091,16 @@
     });
 
     /**
-     * The opposite of `_.method`; this method creates a function that invokes
-     * the method at a given path of `object`. Any additional arguments are
-     * provided to the invoked method.
+     * `_.method` 的反向操作;此方法创建一个函数,在 `object` 的给定路径上调用方法。
+     * 任何额外参数都会提供给调用的方法。
      *
      * @static
      * @memberOf _
      * @since 3.7.0
      * @category Util
-     * @param {Object} object The object to query.
-     * @param {...*} [args] The arguments to invoke the method with.
-     * @returns {Function} Returns the new invoker function.
+     * @param {Object} object 要查询的对象。
+     * @param {...*} [args] 调用方法时传入的参数。
+     * @returns {Function} 返回新的调用者函数。
      * @example
      *
      * var array = _.times(3, _.constant),
@@ -16129,22 +16119,21 @@
     });
 
     /**
-     * Adds all own enumerable string keyed function properties of a source
-     * object to the destination object. If `object` is a function, then methods
-     * are added to its prototype as well.
+     * 将源对象的所有自有可枚举字符串键函数属性添加到目标对象。
+     * 如果 `object` 是函数,则方法也会添加到其原型。
      *
-     * **Note:** Use `_.runInContext` to create a pristine `lodash` function to
-     * avoid conflicts caused by modifying the original.
+     * **注意:** 使用 `_.runInContext` 创建一个原始的 `lodash` 函数,
+     * 以避免因修改原始函数而导致的冲突。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Util
-     * @param {Function|Object} [object=lodash] The destination object.
-     * @param {Object} source The object of functions to add.
-     * @param {Object} [options={}] The options object.
-     * @param {boolean} [options.chain=true] Specify whether mixins are chainable.
-     * @returns {Function|Object} Returns `object`.
+     * @param {Function|Object} [object=lodash] 目标对象。
+     * @param {Object} source 要添加的函数对象。
+     * @param {Object} [options={}] 选项对象。
+     * @param {boolean} [options.chain=true] 指定混合是否可链式调用。
+     * @returns {Function|Object} 返回 `object`。
      * @example
      *
      * function vowels(string) {
@@ -16201,14 +16190,13 @@
     }
 
     /**
-     * Reverts the `_` variable to its previous value and returns a reference to
-     * the `lodash` function.
+     * 将 `_` 变量恢复为其先前的值,并返回对 `lodash` 函数的引用。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Util
-     * @returns {Function} Returns the `lodash` function.
+     * @returns {Function} 返回 `lodash` 函数。
      * @example
      *
      * var lodash = _.noConflict();
@@ -16221,7 +16209,7 @@
     }
 
     /**
-     * This method returns `undefined`.
+     * 此方法返回 `undefined`。
      *
      * @static
      * @memberOf _
@@ -16237,15 +16225,15 @@
     }
 
     /**
-     * Creates a function that gets the argument at index `n`. If `n` is negative,
-     * the nth argument from the end is returned.
+     * 创建一个获取索引 `n` 处参数的函数。如果 `n` 为负数,
+     * 则从末尾返回第 n 个参数。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Util
-     * @param {number} [n=0] The index of the argument to return.
-     * @returns {Function} Returns the new pass-thru function.
+     * @param {number} [n=0] 要返回的参数索引。
+     * @returns {Function} 返回新的传通函数。
      * @example
      *
      * var func = _.nthArg(1);
@@ -16264,16 +16252,15 @@
     }
 
     /**
-     * Creates a function that invokes `iteratees` with the arguments it receives
-     * and returns their results.
+     * 创建一个函数,使用接收到的参数调用 `iteratees`,并返回它们的结果。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Util
      * @param {...(Function|Function[])} [iteratees=[_.identity]]
-     *  The iteratees to invoke.
-     * @returns {Function} Returns the new function.
+     *  要调用的迭代器。
+     * @returns {Function} 返回新函数。
      * @example
      *
      * var func = _.over([Math.max, Math.min]);
@@ -16284,20 +16271,19 @@
     var over = createOver(arrayMap);
 
     /**
-     * Creates a function that checks if **all** of the `predicates` return
-     * truthy when invoked with the arguments it receives.
+     * 创建一个函数,检查当使用接收到的参数调用时,**所有** `predicates` 是否返回真值。
      *
-     * Following shorthands are possible for providing predicates.
-     * Pass an `Object` and it will be used as an parameter for `_.matches` to create the predicate.
-     * Pass an `Array` of parameters for `_.matchesProperty` and the predicate will be created using them.
+     * 提供谓词有以下简写方式。
+     * 传入 `Object` 将被用作 `_.matches` 的参数来创建谓词。
+     * 传入 `_.matchesProperty` 的参数数组,将使用它们创建谓词。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Util
      * @param {...(Function|Function[])} [predicates=[_.identity]]
-     *  The predicates to check.
-     * @returns {Function} Returns the new function.
+     *  要检查的谓词。
+     * @returns {Function} 返回新函数。
      * @example
      *
      * var func = _.overEvery([Boolean, isFinite]);
@@ -16314,20 +16300,19 @@
     var overEvery = createOver(arrayEvery);
 
     /**
-     * Creates a function that checks if **any** of the `predicates` return
-     * truthy when invoked with the arguments it receives.
+     * 创建一个函数,检查当使用接收到的参数调用时,**任一** `predicates` 是否返回真值。
      *
-     * Following shorthands are possible for providing predicates.
-     * Pass an `Object` and it will be used as an parameter for `_.matches` to create the predicate.
-     * Pass an `Array` of parameters for `_.matchesProperty` and the predicate will be created using them.
+     * 提供谓词有以下简写方式。
+     * 传入 `Object` 将被用作 `_.matches` 的参数来创建谓词。
+     * 传入 `_.matchesProperty` 的参数数组,将使用它们创建谓词。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Util
      * @param {...(Function|Function[])} [predicates=[_.identity]]
-     *  The predicates to check.
-     * @returns {Function} Returns the new function.
+     *  要检查的谓词。
+     * @returns {Function} 返回新函数。
      * @example
      *
      * var func = _.overSome([Boolean, isFinite]);
@@ -16347,14 +16332,14 @@
     var overSome = createOver(arraySome);
 
     /**
-     * Creates a function that returns the value at `path` of a given object.
+     * 创建一个返回给定对象 `path` 处值的函数。
      *
      * @static
      * @memberOf _
      * @since 2.4.0
      * @category Util
-     * @param {Array|string} path The path of the property to get.
-     * @returns {Function} Returns the new accessor function.
+     * @param {Array|string} path 要获取的属性路径。
+     * @returns {Function} 返回新的访问器函数。
      * @example
      *
      * var objects = [
@@ -16373,15 +16358,14 @@
     }
 
     /**
-     * The opposite of `_.property`; this method creates a function that returns
-     * the value at a given path of `object`.
+     * `_.property` 的反向操作;此方法创建一个函数,返回 `object` 给定路径处的值。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Util
-     * @param {Object} object The object to query.
-     * @returns {Function} Returns the new accessor function.
+     * @param {Object} object 要查询的对象。
+     * @returns {Function} 返回新的访问器函数。
      * @example
      *
      * var array = [0, 1, 2],
@@ -16400,22 +16384,20 @@
     }
 
     /**
-     * Creates an array of numbers (positive and/or negative) progressing from
-     * `start` up to, but not including, `end`. A step of `-1` is used if a negative
-     * `start` is specified without an `end` or `step`. If `end` is not specified,
-     * it's set to `start` with `start` then set to `0`.
+     * 创建一个数字数组(正数和/或负数),从 `start` 递增到,但不包括 `end`。
+     * 如果指定了负的 `start` 而没有 `end` 或 `step`,则使用 `-1` 作为步长。
+     * 如果未指定 `end`,则将 `start` 设置为 `0`,并将先前的 `start` 值设置为 `end`。
      *
-     * **Note:** JavaScript follows the IEEE-754 standard for resolving
-     * floating-point values which can produce unexpected results.
+     * **注意:** JavaScript 遵循 IEEE-754 标准处理浮点数,这可能产生意想不到的结果。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Util
-     * @param {number} [start=0] The start of the range.
-     * @param {number} end The end of the range.
-     * @param {number} [step=1] The value to increment or decrement by.
-     * @returns {Array} Returns the range of numbers.
+     * @param {number} [start=0] 范围的起始值。
+     * @param {number} end 范围的结束值。
+     * @param {number} [step=1] 递增或递减的值。
+     * @returns {Array} 返回数字范围。
      * @see _.inRange, _.rangeRight
      * @example
      *
@@ -16443,17 +16425,16 @@
     var range = createRange();
 
     /**
-     * This method is like `_.range` except that it populates values in
-     * descending order.
+     * 此方法类似 `_.range`,但它以降序方式填充值。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Util
-     * @param {number} [start=0] The start of the range.
-     * @param {number} end The end of the range.
-     * @param {number} [step=1] The value to increment or decrement by.
-     * @returns {Array} Returns the range of numbers.
+     * @param {number} [start=0] 范围的起始值。
+     * @param {number} end 范围的结束值。
+     * @param {number} [step=1] 递增或递减的值。
+     * @returns {Array} 返回数字范围。
      * @see _.inRange, _.range
      * @example
      *
@@ -16481,13 +16462,13 @@
     var rangeRight = createRange(true);
 
     /**
-     * This method returns a new empty array.
+     * 此方法返回一个新的空数组。
      *
      * @static
      * @memberOf _
      * @since 4.13.0
      * @category Util
-     * @returns {Array} Returns the new empty array.
+     * @returns {Array} 返回新的空数组。
      * @example
      *
      * var arrays = _.times(2, _.stubArray);
@@ -16503,13 +16484,13 @@
     }
 
     /**
-     * This method returns `false`.
+     * 此方法返回 `false`。
      *
      * @static
      * @memberOf _
      * @since 4.13.0
      * @category Util
-     * @returns {boolean} Returns `false`.
+     * @returns {boolean} 返回 `false`。
      * @example
      *
      * _.times(2, _.stubFalse);
@@ -16520,13 +16501,13 @@
     }
 
     /**
-     * This method returns a new empty object.
+     * 此方法返回一个新的空对象。
      *
      * @static
      * @memberOf _
      * @since 4.13.0
      * @category Util
-     * @returns {Object} Returns the new empty object.
+     * @returns {Object} 返回新的空对象。
      * @example
      *
      * var objects = _.times(2, _.stubObject);
@@ -16542,13 +16523,13 @@
     }
 
     /**
-     * This method returns an empty string.
+     * 此方法返回一个空字符串。
      *
      * @static
      * @memberOf _
      * @since 4.13.0
      * @category Util
-     * @returns {string} Returns the empty string.
+     * @returns {string} 返回空字符串。
      * @example
      *
      * _.times(2, _.stubString);
@@ -16559,13 +16540,13 @@
     }
 
     /**
-     * This method returns `true`.
+     * 此方法返回 `true`。
      *
      * @static
      * @memberOf _
      * @since 4.13.0
      * @category Util
-     * @returns {boolean} Returns `true`.
+     * @returns {boolean} 返回 `true`。
      * @example
      *
      * _.times(2, _.stubTrue);
@@ -16576,16 +16557,16 @@
     }
 
     /**
-     * Invokes the iteratee `n` times, returning an array of the results of
-     * each invocation. The iteratee is invoked with one argument; (index).
+     * 调用 `iteratee` `n` 次,返回一个包含每次调用结果的数组。
+     * iteratee 调用一个参数;(index)。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Util
-     * @param {number} n The number of times to invoke `iteratee`.
-     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
-     * @returns {Array} Returns the array of results.
+     * @param {number} n 调用 `iteratee` 的次数。
+     * @param {Function} [iteratee=_.identity] 每次迭代调用的函数。
+     * @returns {Array} 返回结果数组。
      * @example
      *
      * _.times(3, String);
@@ -16613,14 +16594,14 @@
     }
 
     /**
-     * Converts `value` to a property path array.
+     * 将 `value` 转换为属性路径数组。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Util
-     * @param {*} value The value to convert.
-     * @returns {Array} Returns the new property path array.
+     * @param {*} value 要转换的值。
+     * @returns {Array} 返回新的属性路径数组。
      * @example
      *
      * _.toPath('a.b.c');
@@ -16637,14 +16618,14 @@
     }
 
     /**
-     * Generates a unique ID. If `prefix` is given, the ID is appended to it.
+     * 生成一个唯一的 ID。如果提供了 `prefix`,则 ID 会附加到它后面。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Util
-     * @param {string} [prefix=''] The value to prefix the ID with.
-     * @returns {string} Returns the unique ID.
+     * @param {string} [prefix=''] 要添加到 ID 前缀的值。
+     * @returns {string} 返回唯一 ID。
      * @example
      *
      * _.uniqueId('contact_');
@@ -16661,15 +16642,15 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * Adds two numbers.
+     * 两数相加。
      *
      * @static
      * @memberOf _
      * @since 3.4.0
      * @category Math
-     * @param {number} augend The first number in an addition.
-     * @param {number} addend The second number in an addition.
-     * @returns {number} Returns the total.
+     * @param {number} augend 加法中的第一个数字。
+     * @param {number} addend 加法中的第二个数字。
+     * @returns {number} 返回总和。
      * @example
      *
      * _.add(6, 4);
@@ -16680,15 +16661,15 @@
     }, 0);
 
     /**
-     * Computes `number` rounded up to `precision`.
+     * 计算 `number` 向上舍入到指定精度。
      *
      * @static
      * @memberOf _
      * @since 3.10.0
      * @category Math
-     * @param {number} number The number to round up.
-     * @param {number} [precision=0] The precision to round up to.
-     * @returns {number} Returns the rounded up number.
+     * @param {number} number 要向上舍入的数字。
+     * @param {number} [precision=0] 向上舍入的精度。
+     * @returns {number} 返回向上舍入后的数字。
      * @example
      *
      * _.ceil(4.006);
@@ -16703,15 +16684,15 @@
     var ceil = createRound('ceil');
 
     /**
-     * Divide two numbers.
+     * 两数相除。
      *
      * @static
      * @memberOf _
      * @since 4.7.0
      * @category Math
-     * @param {number} dividend The first number in a division.
-     * @param {number} divisor The second number in a division.
-     * @returns {number} Returns the quotient.
+     * @param {number} dividend 除法中的被除数。
+     * @param {number} divisor 除法中的除数。
+     * @returns {number} 返回商。
      * @example
      *
      * _.divide(6, 4);
@@ -16722,15 +16703,15 @@
     }, 1);
 
     /**
-     * Computes `number` rounded down to `precision`.
+     * 计算 `number` 向下舍入到指定精度。
      *
      * @static
      * @memberOf _
      * @since 3.10.0
      * @category Math
-     * @param {number} number The number to round down.
-     * @param {number} [precision=0] The precision to round down to.
-     * @returns {number} Returns the rounded down number.
+     * @param {number} number 要向下舍入的数字。
+     * @param {number} [precision=0] 向下舍入的精度。
+     * @returns {number} 返回向下舍入后的数字。
      * @example
      *
      * _.floor(4.006);
@@ -16745,15 +16726,14 @@
     var floor = createRound('floor');
 
     /**
-     * Computes the maximum value of `array`. If `array` is empty or falsey,
-     * `undefined` is returned.
+     * 计算数组中的最大值。如果数组是空的或为假值，则返回 `undefined`。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Math
-     * @param {Array} array The array to iterate over.
-     * @returns {*} Returns the maximum value.
+     * @param {Array} array 要迭代的数组。
+     * @returns {*} 返回最大值。
      * @example
      *
      * _.max([4, 2, 8, 6]);
@@ -16769,17 +16749,16 @@
     }
 
     /**
-     * This method is like `_.max` except that it accepts `iteratee` which is
-     * invoked for each element in `array` to generate the criterion by which
-     * the value is ranked. The iteratee is invoked with one argument: (value).
+     * 此方法类似于 `_.max`，除了它接受 `iteratee`（迭代器），
+     * 为数组中的每个元素调用以生成用于排序的标准。迭代器接收一个参数：(value)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Math
-     * @param {Array} array The array to iterate over.
-     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
-     * @returns {*} Returns the maximum value.
+     * @param {Array} array 要迭代的数组。
+     * @param {Function} [iteratee=_.identity] 每个元素调用的迭代器。
+     * @returns {*} 返回最大值。
      * @example
      *
      * var objects = [{ 'n': 1 }, { 'n': 2 }];
@@ -16787,7 +16766,7 @@
      * _.maxBy(objects, function(o) { return o.n; });
      * // => { 'n': 2 }
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.maxBy(objects, 'n');
      * // => { 'n': 2 }
      */
@@ -16798,14 +16777,14 @@
     }
 
     /**
-     * Computes the mean of the values in `array`.
+     * 计算数组中值的平均值。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Math
-     * @param {Array} array The array to iterate over.
-     * @returns {number} Returns the mean.
+     * @param {Array} array 要迭代的数组。
+     * @returns {number} 返回平均值。
      * @example
      *
      * _.mean([4, 2, 8, 6]);
@@ -16816,17 +16795,16 @@
     }
 
     /**
-     * This method is like `_.mean` except that it accepts `iteratee` which is
-     * invoked for each element in `array` to generate the value to be averaged.
-     * The iteratee is invoked with one argument: (value).
+     * 此方法类似于 `_.mean`，除了它接受 `iteratee`（迭代器），
+     * 为数组中的每个元素调用以生成要平均的值。迭代器接收一个参数：(value)。
      *
      * @static
      * @memberOf _
      * @since 4.7.0
      * @category Math
-     * @param {Array} array The array to iterate over.
-     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
-     * @returns {number} Returns the mean.
+     * @param {Array} array 要迭代的数组。
+     * @param {Function} [iteratee=_.identity] 每个元素调用的迭代器。
+     * @returns {number} 返回平均值。
      * @example
      *
      * var objects = [{ 'n': 4 }, { 'n': 2 }, { 'n': 8 }, { 'n': 6 }];
@@ -16834,7 +16812,7 @@
      * _.meanBy(objects, function(o) { return o.n; });
      * // => 5
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.meanBy(objects, 'n');
      * // => 5
      */
@@ -16843,15 +16821,14 @@
     }
 
     /**
-     * Computes the minimum value of `array`. If `array` is empty or falsey,
-     * `undefined` is returned.
+     * 计算数组中的最小值。如果数组是空的或为假值，则返回 `undefined`。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Math
-     * @param {Array} array The array to iterate over.
-     * @returns {*} Returns the minimum value.
+     * @param {Array} array 要迭代的数组。
+     * @returns {*} 返回最小值。
      * @example
      *
      * _.min([4, 2, 8, 6]);
@@ -16867,17 +16844,16 @@
     }
 
     /**
-     * This method is like `_.min` except that it accepts `iteratee` which is
-     * invoked for each element in `array` to generate the criterion by which
-     * the value is ranked. The iteratee is invoked with one argument: (value).
+     * 此方法类似于 `_.min`，除了它接受 `iteratee`（迭代器），
+     * 为数组中的每个元素调用以生成用于排序的标准。迭代器接收一个参数：(value)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Math
-     * @param {Array} array The array to iterate over.
-     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
-     * @returns {*} Returns the minimum value.
+     * @param {Array} array 要迭代的数组。
+     * @param {Function} [iteratee=_.identity] 每个元素调用的迭代器。
+     * @returns {*} 返回最小值。
      * @example
      *
      * var objects = [{ 'n': 1 }, { 'n': 2 }];
@@ -16885,7 +16861,7 @@
      * _.minBy(objects, function(o) { return o.n; });
      * // => { 'n': 1 }
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.minBy(objects, 'n');
      * // => { 'n': 1 }
      */
@@ -16896,15 +16872,15 @@
     }
 
     /**
-     * Multiply two numbers.
+     * 两数相乘。
      *
      * @static
      * @memberOf _
      * @since 4.7.0
      * @category Math
-     * @param {number} multiplier The first number in a multiplication.
-     * @param {number} multiplicand The second number in a multiplication.
-     * @returns {number} Returns the product.
+     * @param {number} multiplier 乘法中的被乘数。
+     * @param {number} multiplicand 乘法中的乘数。
+     * @returns {number} 返回乘积。
      * @example
      *
      * _.multiply(6, 4);
@@ -16915,15 +16891,15 @@
     }, 1);
 
     /**
-     * Computes `number` rounded to `precision`.
+     * 计算 `number` 四舍五入到指定精度。
      *
      * @static
      * @memberOf _
      * @since 3.10.0
      * @category Math
-     * @param {number} number The number to round.
-     * @param {number} [precision=0] The precision to round to.
-     * @returns {number} Returns the rounded number.
+     * @param {number} number 要舍入的数字。
+     * @param {number} [precision=0] 舍入的精度。
+     * @returns {number} 返回舍入后的数字。
      * @example
      *
      * _.round(4.006);
@@ -16938,15 +16914,15 @@
     var round = createRound('round');
 
     /**
-     * Subtract two numbers.
+     * 两数相减。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Math
-     * @param {number} minuend The first number in a subtraction.
-     * @param {number} subtrahend The second number in a subtraction.
-     * @returns {number} Returns the difference.
+     * @param {number} minuend 减法中的被减数。
+     * @param {number} subtrahend 减法中的减数。
+     * @returns {number} 返回差。
      * @example
      *
      * _.subtract(6, 4);
@@ -16957,14 +16933,14 @@
     }, 0);
 
     /**
-     * Computes the sum of the values in `array`.
+     * 计算数组中值的总和。
      *
      * @static
      * @memberOf _
      * @since 3.4.0
      * @category Math
-     * @param {Array} array The array to iterate over.
-     * @returns {number} Returns the sum.
+     * @param {Array} array 要迭代的数组。
+     * @returns {number} 返回总和。
      * @example
      *
      * _.sum([4, 2, 8, 6]);
@@ -16977,17 +16953,16 @@
     }
 
     /**
-     * This method is like `_.sum` except that it accepts `iteratee` which is
-     * invoked for each element in `array` to generate the value to be summed.
-     * The iteratee is invoked with one argument: (value).
+     * 此方法类似于 `_.sum`，除了它接受 `iteratee`（迭代器），
+     * 为数组中的每个元素调用以生成要累加的值。迭代器接收一个参数：(value)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Math
-     * @param {Array} array The array to iterate over.
-     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
-     * @returns {number} Returns the sum.
+     * @param {Array} array 要迭代的数组。
+     * @param {Function} [iteratee=_.identity] 每个元素调用的迭代器。
+     * @returns {number} 返回总和。
      * @example
      *
      * var objects = [{ 'n': 4 }, { 'n': 2 }, { 'n': 8 }, { 'n': 6 }];
@@ -16995,7 +16970,7 @@
      * _.sumBy(objects, function(o) { return o.n; });
      * // => 20
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.sumBy(objects, 'n');
      * // => 20
      */
@@ -17158,18 +17133,18 @@
     lodash.zipObjectDeep = zipObjectDeep;
     lodash.zipWith = zipWith;
 
-    // Add aliases.
+    // 添加别名。
     lodash.entries = toPairs;
     lodash.entriesIn = toPairsIn;
     lodash.extend = assignIn;
     lodash.extendWith = assignInWith;
 
-    // Add methods to `lodash.prototype`.
+    // 添加方法到 `lodash.prototype`。
     mixin(lodash, lodash);
 
     /*------------------------------------------------------------------------*/
 
-    // Add methods that return unwrapped values in chain sequences.
+    // 添加在链式序列中返回未包装值的方法。
     lodash.add = add;
     lodash.attempt = attempt;
     lodash.camelCase = camelCase;
@@ -17320,7 +17295,7 @@
     lodash.upperCase = upperCase;
     lodash.upperFirst = upperFirst;
 
-    // Add aliases.
+    // 添加别名。
     lodash.each = forEach;
     lodash.eachRight = forEachRight;
     lodash.first = head;
@@ -17338,7 +17313,7 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * The semantic version number.
+     * 语义化版本号。
      *
      * @static
      * @memberOf _
@@ -17346,12 +17321,12 @@
      */
     lodash.VERSION = VERSION;
 
-    // Assign default placeholders.
+    // 分配默认占位符。
     arrayEach(['bind', 'bindKey', 'curry', 'curryRight', 'partial', 'partialRight'], function(methodName) {
       lodash[methodName].placeholder = lodash;
     });
 
-    // Add `LazyWrapper` methods for `_.drop` and `_.take` variants.
+    // 为 `_.drop` 和 `_.take` 变体添加 `LazyWrapper` 方法。
     arrayEach(['drop', 'take'], function(methodName, index) {
       LazyWrapper.prototype[methodName] = function(n) {
         n = n === undefined ? 1 : nativeMax(toInteger(n), 0);
@@ -17376,7 +17351,7 @@
       };
     });
 
-    // Add `LazyWrapper` methods that accept an `iteratee` value.
+    // 添加接受 `iteratee` 值的 `LazyWrapper` 方法。
     arrayEach(['filter', 'map', 'takeWhile'], function(methodName, index) {
       var type = index + 1,
           isFilter = type == LAZY_FILTER_FLAG || type == LAZY_WHILE_FLAG;
@@ -17392,7 +17367,7 @@
       };
     });
 
-    // Add `LazyWrapper` methods for `_.head` and `_.last`.
+    // 为 `_.head` 和 `_.last` 添加 `LazyWrapper` 方法。
     arrayEach(['head', 'last'], function(methodName, index) {
       var takeName = 'take' + (index ? 'Right' : '');
 
@@ -17401,7 +17376,7 @@
       };
     });
 
-    // Add `LazyWrapper` methods for `_.initial` and `_.tail`.
+    // 为 `_.initial` 和 `_.tail` 添加 `LazyWrapper` 方法。
     arrayEach(['initial', 'tail'], function(methodName, index) {
       var dropName = 'drop' + (index ? '' : 'Right');
 
@@ -17462,7 +17437,7 @@
       return this.take(MAX_ARRAY_LENGTH);
     };
 
-    // Add `LazyWrapper` methods to `lodash.prototype`.
+    // 添加 `LazyWrapper` 方法到 `lodash.prototype`。
     baseForOwn(LazyWrapper.prototype, function(func, methodName) {
       var checkIteratee = /^(?:filter|find|map|reject)|While$/.test(methodName),
           isTaker = /^(?:head|last)$/.test(methodName),
@@ -17485,7 +17460,7 @@
         };
 
         if (useLazy && checkIteratee && typeof iteratee == 'function' && iteratee.length != 1) {
-          // Avoid lazy use if the iteratee has a "length" value other than `1`.
+          // 如果迭代器的 "length" 值不是 `1`，则避免使用懒加载。
           isLazy = useLazy = false;
         }
         var chainAll = this.__chain__,
@@ -17507,7 +17482,7 @@
       };
     });
 
-    // Add `Array` methods to `lodash.prototype`.
+    // 添加 `Array` 方法到 `lodash.prototype`。
     arrayEach(['pop', 'push', 'shift', 'sort', 'splice', 'unshift'], function(methodName) {
       var func = arrayProto[methodName],
           chainName = /^(?:push|sort|unshift)$/.test(methodName) ? 'tap' : 'thru',
@@ -17525,7 +17500,7 @@
       };
     });
 
-    // Map minified method names to their real names.
+    // 将压缩后的方法名映射到它们的真实名称。
     baseForOwn(LazyWrapper.prototype, function(func, methodName) {
       var lodashFunc = lodash[methodName];
       if (lodashFunc) {
@@ -17542,12 +17517,12 @@
       'func': undefined
     }];
 
-    // Add methods to `LazyWrapper`.
+    // 添加方法到 `LazyWrapper`。
     LazyWrapper.prototype.clone = lazyClone;
     LazyWrapper.prototype.reverse = lazyReverse;
     LazyWrapper.prototype.value = lazyValue;
 
-    // Add chain sequence methods to the `lodash` wrapper.
+    // 添加链式序列方法到 `lodash` 包装器。
     lodash.prototype.at = wrapperAt;
     lodash.prototype.chain = wrapperChain;
     lodash.prototype.commit = wrapperCommit;
@@ -17556,7 +17531,7 @@
     lodash.prototype.reverse = wrapperReverse;
     lodash.prototype.toJSON = lodash.prototype.valueOf = lodash.prototype.value = wrapperValue;
 
-    // Add lazy aliases.
+    // 添加懒加载别名。
     lodash.prototype.first = lodash.prototype.head;
 
     if (symIterator) {
@@ -17567,32 +17542,31 @@
 
   /*--------------------------------------------------------------------------*/
 
-  // Export lodash.
+  // 导出 lodash。
   var _ = runInContext();
 
-  // Some AMD build optimizers, like r.js, check for condition patterns like:
+  // 一些 AMD 构建优化工具，如 r.js，检查条件模式如：
   if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
-    // Expose Lodash on the global object to prevent errors when Lodash is
-    // loaded by a script tag in the presence of an AMD loader.
-    // See http://requirejs.org/docs/errors.html#mismatch for more details.
-    // Use `_.noConflict` to remove Lodash from the global object.
+    // 在全局对象上暴露 Lodash，以防止当 Lodash 通过 script 标签加载时
+    // 在存在 AMD 加载器的情况下出现错误。
+    // 有关详细信息，请参阅 http://requirejs.org/docs/errors.html#mismatch。
+    // 使用 `_.noConflict` 从全局对象中移除 Lodash。
     root._ = _;
 
-    // Define as an anonymous module so, through path mapping, it can be
-    // referenced as the "underscore" module.
+    // 定义为匿名模块，以便通过路径映射，它可以作为 "underscore" 模块引用。
     define(function() {
       return _;
     });
   }
-  // Check for `exports` after `define` in case a build optimizer adds it.
+  // 在 `define` 之后检查 `exports`，以防构建优化工具添加它。
   else if (freeModule) {
-    // Export for Node.js.
+    // 导出到 Node.js。
     (freeModule.exports = _)._ = _;
-    // Export for CommonJS support.
+    // 导出以支持 CommonJS。
     freeExports._ = _;
   }
   else {
-    // Export to the global object.
+    // 导出到全局对象。
     root._ = _;
   }
 }.call(this));
