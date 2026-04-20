@@ -8364,19 +8364,18 @@
     }
 
     /**
-     * This method is like `_.pullAll` except that it accepts `comparator` which
-     * is invoked to compare elements of `array` to `values`. The comparator is
-     * invoked with two arguments: (arrVal, othVal).
+     * 此方法类似 `_.pullAll`,但它接受 `comparator` 来比较 `array` 的元素和 `values`。
+     * comparator 使用两个参数调用：(arrVal, othVal)。
      *
-     * **Note:** Unlike `_.differenceWith`, this method mutates `array`.
+     * **注意:** 与 `_.differenceWith` 不同,此方法会修改 `array`。
      *
      * @static
      * @memberOf _
      * @since 4.6.0
      * @category Array
-     * @param {Array} array The array to modify.
-     * @param {Array} values The values to remove.
-     * @param {Function} [comparator] The comparator invoked per element.
+     * @param {Array} array 要修改的数组。
+     * @param {Array} values 要移除的值。
+     * @param {Function} [comparator] 每个元素调用的比较器。
      * @returns {Array} 返回 `array`。
      * @example
      *
@@ -8806,16 +8805,15 @@
     }
 
     /**
-     * Creates a slice of `array` with elements taken from the end. Elements are
-     * taken until `predicate` returns falsey. The predicate is invoked with
-     * three arguments: (value, index, array).
+     * 创建一个从结尾取元素的 `array` 切片。元素从结尾开始取,
+     * 直到 `predicate` 返回假值。断言接受三个参数：(value, index, array)。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Array
-     * @param {Array} array The array to query.
-     * @param {Function} [predicate=_.identity] The function invoked per iteration.
+     * @param {Array} array 要查询的数组。
+     * @param {Function} [predicate=_.identity] 每次迭代调用的函数。
      * @returns {Array} 返回 `array` 的切片。
      * @example
      *
@@ -8959,11 +8957,10 @@
     });
 
     /**
-     * Creates a duplicate-free version of an array, using
+     * 创建一个无重复值的数组,使用
      * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-     * for equality comparisons, in which only the first occurrence of each element
-     * is kept. The order of result values is determined by the order they occur
-     * in the array.
+     * 进行等值比较,只保留每个元素第一次出现的项。
+     * 结果值的顺序由它们在数组中出现的顺序决定。
      *
      * @static
      * @memberOf _
@@ -9214,8 +9211,8 @@
     var zip = baseRest(unzip);
 
     /**
-     * This method is like `_.fromPairs` except that it accepts two arrays,
-     * one of property identifiers and one of corresponding values.
+     * 此方法类似 `_.fromPairs`,但它接受两个数组,
+     * 一个是属性标识符数组,一个是相应值的数组。
      *
      * @static
      * @memberOf _
@@ -9315,9 +9312,9 @@
     }
 
     /**
-     * This method invokes `interceptor` and returns `value`. The interceptor
-     * is invoked with one argument; (value). The purpose of this method is to
-     * "tap into" a method chain sequence in order to modify intermediate results.
+     * 此方法调用 `interceptor` 并返回 `value`。
+     * interceptor 使用一个参数调用：(value)。
+     * 此方法的目的是"插入"到方法链序列中,以修改中间结果。
      *
      * @static
      * @memberOf _
@@ -9409,7 +9406,7 @@
     });
 
     /**
-     * Creates a `lodash` wrapper instance with explicit method chain sequences enabled.
+     * 创建一个启用了显式方法链序列的 `lodash` 包装器实例。
      *
      * @name chain
      * @memberOf _
@@ -9423,11 +9420,11 @@
      *   { 'user': 'fred',   'age': 40 }
      * ];
      *
-     * // A sequence without explicit chaining.
+     * // 没有显式链式的序列。
      * _(users).head();
      * // => { 'user': 'barney', 'age': 36 }
      *
-     * // A sequence with explicit chaining.
+     * // 有显式链式的序列。
      * _(users)
      *   .chain()
      *   .head()
@@ -9568,9 +9565,9 @@
     }
 
     /**
-     * This method is the wrapper version of `_.reverse`.
+     * 这是 `_.reverse` 的包装器版本。
      *
-     * **Note:** This method mutates the wrapped array.
+     * **注意:** 此方法会修改包装的数组。
      *
      * @name reverse
      * @memberOf _
@@ -9702,19 +9699,18 @@
     }
 
     /**
-     * Iterates over elements of `collection`, returning an array of all elements
-     * `predicate` returns truthy for. The predicate is invoked with three
-     * arguments: (value, index|key, collection).
+     * 遍历 `collection` 的每个元素,返回所有 `predicate` 返回真值的元素组成的数组。
+     * predicate 调用三个参数:(value, index|key, collection)。
      *
-     * **Note:** Unlike `_.remove`, this method returns a new array.
+     * **注意:** 与 `_.remove` 不同,此方法返回一个新数组。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Collection
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} [predicate=_.identity] The function invoked per iteration.
-     * @returns {Array} Returns the new filtered array.
+     * @param {Array|Object} collection 要迭代的集合。
+     * @param {Function} [predicate=_.identity] 每次迭代调用的函数。
+     * @returns {Array} 返回过滤后的新数组。
      * @see _.reject
      * @example
      *
@@ -11372,47 +11368,46 @@
     }
 
     /**
-     * Creates a throttled function that only invokes `func` at most once per
-     * every `wait` milliseconds. The throttled function comes with a `cancel`
-     * method to cancel delayed `func` invocations and a `flush` method to
-     * immediately invoke them. Provide `options` to indicate whether `func`
-     * should be invoked on the leading and/or trailing edge of the `wait`
-     * timeout. The `func` is invoked with the last arguments provided to the
-     * throttled function. Subsequent calls to the throttled function return the
-     * result of the last `func` invocation.
+     * 创建一个节流函数,在每 `wait` 毫秒内最多调用 `func` 一次。
+     * 节流函数带有一个 `cancel` 方法来取消延迟的 `func` 调用,
+     * 以及一个 `flush` 方法来立即调用它们。
+     * 提供 `options` 来指定是否在 `wait` 超时之前或之后调用 `func`。
+     * `func` 使用传递给节流函数的最后一个参数调用。
+     * 对节流函数的后续调用将返回最后一次 `func` 调用的结果。
      *
-     * **Note:** If `leading` and `trailing` options are `true`, `func` is
-     * invoked on the trailing edge of the timeout only if the throttled function
-     * is invoked more than once during the `wait` timeout.
+     * **注意:** 如果 `leading` 和 `trailing` 选项都是 `true`,
+     * 则只在节流函数在 `wait` 超时期间被调用多次时,
+     * 才在超时的尾部边缘调用 `func`。
      *
-     * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
-     * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+     * 如果 `wait` 是 `0` 且 `leading` 是 `false`,
+     * 则 `func` 调用将延迟到下一个 tick,
+     * 类似于 timeout 为 `0` 的 `setTimeout`。
      *
-     * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
-     * for details over the differences between `_.throttle` and `_.debounce`.
+     * 有关 `_.throttle` 和 `_.debounce` 之间差异的详细信息,
+     * 请参阅 [David Corbacho 的文章](https://css-tricks.com/debouncing-throttling-explained-examples/)。
      *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Function
-     * @param {Function} func The function to throttle.
-     * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
-     * @param {Object} [options={}] The options object.
+     * @param {Function} func 要节流的函数。
+     * @param {number} [wait=0] 节流调用多少毫秒。
+     * @param {Object} [options={}] 选项对象。
      * @param {boolean} [options.leading=true]
-     *  Specify invoking on the leading edge of the timeout.
+     *  指定在超时前端边缘调用。
      * @param {boolean} [options.trailing=true]
-     *  Specify invoking on the trailing edge of the timeout.
-     * @returns {Function} Returns the new throttled function.
+     *  指定在超时尾端边缘调用。
+     * @returns {Function} 返回新的节流函数。
      * @example
      *
-     * // Avoid excessively updating the position while scrolling.
+     * // 避免在滚动时过度更新位置。
      * jQuery(window).on('scroll', _.throttle(updatePosition, 100));
      *
-     * // Invoke `renewToken` when the click event is fired, but not more than once every 5 minutes.
+     * // 当点击事件触发时调用 `renewToken`,但每 5 分钟最多调用一次。
      * var throttled = _.throttle(renewToken, 300000, { 'trailing': false });
      * jQuery(element).on('click', throttled);
      *
-     * // Cancel the trailing throttled invocation.
+     * // 取消尾部节流调用。
      * jQuery(window).on('popstate', throttled.cancel);
      */
     function throttle(func, wait, options) {
@@ -11434,15 +11429,14 @@
     }
 
     /**
-     * Creates a function that accepts up to one argument, ignoring any
-     * additional arguments.
+     * 创建一个函数,最多接受一个参数,忽略任何其他参数。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Function
-     * @param {Function} func The function to cap arguments for.
-     * @returns {Function} Returns the new capped function.
+     * @param {Function} func 要限制参数的函数。
+     * @returns {Function} 返回新的限制参数函数。
      * @example
      *
      * _.map(['6', '8', '10'], _.unary(parseInt));
@@ -15663,7 +15657,7 @@
     var upperFirst = createCaseFirst('toUpperCase');
 
     /**
-     * Splits `string` into an array of its words.
+     * 将 `string` 分割成单词数组。
      *
      * @static
      * @memberOf _
@@ -15881,8 +15875,8 @@
     }
 
     /**
-     * Creates a function that returns the result of invoking the given functions
-     * 创建函数的 `this` 绑定,其中每个后续调用都提供前一个调用的返回值。
+     * 创建一个函数,返回调用给定函数的结果,
+     * 其中每个后续调用都使用前一个调用的返回值作为创建函数的 `this` 绑定。
      *
      * @static
      * @memberOf _
