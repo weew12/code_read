@@ -638,14 +638,18 @@
   }
 
   /**
-   * A specialized version of `baseAggregator` for arrays.
+   * arrayAggregator 数组专用版本。
    *
    * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} setter The function to set `accumulator` values.
-   * @param {Function} iteratee The iteratee to transform keys.
-   * @param {Object} accumulator The initial aggregated object.
-   * @returns {Function} Returns `accumulator`.
+   * @param {Array} [array] 要遍历的数组。
+   * @param {Function} setter 设置累加器值的函数。
+   * @param {Function} iteratee 转换键的迭代器函数。
+   * @param {Object} accumulator 初始聚合对象。
+   * @returns {Function} 返回累加器。
+   *
+   * arrayAggregator 实现：
+   * - 遍历数组，按 iteratee 转换后的值作为键，将元素聚合到 accumulator 中
+   * - 常用于 groupBy、countBy 等聚合操作
    */
   function arrayAggregator(array, setter, iteratee, accumulator) {
     var index = -1,
@@ -659,13 +663,17 @@
   }
 
   /**
-   * A specialized version of `_.forEach` for arrays without support for
-   * iteratee shorthands.
+   * arrayEach 数组专用版本，不支持 iteratee 简写形式。
    *
    * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @returns {Array} Returns `array`.
+   * @param {Array} [array] 要遍历的数组。
+   * @param {Function} iteratee 每次迭代调用的函数。
+   * @returns {Array} 返回数组本身。
+   *
+   * arrayEach 实现：
+   * - while 循环遍历数组，比 for 循环性能更好
+   * - 如果 iteratee 返回 false，立即终止遍历（early exit）
+   * - 返回原数组以支持链式调用
    */
   function arrayEach(array, iteratee) {
     var index = -1,
@@ -680,13 +688,16 @@
   }
 
   /**
-   * A specialized version of `_.forEachRight` for arrays without support for
-   * iteratee shorthands.
+   * arrayEachRight 数组专用版本，从右向左遍历，不支持 iteratee 简写形式。
    *
    * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @returns {Array} Returns `array`.
+   * @param {Array} [array] 要遍历的数组。
+   * @param {Function} iteratee 每次迭代调用的函数。
+   * @returns {Array} 返回数组本身。
+   *
+   * arrayEachRight 实现：
+   * - while 循环从末尾向前遍历（length--）
+   * - 如果 iteratee 返回 false，立即终止遍历
    */
   function arrayEachRight(array, iteratee) {
     var length = array == null ? 0 : array.length;
@@ -700,14 +711,16 @@
   }
 
   /**
-   * A specialized version of `_.every` for arrays without support for
-   * iteratee shorthands.
+   * arrayEvery 数组专用版本，不支持 iteratee 简写形式。
    *
    * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} predicate The function invoked per iteration.
-   * @returns {boolean} Returns `true` if all elements pass the predicate check,
-   *  else `false`.
+   * @param {Array} [array] 要遍历的数组。
+   * @param {Function} predicate 每次迭代调用的谓词函数。
+   * @returns {boolean} 所有元素都通过谓词检查返回 true，否则返回 false。
+   *
+   * arrayEvery 实现：
+   * - 短路求值：遇到第一个不满足谓词的元素立即返回 false
+   * - 所有元素都满足才返回 true
    */
   function arrayEvery(array, predicate) {
     var index = -1,
@@ -722,13 +735,16 @@
   }
 
   /**
-   * A specialized version of `_.filter` for arrays without support for
-   * iteratee shorthands.
+   * arrayFilter 数组专用版本，不支持 iteratee 简写形式。
    *
    * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} predicate The function invoked per iteration.
-   * @returns {Array} Returns the new filtered array.
+   * @param {Array} [array] 要遍历的数组。
+   * @param {Function} predicate 每次迭代调用的谓词函数。
+   * @returns {Array} 返回过滤后的新数组。
+   *
+   * arrayFilter 实现：
+   * - 预分配结果数组 + 索引追踪，比 push 更快
+   * - 只收集满足谓词条件的元素
    */
   function arrayFilter(array, predicate) {
     var index = -1,
@@ -746,13 +762,16 @@
   }
 
   /**
-   * A specialized version of `_.includes` for arrays without support for
-   * specifying an index to search from.
+   * arrayIncludes 数组专用版本，不支持指定起始搜索索引。
    *
    * @private
-   * @param {Array} [array] The array to inspect.
-   * @param {*} target The value to search for.
-   * @returns {boolean} Returns `true` if `target` is found, else `false`.
+   * @param {Array} [array] 要检查的数组。
+   * @param {*} target 要搜索的值。
+   * @returns {boolean} 如果找到目标值返回 true，否则返回 false。
+   *
+   * arrayIncludes 实现：
+   * - 使用 baseIndexOf 进行查找
+   * - 短路优化：空数组直接返回 false
    */
   function arrayIncludes(array, value) {
     var length = array == null ? 0 : array.length;
@@ -760,13 +779,17 @@
   }
 
   /**
-   * This function is like `arrayIncludes` except that it accepts a comparator.
+   * arrayIncludes 的变体，支持自定义比较器。
    *
    * @private
-   * @param {Array} [array] The array to inspect.
-   * @param {*} target The value to search for.
-   * @param {Function} comparator The comparator invoked per element.
-   * @returns {boolean} Returns `true` if `target` is found, else `false`.
+   * @param {Array} [array] 要检查的数组。
+   * @param {*} target 要搜索的值。
+   * @param {Function} comparator 每个元素调用的比较器。
+   * @returns {boolean} 如果找到目标值返回 true，否则返回 false。
+   *
+   * arrayIncludesWith 实现：
+   * - 使用 comparator 而非严格相等比较
+   * - 短路返回：找到第一个匹配立即返回 true
    */
   function arrayIncludesWith(array, value, comparator) {
     var index = -1,
@@ -781,13 +804,16 @@
   }
 
   /**
-   * A specialized version of `_.map` for arrays without support for iteratee
-   * shorthands.
+   * arrayMap 数组专用版本，不支持 iteratee 简写形式。
    *
    * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @returns {Array} Returns the new mapped array.
+   * @param {Array} [array] 要遍历的数组。
+   * @param {Function} iteratee 每次迭代调用的函数。
+   * @returns {Array} 返回转换后的新数组。
+   *
+   * arrayMap 实现：
+   * - 预分配数组，比 push 更快
+   * - 对每个元素应用 iteratee 转换
    */
   function arrayMap(array, iteratee) {
     var index = -1,
@@ -801,12 +827,16 @@
   }
 
   /**
-   * Appends the elements of `values` to `array`.
+   * 将 values 的元素追加到 array 数组。
    *
    * @private
-   * @param {Array} array The array to modify.
-   * @param {Array} values The values to append.
-   * @returns {Array} Returns `array`.
+   * @param {Array} array 要修改的数组。
+   * @param {Array} values 要追加的值。
+   * @returns {Array} 返回修改后的数组。
+   *
+   * arrayPush 实现：
+   * - 直接通过索引赋值，比 push 更快
+   * - 使用 offset 计算初始位置
    */
   function arrayPush(array, values) {
     var index = -1,
@@ -820,16 +850,18 @@
   }
 
   /**
-   * A specialized version of `_.reduce` for arrays without support for
-   * iteratee shorthands.
+   * arrayReduce 数组专用版本，不支持 iteratee 简写形式。
    *
    * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @param {*} [accumulator] The initial value.
-   * @param {boolean} [initAccum] Specify using the first element of `array` as
-   *  the initial value.
-   * @returns {*} Returns the accumulated value.
+   * @param {Array} [array] 要遍历的数组。
+   * @param {Function} iteratee 每次迭代调用的函数。
+   * @param {*} [accumulator] 初始值。
+   * @param {boolean} [initAccum] 指定使用数组的第一个元素作为初始值。
+   * @returns {*} 返回累积值。
+   *
+   * arrayReduce 实现：
+   * - initAccum 控制是否使用首元素作为初始值
+   * - 标准 reduce 逻辑：遍历并应用 iteratee
    */
   function arrayReduce(array, iteratee, accumulator, initAccum) {
     var index = -1,
@@ -845,16 +877,18 @@
   }
 
   /**
-   * A specialized version of `_.reduceRight` for arrays without support for
-   * iteratee shorthands.
+   * arrayReduceRight 数组专用版本，从右向左遍历，不支持 iteratee 简写形式。
    *
    * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @param {*} [accumulator] The initial value.
-   * @param {boolean} [initAccum] Specify using the last element of `array` as
-   *  the initial value.
-   * @returns {*} Returns the accumulated value.
+   * @param {Array} [array] 要遍历的数组。
+   * @param {Function} iteratee 每次迭代调用的函数。
+   * @param {*} [accumulator] 初始值。
+   * @param {boolean} [initAccum] 指定使用数组的最后一个元素作为初始值。
+   * @returns {*} 返回累积值。
+   *
+   * arrayReduceRight 实现：
+   * - 从数组末尾开始向前遍历
+   * - 使用 --length 而非 length--
    */
   function arrayReduceRight(array, iteratee, accumulator, initAccum) {
     var length = array == null ? 0 : array.length;
@@ -868,14 +902,15 @@
   }
 
   /**
-   * A specialized version of `_.some` for arrays without support for iteratee
-   * shorthands.
+   * arraySome 数组专用版本，不支持 iteratee 简写形式。
    *
    * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} predicate The function invoked per iteration.
-   * @returns {boolean} Returns `true` if any element passes the predicate check,
-   *  else `false`.
+   * @param {Array} [array] 要遍历的数组。
+   * @param {Function} predicate 每次迭代调用的谓词函数。
+   * @returns {boolean} 如果任一元素通过谓词检查返回 true，否则返回 false。
+   *
+   * arraySome 实现：
+   * - 短路求值：找到第一个匹配立即返回 true
    */
   function arraySome(array, predicate) {
     var index = -1,
@@ -890,46 +925,52 @@
   }
 
   /**
-   * Gets the size of an ASCII `string`.
+   * 获取 ASCII 字符串的大小。
    *
    * @private
-   * @param {string} string The string inspect.
-   * @returns {number} Returns the string size.
+   * @param {string} string 要检查的字符串。
+   * @returns {number} 返回字符串大小。
    */
   var asciiSize = baseProperty('length');
 
   /**
-   * Converts an ASCII `string` to an array.
+   * 将 ASCII 字符串转换为数组。
    *
    * @private
-   * @param {string} string The string to convert.
-   * @returns {Array} Returns the converted array.
+   * @param {string} string 要转换的字符串。
+   * @returns {Array} 返回转换后的数组。
+   *
+   * asciiToArray 实现：
+   * - 使用空字符串分割，每个字符成为数组元素
    */
   function asciiToArray(string) {
     return string.split('');
   }
 
   /**
-   * Splits an ASCII `string` into an array of its words.
+   * 将 ASCII 字符串分割为单词数组。
    *
    * @private
-   * @param {string} The string to inspect.
-   * @returns {Array} Returns the words of `string`.
+   * @param {string} string 要检查的字符串。
+   * @returns {Array} 返回字符串的单词数组。
+   *
+   * asciiWords 实现：
+   * - 使用正则 reAsciiWord 匹配单词
+   * - 返回匹配结果或空数组
    */
   function asciiWords(string) {
     return string.match(reAsciiWord) || [];
   }
 
   /**
-   * The base implementation of methods like `_.findKey` and `_.findLastKey`,
-   * without support for iteratee shorthands, which iterates over `collection`
-   * using `eachFunc`.
+   * baseFindKey 基础实现，用于 _.findKey 和 _.findLastKey。
+   * 不支持 iteratee 简写形式，通过 eachFunc 遍历集合。
    *
    * @private
-   * @param {Array|Object} collection The collection to inspect.
-   * @param {Function} predicate The function invoked per iteration.
-   * @param {Function} eachFunc The function to iterate over `collection`.
-   * @returns {*} Returns the found element or its key, else `undefined`.
+   * @param {Array|Object} collection 要检查的集合。
+   * @param {Function} predicate 每次迭代调用的谓词函数。
+   * @param {Function} eachFunc 遍历集合的函数。
+   * @returns {*} 返回找到的元素的键，未找到则返回 undefined。
    *
    * baseFindKey 实现原理：
    *
@@ -957,15 +998,15 @@
   }
 
   /**
-   * The base implementation of `_.findIndex` and `_.findLastIndex` without
-   * support for iteratee shorthands.
+   * baseFindIndex 基础实现，用于 _.findIndex 和 _.findLastIndex。
+   * 不支持 iteratee 简写形式。
    *
    * @private
-   * @param {Array} array The array to inspect.
-   * @param {Function} predicate The function invoked per iteration.
-   * @param {number} fromIndex The index to search from.
-   * @param {boolean} [fromRight] Specify iterating from right to left.
-   * @returns {number} Returns the index of the matched value, else `-1`.
+   * @param {Array} array 要检查的数组。
+   * @param {Function} predicate 每次迭代调用的谓词函数。
+   * @param {number} fromIndex 搜索起始索引。
+   * @param {boolean} [fromRight] 指定从右到左遍历。
+   * @returns {number} 找到的值的索引，未找到返回 -1。
    *
    * baseFindIndex 实现原理：
    *
@@ -997,13 +1038,17 @@
   }
 
   /**
-   * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
+   * baseIndexOf 基础实现，不进行 fromIndex 边界检查。
    *
    * @private
-   * @param {Array} array The array to inspect.
-   * @param {*} value The value to search for.
-   * @param {number} fromIndex The index to search from.
-   * @returns {number} Returns the index of the matched value, else `-1`.
+   * @param {Array} array 要检查的数组。
+   * @param {*} value 要搜索的值。
+   * @param {number} fromIndex 搜索起始索引。
+   * @returns {number} 找到的值的索引，未找到返回 -1。
+   *
+   * baseIndexOf 实现：
+   * - NaN 检测：NaN !== NaN，使用 baseFindIndex + baseIsNaN
+   * - 正常值：使用 strictIndexOf
    */
   function baseIndexOf(array, value, fromIndex) {
     return value === value
@@ -1012,14 +1057,18 @@
   }
 
   /**
-   * This function is like `baseIndexOf` except that it accepts a comparator.
+   * baseIndexOf 的变体，支持自定义比较器。
    *
    * @private
-   * @param {Array} array The array to inspect.
-   * @param {*} value The value to search for.
-   * @param {number} fromIndex The index to search from.
-   * @param {Function} comparator The comparator invoked per element.
-   * @returns {number} Returns the index of the matched value, else `-1`.
+   * @param {Array} array 要检查的数组。
+   * @param {*} value 要搜索的值。
+   * @param {number} fromIndex 搜索起始索引。
+   * @param {Function} comparator 每个元素调用的比较器。
+   * @returns {number} 找到的值的索引，未找到返回 -1。
+   *
+   * baseIndexOfWith 实现：
+   * - 使用 comparator 而非严格相等比较
+   * - 短路返回：找到第一个匹配立即返回索引
    */
   function baseIndexOfWith(array, value, fromIndex, comparator) {
     var index = fromIndex - 1,
@@ -1034,24 +1083,32 @@
   }
 
   /**
-   * The base implementation of `_.isNaN` without support for number objects.
+   * baseIsNaN 基础实现，不支持数字对象。
    *
    * @private
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
+   * @param {*} value 要检查的值。
+   * @returns {boolean} 如果值是 NaN 返回 true，否则返回 false。
+   *
+   * baseIsNaN 实现：
+   * - NaN 是唯一一个不等于自身的值
+   * - value !== value 为 true 当且仅当 value 是 NaN
    */
   function baseIsNaN(value) {
     return value !== value;
   }
 
   /**
-   * The base implementation of `_.mean` and `_.meanBy` without support for
-   * iteratee shorthands.
+   * baseMean 基础实现，用于 _.mean 和 _.meanBy，不支持 iteratee 简写形式。
    *
    * @private
-   * @param {Array} array The array to iterate over.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @returns {number} Returns the mean.
+   * @param {Array} array 要遍历的数组。
+   * @param {Function} iteratee 每次迭代调用的函数。
+   * @returns {number} 返回平均值。
+   *
+   * baseMean 实现：
+   * - 使用 baseSum 计算总和
+   * - 除以数组长度得到平均值
+   * - 空数组返回 NaN
    */
   function baseMean(array, iteratee) {
     var length = array == null ? 0 : array.length;
@@ -1059,12 +1116,16 @@
   }
 
   /**
-   * The base implementation of `_.property` without support for deep paths.
+   * baseProperty 基础实现，不支持深层路径。
    *
-   * @private
-   * @param {string} key The key of the property to get.
-   * @returns {Function} Returns the new accessor function.
-   */
+    * @private
+    * @param {string} key 要获取的属性键。
+    * @returns {Function} 返回新的访问器函数。
+    *
+    * baseProperty 实现：
+    * - 返回一个函数，接收对象并返回其 key 属性值
+    * - 兼容 null/undefined 输入
+    */
   function baseProperty(key) {
     return function(object) {
       return object == null ? undefined : object[key];
@@ -1072,11 +1133,15 @@
   }
 
   /**
-   * The base implementation of `_.propertyOf` without support for deep paths.
+   * basePropertyOf 基础实现，不支持深层路径。
    *
    * @private
-   * @param {Object} object The object to query.
-   * @returns {Function} Returns the new accessor function.
+   * @param {Object} object 要查询的对象。
+   * @returns {Function} 返回新的访问器函数。
+   *
+   * basePropertyOf 实现：
+   * - 与 baseProperty 相反，返回的函数以对象为上下文
+   * - 返回一个函数，接收键并从 object 中获取值
    */
   function basePropertyOf(object) {
     return function(key) {
@@ -1085,17 +1150,16 @@
   }
 
   /**
-   * The base implementation of `_.reduce` and `_.reduceRight`, without support
-   * for iteratee shorthands, which iterates over `collection` using `eachFunc`.
+   * baseReduce 基础实现，用于 _.reduce 和 _.reduceRight。
+   * 不支持 iteratee 简写形式，通过 eachFunc 遍历集合。
    *
    * @private
-   * @param {Array|Object} collection The collection to iterate over.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @param {*} accumulator The initial value.
-   * @param {boolean} initAccum Specify using the first or last element of
-   *  `collection` as the initial value.
-   * @param {Function} eachFunc The function to iterate over `collection`.
-   * @returns {*} Returns the accumulated value.
+   * @param {Array|Object} collection 要遍历的集合。
+   * @param {Function} iteratee 每次迭代调用的函数。
+   * @param {*} accumulator 初始值。
+   * @param {boolean} initAccum 指定使用集合的第一个或最后一个元素作为初始值。
+   * @param {Function} eachFunc 遍历集合的函数。
+   * @returns {*} 返回累积值。
    *
    * baseReduce 实现原理：
    *
@@ -1126,14 +1190,17 @@
   }
 
   /**
-   * The base implementation of `_.sortBy` which uses `comparer` to define the
-   * sort order of `array` and replaces criteria objects with their corresponding
-   * values.
+   * baseSortBy 基础实现，使用 comparer 定义数组的排序顺序，
+   * 并将条件对象替换为其对应的值。
    *
    * @private
-   * @param {Array} array The array to sort.
-   * @param {Function} comparer The function to define sort order.
-   * @returns {Array} Returns `array`.
+   * @param {Array} array 要排序的数组。
+   * @param {Function} comparer 定义排序顺序的函数。
+   * @returns {Array} 返回数组。
+   *
+   * baseSortBy 实现：
+   * - 直接修改原数组（使用 Array.sort）
+   * - 排序后还原元素（将 criteria 对象替换为实际值）
    */
   function baseSortBy(array, comparer) {
     var length = array.length;
@@ -1146,13 +1213,17 @@
   }
 
   /**
-   * The base implementation of `_.sum` and `_.sumBy` without support for
-   * iteratee shorthands.
+   * baseSum 基础实现，用于 _.sum 和 _.sumBy，不支持 iteratee 简写形式。
    *
    * @private
-   * @param {Array} array The array to iterate over.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @returns {number} Returns the sum.
+   * @param {Array} array 要遍历的数组。
+   * @param {Function} iteratee 每次迭代调用的函数。
+   * @returns {number} 返回总和。
+   *
+   * baseSum 实现：
+   * - 累加每个元素调用 iteratee 后的返回值
+   * - 跳过 undefined 值
+   * - 空数组或所有值都 undefined 返回 undefined
    */
   function baseSum(array, iteratee) {
     var result,
@@ -1169,13 +1240,16 @@
   }
 
   /**
-   * The base implementation of `_.times` without support for iteratee shorthands
-   * or max array length checks.
+   * baseTimes 基础实现，不支持 iteratee 简写形式或最大数组长度检查。
    *
    * @private
-   * @param {number} n The number of times to invoke `iteratee`.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @returns {Array} Returns the array of results.
+   * @param {number} n 调用 iteratee 的次数。
+   * @param {Function} iteratee 每次迭代调用的函数。
+   * @returns {Array} 返回结果数组。
+   *
+   * baseTimes 实现：
+   * - 预分配数组（Array(n)）
+   * - 调用 n 次 iteratee，每次传入索引
    */
   function baseTimes(n, iteratee) {
     var index = -1,
@@ -1188,13 +1262,16 @@
   }
 
   /**
-   * The base implementation of `_.toPairs` and `_.toPairsIn` which creates an array
-   * of key-value pairs for `object` corresponding to the property names of `props`.
+   * baseToPairs 基础实现，用于 _.toPairs 和 _.toPairsIn。
+   * 为 object 的每个属性名创建键值对数组。
    *
    * @private
-   * @param {Object} object The object to query.
-   * @param {Array} props The property names to get values for.
-   * @returns {Object} Returns the key-value pairs.
+   * @param {Object} object 要查询的对象。
+   * @param {Array} props 要获取值的属性名数组。
+   * @returns {Object} 返回键值对数组。
+   *
+   * baseToPairs 实现：
+   * - 将属性名数组转换为 [[key, value], ...] 格式
    */
   function baseToPairs(object, props) {
     return arrayMap(props, function(key) {
@@ -1203,11 +1280,11 @@
   }
 
   /**
-   * The base implementation of `_.trim`.
+   * baseTrim 基础实现，用于 _.trim。
    *
    * @private
-   * @param {string} string The string to trim.
-   * @returns {string} Returns the trimmed string.
+   * @param {string} string 要修剪的字符串。
+   * @returns {string} 返回修剪后的字符串。
    */
   function baseTrim(string) {
     return string
@@ -1216,11 +1293,15 @@
   }
 
   /**
-   * The base implementation of `_.unary` without support for storing metadata.
+   * baseUnary 基础实现，不支持存储元数据。
    *
    * @private
-   * @param {Function} func The function to cap arguments for.
-   * @returns {Function} Returns the new capped function.
+   * @param {Function} func 要限制参数的函数。
+   * @returns {Function} 返回新的限制参数的函数。
+   *
+   * baseUnary 实现：
+   * - 将函数限制为只接受一个参数
+   * - 忽略任何额外参数
    */
   function baseUnary(func) {
     return function(value) {
@@ -1229,14 +1310,16 @@
   }
 
   /**
-   * The base implementation of `_.values` and `_.valuesIn` which creates an
-   * array of `object` property values corresponding to the property names
-   * of `props`.
+   * baseValues 基础实现，用于 _.values 和 _.valuesIn。
+   * 创建包含 object 属性值的数组，对应于 props 中的属性名。
    *
    * @private
-   * @param {Object} object The object to query.
-   * @param {Array} props The property names to get values for.
-   * @returns {Object} Returns the array of property values.
+   * @param {Object} object 要查询的对象。
+   * @param {Array} props 要获取值的属性名数组。
+   * @returns {Object} 返回属性值数组。
+   *
+   * baseValues 实现：
+   * - 提取 object 中指定键对应的值
    */
   function baseValues(object, props) {
     return arrayMap(props, function(key) {
@@ -1245,21 +1328,24 @@
   }
 
   /**
-   * Checks if a `cache` value for `key` exists.
+   * 检查 cache 中是否存在 key 对应的值。
    *
    * @private
-   * @param {Object} cache The cache to query.
-   * @param {string} key The key of the entry to check.
-   * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+   * @param {Object} cache 要查询的缓存。
+   * @param {string} key 要检查的条目的键。
+   * @returns {boolean} 如果条目存在返回 true，否则返回 false。
+   *
+   * cacheHas 实现：
+   * - 使用 Map/Set 的 has 方法检查
    */
   function cacheHas(cache, key) {
     return cache.has(key);
   }
 
   /**
-   * Used by `_.trim` and `_.trimStart` to get the index of the first string symbol
-   * that is not found in the character symbols.
-   *
+   * _.trim 和 _.trimStart 使用的辅助函数，
+   * 获取第一个不在 character symbols 中的字符串符号的索引。
+   */
    * @private
    * @param {Array} strSymbols The string symbols to inspect.
    * @param {Array} chrSymbols The character symbols to find.
