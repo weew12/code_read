@@ -13095,19 +13095,18 @@
     });
 
     /**
-     * This method is like `_.assign` except that it iterates over own and
-     * inherited source properties.
+     * 此方法类似 `_.assign`,但它会迭代遍历自身和继承的源属性。
      *
-     * **Note:** This method mutates `object`.
+     * **注意:** 此方法会改变 `object`。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @alias extend
      * @category Object
-     * @param {Object} object The destination object.
-     * @param {...Object} [sources] The source objects.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 目标对象。
+     * @param {...Object} [sources] 源对象。
+     * @returns {Object} 返回 `object`。
      * @see _.assign
      * @example
      *
@@ -13130,22 +13129,21 @@
     });
 
     /**
-     * This method is like `_.assignIn` except that it accepts `customizer`
-     * which is invoked to produce the assigned values. If `customizer` returns
-     * `undefined`, assignment is handled by the method instead. The `customizer`
-     * is invoked with five arguments: (objValue, srcValue, key, object, source).
+     * 此方法类似 `_.assignIn`,但它接受一个 `customizer` 来产生分配的值。
+     * 如果 `customizer` 返回 `undefined`,则由该方法处理分配。
+     * `customizer` 接受五个参数:(objValue, srcValue, key, object, source)。
      *
-     * **Note:** This method mutates `object`.
+     * **注意:** 此方法会改变 `object`。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @alias extendWith
      * @category Object
-     * @param {Object} object The destination object.
-     * @param {...Object} sources The source objects.
-     * @param {Function} [customizer] The function to customize assigned values.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 目标对象。
+     * @param {...Object} sources 源对象。
+     * @param {Function} [customizer] 自定义分配值的函数。
+     * @returns {Object} 返回 `object`。
      * @see _.assignWith
      * @example
      *
@@ -13163,21 +13161,20 @@
     });
 
     /**
-     * This method is like `_.assign` except that it accepts `customizer`
-     * which is invoked to produce the assigned values. If `customizer` returns
-     * `undefined`, assignment is handled by the method instead. The `customizer`
-     * is invoked with five arguments: (objValue, srcValue, key, object, source).
+     * 此方法类似 `_.assign`,但它接受一个 `customizer` 来产生分配的值。
+     * 如果 `customizer` 返回 `undefined`,则由该方法处理分配。
+     * `customizer` 接受五个参数:(objValue, srcValue, key, object, source)。
      *
-     * **Note:** This method mutates `object`.
+     * **注意:** 此方法会改变 `object`。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Object
-     * @param {Object} object The destination object.
-     * @param {...Object} sources The source objects.
-     * @param {Function} [customizer] The function to customize assigned values.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 目标对象。
+     * @param {...Object} sources 源对象。
+     * @param {Function} [customizer] 自定义分配值的函数。
+     * @returns {Object} 返回 `object`。
      * @see _.assignInWith
      * @example
      *
@@ -13195,15 +13192,15 @@
     });
 
     /**
-     * Creates an array of values corresponding to `paths` of `object`.
+     * 创建一个包含 `object` 对应 `paths` 属性值的数组。
      *
      * @static
      * @memberOf _
      * @since 1.0.0
      * @category Object
-     * @param {Object} object The object to iterate over.
-     * @param {...(string|string[])} [paths] The property paths to pick.
-     * @returns {Array} Returns the picked values.
+     * @param {Object} object 要迭代的对象。
+     * @param {...(string|string[])} [paths] 要选取的属性路径。
+     * @returns {Array} 返回选取的值组成的数组。
      * @example
      *
      * var object = { 'a': [{ 'b': { 'c': 3 } }, 4] };
@@ -13214,17 +13211,16 @@
     var at = flatRest(baseAt);
 
     /**
-     * Creates an object that inherits from the `prototype` object. If a
-     * `properties` object is given, its own enumerable string keyed properties
-     * are assigned to the created object.
+     * 创建一个继承自 `prototype` 原型的对象。如果提供了 `properties` 对象,
+     * 其自有可枚举字符串键属性会被分配给创建的对象。
      *
      * @static
      * @memberOf _
      * @since 2.3.0
      * @category Object
-     * @param {Object} prototype The object to inherit from.
-     * @param {Object} [properties] The properties to assign to the object.
-     * @returns {Object} Returns the new object.
+     * @param {Object} prototype 要继承的对象。
+     * @param {Object} [properties] 要分配给对象的属性。
+     * @returns {Object} 返回新对象。
      * @example
      *
      * function Shape() {
@@ -13253,20 +13249,19 @@
     }
 
     /**
-     * Assigns own and inherited enumerable string keyed properties of source
-     * objects to the destination object for all destination properties that
-     * resolve to `undefined`. Source objects are applied from left to right.
-     * Once a property is set, additional values of the same property are ignored.
+     * 将源对象的自有和继承的可枚举字符串键属性分配到目标对象,
+     * 对于所有解析为 `undefined` 的目标属性。源对象从左到右应用。
+     * 一旦属性被设置,相同属性的后续值将被忽略。
      *
-     * **Note:** This method mutates `object`.
+     * **注意:** 此方法会改变 `object`。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Object
-     * @param {Object} object The destination object.
-     * @param {...Object} [sources] The source objects.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 目标对象。
+     * @param {...Object} [sources] 源对象。
+     * @returns {Object} 返回 `object`。
      * @see _.defaultsDeep
      * @example
      *
@@ -13305,18 +13300,17 @@
     });
 
     /**
-     * This method is like `_.defaults` except that it recursively assigns
-     * default properties.
+     * 此方法类似 `_.defaults`,但它会递归分配默认属性。
      *
-     * **Note:** This method mutates `object`.
+     * **注意:** 此方法会改变 `object`。
      *
      * @static
      * @memberOf _
      * @since 3.10.0
      * @category Object
-     * @param {Object} object The destination object.
-     * @param {...Object} [sources] The source objects.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 目标对象。
+     * @param {...Object} [sources] 源对象。
+     * @returns {Object} 返回 `object`。
      * @see _.defaults
      * @example
      *
@@ -13329,17 +13323,16 @@
     });
 
     /**
-     * This method is like `_.find` except that it returns the key of the first
-     * element `predicate` returns truthy for instead of the element itself.
+     * 此方法类似 `_.find`,但它返回 `predicate` 返回真值的第一个元素的 key,
+     * 而不是元素本身。
      *
      * @static
      * @memberOf _
      * @since 1.1.0
      * @category Object
-     * @param {Object} object The object to inspect.
-     * @param {Function} [predicate=_.identity] The function invoked per iteration.
-     * @returns {string|undefined} Returns the key of the matched element,
-     *  else `undefined`.
+     * @param {Object} object 要检查的对象。
+     * @param {Function} [predicate=_.identity] 每次迭代调用的函数。
+     * @returns {string|undefined} 返回匹配元素的 key,否则返回 `undefined`。
      * @example
      *
      * var users = {
@@ -13349,7 +13342,7 @@
      * };
      *
      * _.findKey(users, function(o) { return o.age < 40; });
-     * // => 'barney' (iteration order is not guaranteed)
+     * // => 'barney' (迭代顺序不保证)
      *
      * // The `_.matches` iteratee shorthand.
      * _.findKey(users, { 'age': 1, 'active': true });
@@ -13368,17 +13361,15 @@
     }
 
     /**
-     * This method is like `_.findKey` except that it iterates over elements of
-     * a collection in the opposite order.
+     * 此方法类似 `_.findKey`,但它以相反的顺序迭代集合的元素。
      *
      * @static
      * @memberOf _
      * @since 2.0.0
      * @category Object
-     * @param {Object} object The object to inspect.
-     * @param {Function} [predicate=_.identity] The function invoked per iteration.
-     * @returns {string|undefined} Returns the key of the matched element,
-     *  else `undefined`.
+     * @param {Object} object 要检查的对象。
+     * @param {Function} [predicate=_.identity] 每次迭代调用的函数。
+     * @returns {string|undefined} 返回匹配元素的 key,否则返回 `undefined`。
      * @example
      *
      * var users = {
@@ -13388,7 +13379,7 @@
      * };
      *
      * _.findLastKey(users, function(o) { return o.age < 40; });
-     * // => returns 'pebbles' assuming `_.findKey` returns 'barney'
+     * // => 假设 `_.findKey` 返回 'barney',则返回 'pebbles'
      *
      * // The `_.matches` iteratee shorthand.
      * _.findLastKey(users, { 'age': 36, 'active': true });
@@ -13407,18 +13398,17 @@
     }
 
     /**
-     * Iterates over own and inherited enumerable string keyed properties of an
-     * object and invokes `iteratee` for each property. The iteratee is invoked
-     * with three arguments: (value, key, object). Iteratee functions may exit
-     * iteration early by explicitly returning `false`.
+     * 迭代对象自身的和继承的可枚举字符串键属性,并对每个属性调用 `iteratee`。
+     * iteratee 调用三个参数:(value, key, object)。迭代器函数可以通过明确返回 `false`
+     * 来提前退出迭代。
      *
      * @static
      * @memberOf _
      * @since 0.3.0
      * @category Object
-     * @param {Object} object The object to iterate over.
-     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 要迭代的对象。
+     * @param {Function} [iteratee=_.identity] 每次迭代调用的函数。
+     * @returns {Object} 返回 `object`。
      * @see _.forInRight
      * @example
      *
@@ -13432,7 +13422,7 @@
      * _.forIn(new Foo, function(value, key) {
      *   console.log(key);
      * });
-     * // => Logs 'a', 'b', then 'c' (iteration order is not guaranteed).
+     * // => 记录 'a', 'b', 然后 'c'(迭代顺序不保证)。
      */
     function forIn(object, iteratee) {
       return object == null
@@ -13441,16 +13431,15 @@
     }
 
     /**
-     * This method is like `_.forIn` except that it iterates over properties of
-     * `object` in the opposite order.
+     * 此方法类似 `_.forIn`,但它以相反的顺序迭代 `object` 的属性。
      *
      * @static
      * @memberOf _
      * @since 2.0.0
      * @category Object
-     * @param {Object} object The object to iterate over.
-     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 要迭代的对象。
+     * @param {Function} [iteratee=_.identity] 每次迭代调用的函数。
+     * @returns {Object} 返回 `object`。
      * @see _.forIn
      * @example
      *
@@ -13464,7 +13453,7 @@
      * _.forInRight(new Foo, function(value, key) {
      *   console.log(key);
      * });
-     * // => Logs 'c', 'b', then 'a' assuming `_.forIn` logs 'a', 'b', then 'c'.
+     * // => 假设 `_.forIn` 记录 'a', 'b', 然后 'c',则记录 'c', 'b', 然后 'a'。
      */
     function forInRight(object, iteratee) {
       return object == null
@@ -13473,18 +13462,17 @@
     }
 
     /**
-     * Iterates over own enumerable string keyed properties of an object and
-     * invokes `iteratee` for each property. The iteratee is invoked with three
-     * arguments: (value, key, object). Iteratee functions may exit iteration
-     * early by explicitly returning `false`.
+     * 迭代对象自身的可枚举字符串键属性,并对每个属性调用 `iteratee`。
+     * iteratee 调用三个参数:(value, key, object)。迭代器函数可以通过明确返回 `false`
+     * 来提前退出迭代。
      *
      * @static
      * @memberOf _
      * @since 0.3.0
      * @category Object
-     * @param {Object} object The object to iterate over.
-     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 要迭代的对象。
+     * @param {Function} [iteratee=_.identity] 每次迭代调用的函数。
+     * @returns {Object} 返回 `object`。
      * @see _.forOwnRight
      * @example
      *
@@ -13498,23 +13486,22 @@
      * _.forOwn(new Foo, function(value, key) {
      *   console.log(key);
      * });
-     * // => Logs 'a' then 'b' (iteration order is not guaranteed).
+     * // => 记录 'a' 然后 'b'(迭代顺序不保证)。
      */
     function forOwn(object, iteratee) {
       return object && baseForOwn(object, getIteratee(iteratee, 3));
     }
 
     /**
-     * This method is like `_.forOwn` except that it iterates over properties of
-     * `object` in the opposite order.
+     * 此方法类似 `_.forOwn`,但它以相反的顺序迭代 `object` 的属性。
      *
      * @static
      * @memberOf _
      * @since 2.0.0
      * @category Object
-     * @param {Object} object The object to iterate over.
-     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 要迭代的对象。
+     * @param {Function} [iteratee=_.identity] 每次迭代调用的函数。
+     * @returns {Object} 返回 `object`。
      * @see _.forOwn
      * @example
      *
@@ -13528,22 +13515,21 @@
      * _.forOwnRight(new Foo, function(value, key) {
      *   console.log(key);
      * });
-     * // => Logs 'b' then 'a' assuming `_.forOwn` logs 'a' then 'b'.
+     * // => 假设 `_.forOwn` 记录 'a' 然后 'b',则记录 'b' 然后 'a'。
      */
     function forOwnRight(object, iteratee) {
       return object && baseForOwnRight(object, getIteratee(iteratee, 3));
     }
 
     /**
-     * Creates an array of function property names from own enumerable properties
-     * of `object`.
+     * 从 `object` 自有的可枚举属性中创建函数属性名组成的数组。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Object
-     * @param {Object} object The object to inspect.
-     * @returns {Array} Returns the function names.
+     * @param {Object} object 要检查的对象。
+     * @returns {Array} 返回函数名数组。
      * @see _.functionsIn
      * @example
      *
@@ -13562,15 +13548,14 @@
     }
 
     /**
-     * Creates an array of function property names from own and inherited
-     * enumerable properties of `object`.
+     * 从 `object` 自有的和继承的可枚举属性中创建函数属性名组成的数组。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Object
-     * @param {Object} object The object to inspect.
-     * @returns {Array} Returns the function names.
+     * @param {Object} object 要检查的对象。
+     * @returns {Array} 返回函数名数组。
      * @see _.functions
      * @example
      *
@@ -13589,17 +13574,17 @@
     }
 
     /**
-     * Gets the value at `path` of `object`. If the resolved value is
-     * `undefined`, the `defaultValue` is returned in its place.
+     * 获取 `object` 的 `path` 路径上的值。如果解析的值是 `undefined`,
+     * 则返回 `defaultValue` 作为替代。
      *
      * @static
      * @memberOf _
      * @since 3.7.0
      * @category Object
-     * @param {Object} object The object to query.
-     * @param {Array|string} path The path of the property to get.
-     * @param {*} [defaultValue] The value returned for `undefined` resolved values.
-     * @returns {*} Returns the resolved value.
+     * @param {Object} object 要查询的对象。
+     * @param {Array|string} path 要获取的属性路径。
+     * @param {*} [defaultValue] `undefined` 解析值返回的默认值。
+     * @returns {*} 返回解析后的值。
      * @example
      *
      * var object = { 'a': [{ 'b': { 'c': 3 } }] };
@@ -13619,15 +13604,15 @@
     }
 
     /**
-     * Checks if `path` is a direct property of `object`.
+     * 检查 `path` 是否是 `object` 的直接属性。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Object
-     * @param {Object} object The object to query.
-     * @param {Array|string} path The path to check.
-     * @returns {boolean} Returns `true` if `path` exists, else `false`.
+     * @param {Object} object 要查询的对象。
+     * @param {Array|string} path 要检查的路径。
+     * @returns {boolean} 如果 `path` 存在则返回 `true`,否则返回 `false`。
      * @example
      *
      * var object = { 'a': { 'b': 2 } };
@@ -13650,15 +13635,15 @@
     }
 
     /**
-     * Checks if `path` is a direct or inherited property of `object`.
+     * 检查 `path` 是否是 `object` 的直接属性或继承属性。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Object
-     * @param {Object} object The object to query.
-     * @param {Array|string} path The path to check.
-     * @returns {boolean} Returns `true` if `path` exists, else `false`.
+     * @param {Object} object 要查询的对象。
+     * @param {Array|string} path 要检查的路径。
+     * @returns {boolean} 如果 `path` 存在则返回 `true`,否则返回 `false`。
      * @example
      *
      * var object = _.create({ 'a': _.create({ 'b': 2 }) });
@@ -13680,16 +13665,15 @@
     }
 
     /**
-     * Creates an object composed of the inverted keys and values of `object`.
-     * If `object` contains duplicate values, subsequent values overwrite
-     * property assignments of previous values.
+     * 创建一个由 `object` 的键值对倒置而成的对象。
+     * 如果 `object` 包含重复的值,后续的值将覆盖先前属性的赋值。
      *
      * @static
      * @memberOf _
      * @since 0.7.0
      * @category Object
-     * @param {Object} object The object to invert.
-     * @returns {Object} Returns the new inverted object.
+     * @param {Object} object 要倒置的对象。
+     * @returns {Object} 返回新的倒置对象。
      * @example
      *
      * var object = { 'a': 1, 'b': 2, 'c': 1 };
@@ -13707,19 +13691,17 @@
     }, constant(identity));
 
     /**
-     * This method is like `_.invert` except that the inverted object is generated
-     * from the results of running each element of `object` thru `iteratee`. The
-     * corresponding inverted value of each inverted key is an array of keys
-     * responsible for generating the inverted value. The iteratee is invoked
-     * with one argument: (value).
+     * 此方法类似 `_.invert`,但倒置的对象是从将 `object` 的每个元素
+     * 通过 `iteratee` 运行的结果生成的。每个倒置键对应的倒置值是一个键数组,
+     * 负责生成倒置值。iteratee 调用一个参数:(value)。
      *
      * @static
      * @memberOf _
      * @since 4.1.0
      * @category Object
-     * @param {Object} object The object to invert.
-     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
-     * @returns {Object} Returns the new inverted object.
+     * @param {Object} object 要倒置的对象。
+     * @param {Function} [iteratee=_.identity] 每个元素调用的 iteratee 函数。
+     * @returns {Object} 返回新的倒置对象。
      * @example
      *
      * var object = { 'a': 1, 'b': 2, 'c': 1 };
@@ -13746,16 +13728,16 @@
     }, getIteratee);
 
     /**
-     * Invokes the method at `path` of `object`.
+     * 调用 `object` 的 `path` 路径上的方法。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Object
-     * @param {Object} object The object to query.
-     * @param {Array|string} path The path of the method to invoke.
-     * @param {...*} [args] The arguments to invoke the method with.
-     * @returns {*} Returns the result of the invoked method.
+     * @param {Object} object 要查询的对象。
+     * @param {Array|string} path 要调用的方法路径。
+     * @param {...*} [args] 调用方法时传入的参数。
+     * @returns {*} 返回调用方法的结果。
      * @example
      *
      * var object = { 'a': [{ 'b': { 'c': [1, 2, 3, 4] } }] };
@@ -13766,18 +13748,17 @@
     var invoke = baseRest(baseInvoke);
 
     /**
-     * Creates an array of the own enumerable property names of `object`.
+     * 创建包含 `object` 自有的可枚举属性名的数组。
      *
-     * **Note:** Non-object values are coerced to objects. See the
-     * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
-     * for more details.
+     * **注意:** 非对象值会被强制转换为对象。详见
+     * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Object
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of property names.
+     * @param {Object} object 要查询的对象。
+     * @returns {Array} 返回属性名数组。
      * @example
      *
      * function Foo() {
@@ -13788,7 +13769,7 @@
      * Foo.prototype.c = 3;
      *
      * _.keys(new Foo);
-     * // => ['a', 'b'] (iteration order is not guaranteed)
+     * // => ['a', 'b'] (迭代顺序不保证)
      *
      * _.keys('hi');
      * // => ['0', '1']
@@ -13798,16 +13779,16 @@
     }
 
     /**
-     * Creates an array of the own and inherited enumerable property names of `object`.
+     * 创建包含 `object` 自有的和继承的可枚举属性名的数组。
      *
-     * **Note:** Non-object values are coerced to objects.
+     * **注意:** 非对象值会被强制转换为对象。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Object
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of property names.
+     * @param {Object} object 要查询的对象。
+     * @returns {Array} 返回属性名数组。
      * @example
      *
      * function Foo() {
@@ -13818,25 +13799,24 @@
      * Foo.prototype.c = 3;
      *
      * _.keysIn(new Foo);
-     * // => ['a', 'b', 'c'] (iteration order is not guaranteed)
+     * // => ['a', 'b', 'c'] (迭代顺序不保证)
      */
     function keysIn(object) {
       return isArrayLike(object) ? arrayLikeKeys(object, true) : baseKeysIn(object);
     }
 
     /**
-     * The opposite of `_.mapValues`; this method creates an object with the
-     * same values as `object` and keys generated by running each own enumerable
-     * string keyed property of `object` thru `iteratee`. The iteratee is invoked
-     * with three arguments: (value, key, object).
+     * 与 `_.mapValues` 相反;此方法创建一个对象,该对象具有与 `object` 相同的值,
+     * 但键是通过将 `object` 的每个自有的可枚举字符串键属性
+     * 通过 `iteratee` 运行生成的。iteratee 调用三个参数:(value, key, object)。
      *
      * @static
      * @memberOf _
      * @since 3.8.0
      * @category Object
-     * @param {Object} object The object to iterate over.
-     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
-     * @returns {Object} Returns the new mapped object.
+     * @param {Object} object 要迭代的对象。
+     * @param {Function} [iteratee=_.identity] 每次迭代调用的函数。
+     * @returns {Object} 返回新的映射后的对象。
      * @see _.mapValues
      * @example
      *
@@ -13865,9 +13845,9 @@
      * @memberOf _
      * @since 2.4.0
      * @category Object
-     * @param {Object} object The object to iterate over.
-     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
-     * @returns {Object} Returns the new mapped object.
+     * @param {Object} object 要迭代的对象。
+     * @param {Function} [iteratee=_.identity] 每次迭代调用的函数。
+     * @returns {Object} 返回新的映射后的对象。
      * @see _.mapKeys
      * @example
      *
@@ -13877,11 +13857,11 @@
      * };
      *
      * _.mapValues(users, function(o) { return o.age; });
-     * // => { 'fred': 40, 'pebbles': 1 } (iteration order is not guaranteed)
+     * // => { 'fred': 40, 'pebbles': 1 } (迭代顺序不保证)
      *
      * // The `_.property` iteratee shorthand.
      * _.mapValues(users, 'age');
-     * // => { 'fred': 40, 'pebbles': 1 } (iteration order is not guaranteed)
+     * // => { 'fred': 40, 'pebbles': 1 } (迭代顺序不保证)
      */
     function mapValues(object, iteratee) {
       var result = {};
@@ -13894,23 +13874,21 @@
     }
 
     /**
-     * This method is like `_.assign` except that it recursively merges own and
-     * inherited enumerable string keyed properties of source objects into the
-     * destination object. Source properties that resolve to `undefined` are
-     * skipped if a destination value exists. Array and plain object properties
-     * are merged recursively. Other objects and value types are overridden by
-     * assignment. Source objects are applied from left to right. Subsequent
-     * sources overwrite property assignments of previous sources.
+     * 此方法类似 `_.assign`,但它递归地将源对象的自有的和继承的
+     * 可枚举字符串键属性合并到目标对象中。如果目标值已存在,
+     * 则跳过解析为 `undefined` 的源属性。数组和普通对象属性会递归合并。
+     * 其他对象和值类型通过赋值覆盖。源对象从左到右应用。
+     * 后续源将覆盖先前源的属性赋值。
      *
-     * **Note:** This method mutates `object`.
+     * **注意:** 此方法会改变 `object`。
      *
      * @static
      * @memberOf _
      * @since 0.5.0
      * @category Object
-     * @param {Object} object The destination object.
-     * @param {...Object} [sources] The source objects.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 目标对象。
+     * @param {...Object} [sources] 源对象。
+     * @returns {Object} 返回 `object`。
      * @example
      *
      * var object = {
@@ -13929,22 +13907,20 @@
     });
 
     /**
-     * This method is like `_.merge` except that it accepts `customizer` which
-     * is invoked to produce the merged values of the destination and source
-     * properties. If `customizer` returns `undefined`, merging is handled by the
-     * method instead. The `customizer` is invoked with six arguments:
-     * (objValue, srcValue, key, object, source, stack).
+     * 此方法类似 `_.merge`,但它接受一个 `customizer`,用于生成目标属性和源属性的合并值。
+     * 如果 `customizer` 返回 `undefined`,则由该方法处理合并。
+     * `customizer` 调用六个参数:(objValue, srcValue, key, object, source, stack)。
      *
-     * **Note:** This method mutates `object`.
+     * **注意:** 此方法会改变 `object`。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Object
-     * @param {Object} object The destination object.
-     * @param {...Object} sources The source objects.
-     * @param {Function} customizer The function to customize assigned values.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 目标对象。
+     * @param {...Object} sources 源对象。
+     * @param {Function} customizer 自定义分配值的函数。
+     * @returns {Object} 返回 `object`。
      * @example
      *
      * function customizer(objValue, srcValue) {
@@ -13964,18 +13940,18 @@
     });
 
     /**
-     * The opposite of `_.pick`; this method creates an object composed of the
-     * own and inherited enumerable property paths of `object` that are not omitted.
+     * 与 `_.pick` 相反;此方法创建一个对象,该对象由 `object` 的自有的和继承的
+     * 可枚举属性路径中未省略的部分组成。
      *
-     * **Note:** This method is considerably slower than `_.pick`.
+     * **注意:** 此方法比 `_.pick` 慢得多。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Object
-     * @param {Object} object The source object.
-     * @param {...(string|string[])} [paths] The property paths to omit.
-     * @returns {Object} Returns the new object.
+     * @param {Object} object 源对象。
+     * @param {...(string|string[])} [paths] 要省略的属性路径。
+     * @returns {Object} 返回新对象。
      * @example
      *
      * var object = { 'a': 1, 'b': '2', 'c': 3 };
@@ -14006,18 +13982,17 @@
     });
 
     /**
-     * The opposite of `_.pickBy`; this method creates an object composed of
-     * the own and inherited enumerable string keyed properties of `object` that
-     * `predicate` doesn't return truthy for. The predicate is invoked with two
-     * arguments: (value, key).
+     * 与 `_.pickBy` 相反;此方法创建一个对象,该对象由 `object` 的自有的和继承的
+     * 可枚举字符串键属性中 `predicate` 返回假值的部分组成。
+     * predicate 调用两个参数:(value, key)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Object
-     * @param {Object} object The source object.
-     * @param {Function} [predicate=_.identity] The function invoked per property.
-     * @returns {Object} Returns the new object.
+     * @param {Object} object 源对象。
+     * @param {Function} [predicate=_.identity] 每个属性调用的函数。
+     * @returns {Object} 返回新对象。
      * @example
      *
      * var object = { 'a': 1, 'b': '2', 'c': 3 };
@@ -14030,15 +14005,15 @@
     }
 
     /**
-     * Creates an object composed of the picked `object` properties.
+     * 创建一个由选取的 `object` 属性组成的对象。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Object
-     * @param {Object} object The source object.
-     * @param {...(string|string[])} [paths] The property paths to pick.
-     * @returns {Object} Returns the new object.
+     * @param {Object} object 源对象。
+     * @param {...(string|string[])} [paths] 要选取的属性路径。
+     * @returns {Object} 返回新对象。
      * @example
      *
      * var object = { 'a': 1, 'b': '2', 'c': 3 };
@@ -14051,16 +14026,16 @@
     });
 
     /**
-     * Creates an object composed of the `object` properties `predicate` returns
-     * truthy for. The predicate is invoked with two arguments: (value, key).
+     * 创建一个由 `object` 的属性中 `predicate` 返回真值的部分组成的对象。
+     * predicate 调用两个参数:(value, key)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Object
-     * @param {Object} object The source object.
-     * @param {Function} [predicate=_.identity] The function invoked per property.
-     * @returns {Object} Returns the new object.
+     * @param {Object} object 源对象。
+     * @param {Function} [predicate=_.identity] 每个属性调用的函数。
+     * @returns {Object} 返回新对象。
      * @example
      *
      * var object = { 'a': 1, 'b': '2', 'c': 3 };
@@ -14082,18 +14057,17 @@
     }
 
     /**
-     * This method is like `_.get` except that if the resolved value is a
-     * function it's invoked with the `this` binding of its parent object and
-     * its result is returned.
+     * 此方法类似 `_.get`,不同之处在于如果解析的值是函数,
+     * 则使用其父对象的 `this` 绑定调用它,并返回其结果。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Object
-     * @param {Object} object The object to query.
-     * @param {Array|string} path The path of the property to resolve.
-     * @param {*} [defaultValue] The value returned for `undefined` resolved values.
-     * @returns {*} Returns the resolved value.
+     * @param {Object} object 要查询的对象。
+     * @param {Array|string} path 要解析的属性路径。
+     * @param {*} [defaultValue] `undefined` 解析值返回的默认值。
+     * @returns {*} 返回解析后的值。
      * @example
      *
      * var object = { 'a': [{ 'b': { 'c1': 3, 'c2': _.constant(4) } }] };
@@ -14133,21 +14107,20 @@
     }
 
     /**
-     * Sets the value at `path` of `object`. If a portion of `path` doesn't exist,
-     * it's created. Arrays are created for missing index properties while objects
-     * are created for all other missing properties. Use `_.setWith` to customize
-     * `path` creation.
+     * 设置 `object` 的 `path` 路径上的值。如果 `path` 的某个部分不存在,则创建它。
+     * 缺失的索引属性会创建数组,其他缺失的属性会创建对象。
+     * 使用 `_.setWith` 自定义 `path` 的创建。
      *
-     * **Note:** This method mutates `object`.
+     * **注意:** 此方法会改变 `object`。
      *
      * @static
      * @memberOf _
      * @since 3.7.0
      * @category Object
-     * @param {Object} object The object to modify.
-     * @param {Array|string} path The path of the property to set.
-     * @param {*} value The value to set.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 要修改的对象。
+     * @param {Array|string} path 要设置的属性路径。
+     * @param {*} value 要设置的值。
+     * @returns {Object} 返回 `object`。
      * @example
      *
      * var object = { 'a': [{ 'b': { 'c': 3 } }] };
@@ -14165,22 +14138,21 @@
     }
 
     /**
-     * This method is like `_.set` except that it accepts `customizer` which is
-     * invoked to produce the objects of `path`.  If `customizer` returns `undefined`
-     * path creation is handled by the method instead. The `customizer` is invoked
-     * with three arguments: (nsValue, key, nsObject).
+     * 此方法类似 `_.set`,但它接受一个 `customizer`,用于生成 `path` 的对象。
+     * 如果 `customizer` 返回 `undefined`,则由该方法处理路径创建。
+     * `customizer` 调用三个参数:(nsValue, key, nsObject)。
      *
-     * **Note:** This method mutates `object`.
+     * **注意:** 此方法会改变 `object`。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Object
-     * @param {Object} object The object to modify.
-     * @param {Array|string} path The path of the property to set.
-     * @param {*} value The value to set.
-     * @param {Function} [customizer] The function to customize assigned values.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 要修改的对象。
+     * @param {Array|string} path 要设置的属性路径。
+     * @param {*} value 要设置的值。
+     * @param {Function} [customizer] 自定义分配值的函数。
+     * @returns {Object} 返回 `object`。
      * @example
      *
      * var object = {};
@@ -14194,17 +14166,16 @@
     }
 
     /**
-     * Creates an array of own enumerable string keyed-value pairs for `object`
-     * which can be consumed by `_.fromPairs`. If `object` is a map or set, its
-     * entries are returned.
+     * 为 `object` 创建一个包含自有可枚举字符串键值对的数组,
+     * 可通过 `_.fromPairs` 消费。如果 `object` 是 Map 或 Set,则返回其条目。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @alias entries
      * @category Object
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the key-value pairs.
+     * @param {Object} object 要查询的对象。
+     * @returns {Array} 返回键值对数组。
      * @example
      *
      * function Foo() {
@@ -14215,22 +14186,21 @@
      * Foo.prototype.c = 3;
      *
      * _.toPairs(new Foo);
-     * // => [['a', 1], ['b', 2]] (iteration order is not guaranteed)
+     * // => [['a', 1], ['b', 2]] (迭代顺序不保证)
      */
     var toPairs = createToPairs(keys);
 
     /**
-     * Creates an array of own and inherited enumerable string keyed-value pairs
-     * for `object` which can be consumed by `_.fromPairs`. If `object` is a map
-     * or set, its entries are returned.
+     * 为 `object` 创建一个包含自有的和继承的可枚举字符串键值对的数组,
+     * 可通过 `_.fromPairs` 消费。如果 `object` 是 Map 或 Set,则返回其条目。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @alias entriesIn
      * @category Object
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the key-value pairs.
+     * @param {Object} object 要查询的对象。
+     * @returns {Array} 返回键值对数组。
      * @example
      *
      * function Foo() {
@@ -14241,27 +14211,26 @@
      * Foo.prototype.c = 3;
      *
      * _.toPairsIn(new Foo);
-     * // => [['a', 1], ['b', 2], ['c', 3]] (iteration order is not guaranteed)
+     * // => [['a', 1], ['b', 2], ['c', 3]] (迭代顺序不保证)
      */
     var toPairsIn = createToPairs(keysIn);
 
     /**
-     * An alternative to `_.reduce`; this method transforms `object` to a new
-     * `accumulator` object which is the result of running each of its own
-     * enumerable string keyed properties thru `iteratee`, with each invocation
-     * potentially mutating the `accumulator` object. If `accumulator` is not
-     * provided, a new object with the same `[[Prototype]]` will be used. The
-     * iteratee is invoked with four arguments: (accumulator, value, key, object).
-     * Iteratee functions may exit iteration early by explicitly returning `false`.
+     * `_.reduce` 的替代方法;此方法将 `object` 转换为一个新的 `accumulator` 对象,
+     * 该对象是通过将 `object` 的每个自有的可枚举字符串键属性
+     * 通过 `iteratee` 运行的结果,每次调用都可能改变 `accumulator` 对象。
+     * 如果未提供 `accumulator`,则使用具有相同 `[[Prototype]]` 的新对象。
+     * iteratee 调用四个参数:(accumulator, value, key, object)。
+     * 迭代器函数可以通过明确返回 `false` 来提前退出迭代。
      *
      * @static
      * @memberOf _
      * @since 1.3.0
      * @category Object
-     * @param {Object} object The object to iterate over.
-     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
-     * @param {*} [accumulator] The custom accumulator value.
-     * @returns {*} Returns the accumulated value.
+     * @param {Object} object 要迭代的对象。
+     * @param {Function} [iteratee=_.identity] 每次迭代调用的函数。
+     * @param {*} [accumulator] 自定义累加值。
+     * @returns {*} 返回累加值。
      * @example
      *
      * _.transform([2, 3, 4], function(result, n) {
@@ -14299,17 +14268,17 @@
     }
 
     /**
-     * Removes the property at `path` of `object`.
+     * 删除 `object` 的 `path` 路径上的属性。
      *
-     * **Note:** This method mutates `object`.
+     * **注意:** 此方法会改变 `object`。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Object
-     * @param {Object} object The object to modify.
-     * @param {Array|string} path The path of the property to unset.
-     * @returns {boolean} Returns `true` if the property is deleted, else `false`.
+     * @param {Object} object 要修改的对象。
+     * @param {Array|string} path 要删除的属性路径。
+     * @returns {boolean} 如果属性被删除则返回 `true`,否则返回 `false`。
      * @example
      *
      * var object = { 'a': [{ 'b': { 'c': 7 } }] };
@@ -14330,20 +14299,19 @@
     }
 
     /**
-     * This method is like `_.set` except that accepts `updater` to produce the
-     * value to set. Use `_.updateWith` to customize `path` creation. The `updater`
-     * is invoked with one argument: (value).
+     * 此方法类似 `_.set`,但它接受一个 `updater` 来产生要设置的值。
+     * 使用 `_.updateWith` 自定义 `path` 的创建。`updater` 调用一个参数:(value)。
      *
-     * **Note:** This method mutates `object`.
+     * **注意:** 此方法会改变 `object`。
      *
      * @static
      * @memberOf _
      * @since 4.6.0
      * @category Object
-     * @param {Object} object The object to modify.
-     * @param {Array|string} path The path of the property to set.
-     * @param {Function} updater The function to produce the updated value.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 要修改的对象。
+     * @param {Array|string} path 要设置的属性路径。
+     * @param {Function} updater 产生更新值的函数。
+     * @returns {Object} 返回 `object`。
      * @example
      *
      * var object = { 'a': [{ 'b': { 'c': 3 } }] };
@@ -14361,22 +14329,21 @@
     }
 
     /**
-     * This method is like `_.update` except that it accepts `customizer` which is
-     * invoked to produce the objects of `path`.  If `customizer` returns `undefined`
-     * path creation is handled by the method instead. The `customizer` is invoked
-     * with three arguments: (nsValue, key, nsObject).
+     * 此方法类似 `_.update`,但它接受一个 `customizer`,用于生成 `path` 的对象。
+     * 如果 `customizer` 返回 `undefined`,则由该方法处理路径创建。
+     * `customizer` 调用三个参数:(nsValue, key, nsObject)。
      *
-     * **Note:** This method mutates `object`.
+     * **注意:** 此方法会改变 `object`。
      *
      * @static
      * @memberOf _
      * @since 4.6.0
      * @category Object
-     * @param {Object} object The object to modify.
-     * @param {Array|string} path The path of the property to set.
-     * @param {Function} updater The function to produce the updated value.
-     * @param {Function} [customizer] The function to customize assigned values.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 要修改的对象。
+     * @param {Array|string} path 要设置的属性路径。
+     * @param {Function} updater 产生更新值的函数。
+     * @param {Function} [customizer] 自定义分配值的函数。
+     * @returns {Object} 返回 `object`。
      * @example
      *
      * var object = {};
@@ -14390,16 +14357,16 @@
     }
 
     /**
-     * Creates an array of the own enumerable string keyed property values of `object`.
+     * 创建包含 `object` 自有的可枚举字符串键属性值的数组。
      *
-     * **Note:** Non-object values are coerced to objects.
+     * **注意:** 非对象值会被强制转换为对象。
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Object
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of property values.
+     * @param {Object} object 要查询的对象。
+     * @returns {Array} 返回属性值数组。
      * @example
      *
      * function Foo() {
@@ -14410,7 +14377,7 @@
      * Foo.prototype.c = 3;
      *
      * _.values(new Foo);
-     * // => [1, 2] (iteration order is not guaranteed)
+     * // => [1, 2] (迭代顺序不保证)
      *
      * _.values('hi');
      * // => ['h', 'i']
@@ -14420,17 +14387,16 @@
     }
 
     /**
-     * Creates an array of the own and inherited enumerable string keyed property
-     * values of `object`.
+     * 创建包含 `object` 自有的和继承的可枚举字符串键属性值的数组。
      *
-     * **Note:** Non-object values are coerced to objects.
+     * **注意:** 非对象值会被强制转换为对象。
      *
      * @static
      * @memberOf _
      * @since 3.0.0
      * @category Object
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of property values.
+     * @param {Object} object 要查询的对象。
+     * @returns {Array} 返回属性值数组。
      * @example
      *
      * function Foo() {
@@ -14441,7 +14407,7 @@
      * Foo.prototype.c = 3;
      *
      * _.valuesIn(new Foo);
-     * // => [1, 2, 3] (iteration order is not guaranteed)
+     * // => [1, 2, 3] (迭代顺序不保证)
      */
     function valuesIn(object) {
       return object == null ? [] : baseValues(object, keysIn(object));
@@ -14450,16 +14416,16 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * Clamps `number` within the inclusive `lower` and `upper` bounds.
+     * 将 `number` 限制在 `lower` 和 `upper` 边界之间(含边界)。
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Number
-     * @param {number} number The number to clamp.
-     * @param {number} [lower] The lower bound.
-     * @param {number} upper The upper bound.
-     * @returns {number} Returns the clamped number.
+     * @param {number} number 要限制的数字。
+     * @param {number} [lower] 下界。
+     * @param {number} upper 上界。
+     * @returns {number} 返回限制后的数字。
      * @example
      *
      * _.clamp(-10, -5, 5);
@@ -14485,19 +14451,18 @@
     }
 
     /**
-     * Checks if `n` is between `start` and up to, but not including, `end`. If
-     * `end` is not specified, it's set to `start` with `start` then set to `0`.
-     * If `start` is greater than `end` the params are swapped to support
-     * negative ranges.
+     * 检查 `number` 是否在 `start` 和 `end` 之间(含 `start`,不含 `end`)。
+     * 如果未指定 `end`,则将 `start` 设置为 `0`,并将 `end` 设置为先前的 `start` 值。
+     * 如果 `start` 大于 `end`,则交换参数以支持负数范围。
      *
      * @static
      * @memberOf _
      * @since 3.3.0
      * @category Number
-     * @param {number} number The number to check.
-     * @param {number} [start=0] The start of the range.
-     * @param {number} end The end of the range.
-     * @returns {boolean} Returns `true` if `number` is in the range, else `false`.
+     * @param {number} number 要检查的数字。
+     * @param {number} [start=0] 范围的起始值。
+     * @param {number} end 范围的结束值。
+     * @returns {boolean} 如果 `number` 在范围内则返回 `true`,否则返回 `false`。
      * @see _.range, _.rangeRight
      * @example
      *
@@ -14535,44 +14500,43 @@
     }
 
     /**
-     * Produces a random number between the inclusive `lower` and `upper` bounds.
-     * If only one argument is provided a number between `0` and the given number
-     * is returned. If `floating` is `true`, or either `lower` or `upper` are
-     * floats, a floating-point number is returned instead of an integer.
+     * 产生一个在(含) `lower` 和 `upper` 边界之间的随机数。
+     * 如果只提供一个参数,则返回一个介于 `0` 和给定数字之间的数字。
+     * 如果 `floating` 为 `true`,或者 `lower` 或 `upper` 是浮点数,
+     * 则返回浮点数而不是整数。
      *
-     * **Note:** JavaScript follows the IEEE-754 standard for resolving
-     * floating-point values which can produce unexpected results.
+     * **注意:** JavaScript 遵循 IEEE-754 标准处理浮点数,这可能产生意想不到的结果。
      *
-     * **Note:** If `lower` is greater than `upper`, the values are swapped.
+     * **注意:** 如果 `lower` 大于 `upper`,则交换值。
      *
      * @static
      * @memberOf _
      * @since 0.7.0
      * @category Number
-     * @param {number} [lower=0] The lower bound.
-     * @param {number} [upper=1] The upper bound.
-     * @param {boolean} [floating] Specify returning a floating-point number.
-     * @returns {number} Returns the random number.
+     * @param {number} [lower=0] 下界。
+     * @param {number} [upper=1] 上界。
+     * @param {boolean} [floating] 指定返回浮点数。
+     * @returns {number} 返回随机数。
      * @example
      *
      * _.random(0, 5);
-     * // => an integer between 0 and 5
+     * // => 0 到 5 之间的整数
      *
-     * // when lower is greater than upper the values are swapped
+     * // 当 lower 大于 upper 时,值会被交换
      * _.random(5, 0);
-     * // => an integer between 0 and 5
+     * // => 0 到 5 之间的整数
      *
      * _.random(5);
-     * // => also an integer between 0 and 5
+     * // => 同样返回 0 到 5 之间的整数
      *
      * _.random(-5);
-     * // => an integer between -5 and 0
+     * // => -5 到 0 之间的整数
      *
      * _.random(5, true);
-     * // => a floating-point number between 0 and 5
+     * // => 0 到 5 之间的浮点数
      *
      * _.random(1.2, 5.2);
-     * // => a floating-point number between 1.2 and 5.2
+     * // => 1.2 到 5.2 之间的浮点数
      */
     function random(lower, upper, floating) {
       if (floating && typeof floating != 'boolean' && isIterateeCall(lower, upper, floating)) {
