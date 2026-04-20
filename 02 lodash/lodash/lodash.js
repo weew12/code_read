@@ -7598,7 +7598,7 @@
      * _.differenceBy([2.1, 1.2], [2.3, 3.4], Math.floor);
      * // => [1.2]
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.differenceBy([{ 'x': 2 }, { 'x': 1 }], [{ 'x': 1 }], 'x');
      * // => [{ 'x': 2 }]
      */
@@ -7735,15 +7735,15 @@
      * _.dropRightWhile(users, function(o) { return !o.active; });
      * // => objects for ['barney']
      *
-     * // The `_.matches` iteratee shorthand.
+     * // 使用 `_.matches` 迭代器简写。
      * _.dropRightWhile(users, { 'user': 'pebbles', 'active': false });
      * // => objects for ['barney', 'fred']
      *
-     * // The `_.matchesProperty` iteratee shorthand.
+     * // 使用 `_.matchesProperty` 迭代器简写。
      * _.dropRightWhile(users, ['active', false]);
      * // => objects for ['barney']
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.dropRightWhile(users, 'active');
      * // => objects for ['barney', 'fred', 'pebbles']
      */
@@ -7775,15 +7775,15 @@
      * _.dropWhile(users, function(o) { return !o.active; });
      * // => objects for ['pebbles']
      *
-     * // The `_.matches` iteratee shorthand.
+     * // 使用 `_.matches` 迭代器简写。
      * _.dropWhile(users, { 'user': 'barney', 'active': false });
      * // => objects for ['fred', 'pebbles']
      *
-     * // The `_.matchesProperty` iteratee shorthand.
+     * // 使用 `_.matchesProperty` 迭代器简写。
      * _.dropWhile(users, ['active', false]);
      * // => objects for ['pebbles']
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.dropWhile(users, 'active');
      * // => objects for ['barney', 'fred', 'pebbles']
      */
@@ -7856,15 +7856,15 @@
      * _.findIndex(users, function(o) { return o.user == 'barney'; });
      * // => 0
      *
-     * // The `_.matches` iteratee shorthand.
+     * // 使用 `_.matches` 迭代器简写。
      * _.findIndex(users, { 'user': 'fred', 'active': false });
      * // => 1
      *
-     * // The `_.matchesProperty` iteratee shorthand.
+     * // 使用 `_.matchesProperty` 迭代器简写。
      * _.findIndex(users, ['active', false]);
      * // => 0
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.findIndex(users, 'active');
      * // => 2
      */
@@ -7902,15 +7902,15 @@
      * _.findLastIndex(users, function(o) { return o.user == 'pebbles'; });
      * // => 2
      *
-     * // The `_.matches` iteratee shorthand.
+     * // 使用 `_.matches` 迭代器简写。
      * _.findLastIndex(users, { 'user': 'barney', 'active': true });
      * // => 0
      *
-     * // The `_.matchesProperty` iteratee shorthand.
+     * // 使用 `_.matchesProperty` 迭代器简写。
      * _.findLastIndex(users, ['active', false]);
      * // => 2
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.findLastIndex(users, 'active');
      * // => 0
      */
@@ -8062,7 +8062,7 @@
      * _.indexOf([1, 2, 1, 2], 2);
      * // => 1
      *
-     * // Search from the `fromIndex`.
+     * // 从 `fromIndex` 开始搜索。
      * _.indexOf([1, 2, 1, 2], 2, 2);
      * // => 3
      */
@@ -8137,7 +8137,7 @@
      * _.intersectionBy([2.1, 1.2], [2.3, 3.4], Math.floor);
      * // => [2.1]
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.intersectionBy([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x');
      * // => [{ 'x': 1 }]
      */
@@ -8242,7 +8242,7 @@
      * _.lastIndexOf([1, 2, 1, 2], 2);
      * // => 3
      *
-     * // Search from the `fromIndex`.
+     * // 从 `fromIndex` 开始搜索。
      * _.lastIndexOf([1, 2, 1, 2], 2, 2);
      * // => 1
      */
@@ -8570,7 +8570,7 @@
      * _.sortedIndexBy(objects, { 'x': 4 }, function(o) { return o.x; });
      * // => 0
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.sortedIndexBy(objects, { 'x': 4 }, 'x');
      * // => 0
      */
@@ -8643,7 +8643,7 @@
      * _.sortedLastIndexBy(objects, { 'x': 4 }, function(o) { return o.x; });
      * // => 1
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.sortedLastIndexBy(objects, { 'x': 4 }, 'x');
      * // => 1
      */
@@ -8825,15 +8825,15 @@
      *   { 'user': 'pebbles', 'active': false }
      * ];
      *
-     * // The `_.matches` iteratee shorthand.
+     * // 使用 `_.matches` 迭代器简写。
      * _.takeRightWhile(users, { 'user': 'pebbles', 'active': false });
      * // => objects for ['pebbles']
      *
-     * // The `_.matchesProperty` iteratee shorthand.
+     * // 使用 `_.matchesProperty` 迭代器简写。
      * _.takeRightWhile(users, ['active', false]);
      * // => objects for ['fred', 'pebbles']
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.takeRightWhile(users, 'active');
      * // => []
      */
@@ -8865,15 +8865,15 @@
      * _.takeWhile(users, function(o) { return !o.active; });
      * // => objects for ['barney', 'fred']
      *
-     * // The `_.matches` iteratee shorthand.
+     * // 使用 `_.matches` 迭代器简写。
      * _.takeWhile(users, { 'user': 'barney', 'active': false });
      * // => objects for ['barney']
      *
-     * // The `_.matchesProperty` iteratee shorthand.
+     * // 使用 `_.matchesProperty` 迭代器简写。
      * _.takeWhile(users, ['active', false]);
      * // => objects for ['barney', 'fred']
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.takeWhile(users, 'active');
      * // => []
      */
@@ -8920,7 +8920,7 @@
      * _.unionBy([2.1], [1.2, 2.3], Math.floor);
      * // => [2.1, 1.2]
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.unionBy([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x');
      * // => [{ 'x': 1 }, { 'x': 2 }]
      */
@@ -8997,7 +8997,7 @@
      * _.uniqBy([2.1, 1.2, 2.3], Math.floor);
      * // => [2.1, 1.2]
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.uniqBy([{ 'x': 1 }, { 'x': 2 }, { 'x': 1 }], 'x');
      * // => [{ 'x': 1 }, { 'x': 2 }]
      */
@@ -9158,7 +9158,7 @@
      * _.xorBy([2.1, 1.2], [2.3, 3.4], Math.floor);
      * // => [1.2, 3.4]
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.xorBy([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x');
      * // => [{ 'x': 2 }]
      */
@@ -9330,7 +9330,7 @@
      *
      * _([1, 2, 3])
      *  .tap(function(array) {
-     *    // Mutate input array.
+     *    // 修改输入数组。
      *    array.pop();
      *  })
      *  .reverse()
@@ -9641,7 +9641,7 @@
      * _.countBy([6.1, 4.2, 6.3], Math.floor);
      * // => { '4': 1, '6': 2 }
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.countBy(['one', 'two', 'three'], 'length');
      * // => { '3': 2, '5': 1 }
      */
@@ -9681,15 +9681,15 @@
      *   { 'user': 'fred',   'age': 40, 'active': false }
      * ];
      *
-     * // The `_.matches` iteratee shorthand.
+     * // 使用 `_.matches` 迭代器简写。
      * _.every(users, { 'user': 'barney', 'active': false });
      * // => false
      *
-     * // The `_.matchesProperty` iteratee shorthand.
+     * // 使用 `_.matchesProperty` 迭代器简写。
      * _.every(users, ['active', false]);
      * // => true
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.every(users, 'active');
      * // => false
      */
@@ -9726,19 +9726,19 @@
      * _.filter(users, function(o) { return !o.active; });
      * // => objects for ['fred']
      *
-     * // The `_.matches` iteratee shorthand.
+     * // 使用 `_.matches` 迭代器简写。
      * _.filter(users, { 'age': 36, 'active': true });
      * // => objects for ['barney']
      *
-     * // The `_.matchesProperty` iteratee shorthand.
+     * // 使用 `_.matchesProperty` 迭代器简写。
      * _.filter(users, ['active', false]);
      * // => objects for ['fred']
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.filter(users, 'active');
      * // => objects for ['barney']
      *
-     * // Combining several predicates using `_.overEvery` or `_.overSome`.
+     * // 使用 `_.overEvery` 或 `_.overSome` 组合多个谓词。
      * _.filter(users, _.overSome([{ 'age': 36 }, ['age', 40]]));
      * // => objects for ['fred', 'barney']
      */
@@ -9770,15 +9770,15 @@
      * _.find(users, function(o) { return o.age < 40; });
      * // => object for 'barney'
      *
-     * // The `_.matches` iteratee shorthand.
+     * // 使用 `_.matches` 迭代器简写。
      * _.find(users, { 'age': 1, 'active': true });
      * // => object for 'pebbles'
      *
-     * // The `_.matchesProperty` iteratee shorthand.
+     * // 使用 `_.matchesProperty` 迭代器简写。
      * _.find(users, ['active', false]);
      * // => object for 'fred'
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.find(users, 'active');
      * // => object for 'barney'
      */
@@ -9950,7 +9950,7 @@
      * _.groupBy([6.1, 4.2, 6.3], Math.floor);
      * // => { '4': [4.2], '6': [6.1, 6.3] }
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.groupBy(['one', 'two', 'three'], 'length');
      * // => { '3': ['one', 'two'], '5': ['three'] }
      */
@@ -10103,7 +10103,7 @@
      *   { 'user': 'fred' }
      * ];
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.map(users, 'user');
      * // => ['barney', 'fred']
      */
@@ -10136,7 +10136,7 @@
      *   { 'user': 'barney', 'age': 36 }
      * ];
      *
-     * // Sort by `user` in ascending order and by `age` in descending order.
+     * // 按 `user` 升序和 `age` 降序排序。
      * _.orderBy(users, ['user', 'age'], ['asc', 'desc']);
      * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 40]]
      */
@@ -10176,15 +10176,15 @@
      * _.partition(users, function(o) { return o.active; });
      * // => objects for [['fred'], ['barney', 'pebbles']]
      *
-     * // The `_.matches` iteratee shorthand.
+     * // 使用 `_.matches` 迭代器简写。
      * _.partition(users, { 'age': 1, 'active': false });
      * // => objects for [['pebbles'], ['barney', 'fred']]
      *
-     * // The `_.matchesProperty` iteratee shorthand.
+     * // 使用 `_.matchesProperty` 迭代器简写。
      * _.partition(users, ['active', false]);
      * // => objects for [['barney', 'pebbles'], ['fred']]
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.partition(users, 'active');
      * // => objects for [['fred'], ['barney', 'pebbles']]
      */
@@ -10283,15 +10283,15 @@
      * _.reject(users, function(o) { return !o.active; });
      * // => objects for ['fred']
      *
-     * // The `_.matches` iteratee shorthand.
+     * // 使用 `_.matches` 迭代器简写。
      * _.reject(users, { 'age': 40, 'active': true });
      * // => objects for ['barney']
      *
-     * // The `_.matchesProperty` iteratee shorthand.
+     * // 使用 `_.matchesProperty` 迭代器简写。
      * _.reject(users, ['active', false]);
      * // => objects for ['fred']
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.reject(users, 'active');
      * // => objects for ['barney']
      */
@@ -10426,15 +10426,15 @@
      *   { 'user': 'fred',   'active': false }
      * ];
      *
-     * // The `_.matches` iteratee shorthand.
+     * // 使用 `_.matches` 迭代器简写。
      * _.some(users, { 'user': 'barney', 'active': false });
      * // => false
      *
-     * // The `_.matchesProperty` iteratee shorthand.
+     * // 使用 `_.matchesProperty` 迭代器简写。
      * _.some(users, ['active', false]);
      * // => true
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.some(users, 'active');
      * // => true
      */
@@ -13344,15 +13344,15 @@
      * _.findKey(users, function(o) { return o.age < 40; });
      * // => 'barney' (迭代顺序不保证)
      *
-     * // The `_.matches` iteratee shorthand.
+     * // 使用 `_.matches` 迭代器简写。
      * _.findKey(users, { 'age': 1, 'active': true });
      * // => 'pebbles'
      *
-     * // The `_.matchesProperty` iteratee shorthand.
+     * // 使用 `_.matchesProperty` 迭代器简写。
      * _.findKey(users, ['active', false]);
      * // => 'fred'
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.findKey(users, 'active');
      * // => 'barney'
      */
@@ -13381,15 +13381,15 @@
      * _.findLastKey(users, function(o) { return o.age < 40; });
      * // => 假设 `_.findKey` 返回 'barney',则返回 'pebbles'
      *
-     * // The `_.matches` iteratee shorthand.
+     * // 使用 `_.matches` 迭代器简写。
      * _.findLastKey(users, { 'age': 36, 'active': true });
      * // => 'barney'
      *
-     * // The `_.matchesProperty` iteratee shorthand.
+     * // 使用 `_.matchesProperty` 迭代器简写。
      * _.findLastKey(users, ['active', false]);
      * // => 'fred'
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.findLastKey(users, 'active');
      * // => 'pebbles'
      */
@@ -13859,7 +13859,7 @@
      * _.mapValues(users, function(o) { return o.age; });
      * // => { 'fred': 40, 'pebbles': 1 } (迭代顺序不保证)
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.mapValues(users, 'age');
      * // => { 'fred': 40, 'pebbles': 1 } (迭代顺序不保证)
      */
@@ -15964,19 +15964,19 @@
      *   { 'user': 'fred',   'age': 40, 'active': false }
      * ];
      *
-     * // The `_.matches` iteratee shorthand.
+     * // 使用 `_.matches` 迭代器简写。
      * _.filter(users, _.iteratee({ 'user': 'barney', 'active': true }));
      * // => [{ 'user': 'barney', 'age': 36, 'active': true }]
      *
-     * // The `_.matchesProperty` iteratee shorthand.
+     * // 使用 `_.matchesProperty` 迭代器简写。
      * _.filter(users, _.iteratee(['user', 'fred']));
      * // => [{ 'user': 'fred', 'age': 40 }]
      *
-     * // The `_.property` iteratee shorthand.
+     * // 使用 `_.property` 迭代器简写。
      * _.map(users, _.iteratee('user'));
      * // => ['barney', 'fred']
      *
-     * // Create custom iteratee shorthands.
+     * // 创建自定义迭代器简写。
      * _.iteratee = _.wrap(_.iteratee, function(iteratee, func) {
      *   return !_.isRegExp(func) ? iteratee(func) : function(string) {
      *     return func.test(string);
