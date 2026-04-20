@@ -1345,11 +1345,11 @@
   /**
    * _.trim 和 _.trimStart 使用的辅助函数，
    * 获取第一个不在 character symbols 中的字符串符号的索引。
-   */
+   *
    * @private
-   * @param {Array} strSymbols The string symbols to inspect.
-   * @param {Array} chrSymbols The character symbols to find.
-   * @returns {number} Returns the index of the first unmatched string symbol.
+   * @param {Array} strSymbols 要检查的字符串符号数组。
+   * @param {Array} chrSymbols 要查找的字符符号数组。
+   * @returns {number} 返回第一个不匹配的字符串符号的索引。
    */
   function charsStartIndex(strSymbols, chrSymbols) {
     var index = -1,
@@ -1360,13 +1360,13 @@
   }
 
   /**
-   * Used by `_.trim` and `_.trimEnd` to get the index of the last string symbol
-   * that is not found in the character symbols.
+   * _.trim 和 _.trimEnd 使用的辅助函数，
+   * 获取最后一个不在 character symbols 中的字符串符号的索引。
    *
    * @private
-   * @param {Array} strSymbols The string symbols to inspect.
-   * @param {Array} chrSymbols The character symbols to find.
-   * @returns {number} Returns the index of the last unmatched string symbol.
+   * @param {Array} strSymbols 要检查的字符串符号数组。
+   * @param {Array} chrSymbols 要查找的字符符号数组。
+   * @returns {number} 返回最后一个不匹配的字符串符号的索引。
    */
   function charsEndIndex(strSymbols, chrSymbols) {
     var index = strSymbols.length;
@@ -1376,12 +1376,12 @@
   }
 
   /**
-   * Gets the number of `placeholder` occurrences in `array`.
+   * 获取数组中 placeholder 出现的次数。
    *
    * @private
-   * @param {Array} array The array to inspect.
-   * @param {*} placeholder The placeholder to search for.
-   * @returns {number} Returns the placeholder count.
+   * @param {Array} array 要检查的数组。
+   * @param {*} placeholder 要搜索的占位符。
+   * @returns {number} 返回占位符出现的次数。
    */
   function countHolders(array, placeholder) {
     var length = array.length,
@@ -1396,75 +1396,75 @@
   }
 
   /**
-   * Used by `_.deburr` to convert Latin-1 Supplement and Latin Extended-A
-   * letters to basic Latin letters.
+   * _.deburr 使用的辅助函数，
+   * 将 Latin-1 Supplement 和 Latin Extended-A 字母转换为基本拉丁字母。
    *
    * @private
-   * @param {string} letter The matched letter to deburr.
-   * @returns {string} Returns the deburred letter.
+   * @param {string} letter 要转换的匹配字母。
+   * @returns {string} 返回转换后的字母。
    */
   var deburrLetter = basePropertyOf(deburredLetters);
 
   /**
-   * Used by `_.escape` to convert characters to HTML entities.
+   * _.escape 使用的辅助函数，将字符转换为 HTML 实体。
    *
    * @private
-   * @param {string} chr The matched character to escape.
-   * @returns {string} Returns the escaped character.
+   * @param {string} chr 要转义的匹配字符。
+   * @returns {string} 返回转义后的字符。
    */
   var escapeHtmlChar = basePropertyOf(htmlEscapes);
 
   /**
-   * Used by `_.template` to escape characters for inclusion in compiled string literals.
+   * _.template 使用的辅助函数，转义字符以便包含在编译的字符串字面量中。
    *
    * @private
-   * @param {string} chr The matched character to escape.
-   * @returns {string} Returns the escaped character.
+   * @param {string} chr 要转义的匹配字符。
+   * @returns {string} 返回转义后的字符。
    */
   function escapeStringChar(chr) {
     return '\\' + stringEscapes[chr];
   }
 
   /**
-   * Gets the value at `key` of `object`.
+   * 获取对象的指定键的值。
    *
    * @private
-   * @param {Object} [object] The object to query.
-   * @param {string} key The key of the property to get.
-   * @returns {*} Returns the property value.
+   * @param {Object} [object] 要查询的对象。
+   * @param {string} key 要获取的属性键。
+   * @returns {*} 返回属性值。
    */
   function getValue(object, key) {
     return object == null ? undefined : object[key];
   }
 
   /**
-   * Checks if `string` contains Unicode symbols.
+   * 检查字符串是否包含 Unicode 符号。
    *
    * @private
-   * @param {string} string The string to inspect.
-   * @returns {boolean} Returns `true` if a symbol is found, else `false`.
+   * @param {string} string 要检查的字符串。
+   * @returns {boolean} 如果找到符号返回 true，否则返回 false。
    */
   function hasUnicode(string) {
     return reHasUnicode.test(string);
   }
 
   /**
-   * Checks if `string` contains a word composed of Unicode symbols.
+   * 检查字符串是否包含由 Unicode 符号组成的单词。
    *
    * @private
-   * @param {string} string The string to inspect.
-   * @returns {boolean} Returns `true` if a word is found, else `false`.
+   * @param {string} string 要检查的字符串。
+   * @returns {boolean} 如果找到单词返回 true，否则返回 false。
    */
   function hasUnicodeWord(string) {
     return reHasUnicodeWord.test(string);
   }
 
   /**
-   * Converts `iterator` to an array.
+   * 将迭代器转换为数组。
    *
    * @private
-   * @param {Object} iterator The iterator to convert.
-   * @returns {Array} Returns the converted array.
+   * @param {Object} iterator 要转换的迭代器。
+   * @returns {Array} 返回转换后的数组。
    */
   function iteratorToArray(iterator) {
     var data,
@@ -1477,11 +1477,11 @@
   }
 
   /**
-   * Converts `map` to its key-value pairs.
+   * 将 Map 转换为其键值对数组。
    *
    * @private
-   * @param {Object} map The map to convert.
-   * @returns {Array} Returns the key-value pairs.
+   * @param {Object} map 要转换的 Map。
+   * @returns {Array} 返回键值对数组。
    */
   function mapToArray(map) {
     var index = -1,
@@ -1494,12 +1494,12 @@
   }
 
   /**
-   * Creates a unary function that invokes `func` with its argument transformed.
+   * 创建一个一元函数，使用转换后的参数调用 `func`。
    *
    * @private
-   * @param {Function} func The function to wrap.
-   * @param {Function} transform The argument transform.
-   * @returns {Function} Returns the new function.
+   * @param {Function} func 要包装的函数。
+   * @param {Function} transform 参数转换函数。
+   * @returns {Function} 返回新的函数。
    */
   function overArg(func, transform) {
     return function(arg) {
@@ -1508,13 +1508,13 @@
   }
 
   /**
-   * Replaces all `placeholder` elements in `array` with an internal placeholder
-   * and returns an array of their indexes.
+   * 将数组中所有 `placeholder` 元素替换为内部占位符，
+   * 并返回这些占位符索引的数组。
    *
    * @private
-   * @param {Array} array The array to modify.
-   * @param {*} placeholder The placeholder to replace.
-   * @returns {Array} Returns the new array of placeholder indexes.
+   * @param {Array} array 要修改的数组。
+   * @param {*} placeholder 要替换的占位符。
+   * @returns {Array} 返回占位符索引的新数组。
    */
   function replaceHolders(array, placeholder) {
     var index = -1,
@@ -1533,11 +1533,11 @@
   }
 
   /**
-   * Converts `set` to an array of its values.
+   * 将 Set 转换为其值的数组。
    *
    * @private
-   * @param {Object} set The set to convert.
-   * @returns {Array} Returns the values.
+   * @param {Object} set 要转换的 Set。
+   * @returns {Array} 返回值数组。
    */
   function setToArray(set) {
     var index = -1,
@@ -1550,11 +1550,11 @@
   }
 
   /**
-   * Converts `set` to its value-value pairs.
+   * 将 Set 转换为其值-值对数组。
    *
    * @private
-   * @param {Object} set The set to convert.
-   * @returns {Array} Returns the value-value pairs.
+   * @param {Object} set 要转换的 Set。
+   * @returns {Array} 返回值-值对数组。
    */
   function setToPairs(set) {
     var index = -1,
@@ -1567,14 +1567,13 @@
   }
 
   /**
-   * A specialized version of `_.indexOf` which performs strict equality
-   * comparisons of values, i.e. `===`.
+   * _.indexOf 的专用版本，执行严格相等比较（===）。
    *
    * @private
-   * @param {Array} array The array to inspect.
-   * @param {*} value The value to search for.
-   * @param {number} fromIndex The index to search from.
-   * @returns {number} Returns the index of the matched value, else `-1`.
+   * @param {Array} array 要检查的数组。
+   * @param {*} value 要搜索的值。
+   * @param {number} fromIndex 搜索起始索引。
+   * @returns {number} 返回匹配值的索引，否则返回 -1。
    */
   function strictIndexOf(array, value, fromIndex) {
     var index = fromIndex - 1,
@@ -1589,14 +1588,13 @@
   }
 
   /**
-   * A specialized version of `_.lastIndexOf` which performs strict equality
-   * comparisons of values, i.e. `===`.
+   * _.lastIndexOf 的专用版本，执行严格相等比较（===）。
    *
    * @private
-   * @param {Array} array The array to inspect.
-   * @param {*} value The value to search for.
-   * @param {number} fromIndex The index to search from.
-   * @returns {number} Returns the index of the matched value, else `-1`.
+   * @param {Array} array 要检查的数组。
+   * @param {*} value 要搜索的值。
+   * @param {number} fromIndex 搜索起始索引。
+   * @returns {number} 返回匹配值的索引，否则返回 -1。
    */
   function strictLastIndexOf(array, value, fromIndex) {
     var index = fromIndex + 1;
@@ -1609,11 +1607,11 @@
   }
 
   /**
-   * Gets the number of symbols in `string`.
+   * 获取字符串中符号的数量。
    *
    * @private
-   * @param {string} string The string to inspect.
-   * @returns {number} Returns the string size.
+   * @param {string} string 要检查的字符串。
+   * @returns {number} 返回字符串大小。
    */
   function stringSize(string) {
     return hasUnicode(string)
@@ -1622,11 +1620,11 @@
   }
 
   /**
-   * Converts `string` to an array.
+   * 将字符串转换为数组。
    *
    * @private
-   * @param {string} string The string to convert.
-   * @returns {Array} Returns the converted array.
+   * @param {string} string 要转换的字符串。
+   * @returns {Array} 返回转换后的数组。
    */
   function stringToArray(string) {
     return hasUnicode(string)
@@ -1635,12 +1633,12 @@
   }
 
   /**
-   * Used by `_.trim` and `_.trimEnd` to get the index of the last non-whitespace
-   * character of `string`.
+   * _.trim 和 _.trimEnd 使用的辅助函数，
+   * 获取字符串中最后一个非空白字符的索引。
    *
    * @private
-   * @param {string} string The string to inspect.
-   * @returns {number} Returns the index of the last non-whitespace character.
+   * @param {string} string 要检查的字符串。
+   * @returns {number} 返回最后一个非空白字符的索引。
    */
   function trimmedEndIndex(string) {
     var index = string.length;
@@ -1650,20 +1648,20 @@
   }
 
   /**
-   * Used by `_.unescape` to convert HTML entities to characters.
+   * _.unescape 使用的辅助函数，将 HTML 实体转换为字符。
    *
    * @private
-   * @param {string} chr The matched character to unescape.
-   * @returns {string} Returns the unescaped character.
+   * @param {string} chr 要反转义的匹配字符。
+   * @returns {string} 返回反转义后的字符。
    */
   var unescapeHtmlChar = basePropertyOf(htmlUnescapes);
 
   /**
-   * Gets the size of a Unicode `string`.
+   * 获取 Unicode 字符串的大小。
    *
    * @private
-   * @param {string} string The string inspect.
-   * @returns {number} Returns the string size.
+   * @param {string} string 要检查的字符串。
+   * @returns {number} 返回字符串大小。
    */
   function unicodeSize(string) {
     var result = reUnicode.lastIndex = 0;
@@ -1674,22 +1672,22 @@
   }
 
   /**
-   * Converts a Unicode `string` to an array.
+   * 将 Unicode 字符串转换为数组。
    *
    * @private
-   * @param {string} string The string to convert.
-   * @returns {Array} Returns the converted array.
+   * @param {string} string 要转换的字符串。
+   * @returns {Array} 返回转换后的数组。
    */
   function unicodeToArray(string) {
     return string.match(reUnicode) || [];
   }
 
   /**
-   * Splits a Unicode `string` into an array of its words.
+   * 将 Unicode 字符串分割为其单词数组。
    *
    * @private
-   * @param {string} The string to inspect.
-   * @returns {Array} Returns the words of `string`.
+   * @param {string} string 要检查的字符串。
+   * @returns {Array} 返回字符串的单词数组。
    */
   function unicodeWords(string) {
     return string.match(reUnicodeWord) || [];
@@ -1698,14 +1696,14 @@
   /*--------------------------------------------------------------------------*/
 
   /**
-   * Create a new pristine `lodash` function using the `context` object.
+   * 使用 `context` 对象创建一个全新的原始 `lodash` 函数。
    *
    * @static
    * @memberOf _
    * @since 1.1.0
    * @category Util
-   * @param {Object} [context=root] The context object.
-   * @returns {Function} Returns a new `lodash` function.
+   * @param {Object} [context=root] 上下文对象。
+   * @returns {Function} 返回一个新的 `lodash` 函数。
    * @example
    *
    * _.mixin({ 'foo': _.constant('foo') });
@@ -1729,7 +1727,7 @@
   var runInContext = (function runInContext(context) {
     context = context == null ? root : _.defaults(root.Object(), context, _.pick(root, contextProps));
 
-    /** Built-in constructor references. */
+    /** 内置构造函数引用。 */
     var Array = context.Array,
         Date = context.Date,
         Error = context.Error,
@@ -1740,49 +1738,48 @@
         String = context.String,
         TypeError = context.TypeError;
 
-    /** Used for built-in method references. */
+    /** 用于内置方法引用。 */
     var arrayProto = Array.prototype,
         funcProto = Function.prototype,
         objectProto = Object.prototype;
 
-    /** Used to detect overreaching core-js shims. */
+    /** 用于检测覆盖范围的 core-js shims。 */
     var coreJsData = context['__core-js_shared__'];
 
-    /** Used to resolve the decompiled source of functions. */
+    /** 用于解析函数的反编译源代码。 */
     var funcToString = funcProto.toString;
 
-    /** Used to check objects for own properties. */
+    /** 用于检查对象的自有属性。 */
     var hasOwnProperty = objectProto.hasOwnProperty;
 
-    /** Used to generate unique IDs. */
+    /** 用于生成唯一 ID。 */
     var idCounter = 0;
 
-    /** Used to detect methods masquerading as native. */
+    /** 用于检测伪装成原生方法的方法。 */
     var maskSrcKey = (function() {
       var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
       return uid ? ('Symbol(src)_1.' + uid) : '';
     }());
 
     /**
-     * Used to resolve the
-     * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-     * of values.
+     * 用于解析值的
+     * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)。
      */
     var nativeObjectToString = objectProto.toString;
 
-    /** Used to infer the `Object` constructor. */
+    /** 用于推断 `Object` 构造函数。 */
     var objectCtorString = funcToString.call(Object);
 
-    /** Used to restore the original `_` reference in `_.noConflict`. */
+    /** 用于在 `_.noConflict` 中恢复原始 `_` 引用。 */
     var oldDash = root._;
 
-    /** Used to detect if a method is native. */
+    /** 用于检测方法是否是原生的。 */
     var reIsNative = RegExp('^' +
       funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
       .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
     );
 
-    /** Built-in value references. */
+    /** 内置值引用。 */
     var Buffer = moduleExports ? context.Buffer : undefined,
         Symbol = context.Symbol,
         Uint8Array = context.Uint8Array,
@@ -1803,12 +1800,12 @@
       } catch (e) {}
     }());
 
-    /** Mocked built-ins. */
+    /** 模拟的内置对象。 */
     var ctxClearTimeout = context.clearTimeout !== root.clearTimeout && context.clearTimeout,
         ctxNow = Date && Date.now !== root.Date.now && Date.now,
         ctxSetTimeout = context.setTimeout !== root.setTimeout && context.setTimeout;
 
-    /* Built-in method references for those with the same name as other `lodash` methods. */
+    /* 与其他 `lodash` 方法同名的内置方法引用。 */
     var nativeCeil = Math.ceil,
         nativeFloor = Math.floor,
         nativeGetSymbols = Object.getOwnPropertySymbols,
@@ -1823,7 +1820,7 @@
         nativeRandom = Math.random,
         nativeReverse = arrayProto.reverse;
 
-    /* Built-in method references that are verified to be native. */
+    /* 已验证是原生方法的内置方法引用。 */
     var DataView = getNative(context, 'DataView'),
         Map = getNative(context, 'Map'),
         Promise = getNative(context, 'Promise'),
@@ -1831,20 +1828,20 @@
         WeakMap = getNative(context, 'WeakMap'),
         nativeCreate = getNative(Object, 'create');
 
-    /** Used to store function metadata. */
+    /** 用于存储函数元数据。 */
     var metaMap = WeakMap && new WeakMap;
 
-    /** Used to lookup unminified function names. */
+    /** 用于查找未压缩的函数名。 */
     var realNames = {};
 
-    /** Used to detect maps, sets, and weakmaps. */
+    /** 用于检测 maps、sets 和 weakmaps。 */
     var dataViewCtorString = toSource(DataView),
         mapCtorString = toSource(Map),
         promiseCtorString = toSource(Promise),
         setCtorString = toSource(Set),
         weakMapCtorString = toSource(WeakMap);
 
-    /** Used to convert symbols to primitives and strings. */
+    /** 用于将符号转换为基础类型和字符串。 */
     var symbolProto = Symbol ? Symbol.prototype : undefined,
         symbolValueOf = symbolProto ? symbolProto.valueOf : undefined,
         symbolToString = symbolProto ? symbolProto.toString : undefined;
@@ -1852,101 +1849,95 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * Creates a `lodash` object which wraps `value` to enable implicit method
-     * chain sequences. Methods that operate on and return arrays, collections,
-     * and functions can be chained together. Methods that retrieve a single value
-     * or may return a primitive value will automatically end the chain sequence
-     * and return the unwrapped value. Otherwise, the value must be unwrapped
-     * with `_#value`.
+     * 创建一个包装 `value` 的 `lodash` 对象，以启用隐式方法链序列。
+     * 操作并返回数组、集合和函数的方法可以链式调用。
+     * 检索单个值或可能返回原始值的方法将自动结束链序列
+     * 并返回未包装的值。否则，必须使用 `_#value` 解开包装。
      *
-     * Explicit chain sequences, which must be unwrapped with `_#value`, may be
-     * enabled using `_.chain`.
+     * 显式链序列（必须使用 `_#value` 解开包装）可以使用 `_.chain` 启用。
      *
-     * The execution of chained methods is lazy, that is, it's deferred until
-     * `_#value` is implicitly or explicitly called.
+     * 链式方法的执行是惰性的，即延迟到 `_#value` 被隐式或显式调用时才执行。
      *
-     * Lazy evaluation allows several methods to support shortcut fusion.
-     * Shortcut fusion is an optimization to merge iteratee calls; this avoids
-     * the creation of intermediate arrays and can greatly reduce the number of
-     * iteratee executions. Sections of a chain sequence qualify for shortcut
-     * fusion if the section is applied to an array and iteratees accept only
-     * one argument. The heuristic for whether a section qualifies for shortcut
-     * fusion is subject to change.
+     * 惰性求值允许几个方法支持快捷融合。
+     * 快捷融合是一种优化技术，用于合并迭代器调用；
+     * 这样可以避免创建中间数组，并大大减少迭代器执行次数。
+     * 如果链序列的一个部分应用于数组且迭代器只接受一个参数，
+     * 则该部分有资格进行快捷融合。
+     * 一个部分是否有资格进行快捷融合的启发式方法可能会发生变化。
      *
-     * Chaining is supported in custom builds as long as the `_#value` method is
-     * directly or indirectly included in the build.
+     * 只要 `_#value` 方法直接或间接包含在构建中，自定义构建就支持链式调用。
      *
-     * In addition to lodash methods, wrappers have `Array` and `String` methods.
+     * 除了 lodash 方法外，包装器还具有 `Array` 和 `String` 方法。
      *
-     * The wrapper `Array` methods are:
-     * `concat`, `join`, `pop`, `push`, `shift`, `sort`, `splice`, and `unshift`
+     * 包装器的 `Array` 方法有：
+     * `concat`、`join`、`pop`、`push`、`shift`、`sort`、`splice` 和 `unshift`
      *
-     * The wrapper `String` methods are:
-     * `replace` and `split`
+     * 包装器的 `String` 方法有：
+     * `replace` 和 `split`
      *
-     * The wrapper methods that support shortcut fusion are:
-     * `at`, `compact`, `drop`, `dropRight`, `dropWhile`, `filter`, `find`,
-     * `findLast`, `head`, `initial`, `last`, `map`, `reject`, `reverse`, `slice`,
-     * `tail`, `take`, `takeRight`, `takeRightWhile`, `takeWhile`, and `toArray`
+     * 支持快捷融合的包装器方法有：
+     * `at`、`compact`、`drop`、`dropRight`、`dropWhile`、`filter`、`find`、
+     * `findLast`、`head`、`initial`、`last`、`map`、`reject`、`reverse`、`slice`、
+     * `tail`、`take`、`takeRight`、`takeRightWhile`、`takeWhile` 和 `toArray`
      *
-     * The chainable wrapper methods are:
-     * `after`, `ary`, `assign`, `assignIn`, `assignInWith`, `assignWith`, `at`,
-     * `before`, `bind`, `bindAll`, `bindKey`, `castArray`, `chain`, `chunk`,
-     * `commit`, `compact`, `concat`, `conforms`, `constant`, `countBy`, `create`,
-     * `curry`, `debounce`, `defaults`, `defaultsDeep`, `defer`, `delay`,
-     * `difference`, `differenceBy`, `differenceWith`, `drop`, `dropRight`,
-     * `dropRightWhile`, `dropWhile`, `extend`, `extendWith`, `fill`, `filter`,
-     * `flatMap`, `flatMapDeep`, `flatMapDepth`, `flatten`, `flattenDeep`,
-     * `flattenDepth`, `flip`, `flow`, `flowRight`, `fromPairs`, `functions`,
-     * `functionsIn`, `groupBy`, `initial`, `intersection`, `intersectionBy`,
-     * `intersectionWith`, `invert`, `invertBy`, `invokeMap`, `iteratee`, `keyBy`,
-     * `keys`, `keysIn`, `map`, `mapKeys`, `mapValues`, `matches`, `matchesProperty`,
-     * `memoize`, `merge`, `mergeWith`, `method`, `methodOf`, `mixin`, `negate`,
-     * `nthArg`, `omit`, `omitBy`, `once`, `orderBy`, `over`, `overArgs`,
-     * `overEvery`, `overSome`, `partial`, `partialRight`, `partition`, `pick`,
-     * `pickBy`, `plant`, `property`, `propertyOf`, `pull`, `pullAll`, `pullAllBy`,
-     * `pullAllWith`, `pullAt`, `push`, `range`, `rangeRight`, `rearg`, `reject`,
-     * `remove`, `rest`, `reverse`, `sampleSize`, `set`, `setWith`, `shuffle`,
-     * `slice`, `sort`, `sortBy`, `splice`, `spread`, `tail`, `take`, `takeRight`,
-     * `takeRightWhile`, `takeWhile`, `tap`, `throttle`, `thru`, `toArray`,
-     * `toPairs`, `toPairsIn`, `toPath`, `toPlainObject`, `transform`, `unary`,
-     * `union`, `unionBy`, `unionWith`, `uniq`, `uniqBy`, `uniqWith`, `unset`,
-     * `unshift`, `unzip`, `unzipWith`, `update`, `updateWith`, `values`,
-     * `valuesIn`, `without`, `wrap`, `xor`, `xorBy`, `xorWith`, `zip`,
-     * `zipObject`, `zipObjectDeep`, and `zipWith`
+     * 可链式调用的包装器方法有：
+     * `after`、`ary`、`assign`、`assignIn`、`assignInWith`、`assignWith`、`at`、
+     * `before`、`bind`、`bindAll`、`bindKey`、`castArray`、`chain`、`chunk`、
+     * `commit`、`compact`、`concat`、`conforms`、`constant`、`countBy`、`create`、
+     * `curry`、`debounce`、`defaults`、`defaultsDeep`、`defer`、`delay`、
+     * `difference`、`differenceBy`、`differenceWith`、`drop`、`dropRight`、
+     * `dropRightWhile`、`dropWhile`、`extend`、`extendWith`、`fill`、`filter`、
+     * `flatMap`、`flatMapDeep`、`flatMapDepth`、`flatten`、`flattenDeep`、
+     * `flattenDepth`、`flip`、`flow`、`flowRight`、`fromPairs`、`functions`、
+     * `functionsIn`、`groupBy`、`initial`、`intersection`、`intersectionBy`、
+     * `intersectionWith`、`invert`、`invertBy`、`invokeMap`、`iteratee`、`keyBy`、
+     * `keys`、`keysIn`、`map`、`mapKeys`、`mapValues`、`matches`、`matchesProperty`、
+     * `memoize`、`merge`、`mergeWith`、`method`、`methodOf`、`mixin`、`negate`、
+     * `nthArg`、`omit`、`omitBy`、`once`、`orderBy`、`over`、`overArgs`、
+     * `overEvery`、`overSome`、`partial`、`partialRight`、`partition`、`pick`、
+     * `pickBy`、`plant`、`property`、`propertyOf`、`pull`、`pullAll`、`pullAllBy`、
+     * `pullAllWith`、`pullAt`、`push`、`range`、`rangeRight`、`rearg`、`reject`、
+     * `remove`、`rest`、`reverse`、`sampleSize`、`set`、`setWith`、`shuffle`、
+     * `slice`、`sort`、`sortBy`、`splice`、`spread`、`tail`、`take`、`takeRight`、
+     * `takeRightWhile`、`takeWhile`、`tap`、`throttle`、`thru`、`toArray`、
+     * `toPairs`、`toPairsIn`、`toPath`、`toPlainObject`、`transform`、`unary`、
+     * `union`、`unionBy`、`unionWith`、`uniq`、`uniqBy`、`uniqWith`、`unset`、
+     * `unshift`、`unzip`、`unzipWith`、`update`、`updateWith`、`values`、
+     * `valuesIn`、`without`、`wrap`、`xor`、`xorBy`、`xorWith`、`zip`、
+     * `zipObject`、`zipObjectDeep` 和 `zipWith`
      *
-     * The wrapper methods that are **not** chainable by default are:
-     * `add`, `attempt`, `camelCase`, `capitalize`, `ceil`, `clamp`, `clone`,
-     * `cloneDeep`, `cloneDeepWith`, `cloneWith`, `conformsTo`, `deburr`,
-     * `defaultTo`, `divide`, `each`, `eachRight`, `endsWith`, `eq`, `escape`,
-     * `escapeRegExp`, `every`, `find`, `findIndex`, `findKey`, `findLast`,
-     * `findLastIndex`, `findLastKey`, `first`, `floor`, `forEach`, `forEachRight`,
-     * `forIn`, `forInRight`, `forOwn`, `forOwnRight`, `get`, `gt`, `gte`, `has`,
-     * `hasIn`, `head`, `identity`, `includes`, `indexOf`, `inRange`, `invoke`,
-     * `isArguments`, `isArray`, `isArrayBuffer`, `isArrayLike`, `isArrayLikeObject`,
-     * `isBoolean`, `isBuffer`, `isDate`, `isElement`, `isEmpty`, `isEqual`,
-     * `isEqualWith`, `isError`, `isFinite`, `isFunction`, `isInteger`, `isLength`,
-     * `isMap`, `isMatch`, `isMatchWith`, `isNaN`, `isNative`, `isNil`, `isNull`,
-     * `isNumber`, `isObject`, `isObjectLike`, `isPlainObject`, `isRegExp`,
-     * `isSafeInteger`, `isSet`, `isString`, `isUndefined`, `isTypedArray`,
-     * `isWeakMap`, `isWeakSet`, `join`, `kebabCase`, `last`, `lastIndexOf`,
-     * `lowerCase`, `lowerFirst`, `lt`, `lte`, `max`, `maxBy`, `mean`, `meanBy`,
-     * `min`, `minBy`, `multiply`, `noConflict`, `noop`, `now`, `nth`, `pad`,
-     * `padEnd`, `padStart`, `parseInt`, `pop`, `random`, `reduce`, `reduceRight`,
-     * `repeat`, `result`, `round`, `runInContext`, `sample`, `shift`, `size`,
-     * `snakeCase`, `some`, `sortedIndex`, `sortedIndexBy`, `sortedLastIndex`,
-     * `sortedLastIndexBy`, `startCase`, `startsWith`, `stubArray`, `stubFalse`,
-     * `stubObject`, `stubString`, `stubTrue`, `subtract`, `sum`, `sumBy`,
-     * `template`, `times`, `toFinite`, `toInteger`, `toJSON`, `toLength`,
-     * `toLower`, `toNumber`, `toSafeInteger`, `toString`, `toUpper`, `trim`,
-     * `trimEnd`, `trimStart`, `truncate`, `unescape`, `uniqueId`, `upperCase`,
-     * `upperFirst`, `value`, and `words`
+     * 默认情况下**不可**链式调用的包装器方法有：
+     * `add`、`attempt`、`camelCase`、`capitalize`、`ceil`、`clamp`、`clone`、
+     * `cloneDeep`、`cloneDeepWith`、`cloneWith`、`conformsTo`、`deburr`、
+     * `defaultTo`、`divide`、`each`、`eachRight`、`endsWith`、`eq`、`escape`、
+     * `escapeRegExp`、`every`、`find`、`findIndex`、`findKey`、`findLast`、
+     * `findLastIndex`、`findLastKey`、`first`、`floor`、`forEach`、`forEachRight`、
+     * `forIn`、`forInRight`、`forOwn`、`forOwnRight`、`get`、`gt`、`gte`、`has`、
+     * `hasIn`、`head`、`identity`、`includes`、`indexOf`、`inRange`、`invoke`、
+     * `isArguments`、`isArray`、`isArrayBuffer`、`isArrayLike`、`isArrayLikeObject`、
+     * `isBoolean`、`isBuffer`、`isDate`、`isElement`、`isEmpty`、`isEqual`、
+     * `isEqualWith`、`isError`、`isFinite`、`isFunction`、`isInteger`、`isLength`、
+     * `isMap`、`isMatch`、`isMatchWith`、`isNaN`、`isNative`、`isNil`、`isNull`、
+     * `isNumber`、`isObject`、`isObjectLike`、`isPlainObject`、`isRegExp`、
+     * `isSafeInteger`、`isSet`、`isString`、`isUndefined`、`isTypedArray`、
+     * `isWeakMap`、`isWeakSet`、`join`、`kebabCase`、`last`、`lastIndexOf`、
+     * `lowerCase`、`lowerFirst`、`lt`、`lte`、`max`、`maxBy`、`mean`、`meanBy`、
+     * `min`、`minBy`、`multiply`、`noConflict`、`noop`、`now`、`nth`、`pad`、
+     * `padEnd`、`padStart`、`parseInt`、`pop`、`random`、`reduce`、`reduceRight`、
+     * `repeat`、`result`、`round`、`runInContext`、`sample`、`shift`、`size`、
+     * `snakeCase`、`some`、`sortedIndex`、`sortedIndexBy`、`sortedLastIndex`、
+     * `sortedLastIndexBy`、`startCase`、`startsWith`、`stubArray`、`stubFalse`、
+     * `stubObject`、`stubString`、`stubTrue`、`subtract`、`sum`、`sumBy`、
+     * `template`、`times`、`toFinite`、`toInteger`、`toJSON`、`toLength`、
+     * `toLower`、`toNumber`、`toSafeInteger`、`toString`、`toUpper`、`trim`、
+     * `trimEnd`、`trimStart`、`truncate`、`unescape`、`uniqueId`、`upperCase`、
+     * `upperFirst`、`value` 和 `words`
      *
      * @name _
      * @constructor
      * @category Seq
-     * @param {*} value The value to wrap in a `lodash` instance.
-     * @returns {Object} Returns the new `lodash` wrapper instance.
+     * @param {*} value 要包装在 `lodash` 实例中的值。
+     * @returns {Object} 返回新的 `lodash` 包装器实例。
      * @example
      *
      * function square(n) {
@@ -1955,11 +1946,11 @@
      *
      * var wrapped = _([1, 2, 3]);
      *
-     * // Returns an unwrapped value.
+     * // 返回一个未包装的值。
      * wrapped.reduce(_.add);
      * // => 6
      *
-     * // Returns a wrapped value.
+     * // 返回一个包装的值。
      * var squares = wrapped.map(square);
      *
      * _.isArray(squares);
@@ -1981,12 +1972,11 @@
     }
 
     /**
-     * The base implementation of `_.create` without support for assigning
-     * properties to the created object.
+     * _.create 的基础实现，不支持为创建的对象分配属性。
      *
      * @private
-     * @param {Object} proto The object to inherit from.
-     * @returns {Object} Returns the new object.
+     * @param {Object} proto 要继承的对象。
+     * @returns {Object} 返回新对象。
      */
     var baseCreate = (function() {
       function object() {}
@@ -2005,7 +1995,7 @@
     }());
 
     /**
-     * The function whose prototype chain sequence wrappers inherit from.
+     * 其原型链序列包装器继承自的函数。
      *
      * @private
      */
@@ -2014,11 +2004,11 @@
     }
 
     /**
-     * The base constructor for creating `lodash` wrapper objects.
+     * 用于创建 `lodash` 包装器对象的基础构造函数。
      *
      * @private
-     * @param {*} value The value to wrap.
-     * @param {boolean} [chainAll] Enable explicit method chain sequences.
+     * @param {*} value 要包装的值。
+     * @param {boolean} [chainAll] 启用显式方法链序列。
      */
     function LodashWrapper(value, chainAll) {
       this.__wrapped__ = value;
@@ -2029,13 +2019,12 @@
     }
 
     /**
-     * By default, the template delimiters used by lodash are like those in
-     * embedded Ruby (ERB) as well as ES2015 template strings. Change the
-     * following template settings to use alternative delimiters.
+     * 默认情况下，lodash 使用的模板分隔符类似于嵌入式 Ruby (ERB)
+     * 以及 ES2015 模板字符串。更改以下模板设置以使用替代分隔符。
      *
-     * **Security:** See
-     * [threat model](https://github.com/lodash/lodash/blob/main/threat-model.md)
-     * — `_.template` is insecure and will be removed in v5.
+     * **安全警告：** 请参阅
+     * [威胁模型](https://github.com/lodash/lodash/blob/main/threat-model.md)
+     * — `_.template` 不安全，将在 v5 中移除。
      *
      * @static
      * @memberOf _
@@ -2044,7 +2033,7 @@
     lodash.templateSettings = {
 
       /**
-       * Used to detect `data` property values to be HTML-escaped.
+       * 用于检测要 HTML 转义的数据属性值。
        *
        * @memberOf _.templateSettings
        * @type {RegExp}
@@ -2052,7 +2041,7 @@
       'escape': reEscape,
 
       /**
-       * Used to detect code to be evaluated.
+       * 用于检测要评估的代码。
        *
        * @memberOf _.templateSettings
        * @type {RegExp}
@@ -2060,7 +2049,7 @@
       'evaluate': reEvaluate,
 
       /**
-       * Used to detect `data` property values to inject.
+       * 用于检测要注入的数据属性值。
        *
        * @memberOf _.templateSettings
        * @type {RegExp}
@@ -2068,7 +2057,7 @@
       'interpolate': reInterpolate,
 
       /**
-       * Used to reference the data object in the template text.
+       * 用于在模板文本中引用数据对象。
        *
        * @memberOf _.templateSettings
        * @type {string}
@@ -2076,7 +2065,7 @@
       'variable': '',
 
       /**
-       * Used to import variables into the compiled template.
+       * 用于将变量导入到编译的模板中。
        *
        * @memberOf _.templateSettings
        * @type {Object}
@@ -2084,7 +2073,7 @@
       'imports': {
 
         /**
-         * A reference to the `lodash` function.
+         * 对 `lodash` 函数的引用。
          *
          * @memberOf _.templateSettings.imports
          * @type {Function}
@@ -2093,7 +2082,7 @@
       }
     };
 
-    // Ensure wrappers are instances of `baseLodash`.
+    // 确保包装器是 `baseLodash` 的实例。
     lodash.prototype = baseLodash.prototype;
     lodash.prototype.constructor = lodash;
 
@@ -2103,11 +2092,11 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * Creates a lazy wrapper object which wraps `value` to enable lazy evaluation.
+     * 创建一个包装 `value` 的延迟包装器对象，以启用延迟求值。
      *
      * @private
      * @constructor
-     * @param {*} value The value to wrap.
+     * @param {*} value 要包装的值。
      *
      * LazyWrapper 是 Lodash 延迟计算的核心实现。
      *
@@ -2140,12 +2129,12 @@
     }
 
     /**
-     * Creates a clone of the lazy wrapper object.
+     * 创建延迟包装器对象的克隆。
      *
      * @private
      * @name clone
      * @memberOf LazyWrapper
-     * @returns {Object} Returns the cloned `LazyWrapper` object.
+     * @returns {Object} 返回克隆的 `LazyWrapper` 对象。
      *
      * 浅克隆 LazyWrapper，复制所有内部状态。
      * 重要：数组和嵌套状态使用 copyArray 复制，确保独立性。
@@ -2162,12 +2151,12 @@
     }
 
     /**
-     * Reverses the direction of lazy iteration.
+     * 反转延迟迭代的方向。
      *
      * @private
      * @name reverse
      * @memberOf LazyWrapper
-     * @returns {Object} Returns the new reversed `LazyWrapper` object.
+     * @returns {Object} 返回新的反转后的 `LazyWrapper` 对象。
      *
      * 反转遍历方向。如果已经是 filtered 状态，
      * 创建一个新的 LazyWrapper 副本；否则直接修改方向。
@@ -2185,12 +2174,12 @@
     }
 
     /**
-     * Extracts the unwrapped value from its lazy wrapper.
+     * 从其延迟包装器中提取未包装的值。
      *
      * @private
      * @name value
      * @memberOf LazyWrapper
-     * @returns {*} Returns the unwrapped value.
+     * @returns {*} 返回未包装的值。
      *
      * 延迟值计算的核心方法。这是真正执行计算的地方。
      *
@@ -2262,11 +2251,11 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * Creates a hash object.
+     * 创建一个哈希对象。
      *
      * @private
      * @constructor
-     * @param {Array} [entries] The key-value pairs to cache.
+     * @param {Array} [entries] 要缓存的键值对。
      */
     function Hash(entries) {
       var index = -1,
@@ -2280,7 +2269,7 @@
     }
 
     /**
-     * Removes all key-value entries from the hash.
+     * 移除哈希中的所有键值对。
      *
      * @private
      * @name clear
@@ -2292,14 +2281,14 @@
     }
 
     /**
-     * Removes `key` and its value from the hash.
+     * 从哈希中移除 `key` 及其值。
      *
      * @private
      * @name delete
      * @memberOf Hash
-     * @param {Object} hash The hash to modify.
-     * @param {string} key The key of the value to remove.
-     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+     * @param {Object} hash 要修改的哈希。
+     * @param {string} key 要移除的值的键。
+     * @returns {boolean} 如果条目被移除返回 `true`，否则返回 `false`。
      */
     function hashDelete(key) {
       var result = this.has(key) && delete this.__data__[key];
@@ -2308,13 +2297,13 @@
     }
 
     /**
-     * Gets the hash value for `key`.
+     * 获取 `key` 对应的哈希值。
      *
      * @private
      * @name get
      * @memberOf Hash
-     * @param {string} key The key of the value to get.
-     * @returns {*} Returns the entry value.
+     * @param {string} key 要获取的值的键。
+     * @returns {*} 返回条目的值。
      */
     function hashGet(key) {
       var data = this.__data__;
@@ -2326,13 +2315,13 @@
     }
 
     /**
-     * Checks if a hash value for `key` exists.
+     * 检查 `key` 的哈希值是否存在。
      *
      * @private
      * @name has
      * @memberOf Hash
-     * @param {string} key The key of the entry to check.
-     * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+     * @param {string} key 要检查的条目的键。
+     * @returns {boolean} 如果 `key` 的条目存在返回 `true`，否则返回 `false`。
      */
     function hashHas(key) {
       var data = this.__data__;
@@ -2340,14 +2329,14 @@
     }
 
     /**
-     * Sets the hash `key` to `value`.
+     * 将哈希 `key` 设置为 `value`。
      *
      * @private
      * @name set
      * @memberOf Hash
-     * @param {string} key The key of the value to set.
-     * @param {*} value The value to set.
-     * @returns {Object} Returns the hash instance.
+     * @param {string} key 要设置的值的键。
+     * @param {*} value 要设置的值。
+     * @returns {Object} 返回哈希实例。
      */
     function hashSet(key, value) {
       var data = this.__data__;
@@ -2356,7 +2345,7 @@
       return this;
     }
 
-    // Add methods to `Hash`.
+    // 将方法添加到 `Hash`。
     Hash.prototype.clear = hashClear;
     Hash.prototype['delete'] = hashDelete;
     Hash.prototype.get = hashGet;
@@ -2366,11 +2355,11 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * Creates an list cache object.
+     * 创建一个列表缓存对象。
      *
      * @private
      * @constructor
-     * @param {Array} [entries] The key-value pairs to cache.
+     * @param {Array} [entries] 要缓存的键值对。
      */
     function ListCache(entries) {
       var index = -1,
@@ -2384,7 +2373,7 @@
     }
 
     /**
-     * Removes all key-value entries from the list cache.
+     * 移除列表缓存中的所有键值对。
      *
      * @private
      * @name clear
@@ -2396,13 +2385,13 @@
     }
 
     /**
-     * Removes `key` and its value from the list cache.
+     * 从列表缓存中移除 `key` 及其值。
      *
      * @private
      * @name delete
      * @memberOf ListCache
-     * @param {string} key The key of the value to remove.
-     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+     * @param {string} key 要移除的值的键。
+     * @returns {boolean} 如果条目被移除返回 `true`，否则返回 `false`。
      */
     function listCacheDelete(key) {
       var data = this.__data__,
@@ -2422,13 +2411,13 @@
     }
 
     /**
-     * Gets the list cache value for `key`.
+     * 获取 `key` 对应的列表缓存值。
      *
      * @private
      * @name get
      * @memberOf ListCache
-     * @param {string} key The key of the value to get.
-     * @returns {*} Returns the entry value.
+     * @param {string} key 要获取的值的键。
+     * @returns {*} 返回条目的值。
      */
     function listCacheGet(key) {
       var data = this.__data__,
@@ -2438,27 +2427,27 @@
     }
 
     /**
-     * Checks if a list cache value for `key` exists.
+     * 检查 `key` 的列表缓存值是否存在。
      *
      * @private
      * @name has
      * @memberOf ListCache
-     * @param {string} key The key of the entry to check.
-     * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+     * @param {string} key 要检查的条目的键。
+     * @returns {boolean} 如果 `key` 的条目存在返回 `true`，否则返回 `false`。
      */
     function listCacheHas(key) {
       return assocIndexOf(this.__data__, key) > -1;
     }
 
     /**
-     * Sets the list cache `key` to `value`.
+     * 将列表缓存的 `key` 设置为 `value`。
      *
      * @private
      * @name set
      * @memberOf ListCache
-     * @param {string} key The key of the value to set.
-     * @param {*} value The value to set.
-     * @returns {Object} Returns the list cache instance.
+     * @param {string} key 要设置的值的键。
+     * @param {*} value 要设置的值。
+     * @returns {Object} 返回列表缓存实例。
      */
     function listCacheSet(key, value) {
       var data = this.__data__,
@@ -2473,7 +2462,7 @@
       return this;
     }
 
-    // Add methods to `ListCache`.
+    // 将方法添加到 `ListCache`。
     ListCache.prototype.clear = listCacheClear;
     ListCache.prototype['delete'] = listCacheDelete;
     ListCache.prototype.get = listCacheGet;
@@ -2483,11 +2472,11 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * Creates a map cache object to store key-value pairs.
+     * 创建一个 map 缓存对象来存储键值对。
      *
      * @private
      * @constructor
-     * @param {Array} [entries] The key-value pairs to cache.
+     * @param {Array} [entries] 要缓存的键值对。
      */
     function MapCache(entries) {
       var index = -1,
@@ -2501,7 +2490,7 @@
     }
 
     /**
-     * Removes all key-value entries from the map.
+     * 移除 map 中的所有键值对。
      *
      * @private
      * @name clear
@@ -2517,13 +2506,13 @@
     }
 
     /**
-     * Removes `key` and its value from the map.
+     * 从 map 中移除 `key` 及其值。
      *
      * @private
      * @name delete
      * @memberOf MapCache
-     * @param {string} key The key of the value to remove.
-     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+     * @param {string} key 要移除的值的键。
+     * @returns {boolean} 如果条目被移除返回 `true`，否则返回 `false`。
      */
     function mapCacheDelete(key) {
       var result = getMapData(this, key)['delete'](key);
@@ -2532,40 +2521,40 @@
     }
 
     /**
-     * Gets the map value for `key`.
+     * 获取 `key` 对应的 map 值。
      *
      * @private
      * @name get
      * @memberOf MapCache
-     * @param {string} key The key of the value to get.
-     * @returns {*} Returns the entry value.
+     * @param {string} key 要获取的值的键。
+     * @returns {*} 返回条目的值。
      */
     function mapCacheGet(key) {
       return getMapData(this, key).get(key);
     }
 
     /**
-     * Checks if a map value for `key` exists.
+     * 检查 `key` 的 map 值是否存在。
      *
      * @private
      * @name has
      * @memberOf MapCache
-     * @param {string} key The key of the entry to check.
-     * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+     * @param {string} key 要检查的条目的键。
+     * @returns {boolean} 如果 `key` 的条目存在返回 `true`，否则返回 `false`。
      */
     function mapCacheHas(key) {
       return getMapData(this, key).has(key);
     }
 
     /**
-     * Sets the map `key` to `value`.
+     * 将 map 的 `key` 设置为 `value`。
      *
      * @private
      * @name set
      * @memberOf MapCache
-     * @param {string} key The key of the value to set.
-     * @param {*} value The value to set.
-     * @returns {Object} Returns the map cache instance.
+     * @param {string} key 要设置的值的键。
+     * @param {*} value 要设置的值。
+     * @returns {Object} 返回 map 缓存实例。
      */
     function mapCacheSet(key, value) {
       var data = getMapData(this, key),
@@ -2576,7 +2565,7 @@
       return this;
     }
 
-    // Add methods to `MapCache`.
+    // 将方法添加到 `MapCache`。
     MapCache.prototype.clear = mapCacheClear;
     MapCache.prototype['delete'] = mapCacheDelete;
     MapCache.prototype.get = mapCacheGet;
@@ -2587,11 +2576,11 @@
 
     /**
      *
-     * Creates an array cache object to store unique values.
+     * 创建一个数组缓存对象来存储唯一值。
      *
      * @private
      * @constructor
-     * @param {Array} [values] The values to cache.
+     * @param {Array} [values] 要缓存的值。
      */
     function SetCache(values) {
       var index = -1,
@@ -2604,14 +2593,14 @@
     }
 
     /**
-     * Adds `value` to the array cache.
+     * 将 `value` 添加到数组缓存。
      *
      * @private
      * @name add
      * @memberOf SetCache
      * @alias push
-     * @param {*} value The value to cache.
-     * @returns {Object} Returns the cache instance.
+     * @param {*} value 要缓存的值。
+     * @returns {Object} 返回缓存实例。
      */
     function setCacheAdd(value) {
       this.__data__.set(value, HASH_UNDEFINED);
@@ -2619,30 +2608,30 @@
     }
 
     /**
-     * Checks if `value` is in the array cache.
+     * 检查 `value` 是否在数组缓存中。
      *
      * @private
      * @name has
      * @memberOf SetCache
-     * @param {*} value The value to search for.
-     * @returns {boolean} Returns `true` if `value` is found, else `false`.
+     * @param {*} value 要搜索的值。
+     * @returns {boolean} 如果找到 `value` 返回 `true`，否则返回 `false`。
      */
     function setCacheHas(value) {
       return this.__data__.has(value);
     }
 
-    // Add methods to `SetCache`.
+    // 将方法添加到 `SetCache`。
     SetCache.prototype.add = SetCache.prototype.push = setCacheAdd;
     SetCache.prototype.has = setCacheHas;
 
     /*------------------------------------------------------------------------*/
 
     /**
-     * Creates a stack cache object to store key-value pairs.
+     * 创建一个栈缓存对象来存储键值对。
      *
      * @private
      * @constructor
-     * @param {Array} [entries] The key-value pairs to cache.
+     * @param {Array} [entries] 要缓存的键值对。
      */
     function Stack(entries) {
       var data = this.__data__ = new ListCache(entries);
@@ -2650,7 +2639,7 @@
     }
 
     /**
-     * Removes all key-value entries from the stack.
+     * 移除栈中的所有键值对。
      *
      * @private
      * @name clear
@@ -2662,13 +2651,13 @@
     }
 
     /**
-     * Removes `key` and its value from the stack.
+     * 从栈中移除 `key` 及其值。
      *
      * @private
      * @name delete
      * @memberOf Stack
-     * @param {string} key The key of the value to remove.
-     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+     * @param {string} key 要移除的值的键。
+     * @returns {boolean} 如果条目被移除返回 `true`，否则返回 `false`。
      */
     function stackDelete(key) {
       var data = this.__data__,
@@ -2679,40 +2668,40 @@
     }
 
     /**
-     * Gets the stack value for `key`.
+     * 获取 `key` 对应的栈值。
      *
      * @private
      * @name get
      * @memberOf Stack
-     * @param {string} key The key of the value to get.
-     * @returns {*} Returns the entry value.
+     * @param {string} key 要获取的值的键。
+     * @returns {*} 返回条目的值。
      */
     function stackGet(key) {
       return this.__data__.get(key);
     }
 
     /**
-     * Checks if a stack value for `key` exists.
+     * 检查 `key` 的栈值是否存在。
      *
      * @private
      * @name has
      * @memberOf Stack
-     * @param {string} key The key of the entry to check.
-     * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+     * @param {string} key 要检查的条目的键。
+     * @returns {boolean} 如果 `key` 的条目存在返回 `true`，否则返回 `false`。
      */
     function stackHas(key) {
       return this.__data__.has(key);
     }
 
     /**
-     * Sets the stack `key` to `value`.
+     * 将栈的 `key` 设置为 `value`。
      *
      * @private
      * @name set
      * @memberOf Stack
-     * @param {string} key The key of the value to set.
-     * @param {*} value The value to set.
-     * @returns {Object} Returns the stack cache instance.
+     * @param {string} key 要设置的值的键。
+     * @param {*} value 要设置的值。
+     * @returns {Object} 返回栈缓存实例。
      */
     function stackSet(key, value) {
       var data = this.__data__;
@@ -2730,7 +2719,7 @@
       return this;
     }
 
-    // Add methods to `Stack`.
+    // 将方法添加到 `Stack`。
     Stack.prototype.clear = stackClear;
     Stack.prototype['delete'] = stackDelete;
     Stack.prototype.get = stackGet;
@@ -2740,12 +2729,12 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * Creates an array of the enumerable property names of the array-like `value`.
+     * 创建类数组 `value` 的可枚举属性名的数组。
      *
      * @private
-     * @param {*} value The value to query.
-     * @param {boolean} inherited Specify returning inherited property names.
-     * @returns {Array} Returns the array of property names.
+     * @param {*} value 要查询的值。
+     * @param {boolean} inherited 指定是否返回继承的属性名。
+     * @returns {Array} 返回属性名数组。
      */
     function arrayLikeKeys(value, inherited) {
       var isArr = isArray(value),
@@ -2775,11 +2764,11 @@
     }
 
     /**
-     * A specialized version of `_.sample` for arrays.
+     * _.sample 的数组专用版本。
      *
      * @private
-     * @param {Array} array The array to sample.
-     * @returns {*} Returns the random element.
+     * @param {Array} array 要采样的数组。
+     * @returns {*} 返回随机元素。
      */
     function arraySample(array) {
       var length = array.length;
@@ -2787,36 +2776,35 @@
     }
 
     /**
-     * A specialized version of `_.sampleSize` for arrays.
+     * _.sampleSize 的数组专用版本。
      *
      * @private
-     * @param {Array} array The array to sample.
-     * @param {number} n The number of elements to sample.
-     * @returns {Array} Returns the random elements.
+     * @param {Array} array 要采样的数组。
+     * @param {number} n 要采样的元素数量。
+     * @returns {Array} 返回随机元素数组。
      */
     function arraySampleSize(array, n) {
       return shuffleSelf(copyArray(array), baseClamp(n, 0, array.length));
     }
 
     /**
-     * A specialized version of `_.shuffle` for arrays.
+     * _.shuffle 的数组专用版本。
      *
      * @private
-     * @param {Array} array The array to shuffle.
-     * @returns {Array} Returns the new shuffled array.
+     * @param {Array} array 要打乱的数组。
+     * @returns {Array} 返回打乱后的新数组。
      */
     function arrayShuffle(array) {
       return shuffleSelf(copyArray(array));
     }
 
     /**
-     * This function is like `assignValue` except that it doesn't assign
-     * `undefined` values.
+     * 此函数类似于 `assignValue`，但不会分配 `undefined` 值。
      *
      * @private
-     * @param {Object} object The object to modify.
-     * @param {string} key The key of the property to assign.
-     * @param {*} value The value to assign.
+     * @param {Object} object 要修改的对象。
+     * @param {string} key 要分配的属性的键。
+     * @param {*} value 要分配的值。
      */
     function assignMergeValue(object, key, value) {
       if ((value !== undefined && !eq(object[key], value)) ||
@@ -2826,14 +2814,14 @@
     }
 
     /**
-     * Assigns `value` to `key` of `object` if the existing value is not equivalent
-     * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-     * for equality comparisons.
+     * 如果 `object` 的 `key` 的现有值不等价，
+     * 则使用 [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+     * 进行相等比较来分配 `value`。
      *
      * @private
-     * @param {Object} object The object to modify.
-     * @param {string} key The key of the property to assign.
-     * @param {*} value The value to assign.
+     * @param {Object} object 要修改的对象。
+     * @param {string} key 要分配的属性的键。
+     * @param {*} value 要分配的值。
      */
     function assignValue(object, key, value) {
       var objValue = object[key];
@@ -2844,12 +2832,12 @@
     }
 
     /**
-     * Gets the index at which the `key` is found in `array` of key-value pairs.
+     * 获取在键值对数组中找到 `key` 的索引。
      *
      * @private
-     * @param {Array} array The array to inspect.
-     * @param {*} key The key to search for.
-     * @returns {number} Returns the index of the matched value, else `-1`.
+     * @param {Array} array 要检查的数组。
+     * @param {*} key 要搜索的键。
+     * @returns {number} 返回匹配值的索引，否则返回 `-1`。
      */
     function assocIndexOf(array, key) {
       var length = array.length;
@@ -2862,15 +2850,15 @@
     }
 
     /**
-     * Aggregates elements of `collection` on `accumulator` with keys transformed
-     * by `iteratee` and values set by `setter`.
+     * 使用 `iteratee` 转换键和 `setter` 设置值，
+     * 在 `accumulator` 上聚合 `collection` 的元素。
      *
      * @private
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} setter The function to set `accumulator` values.
-     * @param {Function} iteratee The iteratee to transform keys.
-     * @param {Object} accumulator The initial aggregated object.
-     * @returns {Function} Returns `accumulator`.
+     * @param {Array|Object} collection 要遍历的集合。
+     * @param {Function} setter 用于设置 `accumulator` 值的函数。
+     * @param {Function} iteratee 用于转换键的迭代器函数。
+     * @param {Object} accumulator 初始聚合对象。
+     * @returns {Function} 返回 `accumulator`。
      */
     function baseAggregator(collection, setter, iteratee, accumulator) {
       baseEach(collection, function(value, key, collection) {
@@ -2880,39 +2868,36 @@
     }
 
     /**
-     * The base implementation of `_.assign` without support for multiple sources
-     * or `customizer` functions.
+     * _.assign 的基础实现，不支持多个源或 `customizer` 函数。
      *
      * @private
-     * @param {Object} object The destination object.
-     * @param {Object} source The source object.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 目标对象。
+     * @param {Object} source 源对象。
+     * @returns {Object} 返回 `object`。
      */
     function baseAssign(object, source) {
       return object && copyObject(source, keys(source), object);
     }
 
     /**
-     * The base implementation of `_.assignIn` without support for multiple sources
-     * or `customizer` functions.
+     * _.assignIn 的基础实现，不支持多个源或 `customizer` 函数。
      *
      * @private
-     * @param {Object} object The destination object.
-     * @param {Object} source The source object.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 目标对象。
+     * @param {Object} source 源对象。
+     * @returns {Object} 返回 `object`。
      */
     function baseAssignIn(object, source) {
       return object && copyObject(source, keysIn(source), object);
     }
 
     /**
-     * The base implementation of `assignValue` and `assignMergeValue` without
-     * value checks.
+     * assignValue 和 assignMergeValue 的基础实现，不进行值检查。
      *
      * @private
-     * @param {Object} object The object to modify.
-     * @param {string} key The key of the property to assign.
-     * @param {*} value The value to assign.
+     * @param {Object} object 要修改的对象。
+     * @param {string} key 要分配的属性的键。
+     * @param {*} value 要分配的值。
      */
     function baseAssignValue(object, key, value) {
       if (key == '__proto__' && defineProperty) {
@@ -2928,12 +2913,12 @@
     }
 
     /**
-     * The base implementation of `_.at` without support for individual paths.
+     * _.at 的基础实现，不支持单个路径。
      *
      * @private
-     * @param {Object} object The object to iterate over.
-     * @param {string[]} paths The property paths to pick.
-     * @returns {Array} Returns the picked elements.
+     * @param {Object} object 要遍历的对象。
+     * @param {string[]} paths 要选取的属性路径。
+     * @returns {Array} 返回选取的元素。
      */
     function baseAt(object, paths) {
       var index = -1,
@@ -2948,13 +2933,13 @@
     }
 
     /**
-     * The base implementation of `_.clamp` which doesn't coerce arguments.
+     * _.clamp 的基础实现，不强制转换参数。
      *
      * @private
-     * @param {number} number The number to clamp.
-     * @param {number} [lower] The lower bound.
-     * @param {number} upper The upper bound.
-     * @returns {number} Returns the clamped number.
+     * @param {number} number 要限制的数字。
+     * @param {number} [lower] 下界。
+     * @param {number} upper 上界。
+     * @returns {number} 返回限制后的数字。
      */
     function baseClamp(number, lower, upper) {
       if (number === number) {
@@ -2969,20 +2954,19 @@
     }
 
     /**
-     * The base implementation of `_.clone` and `_.cloneDeep` which tracks
-     * traversed objects.
+     * _.clone 和 _.cloneDeep 的基础实现，跟踪遍历的对象。
      *
      * @private
-     * @param {*} value The value to clone.
-     * @param {boolean} bitmask The bitmask flags.
-     *  1 - Deep clone
-     *  2 - Flatten inherited properties
-     *  4 - Clone symbols
-     * @param {Function} [customizer] The function to customize cloning.
-     * @param {string} [key] The key of `value`.
-     * @param {Object} [object] The parent object of `value`.
-     * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
-     * @returns {*} Returns the cloned value.
+     * @param {*} value 要克隆的值。
+     * @param {boolean} bitmask 位掩码标志。
+     *  1 - 深度克隆
+     *  2 - 展平继承的属性
+     *  4 - 克隆符号
+     * @param {Function} [customizer] 用于自定义克隆的函数。
+     * @param {string} [key] value 的键。
+     * @param {Object} [object] value 的父对象。
+     * @param {Object} [stack] 跟踪遍历的对象及其克隆对应物。
+     * @returns {*} 返回克隆的值。
      */
     function baseClone(value, bitmask, customizer, key, object, stack) {
       var result,
@@ -3061,11 +3045,11 @@
     }
 
     /**
-     * The base implementation of `_.conforms` which doesn't clone `source`.
+     * _.conforms 的基础实现，不克隆 `source`。
      *
      * @private
-     * @param {Object} source The object of property predicates to conform to.
-     * @returns {Function} Returns the new spec function.
+     * @param {Object} source 属性谓词符合的对象。
+     * @returns {Function} 返回新的规范函数。
      */
     function baseConforms(source) {
       var props = keys(source);
@@ -3075,12 +3059,12 @@
     }
 
     /**
-     * The base implementation of `_.conformsTo` which accepts `props` to check.
+     * _.conformsTo 的基础实现，接受要检查的 `props`。
      *
      * @private
-     * @param {Object} object The object to inspect.
-     * @param {Object} source The object of property predicates to conform to.
-     * @returns {boolean} Returns `true` if `object` conforms, else `false`.
+     * @param {Object} object 要检查的对象。
+     * @param {Object} source 属性谓词符合的对象。
+     * @returns {boolean} 如果 `object` 符合返回 `true`，否则返回 `false`。
      */
     function baseConformsTo(object, source, props) {
       var length = props.length;
@@ -3101,14 +3085,13 @@
     }
 
     /**
-     * The base implementation of `_.delay` and `_.defer` which accepts `args`
-     * to provide to `func`.
+     * _.delay 和 _.defer 的基础实现，接受要提供给 `func` 的 `args`。
      *
      * @private
-     * @param {Function} func The function to delay.
-     * @param {number} wait The number of milliseconds to delay invocation.
-     * @param {Array} args The arguments to provide to `func`.
-     * @returns {number|Object} Returns the timer id or timeout object.
+     * @param {Function} func 要延迟的函数。
+     * @param {number} wait 延迟调用的毫秒数。
+     * @param {Array} args 要提供给 `func` 的参数。
+     * @returns {number|Object} 返回定时器 id 或超时对象。
      */
     function baseDelay(func, wait, args) {
       if (typeof func != 'function') {
@@ -3118,15 +3101,14 @@
     }
 
     /**
-     * The base implementation of methods like `_.difference` without support
-     * for excluding multiple arrays or iteratee shorthands.
+     * 类似 `_.difference` 的方法的基础实现，不支持排除多个数组或迭代器简写。
      *
      * @private
-     * @param {Array} array The array to inspect.
-     * @param {Array} values The values to exclude.
-     * @param {Function} [iteratee] The iteratee invoked per element.
-     * @param {Function} [comparator] The comparator invoked per element.
-     * @returns {Array} Returns the new array of filtered values.
+     * @param {Array} array 要检查的数组。
+     * @param {Array} values 要排除的值。
+     * @param {Function} [iteratee] 每个元素调用的迭代器函数。
+     * @param {Function} [comparator] 每个元素调用的比较器函数。
+     * @returns {Array} 返回过滤后的新数组。
      */
     function baseDifference(array, values, iteratee, comparator) {
       var index = -1,
@@ -3174,33 +3156,33 @@
     }
 
     /**
-     * The base implementation of `_.forEach` without support for iteratee shorthands.
+     * _.forEach 的基础实现，不支持迭代器简写。
      *
      * @private
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} iteratee The function invoked per iteration.
-     * @returns {Array|Object} Returns `collection`.
+     * @param {Array|Object} collection 要遍历的集合。
+     * @param {Function} iteratee 每次迭代调用的函数。
+     * @returns {Array|Object} 返回 `collection`。
      */
     var baseEach = createBaseEach(baseForOwn);
 
     /**
-     * The base implementation of `_.forEachRight` without support for iteratee shorthands.
+     * _.forEachRight 的基础实现，不支持迭代器简写。
      *
      * @private
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} iteratee The function invoked per iteration.
-     * @returns {Array|Object} Returns `collection`.
+     * @param {Array|Object} collection 要遍历的集合。
+     * @param {Function} iteratee 每次迭代调用的函数。
+     * @returns {Array|Object} 返回 `collection`。
      */
     var baseEachRight = createBaseEach(baseForOwnRight, true);
 
     /**
-     * The base implementation of `_.every` without support for iteratee shorthands.
+     * _.every 的基础实现，不支持迭代器简写。
      *
      * @private
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} predicate The function invoked per iteration.
-     * @returns {boolean} Returns `true` if all elements pass the predicate check,
-     *  else `false`
+     * @param {Array|Object} collection 要遍历的集合。
+     * @param {Function} predicate 每次迭代调用的谓词函数。
+     * @returns {boolean} 如果所有元素都通过谓词检查返回 `true`，
+     *  否则返回 `false`
      *
      * baseEvery 实现原理：
      *
@@ -3230,14 +3212,14 @@
     }
 
     /**
-     * The base implementation of methods like `_.max` and `_.min` which accepts a
-     * `comparator` to determine the extremum value.
+     * 类似 `_.max` 和 `_.min` 方法的基础实现，
+     * 接受一个 `comparator` 来确定极值。
      *
      * @private
-     * @param {Array} array The array to iterate over.
-     * @param {Function} iteratee The iteratee invoked per iteration.
-     * @param {Function} comparator The comparator used to compare values.
-     * @returns {*} Returns the extremum value.
+     * @param {Array} array 要遍历的数组。
+     * @param {Function} iteratee 每次迭代调用的迭代器函数。
+     * @param {Function} comparator 用于比较值的比较器函数。
+     * @returns {*} 返回极值。
      */
     function baseExtremum(array, iteratee, comparator) {
       var index = -1,
@@ -3259,14 +3241,14 @@
     }
 
     /**
-     * The base implementation of `_.fill` without an iteratee call guard.
+     * _.fill 的基础实现，没有迭代器调用保护。
      *
      * @private
-     * @param {Array} array The array to fill.
-     * @param {*} value The value to fill `array` with.
-     * @param {number} [start=0] The start position.
-     * @param {number} [end=array.length] The end position.
-     * @returns {Array} Returns `array`.
+     * @param {Array} array 要填充的数组。
+     * @param {*} value 用什么值填充 `array`。
+     * @param {number} [start=0] 起始位置。
+     * @param {number} [end=array.length] 结束位置。
+     * @returns {Array} 返回 `array`。
      */
     function baseFill(array, value, start, end) {
       var length = array.length;
@@ -3287,12 +3269,12 @@
     }
 
     /**
-     * The base implementation of `_.filter` without support for iteratee shorthands.
+     * _.filter 的基础实现，不支持迭代器简写。
      *
      * @private
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} predicate The function invoked per iteration.
-     * @returns {Array} Returns the new filtered array.
+     * @param {Array|Object} collection 要遍历的集合。
+     * @param {Function} predicate 每次迭代调用的谓词函数。
+     * @returns {Array} 返回过滤后的新数组。
      *
      * baseFilter 实现原理：
      *
@@ -3324,15 +3306,15 @@
     }
 
     /**
-     * The base implementation of `_.flatten` with support for restricting flattening.
+     * _.flatten 的基础实现，支持限制扁平化深度。
      *
      * @private
-     * @param {Array} array The array to flatten.
-     * @param {number} depth The maximum recursion depth.
-     * @param {boolean} [predicate=isFlattenable] The function invoked per iteration.
-     * @param {boolean} [isStrict] Restrict to values that pass `predicate` checks.
-     * @param {Array} [result=[]] The initial result value.
-     * @returns {Array} Returns the new flattened array.
+     * @param {Array} array 要扁平化的数组。
+     * @param {number} depth 最大递归深度。
+     * @param {boolean} [predicate=isFlattenable] 每次迭代调用的函数。
+     * @param {boolean} [isStrict] 限制为通过 `predicate` 检查的值。
+     * @param {Array} [result=[]] 初始结果值。
+     * @returns {Array} 返回扁平化后的新数组。
      */
     function baseFlatten(array, depth, predicate, isStrict, result) {
       var index = -1,
@@ -3358,37 +3340,35 @@
     }
 
     /**
-     * The base implementation of `baseForOwn` which iterates over `object`
-     * properties returned by `keysFunc` and invokes `iteratee` for each property.
-     * Iteratee functions may exit iteration early by explicitly returning `false`.
+     * baseForOwn 的基础实现，遍历 `object` 的 `keysFunc` 返回的属性，
+     * 并为每个属性调用 `iteratee`。迭代器函数可以通过返回 `false` 提前退出迭代。
      *
      * @private
-     * @param {Object} object The object to iterate over.
-     * @param {Function} iteratee The function invoked per iteration.
-     * @param {Function} keysFunc The function to get the keys of `object`.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 要遍历的对象。
+     * @param {Function} iteratee 每次迭代调用的函数。
+     * @param {Function} keysFunc 获取 `object` 键的函数。
+     * @returns {Object} 返回 `object`。
      */
     var baseFor = createBaseFor();
 
     /**
-     * This function is like `baseFor` except that it iterates over properties
-     * in the opposite order.
+     * 此函数类似于 `baseFor`，但以相反的顺序遍历属性。
      *
      * @private
-     * @param {Object} object The object to iterate over.
-     * @param {Function} iteratee The function invoked per iteration.
-     * @param {Function} keysFunc The function to get the keys of `object`.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 要遍历的对象。
+     * @param {Function} iteratee 每次迭代调用的函数。
+     * @param {Function} keysFunc 获取 `object` 键的函数。
+     * @returns {Object} 返回 `object`。
      */
     var baseForRight = createBaseFor(true);
 
     /**
-     * The base implementation of `_.forOwn` without support for iteratee shorthands.
+     * _.forOwn 的基础实现，不支持迭代器简写。
      *
      * @private
-     * @param {Object} object The object to iterate over.
-     * @param {Function} iteratee The function invoked per iteration.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 要遍历的对象。
+     * @param {Function} iteratee 每次迭代调用的函数。
+     * @returns {Object} 返回 `object`。
      *
      * baseForOwn 是 Lodash 集合遍历的核心基础设施函数之一。
      *
@@ -3407,27 +3387,26 @@
 
     /**
      * The base implementation of `_.forOwnRight` without support for iteratee shorthands.
-     *
-     * @private
-     * @param {Object} object The object to iterate over.
-     * @param {Function} iteratee The function invoked per iteration.
-     * @returns {Object} Returns `object`.
-     *
-     * forOwnRight 的基础实现，按属性名的反向顺序遍历对象。
-     * 常用于需要从后向前处理对象属性的场景。
-     */
+      *
+      * @private
+      * @param {Object} object 要遍历的对象。
+      * @param {Function} iteratee 每次迭代调用的函数。
+      * @returns {Object} 返回 `object`。
+      *
+      * forOwnRight 的基础实现，按属性名的反向顺序遍历对象。
+      * 常用于需要从后向前处理对象属性的场景。
+      */
     function baseForOwnRight(object, iteratee) {
       return object && baseForRight(object, iteratee, keys);
     }
 
     /**
-     * The base implementation of `_.functions` which creates an array of
-     * `object` function property names filtered from `props`.
+     * _.functions 的基础实现，从 `props` 过滤创建 `object` 函数属性名的数组。
      *
      * @private
-     * @param {Object} object The object to inspect.
-     * @param {Array} props The property names to filter.
-     * @returns {Array} Returns the function names.
+     * @param {Object} object 要检查的对象。
+     * @param {Array} props 要过滤的属性名。
+     * @returns {Array} 返回函数名数组。
      *
      * 提取对象中所有函数类型属性的基础实现。
      * 与 _.functions 的区别：不检查 props 参数的有效性，假设传入的是对象键数组。
@@ -3439,12 +3418,12 @@
     }
 
     /**
-     * The base implementation of `_.get` without support for default values.
+     * _.get 的基础实现，不支持默认值。
      *
      * @private
-     * @param {Object} object The object to query.
-     * @param {Array|string} path The path of the property to get.
-     * @returns {*} Returns the resolved value.
+     * @param {Object} object 要查询的对象。
+     * @param {Array|string} path 要获取的属性的路径。
+     * @returns {*} 返回解析后的值。
      *
      * 深层属性访问的基础实现，支持路径语法。
      *
@@ -3470,15 +3449,14 @@
     }
 
     /**
-     * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
-     * `keysFunc` and `symbolsFunc` to get the enumerable property names and
-     * symbols of `object`.
+     * getAllKeys 和 getAllKeysIn 的基础实现，
+     * 使用 `keysFunc` 和 `symbolsFunc` 获取 `object` 的可枚举属性名和符号。
      *
      * @private
-     * @param {Object} object The object to query.
-     * @param {Function} keysFunc The function to get the keys of `object`.
-     * @param {Function} symbolsFunc The function to get the symbols of `object`.
-     * @returns {Array} Returns the array of property names and symbols.
+     * @param {Object} object 要查询的对象。
+     * @param {Function} keysFunc 获取 `object` 键的函数。
+     * @param {Function} symbolsFunc 获取 `object` 符号的函数。
+     * @returns {Array} 返回属性名和符号的数组。
      */
     function baseGetAllKeys(object, keysFunc, symbolsFunc) {
       var result = keysFunc(object);
@@ -3486,11 +3464,11 @@
     }
 
     /**
-     * The base implementation of `getTag` without fallbacks for buggy environments.
+     * getTag 的基础实现，没有针对有问题的环境的回退。
      *
      * @private
-     * @param {*} value The value to query.
-     * @returns {string} Returns the `toStringTag`.
+     * @param {*} value 要查询的值。
+     * @returns {string} 返回 `toStringTag`。
      */
     function baseGetTag(value) {
       if (value == null) {
@@ -3504,62 +3482,62 @@
     /**
      * The base implementation of `_.gt` which doesn't coerce arguments.
      *
-     * @private
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @returns {boolean} Returns `true` if `value` is greater than `other`,
-     *  else `false`.
-     */
+      * @private
+      * @param {*} value 要比较的值。
+      * @param {*} other 要比较的其他值。
+      * @returns {boolean} 如果 `value` 大于 `other` 返回 `true`，
+      *  否则返回 `false`。
+      */
     function baseGt(value, other) {
       return value > other;
     }
 
     /**
-     * The base implementation of `_.has` without support for deep paths.
+     * _.has 的基础实现，不支持深层路径。
      *
      * @private
-     * @param {Object} [object] The object to query.
-     * @param {Array|string} key The key to check.
-     * @returns {boolean} Returns `true` if `key` exists, else `false`.
+     * @param {Object} [object] 要查询的对象。
+     * @param {Array|string} key 要检查的键。
+     * @returns {boolean} 如果 `key` 存在返回 `true`，否则返回 `false`。
      */
     function baseHas(object, key) {
       return object != null && hasOwnProperty.call(object, key);
     }
 
     /**
-     * The base implementation of `_.hasIn` without support for deep paths.
+     * _.hasIn 的基础实现，不支持深层路径。
      *
      * @private
-     * @param {Object} [object] The object to query.
-     * @param {Array|string} key The key to check.
-     * @returns {boolean} Returns `true` if `key` exists, else `false`.
+     * @param {Object} [object] 要查询的对象。
+     * @param {Array|string} key 要检查的键。
+     * @returns {boolean} 如果 `key` 存在返回 `true`，否则返回 `false`。
      */
     function baseHasIn(object, key) {
       return object != null && key in Object(object);
     }
 
     /**
-     * The base implementation of `_.inRange` which doesn't coerce arguments.
+     * _.inRange 的基础实现，不强制转换参数。
      *
      * @private
-     * @param {number} number The number to check.
-     * @param {number} start The start of the range.
-     * @param {number} end The end of the range.
-     * @returns {boolean} Returns `true` if `number` is in the range, else `false`.
+     * @param {number} number 要检查的数字。
+     * @param {number} start 范围的起始值。
+     * @param {number} end 范围的结束值。
+     * @returns {boolean} 如果 `number` 在范围内返回 `true`，否则返回 `false`。
      */
     function baseInRange(number, start, end) {
       return number >= nativeMin(start, end) && number < nativeMax(start, end);
     }
 
     /**
-     * The base implementation of methods like `_.intersection`, without support
-     * for iteratee shorthands, that accepts an array of arrays to inspect.
+     * 类似 `_.intersection` 方法的基础实现，不支持迭代器简写，
+     * 接受要检查的数组数组。
      *
      * @private
-     * @param {Array} arrays The arrays to inspect.
-     * @param {Function} [iteratee] The iteratee invoked per element.
-     * @param {Function} [comparator] The comparator invoked per element.
-     * @returns {Array} Returns the new array of shared values.
+     * @param {Array} arrays 要检查的数组。
+     * @param {Function} [iteratee] 每个元素调用的迭代器函数。
+     * @param {Function} [comparator] 每个元素调用的比较器函数。
+     * @returns {Array} 返回共享值的新数组。
      */
     function baseIntersection(arrays, iteratee, comparator) {
       var includes = comparator ? arrayIncludesWith : arrayIncludes,
@@ -3615,15 +3593,15 @@
     }
 
     /**
-     * The base implementation of `_.invert` and `_.invertBy` which inverts
-     * `object` with values transformed by `iteratee` and set by `setter`.
+     * _.invert 和 _.invertBy 的基础实现，
+     * 使用 `iteratee` 转换值并用 `setter` 设置来反转 `object`。
      *
      * @private
-     * @param {Object} object The object to iterate over.
-     * @param {Function} setter The function to set `accumulator` values.
-     * @param {Function} iteratee The iteratee to transform values.
-     * @param {Object} accumulator The initial inverted object.
-     * @returns {Function} Returns `accumulator`.
+     * @param {Object} object 要遍历的对象。
+     * @param {Function} setter 用于设置 `accumulator` 值的函数。
+     * @param {Function} iteratee 用于转换值的迭代器函数。
+     * @param {Object} accumulator 初始反转对象。
+     * @returns {Function} 返回 `accumulator`。
      */
     function baseInverter(object, setter, iteratee, accumulator) {
       baseForOwn(object, function(value, key, object) {
@@ -3633,14 +3611,13 @@
     }
 
     /**
-     * The base implementation of `_.invoke` without support for individual
-     * method arguments.
+     * _.invoke 的基础实现，不支持单个方法参数。
      *
      * @private
-     * @param {Object} object The object to query.
-     * @param {Array|string} path The path of the method to invoke.
-     * @param {Array} args The arguments to invoke the method with.
-     * @returns {*} Returns the result of the invoked method.
+     * @param {Object} object 要查询的对象。
+     * @param {Array|string} path 要调用的方法的路径。
+     * @param {Array} args 调用方法时使用的参数。
+     * @returns {*} 返回被调用方法的结果。
      */
     function baseInvoke(object, path, args) {
       path = castPath(path, object);
@@ -3650,51 +3627,50 @@
     }
 
     /**
-     * The base implementation of `_.isArguments`.
+     * _.isArguments 的基础实现。
      *
      * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是 `arguments` 对象返回 `true`。
      */
     function baseIsArguments(value) {
       return isObjectLike(value) && baseGetTag(value) == argsTag;
     }
 
     /**
-     * The base implementation of `_.isArrayBuffer` without Node.js optimizations.
+     * _.isArrayBuffer 的基础实现，没有 Node.js 优化。
      *
      * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an array buffer, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是数组缓冲区返回 `true`，否则返回 `false`。
      */
     function baseIsArrayBuffer(value) {
       return isObjectLike(value) && baseGetTag(value) == arrayBufferTag;
     }
 
     /**
-     * The base implementation of `_.isDate` without Node.js optimizations.
+     * _.isDate 的基础实现，没有 Node.js 优化。
      *
      * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a date object, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是日期对象返回 `true`，否则返回 `false`。
      */
     function baseIsDate(value) {
       return isObjectLike(value) && baseGetTag(value) == dateTag;
     }
 
     /**
-     * The base implementation of `_.isEqual` which supports partial comparisons
-     * and tracks traversed objects.
+     * _.isEqual 的基础实现，支持部分比较和跟踪遍历的对象。
      *
      * @private
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @param {boolean} bitmask The bitmask flags.
-     *  1 - Unordered comparison
-     *  2 - Partial comparison
-     * @param {Function} [customizer] The function to customize comparisons.
-     * @param {Object} [stack] Tracks traversed `value` and `other` objects.
-     * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+     * @param {*} value 要比较的值。
+     * @param {*} other 要比较的其他值。
+     * @param {boolean} bitmask 位掩码标志。
+     *  1 - 无序比较
+     *  2 - 部分比较
+     * @param {Function} [customizer] 用于自定义比较的函数。
+     * @param {Object} [stack] 跟踪遍历的 `value` 和 `other` 对象。
+     * @returns {boolean} 如果值等价返回 `true`，否则返回 `false`。
      *
      * baseIsEqual 实现原理：
      *
@@ -3731,18 +3707,17 @@
     }
 
     /**
-     * A specialized version of `baseIsEqual` for arrays and objects which performs
-     * deep comparisons and tracks traversed objects enabling objects with circular
-     * references to be compared.
+     * baseIsEqual 的专用版本，用于数组和对象，
+     * 执行深度比较并跟踪遍历的对象，使具有循环引用的对象能够被比较。
      *
      * @private
-     * @param {Object} object The object to compare.
-     * @param {Object} other The other object to compare.
-     * @param {number} bitmask The bitmask flags. See `baseIsEqual` for more details.
-     * @param {Function} customizer The function to customize comparisons.
-     * @param {Function} equalFunc The function to determine equivalents of values.
-     * @param {Object} [stack] Tracks traversed `object` and `other` objects.
-     * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
+     * @param {Object} object 要比较的对象。
+     * @param {Object} other 要比较的其他对象。
+     * @param {number} bitmask 位掩码标志。详见 `baseIsEqual`。
+     * @param {Function} customizer 用于自定义比较的函数。
+     * @param {Function} equalFunc 用于确定值等价的函数。
+     * @param {Object} [stack] 跟踪遍历的 `object` 和 `other` 对象。
+     * @returns {boolean} 如果对象等价返回 `true`，否则返回 `false`。
      *
      * baseIsEqualDeep 实现原理：
      *
@@ -3822,25 +3797,25 @@
     }
 
     /**
-     * The base implementation of `_.isMap` without Node.js optimizations.
+     * _.isMap 的基础实现，没有 Node.js 优化。
      *
      * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a map, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是 Map 返回 `true`，否则返回 `false`。
      */
     function baseIsMap(value) {
       return isObjectLike(value) && getTag(value) == mapTag;
     }
 
     /**
-     * The base implementation of `_.isMatch` without support for iteratee shorthands.
+     * _.isMatch 的基础实现，不支持迭代器简写。
      *
      * @private
-     * @param {Object} object The object to inspect.
-     * @param {Object} source The object of property values to match.
-     * @param {Array} matchData The property names, values, and compare flags to match.
-     * @param {Function} [customizer] The function to customize comparisons.
-     * @returns {boolean} Returns `true` if `object` is a match, else `false`.
+     * @param {Object} object 要检查的对象。
+     * @param {Object} source 要匹配的属性值的对象。
+     * @param {Array} matchData 要匹配的属性名、值和比较标志。
+     * @param {Function} [customizer] 用于自定义比较的函数。
+     * @returns {boolean} 如果 `object` 是匹配返回 `true`，否则返回 `false`。
      */
     function baseIsMatch(object, source, matchData, customizer) {
       var index = matchData.length,
@@ -3887,12 +3862,12 @@
     }
 
     /**
-     * The base implementation of `_.isNative` without bad shim checks.
+     * _.isNative 的基础实现，没有不良 shim 检查。
      *
      * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a native function,
-     *  else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是原生函数返回 `true`，
+     *  否则返回 `false`。
      */
     function baseIsNative(value) {
       if (!isObject(value) || isMasked(value)) {
@@ -3903,33 +3878,33 @@
     }
 
     /**
-     * The base implementation of `_.isRegExp` without Node.js optimizations.
+     * _.isRegExp 的基础实现，没有 Node.js 优化。
      *
      * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a regexp, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是正则表达式返回 `true`，否则返回 `false`。
      */
     function baseIsRegExp(value) {
       return isObjectLike(value) && baseGetTag(value) == regexpTag;
     }
 
     /**
-     * The base implementation of `_.isSet` without Node.js optimizations.
+     * _.isSet 的基础实现，没有 Node.js 优化。
      *
      * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a set, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是 Set 返回 `true`，否则返回 `false`。
      */
     function baseIsSet(value) {
       return isObjectLike(value) && getTag(value) == setTag;
     }
 
     /**
-     * The base implementation of `_.isTypedArray` without Node.js optimizations.
+     * _.isTypedArray 的基础实现，没有 Node.js 优化。
      *
      * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+     * @param {*} value 要检查的值。
+     * @returns {boolean} 如果 `value` 是类型化数组返回 `true`，否则返回 `false`。
      */
     function baseIsTypedArray(value) {
       return isObjectLike(value) &&
@@ -3937,11 +3912,11 @@
     }
 
     /**
-     * The base implementation of `_.iteratee`.
+     * _.iteratee 的基础实现。
      *
      * @private
-     * @param {*} [value=_.identity] The value to convert to an iteratee.
-     * @returns {Function} Returns the iteratee.
+     * @param {*} [value=_.identity] 要转换为迭代器的值。
+     * @returns {Function} 返回迭代器。
      */
     function baseIteratee(value) {
       // Don't store the `typeof` result in a variable to avoid a JIT bug in Safari 9.
@@ -3961,11 +3936,11 @@
     }
 
     /**
-     * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+     * _.keys 的基础实现，不将稀疏数组视为密集数组。
      *
      * @private
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of property names.
+     * @param {Object} object 要查询的对象。
+     * @returns {Array} 返回属性名数组。
      *
      * baseKeys 实现原理：
      *
@@ -4003,11 +3978,11 @@
     }
 
     /**
-     * The base implementation of `_.keysIn` which doesn't treat sparse arrays as dense.
+     * _.keysIn 的基础实现，不将稀疏数组视为密集数组。
      *
      * @private
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of property names.
+     * @param {Object} object 要查询的对象。
+     * @returns {Array} 返回属性名数组。
      *
      * baseKeysIn 实现原理：
      *
@@ -4044,25 +4019,25 @@
     }
 
     /**
-     * The base implementation of `_.lt` which doesn't coerce arguments.
+     * _.lt 的基础实现，不强制转换参数。
      *
      * @private
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @returns {boolean} Returns `true` if `value` is less than `other`,
-     *  else `false`.
+     * @param {*} value 要比较的值。
+     * @param {*} other 要比较的其他值。
+     * @returns {boolean} 如果 `value` 小于 `other` 返回 `true`，
+     *  否则返回 `false`。
      */
     function baseLt(value, other) {
       return value < other;
     }
 
     /**
-     * The base implementation of `_.map` without support for iteratee shorthands.
+     * _.map 的基础实现，不支持迭代器简写。
      *
      * @private
-     * @param {Array|Object} collection The collection to iterate over.
-     * @param {Function} iteratee The function invoked per iteration.
-     * @returns {Array} Returns the new mapped array.
+     * @param {Array|Object} collection 要遍历的集合。
+     * @param {Function} iteratee 每次迭代调用的函数。
+     * @returns {Array} 返回映射后的新数组。
      *
      * baseMap 实现原理：
      *
