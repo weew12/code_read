@@ -2,224 +2,73 @@
 
 ## 概述
 
-本文档从源码分析的角度，系统性解读 Lodash JavaScript 工具库的设计与实现。Lodash 是一个功能强大的实用工具库，提供模块化、高性能的数组、对象、字符串、数字等操作函数，以其简洁的 API、卓越的性能和良好的兼容性而广受欢迎。
+本文档从源码分析角度，系统解读 Lodash 4.18.1 的设计与实现。Lodash 是一个功能强大的 JavaScript 实用工具库，提供 300+ 实用函数，以其简洁的 API、卓越的性能和良好的兼容性广受欢迎。
 
 ### 核心特性
 
-- **函数丰富**：提供 300+ 实用函数，覆盖各种开发场景
+- **函数丰富**：300+ 实用函数，覆盖各种开发场景
 - **高性能**：针对大数组等场景做了大量优化
-- **模块化设计**：支持按需加载，减小打包体积
-- **函数式编程支持**：提供 FP 版本，支持自动柯里化
-- **链式调用**：支持流式 API，方便数据处理
-- **延迟计算**：链式操作采用惰性求值，提高性能
-- **跨环境支持**：浏览器、Node.js、Worker 等环境
-- **深度克隆**：复杂的深拷贝解决方案
-- **Unicode 支持**：完善的 Unicode 字符处理
+- **跨环境**：浏览器、Node.js、Worker 等环境
+- **链式调用**：支持流式 API
+- **延迟计算**：链式操作采用惰性求值
+- **FP 支持**：提供 FP 版本，支持自动柯里化
 
-### 版本信息
-
-- 当前分析版本：4.18.1
-- 源码位置：`./lodash/` 目录
-- 源码规模：约 17,431 行代码（单体单文件）
-- 分析范围：核心源代码（测试代码除外）
-
-## 架构设计
-
-### 整体架构图
+### 架构特点
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                     UMD 导出层                              │
 │     支持 AMD / CommonJS / 全局变量多种导出方式               │
 └─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
+                               │
+                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    IIFE 封装层                              │
 │         避免污染全局命名空间，函数定义表达式                  │
 └─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
+                               │
+                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                   核心常量定义区                             │
 │  版本号、错误消息、位掩码标志、类型标签、正则表达式           │
 └─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
+                               │
+                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                   基础实现层 (base*)                        │
-│   baseForOwn | baseGet | baseSet | baseEach | baseMap      │
+│   baseForOwn | baseGet | baseSet | baseEach | baseMap       │
 └─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
+                               │
+                               ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                   工具函数层                                │
-│    isArray | isObject | isFunction | isString | ...        │
+│                   分类方法层                                │
+│    Array | Collection | Function | Lang | Math | Object     │
 └─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   高级函数层                                │
-│    chunk | flatten | groupBy | sortBy | debounce | ...     │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
+                               │
+                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                   链式调用层                                │
 │              LazyWrapper | 拦截器 | chain                    │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### 设计原则
+---
 
-1. **单体单文件架构**：所有代码集中在一个文件中，便于分发和构建
-2. **工厂模式**：通过 `runInContext()` 创建隔离的 lodash 实例
-3. **位掩码优化**：使用位运算处理函数元数据和标志位，提高性能
-4. **迭代器模式**：提供统一的集合遍历接口（`baseFor`、`baseEach`）
-5. **延迟计算**：通过 `LazyWrapper` 实现链式操作的惰性求值
-6. **缓存优化**：类型检测、memoize 等采用缓存策略
+## 第一部分：核心常量系统
 
-### 核心设计模式
+### 1.1 位掩码标志（Bitmask Flags）
 
-- **工厂模式**：`runInContext()` 函数创建隔离的 lodash 实例
-- **装饰器模式**：`wrap` 系列函数包装现有函数
-- **迭代器模式**：提供统一的集合遍历接口
-- **链式调用**：通过 prototype 方法实现流式 API
-- **备忘录模式**：`memoize` 函数缓存计算结果
-- **组合模式**：`flow`、`pipe` 实现函数组合
-
-## 目录结构详解
-
-### 项目根目录
-
-```
-lodash/
-├── lodash.js                 # 主源码文件（单体单文件，约 17,431 行）
-├── dist/                     # 构建产物
-│   ├── lodash.js            # 完整构建版本
-│   ├── lodash.min.js        # 压缩版本
-│   ├── lodash.core.js       # 核心构建版本
-│   ├── lodash.fp.js         # FP（函数式编程）版本
-│   └── mapping.fp.js        # FP 方法映射
-├── lib/                      # 构建工具库
-│   ├── common/              # 公共构建工具
-│   │   ├── file.js          # 文件操作工具
-│   │   ├── mapping.js       # 方法映射工具
-│   │   ├── minify.js        # 压缩工具
-│   │   └── util.js          # 通用工具函数
-│   ├── main/                # 主构建脚本
-│   │   ├── build-dist.js    # 构建分发版本
-│   │   ├── build-doc.js     # 构建文档
-│   │   └── build-modules.js # 构建模块化版本
-│   └── fp/                  # FP 构建脚本
-│       ├── build-dist.js
-│       └── template/        # FP 代码生成模板
-├── fp/                       # FP 版本运行时支持
-│   ├── _baseConvert.js      # FP 核心转换逻辑
-│   ├── _mapping.js          # FP 方法映射配置
-│   └── placeholder.js       # FP 占位符实现
-├── test/                     # 测试目录
-│   ├── test.js              # 主测试脚本
-│   └── test-fp.js           # FP 功能测试
-├── perf/                     # 性能测试
-│   └── perf.js              # 性能测试脚本
-├── README.md                 # 项目说明
-├── package.json             # 项目配置
-└── CHANGELOG                # 更新日志
-```
-
-### 核心目录功能说明
-
-#### 1. `lodash.js` - 单体源码核心
-
-**文件规模**：约 17,431 行
-
-**代码组织结构**：
-
-```
-lodash.js
-├── 1. IIFE 头部注释与许可证 (1-9)
-├── 2. 常量定义区 (10-600)
-│   ├── 版本号、错误消息
-│   ├── 位掩码标志（克隆、比较、函数包装）
-│   ├── 类型标签（Object.prototype.toString 结果）
-│   └── 正则表达式（Unicode、空格、HTML 等）
-├── 3. 环境检测与根对象 (550-620)
-│   ├── freeGlobal / freeSelf / root
-│   └── Node.js 辅助检测
-├── 4. 基础工具函数 (620-1200)
-│   ├── apply / arrayEach / arrayAggregator
-│   └── baseForOwn / baseGet / baseSet
-├── 5. 类型检测函数 (1200-2000)
-│   ├── isArray / isObject / isFunction
-│   └── isString / isNumber / isBoolean
-├── 6. 集合操作函数 (2000-6000)
-│   ├── forEach / map / filter / reduce
-│   └── find / findIndex / sortBy / groupBy
-├── 7. 数组操作函数 (6000-9000)
-│   ├── chunk / flatten / difference
-│   └── drop / take / uniq / zip
-├── 8. 对象操作函数 (9000-11000)
-│   ├── assign / merge / pick / omit
-│   └── keys / values / entries
-├── 9. 函数操作函数 (11000-13000)
-│   ├── bind / curry / partial
-│   └── debounce / throttle / memoize
-├── 10. 字符串操作函数 (13000-14500)
-│   ├── camelCase / kebabCase / snakeCase
-│   └── trim / pad / truncate
-├── 11. 数学/数字操作函数 (14500-15000)
-│    └── add / subtract / multiply / divide
-├── 12. 日期/时间操作函数 (15000-15200)
-│    └── now / uniqueId
-├── 13. 工具方法 (15200-15500)
-│    └── times / flow / identity / noop
-├── 14. 链式调用支持 (15500-17200)
-│    ├── LazyWrapper
-│    ├── chain / wrapperChain
-│    └── thru / value
-└── 15. 导出逻辑 (17200-17431)
-     └── UMD 导出（AMD / CommonJS / 全局变量）
-```
-
-#### 2. `lib/common/` - 构建公共工具
-
-| 文件 | 作用 |
-|------|------|
-| `file.js` | 文件读写、复制操作封装 |
-| `mapping.js` | 方法映射与依赖管理配置 |
-| `minify.js` | JS 代码压缩封装（基于 uglify-js） |
-| `util.js` | 通用工具函数（Hash 类等） |
-
-#### 3. `lib/main/` - 主构建脚本
-
-| 文件 | 作用 |
-|------|------|
-| `build-dist.js` | 构建分发版本（完整版、压缩版） |
-| `build-doc.js` | 生成 API 文档 |
-| `build-modules.js` | 构建模块化导出版本 |
-
-#### 4. `fp/` - 函数式编程支持
-
-| 文件 | 作用 |
-|------|------|
-| `_baseConvert.js` | FP 核心转换逻辑（569 行） |
-| `_mapping.js` | FP 方法映射配置（别名、arity、分组等） |
-| `placeholder.js` | FP 占位符对象（用于偏函数应用） |
-
-## 核心模块深度分析
-
-### 1. 常量系统
-
-#### 1.1 位掩码标志（Bitmask Flags）
-
-Lodash 使用位掩码来优化函数元数据处理，这是一种高效的状态编码方式：
+Lodash 使用位掩码来优化函数元数据处理：
 
 ```javascript
 // 克隆操作标志
 var CLONE_DEEP_FLAG = 1;      // 0001 - 深度克隆
 var CLONE_FLAT_FLAG = 2;      // 0010 - 扁平克隆
 var CLONE_SYMBOLS_FLAG = 4;   // 0100 - 克隆 Symbol
+
+// 比较操作标志
+var COMPARE_PARTIAL_FLAG = 1;  // 部分比较
+var COMPARE_UNORDERED_FLAG = 2;// 无序比较
 
 // 组合使用：CLONE_DEEP_FLAG | CLONE_SYMBOLS_FLAG = 5 (0101)
 ```
@@ -229,7 +78,7 @@ var CLONE_SYMBOLS_FLAG = 4;   // 0100 - 克隆 Symbol
 - 比较速度快：使用位运算而非对象属性访问
 - 组合灵活：通过 OR 操作符组合多个标志
 
-#### 1.2 类型标签（Type Tags）
+### 1.2 类型标签（Type Tags）
 
 使用 `Object.prototype.toString` 获取精确类型：
 
@@ -237,70 +86,93 @@ var CLONE_SYMBOLS_FLAG = 4;   // 0100 - 克隆 Symbol
 var arrayTag = '[object Array]';
 var objectTag = '[object Object]';
 var numberTag = '[object Number]';
-// ...
+var stringTag = '[object String]';
+var booleanTag = '[object Boolean]';
+var dateTag = '[object Date]';
+var regexpTag = '[object RegExp]';
+var errorTag = '[object Error]';
+var symbolTag = '[object Symbol]';
 ```
 
 用于精确的类型检测，而非粗糙的 `typeof`。
 
-### 2. 延迟计算（Lazy Evaluation）
+---
 
-#### 2.1 LazyWrapper 核心实现
+## 第二部分：核心类实现
+
+### 2.1 Hash（哈希表）
 
 ```javascript
 /**
- * 延迟包装器，包装值以启用延迟计算
+ * Hash 类 - 哈希表实现
+ *
+ * 使用对象作为哈希表，提供 O(1) 的查找性能
+ * 注意：undefined 值会从哈希表中移除（作为占位符）
  */
-function LazyWrapper(value) {
-  this.__wrapped__ = value;      // 原始值
-  this.__actions__ = [];         // 待执行动作
-  this.__dir__ = 1;              // 遍历方向（1 或 -1）
-  this.__filtered__ = false;     // 是否已过滤
-  this.__iteratees__ = [];       // 迭代器列表
-  this.__takeCount__ = MAX_ARRAY_LENGTH;  // 需要获取的元素数
-  this.__views__ = [];           // 视图信息
-}
-```
+function Hash(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
 
-**延迟计算原理**：
-1. 不立即执行遍历，而是记录操作
-2. 只在调用 `.value()` 时才真正计算
-3. 可以合并多个操作，减少中间数组创建
-
-**示例**：
-```javascript
-// 传统方式：创建多个中间数组
-_([1,2,3,4,5])
-  .filter(x => x % 2 === 0)  // [2,4]
-  .map(x => x * 2)           // [4,8]
-  .value();
-
-// 延迟方式：一次遍历完成所有操作
-// filter 和 map 合并执行，只遍历一次数组
-```
-
-#### 2.2 惰性执行优化
-
-```javascript
-function lazyValue() {
-  var array = this.__wrapped__.value();
-  // ... 按方向遍历，应用所有 iteratee
-
-  outer:
-  while (length-- && resIndex < takeCount) {
-    index += dir;
-    // ... 应用 map/filter 等操作
-
-    // 短路优化：find 等操作可提前终止
-    if (type == LAZY_WHILE_FLAG && computed) {
-      break outer;
-    }
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
   }
 }
 ```
 
-### 3. 迭代器系统
+### 2.2 MapCache（Map 缓存）
 
-#### 3.1 baseFor 循环模式
+```javascript
+/**
+ * MapCache 类 - 支持 Map 所有操作的缓存
+ *
+ * 内部结构：
+ * - __data__ = {Map} 用于存储键值对
+ * - hash = Hash 用于快速查找
+ *
+ * 优化点：
+ * - 小数据量使用 Hash（大性能开销小）
+ * - 大数据量使用原生 Map
+ */
+function MapCache(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+```
+
+### 2.3 Stack（栈结构）
+
+```javascript
+/**
+ * Stack 类 - 用于深度遍历的栈
+ *
+ * 核心用途：
+ * 1. 深度克隆时的循环引用检测
+ * 2. 深度合并时的遍历栈管理
+ *
+ * 特点：
+ * - 基于 ListCache 实现
+ * - 支持 push/pop 操作
+ * - 可存储复杂数据（键、值、对象、源、栈索引）
+ */
+function Stack(entries) {
+  this.clear();
+  this.push.apply(this, entries);
+}
+```
+
+---
+
+## 第三部分：基础函数层
+
+### 3.1 baseFor - 基础遍历
 
 ```javascript
 /**
@@ -309,7 +181,7 @@ function lazyValue() {
  * 设计模式：
  * 1. while 循环 + 索引递增（性能优于 for...in）
  * 2. early exit - 返回 false 可提前终止
- * 3. 委托模式 - keys 函数可配置
+ * 3. 委托模式 - keys 函数可配置（keys/keysIn）
  */
 function baseFor(object, iteratee, keysFunc) {
   var index = -1,
@@ -327,62 +199,264 @@ function baseFor(object, iteratee, keysFunc) {
 }
 ```
 
-#### 3.2 迭代器协议
-
-Lodash 通过 `getIteratee` 统一迭代器生成：
+### 3.2 baseGet - 深层属性访问
 
 ```javascript
 /**
- * 获取迭代器函数
+ * 深层属性访问
  *
- * 支持多种迭代器形式：
- * 1. 函数：直接使用
- * 2. 对象属性：转换为 property 获取函数
- * 3. 数组：[key, value] 形式
+ * 支持路径语法：
+ * baseGet({a: {b: {c: 1}}}, ['a', 'b', 'c']) // 1
+ * baseGet({a: {b: {c: 1}}}, 'a.b.c')         // 1
+ * baseGet({a: {b: {c: 1}}}, 'a[0].b.c')      // 支持数组下标
  */
-function getIteratee(func, n) {
+function baseGet(object, path) {
+  path = castPath(path, object);
+  var index = 0, length = path.length;
+
+  while (object != null && index < length) {
+    object = object[toKey(path[index++])];
+  }
+  return (index && index == length) ? object : undefined;
+}
+```
+
+### 3.3 baseSet - 深层属性设置
+
+```javascript
+/**
+ * 深层属性设置
+ *
+ * 特性：
+ * 1. 自动创建路径中不存在的中间对象
+ * 2. 支持数组下标（自动创建数组）
+ * 3. 可通过 customizer 自定义设置行为
+ */
+function baseSet(object, path, value, customizer) {
+  if (!isObject(object)) {
+    return object;
+  }
+
+  path = castPath(path, object);
+  var index = -1,
+      length = path.length,
+      lastIndex = length - 1,
+      nested = object;
+
+  while (nested != null && ++index < length) {
+    var key = toKey(path[index]),
+        newValue = value;
+
+    if (index != lastIndex) {
+      var objValue = nested[key];
+      newValue = customizer ? customizer(objValue, key, nested) : undefined;
+      if (newValue === undefined) {
+        newValue = isObject(objValue) ? objValue : (isIndex(path[index + 1]) ? [] : {});
+      }
+    }
+    nested[key] = newValue;
+  }
+  return object;
+}
+```
+
+---
+
+## 第四部分：延迟计算（Lazy Evaluation）
+
+### 4.1 LazyWrapper 核心结构
+
+```javascript
+/**
+ * 延迟包装器，包装值以启用延迟计算
+ *
+ * 与传统链式调用的区别：
+ * - 传统方式：每个操作都创建新数组
+ * - 延迟方式：合并多个操作，一次遍历完成
+ */
+function LazyWrapper(value) {
+  this.__wrapped__ = value;           // 原始值
+  this.__actions__ = [];             // 待执行动作
+  this.__dir__ = 1;                 // 遍历方向（1 或 -1）
+  this.__filtered__ = false;         // 是否已过滤
+  this.__iteratees__ = [];           // 迭代器列表
+  this.__takeCount__ = MAX_ARRAY_LENGTH;  // 需要获取的元素数
+  this.__views__ = [];               // 视图信息
+}
+```
+
+### 4.2 延迟执行示例
+
+```javascript
+// 传统方式：创建多个中间数组
+_([1,2,3,4,5])
+  .filter(x => x % 2 === 0)  // 创建 [2,4]
+  .map(x => x * 2)           // 创建 [4,8]
+  .value();
+
+// 延迟方式：一次遍历完成所有操作
+// 遍历一次：[1,2,3,4,5]
+//   - filter(2%2===0) → true → 保留 2
+//   - map(2*2) → 4
+//   - filter(4%2===0) → true → 保留 4
+//   - map(4*2) → 8
+// 结果：[8]
+```
+
+### 4.3 短路优化
+
+```javascript
+// find 系列操作可提前终止遍历
+function lazyValue() {
+  var array = this.__wrapped__.value();
+
+  outer:
+  while (length-- && resIndex < takeCount) {
+    index += dir;
+    // 应用所有 iteratee
+
+    // 短路优化：find 等操作可提前终止
+    if (type == LAZY_WILE_FLAG && computed) {
+      break outer;
+    }
+  }
+}
+```
+
+---
+
+## 第五部分：深度克隆算法
+
+### 5.1 基础克隆逻辑
+
+```javascript
+/**
+ * 深度克隆核心实现
+ *
+ * 策略：
+ * 1. 类型检测 - 根据类型选择克隆方式
+ * 2. 循环引用检测 - 使用 Map/WeakMap 记录已克隆对象
+ * 3. 原型保留 - 使用 Object.create(Object.getPrototypeOf(obj))
+ * 4. Symbol 处理 - 可选是否克隆 Symbol 属性
+ * 5. 可枚举属性 - 仅克隆自有可枚举属性
+ */
+function baseClone(value, isDeep, cloneableTags) {
+  // 数组：递归克隆每个元素
+  if (isArray(value)) {
+    return value.map(x => baseClone(x, isDeep, cloneableTags));
+  }
+
+  // 对象：创建新对象，递归克隆属性
+  if (isObject(value)) {
+    var result = Object.create(Object.getPrototypeOf(value));
+    for (var key in value) {
+      if (hasOwnProperty.call(value, key)) {
+        result[key] = baseClone(value[key], isDeep, cloneableTags);
+      }
+    }
+    return result;
+  }
+
+  // 不可克隆类型（如函数、Error）返回自身
+  return value;
+}
+```
+
+### 5.2 循环引用处理
+
+```javascript
+/**
+ * 循环引用检测
+ *
+ * 使用 stack 数据结构追踪已克隆对象
+ * 当发现对象已存在于栈中时，直接返回引用而非重新克隆
+ */
+function baseClone(value, isDeep, cloneableTags, stack) {
+  // ...类型检测...
+
+  // 检查是否已克隆过（循环引用）
+  if (stack.has(value)) {
+    return stack.get(value);
+  }
+
+  // 克隆新对象，加入栈
+  var result = /* ... */;
+  stack.set(value, result);
+
+  // 递归克隆属性
   // ...
+
+  return result;
 }
 ```
 
-### 4. 链式调用系统
+---
 
-#### 4.1 链式调用原理
+## 第六部分：去重算法
 
-```javascript
-// 返回包装器，启用链式调用
-_.chain([1, 2, 3])
-  .filter(x => x % 2 === 0)
-  .map(x => x * 2)
-  .value(); // [4]
-
-// 实际返回的是 LodashWrapper 实例
-function LodashWrapper(value, chainAll) {
-  this.__wrapped__ = value;
-  this.__actions__ = [];
-  this.__chain__ = chainAll;
-}
-```
-
-#### 4.2 thunk/thru 模式
+### 6.1 baseUniq 实现
 
 ```javascript
 /**
- * thru - 穿透包装器执行函数
+ * 数组去重
  *
- * 与 tap 的区别：thru 可以返回新值
+ * 策略选择：
+ * 1. 小数组（< 200项）：使用 indexOf + includes
+ * 2. 大数组：使用 Set
+ * 3. 复杂场景（自定义比较）：使用二分查找
  */
-_.chain([1, 2, 3])
-  .map(x => x * 2)
-  .thru(function(value) {
-    return value.filter(x => x > 2);
-  })
-  .value(); // [4, 6]
+function baseUniq(array, iteratee, comparator) {
+  var index = -1,
+      includes = arrayIncludes,
+      length = array.length,
+      isCommon = true,
+      result = [],
+      seen = result;
+
+  if (comparator) {
+    isCommon = false;
+    includes = arrayIncludesWith;
+  }
+  else if (length >= LARGE_ARRAY_SIZE) {
+    var set = iteratee ? null : createSet(array);
+    if (set) {
+      return setToArray(set);
+    }
+    isCommon = false;
+    includes = cacheHas;
+    seen = new SetCache;
+  }
+
+  // 小数组：直接比较
+  while (++index < length) {
+    var value = array[index],
+        computed = iteratee ? iteratee(value) : value;
+
+    if (isCommon) {
+      if (seen !== result) {
+        if (!includes(seen, computed)) {
+          result.push(value);
+        }
+        seen.push(computed);
+      }
+      else if (!includes(result, computed)) {
+        result.push(value);
+      }
+    }
+    else if (!includes(seen, computed)) {
+      seen.push(computed);
+      result.push(value);
+    }
+  }
+  return result;
+}
 ```
 
-### 5. 函数式编程（FP）支持
+---
 
-#### 5.1 FP 版本特性
+## 第七部分：函数式编程（FP）
+
+### 7.1 FP 版本特性
 
 ```javascript
 // lodash/fp 是自动柯里化的版本
@@ -403,9 +477,7 @@ fp.flowRight(fp.join('-'), fp.map(fp.toUpper), fp.split(' '))('hello world');
 // 'HELLO-WORLD'
 ```
 
-#### 5.2 FP 转换核心
-
-`_baseConvert.js` 实现了 FP 转换的核心逻辑：
+### 7.2 FP 转换核心
 
 ```javascript
 /**
@@ -430,11 +502,11 @@ function baseCurry(func, arity) {
 }
 ```
 
-#### 5.3 FP 方法映射
-
-`_mapping.js` 定义了 FP 版本的所有配置：
+### 7.3 FP 方法映射
 
 ```javascript
+// _mapping.js 定义了 FP 版本的所有配置
+
 // 按参数数量分组的方法
 exports.aryMethod = {
   '1': ['assignAll', 'attempt', 'castArray', ...],
@@ -452,209 +524,11 @@ exports.aliasToReal = {
 };
 ```
 
-### 6. 核心工具函数
+---
 
-#### 6.1 类型检测
+## 第八部分：性能优化策略
 
-```javascript
-/**
- * 精确类型检测（使用 Object.prototype.toString）
- *
- * 与 typeof 的区别：
- * - typeof [] === 'object'  // true
- * - isArray([]) === true    // 精确区分
- */
-function isArray(value) {
-  return Object.prototype.toString.call(value) === '[object Array]';
-}
-
-/**
- * 检测是否为类数组对象
- * （有 length 属性且 length 为非负整数）
- */
-function isArrayLike(value) {
-  return value != null && typeof value !== 'function' && isLength(value.length);
-}
-```
-
-#### 6.2 对象操作
-
-```javascript
-/**
- * 深层属性访问
- *
- * 支持路径语法：
- * baseGet({a: {b: {c: 1}}}, ['a', 'b', 'c']) // 1
- * baseGet({a: {b: {c: 1}}}, 'a.b.c')         // 1
- */
-function baseGet(object, path) {
-  path = castPath(path, object);
-  var index = 0, length = path.length;
-  while (object != null && index < length) {
-    object = object[toKey(path[index++])];
-  }
-  return (index && index == length) ? object : undefined;
-}
-```
-
-### 7. 构建系统
-
-#### 7.1 构建流程
-
-```
-npm run build
-    │
-    ├── node lib/main/build-dist.js
-    │   ├── 复制 lodash.js → dist/lodash.js
-    │   └── 压缩 → dist/lodash.min.js
-    │
-    └── node lib/fp/build-dist.js
-        ├── 按 aryMethod 分组转换函数
-        ├── 应用柯里化、占位符配置
-        └── 生成 lodash.fp.js
-```
-
-#### 7.2 UMD 导出模式
-
-```javascript
-// IIFE 内部
-;(function() {
-  // ... 全部代码 ...
-
-  // 导出逻辑
-  var _ = runInContext();
-
-  // AMD
-  if (typeof define == 'function' && define.amd) {
-    define(function() { return _; });
-  }
-  // CommonJS
-  else if (freeExports) {
-    freeExports._ = _;
-  }
-  // 全局变量
-  else {
-    root._ = _;
-  }
-}());
-```
-
-## 关键算法深度分析
-
-### 1. 深度克隆算法
-
-```javascript
-/**
- * 深度克隆核心实现
- *
- * 策略：
- * 1. 类型检测 - 根据类型选择克隆方式
- * 2. 循环引用检测 - 使用 Map/WeakMap 记录已克隆对象
- * 3. 原型保留 - 使用 Object.create(Object.getPrototypeOf(obj))
- * 4. Symbol 处理 - 可选是否克隆 Symbol 属性
- */
-function baseClone(value, isDeep, cloneableTags) {
-  // 数组：递归克隆每个元素
-  if (isArray(value)) {
-    return value.map(x => baseClone(x, isDeep, cloneableTags));
-  }
-
-  // 对象：创建新对象，递归克隆属性
-  if (isObject(value)) {
-    var result = Object.create(Object.getPrototypeOf(value));
-    for (var key in value) {
-      if (hasOwnProperty.call(value, key)) {
-        result[key] = baseClone(value[key], isDeep, cloneableTags);
-      }
-    }
-    return result;
-  }
-
-  // 不可克隆类型（如函数、Error）返回自身
-  return value;
-}
-```
-
-### 2. 去重算法
-
-```javascript
-/**
- * 数组去重
- *
- * 策略选择：
- * 1. 小数组（< LARGE_ARRAY_SIZE）：使用 indexOf + includes
- * 2. 大数组：使用 Set 或 对象键值记录
- * 3. 复杂场景（自定义比较）：使用 SortedArray + 二分查找
- */
-function baseUniq(array, iteratee) {
-  var length = array.length;
-
-  // 大数组优化：使用 Set
-  if (length >= LARGE_ARRAY_SIZE) {
-    var seen = new Set();
-    return array.filter(x => {
-      var computed = iteratee ? iteratee(x) : x;
-      if (seen.has(computed)) {
-        return false;
-      }
-      seen.add(computed);
-      return true;
-    });
-  }
-
-  // 小数组：直接比较
-  var result = [];
-  for (var i = 0; i < length; i++) {
-    var value = array[i];
-    if (!result.includes(value)) {
-      result.push(value);
-    }
-  }
-  return result;
-}
-```
-
-### 3. Memoization 算法
-
-```javascript
-/**
- * 函数记忆化
- *
- * 核心思想：将函数结果缓存起来，避免重复计算
- *
- * 优化点：
- * 1. 缓存大小限制（MAX_MEMOIZE_SIZE = 500）
- * 2. 缓存淘汰策略（FIFO）
- * 3. 参数序列化（支持复杂对象）
- */
-function memoize(func, resolver) {
-  var cache = new Map();
-
-  return function(...args) {
-    var key = resolver ? resolver.apply(this, args) : args[0];
-
-    if (cache.has(key)) {
-      return cache.get(key);
-    }
-
-    var result = func.apply(this, args);
-    cache.set(key, result);
-
-    // 缓存大小限制
-    if (cache.size > MAX_MEMOIZE_SIZE) {
-      // 删除最早的条目
-      var firstKey = cache.keys().next().value;
-      cache.delete(firstKey);
-    }
-
-    return result;
-  };
-}
-```
-
-## 性能优化策略
-
-### 1. 位运算优化
+### 8.1 位运算优化
 
 ```javascript
 // 使用位移替代乘除法
@@ -669,40 +543,7 @@ if (flags & CLONE_DEEP_FLAG) {  // 检查是否深度克隆
 }
 ```
 
-### 2. 热函数检测
-
-```javascript
-/**
- * 热函数检测
- *
- * 当函数在 16ms（60fps 一帧）内被调用 800 次时，
- * 标记为热函数，采用特殊优化策略。
- */
-var HOT_COUNT = 800,
-    HOT_SPAN = 16;
-
-function hotFunction(func) {
-  var callCount = 0;
-  var lastCallTime = Date.now();
-
-  return function(...args) {
-    var now = Date.now();
-    if (now - lastCallTime > HOT_SPAN) {
-      callCount = 0;
-    }
-    lastCallTime = now;
-
-    if (++callCount >= HOT_COUNT) {
-      // 启用热函数优化
-      return func.apply(this, args);
-    }
-
-    return func.apply(this, args);
-  };
-}
-```
-
-### 3. 大数组优化
+### 8.2 大数组优化
 
 ```javascript
 /**
@@ -711,7 +552,6 @@ function hotFunction(func) {
  * 当数组长度 >= 200 时：
  * - 使用 Set 替代 indexOf 去重
  * - 使用更快的排序算法
- * - 启用并行处理（如果支持）
  */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -725,7 +565,7 @@ function uniq(array) {
 }
 ```
 
-### 4. 原型链优化
+### 8.3 原型链优化
 
 ```javascript
 // 缓存原型方法查找
@@ -740,35 +580,41 @@ var slice = arrayProto.slice;
 push.call(arr, newItem);
 ```
 
-## 与 Axios 架构对比
+---
 
-| 特性 | Lodash | Axios |
-|------|--------|-------|
-| **架构类型** | 单体单文件 (~17K行) | 模块化多文件 |
-| **设计理念** | 工具函数库 | HTTP 客户端 |
-| **入口文件** | lodash.js | index.js / lib/axios.js |
-| **核心组织** | 按函数分类（数组/对象/函数） | 按职责分层（Core/Adapters/Helpers） |
-| **环境适配** | 单一代码 + 平台检测 | 适配器模式（XHR/HTTP/Fetch） |
-| **导出方式** | UMD (AMD/CommonJS/全局) | ES Module + CommonJS |
-| **类型系统** | 无（原生 JS） | TypeScript (.d.ts) |
-| **扩展方式** | mixin / chain | 拦截器 / 适配器 |
-| **构建工具** | 自定义脚本 + uglify | Rollup + Gulp |
+## 第九部分：UMD 导出模式
 
-### 架构差异说明
+```javascript
+// IIFE 内部
+;(function() {
+  'use strict';
 
-1. **Lodash 单体架构**：
-   - 所有代码集中，便于分发和 CDN 引用
-   - 构建工具按需提取，生成不同版本
-   - 适合工具库，API 稳定，不需 tree-shaking
+  // ... 全部代码 ...
 
-2. **Axios 模块化架构**：
-   - 分离 concerns（核心、适配器、工具）
-   - 便于维护和测试
-   - 支持 tree-shaking，减少打包体积
+  // 创建 lodash 实例
+  var _ = runInContext();
 
-## 调试与学习建议
+  // AMD 导出
+  if (typeof define == 'function' && typeof define.amd == 'object') {
+    define(function() { return _; });
+  }
+  // CommonJS/Node.js 导出
+  else if (freeModule) {
+    freeExports._ = _;
+    freeModule.exports = _;
+  }
+  // 浏览器全局变量导出
+  else {
+    root._ = _;
+  }
+}.call(this));
+```
 
-### 1. 源码阅读路径
+---
+
+## 第十部分：调试与学习
+
+### 源码阅读路径
 
 #### 入门级（理解基本结构）
 1. `lodash.js` 头部常量和注释
@@ -780,41 +626,32 @@ push.call(arr, newItem);
 1. 链式调用实现（chain, wrapperChain, thru）
 2. 深度克隆算法（baseClone）
 3. FP 版本转换（fp/_baseConvert.js）
-4. 对象属性访问（baseGet, baseSet, basePick）
+4. 对象属性访问（baseGet, baseSet）
 
 #### 专家级（研究高级特性）
 1. 延迟计算优化（lazyValue, getView）
 2. memoize 缓存策略
-3. 构建系统（lib/main/build-*.js）
-4. Unicode 处理（deburredLetters, reUnicodeWord）
+3. Unicode 处理（deburredLetters, reUnicodeWord）
 
-### 2. 调试技巧
+### 调试技巧
 
-#### 2.1 链式调用调试
 ```javascript
-// 查看链式调用中间状态
+// 1. 链式调用调试
 _.chain([1, 2, 3])
   .map(x => x * 2)
   .tap(console.log)  // [2, 4, 6]
   .filter(x => x > 2)
-  .value(); // [4, 6]
-```
+  .value();
 
-#### 2.2 FP 版本调试
-```javascript
+// 2. FP 版本调试
 const fp = require('lodash/fp');
-
-// 组合函数调试
 const process = fp.flowRight(
   fp.map(x => { console.log('map', x); return x * 2; }),
   fp.filter(x => { console.log('filter', x); return x % 2 === 0; })
 );
 process([1, 2, 3, 4]);
-```
 
-#### 2.3 延迟计算调试
-```javascript
-// 启用延迟计算的详细日志
+// 3. 延迟计算调试
 var _ = require('lodash');
 var originalLazy = _.prototype.value;
 
@@ -826,20 +663,7 @@ _.prototype.value = function() {
 };
 ```
 
-### 3. 常见问题排查
-
-#### 3.1 链式调用不执行
-- 检查是否调用了 `.value()`
-- 确认没有在中间返回非包装值
-
-#### 3.2 FP 版本参数顺序错误
-- FP 版本是迭代器优先、数据最后的
-- 使用 `fp.placeholder` 指定参数位置
-
-#### 3.3 性能问题
-- 大数组操作启用延迟计算
-- 使用 `_.debounce` / `_.throttle` 限制高频调用
-- 避免在 iteratee 中创建新函数
+---
 
 ## 总结
 
@@ -856,7 +680,6 @@ _.prototype.value = function() {
 1. **缺乏 TypeScript 支持**：没有原生 .ts 文件，仅有 .d.ts 声明
 2. **单体文件维护难度**：17K+ 行代码在单一文件，协作困难
 3. **现代 ES 特性**：可使用更多 ES6+ 特性（如 Map/Set 原生支持）
-4. **Tree-shaking 优化**：完整导入时无法完全摇掉未使用代码
 
 ### 学习价值
 
@@ -868,9 +691,8 @@ Lodash 源码具有多重学习价值：
 4. **设计模式**：工厂、迭代器、备忘录、装饰器等模式应用
 5. **兼容性处理**：跨环境、渐进增强的最佳实践
 
-通过深入分析 Lodash 源码，不仅可以理解一个工具库的实现原理，更能学习到 JavaScript 高级技巧、性能优化策略和工程化实践，对于提升代码质量和架构能力具有重要价值。
-
 ---
-*文档更新时间：2026年4月20日*
-*对应 Lodash 版本：4.18.1*
-*分析者：代码阅读项目*
+
+## 相关文档
+
+- [源码结构文档.md](./源码结构文档.md) - 项目结构、目录组织、快速参考
