@@ -1,10 +1,10 @@
 /**
  * @license
  * Lodash <https://lodash.com/>
- * Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
- * Released under MIT license <https://lodash.com/license>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * 版权所有 OpenJS Foundation 和其他贡献者 <https://openjsf.org/>
+ * 根据 MIT 许可证发布 <https://lodash.com/license>
+ * 基于 Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * 版权所有 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  *
  * Lodash 源码深度解析
  * ====================
@@ -270,81 +270,81 @@
       rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
 
   /**
-   * Used to match `RegExp`
-   * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+   * 用于匹配 `RegExp`
+   * [语法字符](http://ecma-international.org/ecma-262/7.0/#sec-patterns)。
    */
   var reRegExpChar = /[\\^$.*+?()[\]{}|]/g,
       reHasRegExpChar = RegExp(reRegExpChar.source);
 
-  /** Used to match leading whitespace. */
+  /** 用于匹配前导空白。 */
   var reTrimStart = /^\s+/;
 
-  /** Used to match a single whitespace character. */
+  /** 用于匹配单个空白字符。 */
   var reWhitespace = /\s/;
 
-  /** Used to match wrap detail comments. */
+  /** 用于匹配包裹详情注释。 */
   var reWrapComment = /\{(?:\n\/\* \[wrapped with .+\] \*\/)?\n?/,
       reWrapDetails = /\{\n\/\* \[wrapped with (.+)\] \*/,
       reSplitDetails = /,? & /;
 
-  /** Used to match words composed of alphanumeric characters. */
+  /** 用于匹配由字母数字字符组成的单词。 */
   var reAsciiWord = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g;
 
   /**
-   * Used to validate the `validate` option in `_.template` variable.
+   * 用于验证 `_.template` 变量中 `validate` 选项。
    *
-   * Forbids characters which could potentially change the meaning of the function argument definition:
-   * - "()," (modification of function parameters)
-   * - "=" (default value)
-   * - "[]{}" (destructuring of function parameters)
-   * - "/" (beginning of a comment)
-   * - whitespace
+   * 禁止可能改变函数参数定义含义的字符：
+   * - "()," (修改函数参数)
+   * - "=" (默认值)
+   * - "[]{}" (函数参数解构)
+   * - "/" (注释开始)
+   * - 空白字符
    */
   var reForbiddenIdentifierChars = /[()=,{}\[\]\/\s]/;
 
-  /** Used to match backslashes in property paths. */
+  /** 用于匹配属性路径中的反斜杠。 */
   var reEscapeChar = /\\(\\)?/g;
 
   /**
-   * Used to match
-   * [ES template delimiters](http://ecma-international.org/ecma-262/7.0/#sec-template-literal-lexical-components).
+   * 用于匹配
+   * [ES 模板分隔符](http://ecma-international.org/ecma-262/7.0/#sec-template-literal-lexical-components)。
    */
   var reEsTemplate = /\$\{([^\\}]*(?:\\.[^\\}]*)*)\}/g;
 
-  /** Used to match `RegExp` flags from their coerced string values. */
+  /** 用于从强制转换的字符串值中匹配 `RegExp` 标志。 */
   var reFlags = /\w*$/;
 
-  /** Used to detect bad signed hexadecimal string values. */
+  /** 用于检测错误的带符号十六进制字符串值。 */
   var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
 
-  /** Used to detect binary string values. */
+  /** 用于检测二进制字符串值。 */
   var reIsBinary = /^0b[01]+$/i;
 
-  /** Used to detect host constructors (Safari). */
+  /** 用于检测宿主构造函数 (Safari)。 */
   var reIsHostCtor = /^\[object .+?Constructor\]$/;
 
-  /** Used to detect octal string values. */
+  /** 用于检测八进制字符串值。 */
   var reIsOctal = /^0o[0-7]+$/i;
 
-  /** Used to detect unsigned integer values. */
+  /** 用于检测无符号整数值。 */
   var reIsUint = /^(?:0|[1-9]\d*)$/;
 
-  /** Used to match Latin Unicode letters (excluding mathematical operators). */
+  /** 用于匹配拉丁 Unicode 字母（不包括数学运算符）。 */
   var reLatin = /[\xc0-\xd6\xd8-\xf6\xf8-\xff\u0100-\u017f]/g;
 
-  /** Used to ensure capturing order of template delimiters. */
+  /** 用于确保模板分隔符的捕获顺序。 */
   var reNoMatch = /($^)/;
 
-  /** Used to match unescaped characters in compiled string literals. */
+  /** 用于匹配编译字符串字面量中的未转义字符。 */
   var reUnescapedString = /['\n\r\u2028\u2029\\]/g;
 
-  /** Used to compose unicode character classes. */
+  /** 用于组合 unicode 字符类。 */
   var rsAstralRange = '\\ud800-\\udfff',
       rsComboMarksRange = '\\u0300-\\u036f',
       reComboHalfMarksRange = '\\ufe20-\\ufe2f',
       rsComboSymbolsRange = '\\u20d0-\\u20ff',
       rsComboRange = rsComboMarksRange + reComboHalfMarksRange + rsComboSymbolsRange,
-      rsDingbatRange = '\\u2700-\\u27bf',
+      rsDingbatRange = '\\ud800-\\udfff',
       rsLowerRange = 'a-z\\xdf-\\xf6\\xf8-\\xff',
       rsMathOpRange = '\\xac\\xb1\\xd7\\xf7',
       rsNonCharRange = '\\x00-\\x2f\\x3a-\\x40\\x5b-\\x60\\x7b-\\xbf',
@@ -354,7 +354,7 @@
       rsVarRange = '\\ufe0e\\ufe0f',
       rsBreakRange = rsMathOpRange + rsNonCharRange + rsPunctuationRange + rsSpaceRange;
 
-  /** Used to compose unicode capture groups. */
+  /** 用于组合 unicode 捕获组。 */
   var rsApos = "['\u2019]",
       rsAstral = '[' + rsAstralRange + ']',
       rsBreak = '[' + rsBreakRange + ']',
@@ -371,7 +371,7 @@
       rsUpper = '[' + rsUpperRange + ']',
       rsZWJ = '\\u200d';
 
-  /** Used to compose unicode regexes. */
+  /** 用于组合 unicode 正则表达式。 */
   var rsMiscLower = '(?:' + rsLower + '|' + rsMisc + ')',
       rsMiscUpper = '(?:' + rsUpper + '|' + rsMisc + ')',
       rsOptContrLower = '(?:' + rsApos + '(?:d|ll|m|re|s|t|ve))?',
@@ -385,19 +385,19 @@
       rsEmoji = '(?:' + [rsDingbat, rsRegional, rsSurrPair].join('|') + ')' + rsSeq,
       rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
 
-  /** Used to match apostrophes. */
+  /** 用于匹配撇号。 */
   var reApos = RegExp(rsApos, 'g');
 
   /**
-   * Used to match [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks) and
-   * [combining diacritical marks for symbols](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks_for_Symbols).
+   * 用于匹配[组合变音标记](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks)和
+   * [符号组合变音标记](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks_for_Symbols)。
    */
   var reComboMark = RegExp(rsCombo, 'g');
 
-  /** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
+  /** 用于匹配[字符串符号](https://mathiasbynens.be/notes/javascript-unicode)。 */
   var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
 
-  /** Used to match complex or compound words. */
+  /** 用于匹配复杂或复合单词。 */
   var reUnicodeWord = RegExp([
     rsUpper + '?' + rsLower + '+' + rsOptContrLower + '(?=' + [rsBreak, rsUpper, '$'].join('|') + ')',
     rsMiscUpper + '+' + rsOptContrUpper + '(?=' + [rsBreak, rsUpper + rsMiscLower, '$'].join('|') + ')',
@@ -409,13 +409,13 @@
     rsEmoji
   ].join('|'), 'g');
 
-  /** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
+  /** 用于检测包含[零宽连接符或来自 astral 平面的码点的字符串](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/)。 */
   var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboRange + rsVarRange + ']');
 
-  /** Used to detect strings that need a more robust regexp to match words. */
+  /** 用于检测需要更强大正则表达式来匹配单词的字符串。 */
   var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
 
-  /** Used to assign default `context` object properties.
+  /** 用于分配默认 `context` 对象属性。
    *
    * 默认上下文对象属性列表。
    * 用于 lodash 在某些环境中运行时（如 Web Worker），
@@ -618,14 +618,14 @@
   /*--------------------------------------------------------------------------*/
 
   /**
-   * A faster alternative to `Function#apply`, this function invokes `func`
-   * with the `this` binding of `thisArg` and the arguments of `args`.
+   * `Function#apply` 的更快替代方案，此函数使用 `thisArg` 的 `this` 绑定
+   * 和 `args` 的参数调用 `func`。
    *
    * @private
-   * @param {Function} func The function to invoke.
-   * @param {*} thisArg The `this` binding of `func`.
-   * @param {Array} args The arguments to invoke `func` with.
-   * @returns {*} Returns the result of `func`.
+   * @param {Function} func 要调用的函数。
+   * @param {*} thisArg `func` 的 `this` 绑定。
+   * @param {Array} args 调用 `func` 的参数。
+   * @returns {*} 返回 `func` 的结果。
    */
   function apply(func, thisArg, args) {
     switch (args.length) {
@@ -3386,7 +3386,7 @@
     }
 
     /**
-     * The base implementation of `_.forOwnRight` without support for iteratee shorthands.
+     * `_.forOwnRight` 的基础实现，不支持迭代器简写。
       *
       * @private
       * @param {Object} object 要遍历的对象。
@@ -3480,7 +3480,7 @@
     }
 
     /**
-     * The base implementation of `_.gt` which doesn't coerce arguments.
+     * `_.gt` 的基础实现，不强制转换参数。
      *
       * @private
       * @param {*} value 要比较的值。
@@ -4108,15 +4108,14 @@
     }
 
     /**
-     * The base implementation of `_.merge` without support for multiple sources.
+     * `_.merge` 的基础实现，不支持多个源。
      *
      * @private
-     * @param {Object} object The destination object.
-     * @param {Object} source The source object.
-     * @param {number} srcIndex The index of `source`.
-     * @param {Function} [customizer] The function to customize merged values.
-     * @param {Object} [stack] Tracks traversed source values and their merged
-     *  counterparts.
+     * @param {Object} object 目标对象。
+     * @param {Object} source 源对象。
+     * @param {number} srcIndex `source` 的索引。
+     * @param {Function} [customizer] 用于自定义合并值的函数。
+     * @param {Object} [stack] 跟踪遍历的源值及其合并的对应值。
      *
      * baseMerge 实现原理：
      *
@@ -4838,10 +4837,10 @@
     }
 
     /**
-     * The base implementation of `_.uniqBy` without support for iteratee shorthands.
+     * `_.uniqBy` 的基础实现，不支持迭代器简写。
      *
      * @private
-     * @param {Array} array The array to inspect.
+     * @param {Array} array 要检查的数组。
      * @param {Function} [iteratee] 每个元素调用的迭代器。
      * @param {Function} [comparator] 每个元素调用的比较器。
      * @returns {Array} 返回新的无重复值数组。
@@ -4939,7 +4938,7 @@
     }
 
     /**
-     * The base implementation of `_.update`.
+     * `_.update` 的基础实现。
      *
      * @private
      * @param {Object} object 要修改的对象。
@@ -5138,10 +5137,10 @@
     }
 
     /**
-     * Creates a clone of `arrayBuffer`.
+     * 创建 `arrayBuffer` 的克隆。
      *
      * @private
-     * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
+     * @param {ArrayBuffer} arrayBuffer 要克隆的数组缓冲区。
      * @returns {ArrayBuffer} 返回克隆的数组缓冲区。
      */
     function cloneArrayBuffer(arrayBuffer) {
@@ -5239,18 +5238,17 @@
     }
 
     /**
-     * Used by `_.orderBy` to compare multiple properties of a value to another
-     * and stable sort them.
+     * 由 `_.orderBy` 使用,用于比较值的多个属性并稳定排序。
      *
-      * 如果未指定 `orders`，所有值按升序排序。否则，
-      * 指定 "desc" 为降序或 "asc" 为相应值的升序排序顺序。
-      *
-      * @private
-      * @param {Object} object 要比较的对象。
-      * @param {Object} other 要比较的其他对象。
-      * @param {boolean[]|string[]} orders 每个属性要排序的顺序。
-      * @returns {number} 返回 `object` 的排序顺序指示符。
-      */
+       * 如果未指定 `orders`，所有值按升序排序。否则，
+       * 指定 "desc" 为降序或 "asc" 为相应值的升序排序顺序。
+       *
+       * @private
+       * @param {Object} object 要比较的对象。
+       * @param {Object} other 要比较的其他对象。
+       * @param {boolean[]|string[]} orders 每个属性要排序的顺序。
+       * @returns {number} 返回 `object` 的排序顺序指示符。
+       */
     function compareMultiple(object, other, orders) {
       var index = -1,
           objCriteria = object.criteria,
@@ -5696,11 +5694,11 @@
     }
 
     /**
-     * Creates a `_.find` or `_.findLast` function.
+     * 创建一个 `_.find` 或 `_.findLast` 函数。
      *
      * @private
-     * @param {Function} findIndexFunc The function to find the collection index.
-     * @returns {Function} Returns the new find function.
+     * @param {Function} findIndexFunc 用于查找集合索引的函数。
+     * @returns {Function} 返回新的查找函数。
      */
     function createFind(findIndexFunc) {
       return function(collection, predicate, fromIndex) {
@@ -5716,11 +5714,11 @@
     }
 
     /**
-     * Creates a `_.flow` or `_.flowRight` function.
+     * 创建一个 `_.flow` 或 `_.flowRight` 函数。
      *
      * @private
-     * @param {boolean} [fromRight] Specify iterating from right to left.
-     * @returns {Function} Returns the new flow function.
+     * @param {boolean} [fromRight] 指定从右到左迭代。
+     * @returns {Function} 返回新的流函数。
      */
     function createFlow(fromRight) {
       return flatRest(function(funcs) {
@@ -13045,20 +13043,20 @@
     /*------------------------------------------------------------------------*/
 
     /**
-     * Assigns own enumerable string keyed properties of source objects to the
-     * destination object. Source objects are applied from left to right.
-     * Subsequent sources overwrite property assignments of previous sources.
+     * 将源对象自身的可枚举字符串键属性分配到目标对象。
+     * 源对象从左到右应用。
+     * 后面的源会覆盖前面源的属性分配。
      *
-     * **Note:** This method mutates `object` and is loosely based on
-     * [`Object.assign`](https://mdn.io/Object/assign).
+     * **注意:** 此方法会修改 `object`，大致基于
+     * [`Object.assign`](https://mdn.io/Object/assign)。
      *
      * @static
      * @memberOf _
      * @since 0.10.0
      * @category Object
-     * @param {Object} object The destination object.
-     * @param {...Object} [sources] The source objects.
-     * @returns {Object} Returns `object`.
+     * @param {Object} object 目标对象。
+     * @param {...Object} [sources] 源对象。
+     * @returns {Object} 返回 `object`。
      * @see _.assignIn
      * @example
      *
@@ -13830,10 +13828,9 @@
     }
 
     /**
-     * Creates an object with the same keys as `object` and values generated
-     * by running each own enumerable string keyed property of `object` thru
-     * `iteratee`. The iteratee is invoked with three arguments:
-     * (value, key, object).
+     * 创建一个对象，具有与 `object` 相同的键，
+     * 通过运行 `object` 的每个可枚举字符串键自身属性 thru `iteratee` 生成值。
+     * 迭代器接受三个参数：(value, key, object)。
      *
      * @static
      * @memberOf _
