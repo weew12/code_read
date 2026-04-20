@@ -5,43 +5,128 @@
  * Released under MIT license <https://lodash.com/license>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ *
+ * Lodash 源码深度解析
+ * ====================
+ *
+ * Lodash 是一个功能强大的 JavaScript 实用工具库，提供模块化、高性能的
+ * 数组、对象、字符串、数字等操作函数。本文件采用单体单文件架构 (Monolithic Single-File)，
+ * 所有源码（约 17,259 行）集中在 lodash.js 中。
+ *
+ * 架构特点：
+ * 1. IIFE 封装 - 避免污染全局命名空间
+ * 2. UMD 模块格式 - 支持 AMD/CommonJS/全局变量多种导出方式
+ * 3. 函数定义表达式 - 使用表达式而非函数声明，避免提升问题
+ * 4. 位掩码优化 - 使用位运算处理函数元数据和标志位
+ * 5. 延迟计算 - 支持链式操作的惰性求值
+ *
+ * 核心设计模式：
+ * - 工厂模式：通过 runInContext() 创建隔离的 lodash 实例
+ * - 装饰器模式：wrap 系列函数包装现有函数
+ * - 迭代器模式：提供统一的集合遍历接口
+ * - 链式调用：通过 prototype 方法实现流式 API
  */
 ;(function() {
 
-  /** Used as a safe reference for `undefined` in pre-ES5 environments. */
+  /** Used as a safe reference for `undefined` in pre-ES5 environments.
+   *
+   * 在 pre-ES5 环境中安全引用 undefined 的方式。
+   * 原因：在旧版 JavaScript 中，undefined 不是一个保留字，
+   * 可以被重新赋值（如：var undefined = 1），导致 typeof undefined === 'undefined' 检查失效。
+   * 通过本地变量 undefined 引用全局 undefined，确保其值确实为 undefined。
+   */
   var undefined;
 
-  /** Used as the semantic version number. */
+  /** Used as the semantic version number.
+   *
+   * Lodash 语义化版本号，用于标识库版本。
+   * 可通过 _.VERSION 访问。
+   */
   var VERSION = '4.18.1';
 
-  /** Used as the size to enable large array optimizations. */
+  /** Used as the size to enable large array optimizations.
+   *
+   * 大数组优化的阈值。当数组长度 >= 200 时，
+   * 启用特殊的优化算法（如快速排序替代归并排序）。
+   * 这是基于性能测试得出的经验值。
+   */
   var LARGE_ARRAY_SIZE = 200;
 
-  /** Error message constants. */
+  /** Error message constants.
+   *
+   * 核心错误信息常量，用于保持错误消息的一致性。
+   *
+   * - CORE_ERROR_TEXT: core-js 不支持时的错误提示
+   * - FUNC_ERROR_TEXT: 函数参数类型错误（如期望函数却传入其他类型）
+   * - INVALID_TEMPL_VAR_ERROR_TEXT: _.template 的 variable 选项无效
+   * - INVALID_TEMPL_IMPORTS_ERROR_TEXT: _.template 的 imports 选项无效
+   */
   var CORE_ERROR_TEXT = 'Unsupported core-js use. Try https://npms.io/search?q=ponyfill.',
       FUNC_ERROR_TEXT = 'Expected a function',
       INVALID_TEMPL_VAR_ERROR_TEXT = 'Invalid `variable` option passed into `_.template`',
       INVALID_TEMPL_IMPORTS_ERROR_TEXT = 'Invalid `imports` option passed into `_.template`';
 
-  /** Used to stand-in for `undefined` hash values. */
+  /** Used to stand-in for `undefined` hash values.
+   *
+   * Hash 表中 undefined 值的占位符。
+   * 在 Hash 对象中使用，防止与真实的 undefined 键混淆。
+   */
   var HASH_UNDEFINED = '__lodash_hash_undefined__';
 
-  /** Used as the maximum memoize cache size. */
+  /** Used as the maximum memoize cache size.
+   *
+   * _.memoize 的最大缓存大小。
+   * 超过此大小时，旧缓存条目会被清除。
+   */
   var MAX_MEMOIZE_SIZE = 500;
 
-  /** Used as the internal argument placeholder. */
+  /** Used as the internal argument placeholder.
+   *
+   * 内部参数占位符，用于柯里化和偏函数应用。
+   * 例如：_.partial(fn, _, 1)(_) 会产生占位符替换。
+   * 可以通过 lodash PLACEHOLDER 属性访问。
+   */
   var PLACEHOLDER = '__lodash_placeholder__';
 
-  /** Used to compose bitmasks for cloning. */
+  /** Used to compose bitmasks for cloning.
+   *
+   * 克隆操作的位掩码标志，用于控制克隆深度和是否克隆 Symbol。
+   *
+   * - CLONE_DEEP_FLAG (1): 深度克隆
+   * - CLONE_FLAT_FLAG (2): 扁平克隆（一层）
+   * - CLONE_SYMBOLS_FLAG (4): 克隆 Symbol 属性
+   *
+   * 可以组合使用：如 CLONE_DEEP_FLAG | CLONE_SYMBOLS_FLAG = 5 表示深度克隆包含 Symbol
+   */
   var CLONE_DEEP_FLAG = 1,
       CLONE_FLAT_FLAG = 2,
       CLONE_SYMBOLS_FLAG = 4;
 
-  /** Used to compose bitmasks for value comparisons. */
+  /** Used to compose bitmasks for value comparisons.
+   *
+   * 值比较的位掩码标志，用于控制比较行为。
+   *
+   * - COMPARE_PARTIAL_FLAG (1): 部分比较（对象只比较部分属性）
+   * - COMPARE_UNORDERED_FLAG (2): 无序比较（用于数组/集合）
+   */
   var COMPARE_PARTIAL_FLAG = 1,
       COMPARE_UNORDERED_FLAG = 2;
 
-  /** Used to compose bitmasks for function metadata. */
+  /** Used to compose bitmasks for function metadata.
+   *
+   * 函数包装的位掩码标志，用于 _.wrap、_.curry 等函数元数据。
+   *
+   * - WRAP_BIND_FLAG (1): bind 绑定
+   * - WRAP_BIND_KEY_FLAG (2): bindKey 键绑定
+   * - WRAP_CURRY_BOUND_FLAG (4): 柯里化绑定
+   * - WRAP_CURRY_FLAG (8): 柯里化
+   * - WRAP_CURRY_RIGHT_FLAG (16): 右柯里化
+   * - WRAP_PARTIAL_FLAG (32): 偏函数应用
+   * - WRAP_PARTIAL_RIGHT_FLAG (64): 右偏函数应用
+   * - WRAP_ARY_FLAG (128): 参数数量限制
+   * - WRAP_REARG_FLAG (256): 参数重排
+   * - WRAP_FLIP_FLAG (512): 函数翻转（参数顺序反转）
+   */
   var WRAP_BIND_FLAG = 1,
       WRAP_BIND_KEY_FLAG = 2,
       WRAP_CURRY_BOUND_FLAG = 4,
@@ -53,31 +138,68 @@
       WRAP_REARG_FLAG = 256,
       WRAP_FLIP_FLAG = 512;
 
-  /** Used as default options for `_.truncate`. */
+  /** Used as default options for `_.truncate`.
+   *
+   * _.truncate 的默认选项：
+   * - DEFAULT_TRUNC_LENGTH (30): 默认截断长度
+   * - DEFAULT_TRUNC_OMISSION ('...'): 省略符
+   */
   var DEFAULT_TRUNC_LENGTH = 30,
       DEFAULT_TRUNC_OMISSION = '...';
 
-  /** Used to detect hot functions by number of calls within a span of milliseconds. */
+  /** Used to detect hot functions by number of calls within a span of milliseconds.
+   *
+   * 热函数检测配置，用于性能优化。
+   * 当一个函数在 HOT_SPAN (16ms) 内被调用 HOT_COUNT (800) 次，
+   * 该函数被标记为"热函数"，采用特殊优化策略。
+   * 16ms 约等于 60fps 的一帧时间。
+   */
   var HOT_COUNT = 800,
       HOT_SPAN = 16;
 
-  /** Used to indicate the type of lazy iteratees. */
+  /** Used to indicate the type of lazy iteratees.
+   *
+   * 延迟迭代器的类型标志，用于链式操作的惰性求值。
+   *
+   * - LAZY_FILTER_FLAG (1): 过滤操作
+   * - LAZY_MAP_FLAG (2): 映射操作
+   * - LAZY_WHILE_FLAG (3): 条件循环
+   */
   var LAZY_FILTER_FLAG = 1,
       LAZY_MAP_FLAG = 2,
       LAZY_WHILE_FLAG = 3;
 
-  /** Used as references for various `Number` constants. */
+  /** Used as references for various `Number` constants.
+   *
+   * JavaScript Number 常量的快捷引用：
+   * - INFINITY: 无穷大 (1/0)
+   * - MAX_SAFE_INTEGER: 最大安全整数 (2^53 - 1)
+   * - MAX_INTEGER: 最大浮点数
+   * - NAN: 非数字 (0/0)
+   */
   var INFINITY = 1 / 0,
       MAX_SAFE_INTEGER = 9007199254740991,
       MAX_INTEGER = 1.7976931348623157e+308,
       NAN = 0 / 0;
 
-  /** Used as references for the maximum length and index of an array. */
+  /** Used as references for the maximum length and index of an array.
+   *
+   * 数组长度相关的最大值常量：
+   * - MAX_ARRAY_LENGTH (2^32 - 1): 数组最大长度
+   * - MAX_ARRAY_INDEX: 最大数组索引 (MAX_ARRAY_LENGTH - 1)
+   * - HALF_MAX_ARRAY_LENGTH: 最大长度的一半（用于二分查找等优化）
+   */
   var MAX_ARRAY_LENGTH = 4294967295,
       MAX_ARRAY_INDEX = MAX_ARRAY_LENGTH - 1,
       HALF_MAX_ARRAY_LENGTH = MAX_ARRAY_LENGTH >>> 1;
 
-  /** Used to associate wrap methods with their bit flags. */
+  /** Used to associate wrap methods with their bit flags.
+   *
+   * wrap 方法与位标志的映射表。
+   * 用于在包装函数时快速查找对应的标志位。
+   *
+   * 示例：_.curry(fn) 会设置 WRAP_CURRY_FLAG (8)
+   */
   var wrapFlags = [
     ['ary', WRAP_ARY_FLAG],
     ['bind', WRAP_BIND_FLAG],
@@ -293,7 +415,15 @@
   /** Used to detect strings that need a more robust regexp to match words. */
   var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
 
-  /** Used to assign default `context` object properties. */
+  /** Used to assign default `context` object properties.
+   *
+   * 默认上下文对象属性列表。
+   * 用于 lodash 在某些环境中运行时（如 Web Worker），
+   * 需要明确指定全局对象属性来源。
+   *
+   * 包含：原生构造函数（Array, Date 等）、TypedArray、全局函数（setTimeout 等），
+   * 以及特殊值（_ 自身）。
+   */
   var contextProps = [
     'Array', 'Buffer', 'DataView', 'Date', 'Error', 'Float32Array', 'Float64Array',
     'Function', 'Int8Array', 'Int16Array', 'Int32Array', 'Map', 'Math', 'Object',
@@ -305,7 +435,15 @@
   /** Used to make template sourceURLs easier to identify. */
   var templateCounter = -1;
 
-  /** Used to identify `toStringTag` values of typed arrays. */
+  /** Used to identify `toStringTag` values of typed arrays.
+   *
+   * typed array 的 toStringTag 查找表。
+   * 用于快速判断一个对象的 [[Class]] 是否为 typed array。
+   *
+   * true: Float32Array, Float64Array, Int8Array, Int16Array, Int32Array,
+   *       Uint8Array, Uint8ClampedArray, Uint16Array, Uint32Array
+   * false: Array, Object, Error, Date 等
+   */
   var typedArrayTags = {};
   typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
   typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
@@ -321,7 +459,13 @@
   typedArrayTags[setTag] = typedArrayTags[stringTag] =
   typedArrayTags[weakMapTag] = false;
 
-  /** Used to identify `toStringTag` values supported by `_.clone`. */
+  /** Used to identify `toStringTag` values supported by `_.clone`.
+   *
+   * _.clone 支持的类型的查找表。
+   * 某些类型（如 Error, Function, WeakMap）不能被克隆。
+   *
+   * cloneableTags[tag] = true 表示该类型可以被克隆
+   */
   var cloneableTags = {};
   cloneableTags[argsTag] = cloneableTags[arrayTag] =
   cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] =
@@ -1828,6 +1972,26 @@
      * @private
      * @constructor
      * @param {*} value The value to wrap.
+     *
+     * LazyWrapper 是 Lodash 延迟计算的核心实现。
+     *
+     * 延迟计算（Lazy Evaluation）是一种优化策略：
+     * - 不立即执行遍历操作，而是记录操作
+     * - 只在真正需要结果时才执行计算
+     * - 可以合并多个操作，减少中间数组创建
+     *
+     * 内部属性说明：
+     * - __wrapped__: 被包装的原始值（通常是数组）
+     * - __actions__: 需要执行的动作（如 slice, reverse 等）
+     * - __dir__: 遍历方向，1 表示正向，-1 表示反向
+     * - __filtered__: 是否经过过滤操作（用于优化）
+     * - __iteratees__: 迭代器列表（如 map 的转换函数）
+     * - __takeCount__: 需要获取的元素数量
+     * - __views__: 视图信息，用于 take/drop 操作
+     *
+     * 示例：
+     * _([1,2,3,4,5]).filter(x => x % 2 === 0).map(x => x * 2)
+     * 不会立即执行，而是在调用 .value() 时一起执行
      */
     function LazyWrapper(value) {
       this.__wrapped__ = value;
@@ -1846,6 +2010,9 @@
      * @name clone
      * @memberOf LazyWrapper
      * @returns {Object} Returns the cloned `LazyWrapper` object.
+     *
+     * 浅克隆 LazyWrapper，复制所有内部状态。
+     * 重要：数组和嵌套状态使用 copyArray 复制，确保独立性。
      */
     function lazyClone() {
       var result = new LazyWrapper(this.__wrapped__);
@@ -1865,6 +2032,9 @@
      * @name reverse
      * @memberOf LazyWrapper
      * @returns {Object} Returns the new reversed `LazyWrapper` object.
+     *
+     * 反转遍历方向。如果已经是 filtered 状态，
+     * 创建一个新的 LazyWrapper 副本；否则直接修改方向。
      */
     function lazyReverse() {
       if (this.__filtered__) {
@@ -1885,6 +2055,20 @@
      * @name value
      * @memberOf LazyWrapper
      * @returns {*} Returns the unwrapped value.
+     *
+     * 延迟值计算的核心方法。这是真正执行计算的地方。
+     *
+     * 执行流程：
+     * 1. 获取原始数组（调用 __wrapped__.value()）
+     * 2. 计算视图范围（start, end）
+     * 3. 按方向遍历，应用所有 iteratee
+     * 4. 处理 take/drop 操作
+     * 5. 返回最终结果
+     *
+     * 优化策略：
+     * - 短路计算：某些操作（如 find）可以在找到后立即停止
+     * - take 优化：如果已知需要取的元素数量，可提前终止
+     * - 视图合并：多个 take/drop 操作合并计算
      */
     function lazyValue() {
       var array = this.__wrapped__.value(),
@@ -3032,6 +3216,17 @@
      * @param {Object} object The object to iterate over.
      * @param {Function} iteratee The function invoked per iteration.
      * @returns {Object} Returns `object`.
+     *
+     * baseForOwn 是 Lodash 集合遍历的核心基础设施函数之一。
+     *
+     * 设计原理：
+     * 1. 委托模式 - 将具体遍历逻辑委托给 baseFor，自己只负责 keys 获取
+     * 2. 原型链安全 - keys 函数确保只遍历对象自身的可枚举属性
+     * 3. early exit - 遍历过程中可通过 iteratee 返回 false 提前终止
+     *
+     * 与 baseForOwnRight 的区别：
+     * - baseForOwn: 从前向后遍历（key 顺序由 keys() 决定）
+     * - baseForOwnRight: 从后向前遍历（反向 key 顺序）
      */
     function baseForOwn(object, iteratee) {
       return object && baseFor(object, iteratee, keys);
@@ -3044,6 +3239,9 @@
      * @param {Object} object The object to iterate over.
      * @param {Function} iteratee The function invoked per iteration.
      * @returns {Object} Returns `object`.
+     *
+     * forOwnRight 的基础实现，按属性名的反向顺序遍历对象。
+     * 常用于需要从后向前处理对象属性的场景。
      */
     function baseForOwnRight(object, iteratee) {
       return object && baseForRight(object, iteratee, keys);
@@ -3057,6 +3255,9 @@
      * @param {Object} object The object to inspect.
      * @param {Array} props The property names to filter.
      * @returns {Array} Returns the function names.
+     *
+     * 提取对象中所有函数类型属性的基础实现。
+     * 与 _.functions 的区别：不检查 props 参数的有效性，假设传入的是对象键数组。
      */
     function baseFunctions(object, props) {
       return arrayFilter(props, function(key) {
@@ -3071,6 +3272,17 @@
      * @param {Object} object The object to query.
      * @param {Array|string} path The path of the property to get.
      * @returns {*} Returns the resolved value.
+     *
+     * 深层属性访问的基础实现，支持路径语法。
+     *
+     * 设计原理：
+     * 1. 路径解析 - 将字符串路径（如 'a.b.c'）转换为数组 ['a', 'b', 'c']
+     * 2. 逐层访问 - 循环遍历路径的每一层，从对象中取出对应的值
+     * 3. 中途短路 - 如果任意一层为 null/undefined，立即返回 undefined
+     *
+     * 示例：
+     * baseGet({a: {b: {c: 1}}}, ['a', 'b', 'c']) => 1
+     * baseGet({a: {b: {c: 1}}}, 'a.b.c') => 1
      */
     function baseGet(object, path) {
       path = castPath(path, object);

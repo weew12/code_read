@@ -1,4 +1,26 @@
-/** Used to map aliases to their real names. */
+/**
+ * FP 模块映射配置文件
+ *
+ * 本文件定义了 Lodash FP (函数式编程) 版本所需的全部映射关系。
+ * FP 版本的核心特性：
+ * 1. 自动柯里化 - 所有多参数函数自动转为 curry 函数
+ * 2. 迭代器优先 - 回调函数作为第一个参数
+ * 3. 数据最后 - 数据参数放在最后
+ * 4. 不可变 - 不会修改原始数据
+ *
+ * 这些映射表用于构建工具将普通 lodash 方法转换为 FP 版本。
+ */
+
+/** Used to map aliases to their real names.
+ *
+ * 别名到真实方法名的映射。
+ * 统一不同库（ Lodash、Ramda）的命名风格。
+ *
+ * 分类：
+ * 1. Lodash 别名 - Lodash 内部的别名（如 each -> forEach）
+ * 2. Curried 变体 - 柯里化版本的原名映射
+ * 3. Ramda 兼容 - 与 Ramda 库兼容的别名
+ */
 exports.aliasToReal = {
 
   // Lodash aliases.
@@ -13,14 +35,16 @@ exports.aliasToReal = {
   'first': 'head',
 
   // Methods that are curried variants of others.
+  // 注意：conforms 和 matches 在 FP 版本中行为不同
   'conforms': 'conformsTo',
   'matches': 'isMatch',
   'property': 'get',
 
   // Ramda aliases.
-  '__': 'placeholder',
-  'F': 'stubFalse',
-  'T': 'stubTrue',
+  // Ramda 兼容别名，方便从 Ramda 迁移
+  '__': 'placeholder',      // 占位符（类似 Ramda 的 __）
+  'F': 'stubFalse',        // 返回 false 的函数
+  'T': 'stubTrue',         // 返回 true 的函数
   'all': 'every',
   'allPass': 'overEvery',
   'always': 'constant',
@@ -68,7 +92,28 @@ exports.aliasToReal = {
   'zipObj': 'zipObject'
 };
 
-/** Used to map ary to method names. */
+/** Used to map ary to method names.
+ *
+ * 按参数数量（arity）分组的方法映射。
+ * 用于 FP 版本的自动柯里化配置。
+ *
+ * 结构：
+ * - '1': 需要 1 个参数的方法（立即求值，不需要柯里化）
+ * - '2': 需要 2 个参数的方法
+ * - '3': 需要 3 个参数的方法
+ * - '4': 需要 4 个参数的方法
+ *
+ * FP 版本会将这些方法自动包装为 curry 函数。
+ * 例如：_.add 在 FP 版本中变成 curry 化的版本
+ *
+ * 示例：
+ * // 普通版
+ * _.add(1, 2) // => 3
+ *
+ * // FP 版本 - 自动柯里化
+ * const fp = require('lodash/fp')
+ * fp.add(1)(2) // => 3
+ */
 exports.aryMethod = {
   '1': [
     'assignAll', 'assignInAll', 'attempt', 'castArray', 'ceil', 'create',
@@ -85,7 +130,7 @@ exports.aryMethod = {
     'debounce', 'defaults', 'defaultsDeep', 'defaultTo', 'delay', 'difference',
     'divide', 'drop', 'dropRight', 'dropRightWhile', 'dropWhile', 'endsWith', 'eq',
     'every', 'filter', 'find', 'findIndex', 'findKey', 'findLast', 'findLastIndex',
-    'findLastKey', 'flatMap', 'flatMapDeep', 'flattenDepth', 'forEach',
+    'findLastKey', 'findLast', 'flatMap', 'flatMapDeep', 'flattenDepth', 'forEach',
     'forEachRight', 'forIn', 'forInRight', 'forOwn', 'forOwnRight', 'get',
     'groupBy', 'gt', 'gte', 'has', 'hasIn', 'includes', 'indexOf', 'intersection',
     'invertBy', 'invoke', 'invokeMap', 'isEqual', 'isMatch', 'join', 'keyBy',
