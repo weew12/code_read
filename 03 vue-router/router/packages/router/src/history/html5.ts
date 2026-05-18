@@ -1,3 +1,24 @@
+/**
+ * Vue Router HTML5 History 实现
+ * ==============================
+ *
+ * 本模块实现基于 HTML5 History API 的路由历史记录管理。
+ * 使用 history.pushState/replaceState 实现 URL 变化而不触发页面刷新。
+ *
+ * 核心功能：
+ * 1. 状态管理：维护 history.state 包含位置、滚动信息
+ * 2. 监听 popstate 事件：处理浏览器前进/后退
+ * 3. 滚动位置保存：在页面隐藏时保存滚动位置
+ *
+ * 状态对象 (StateEntry) 包含：
+ * - current: 当前路径
+ * - back: 上一个路径
+ * - forward: 下一个路径
+ * - position: 历史堆栈位置
+ * - replaced: 是否被替换
+ * - scroll: 滚动位置
+ */
+
 import type {
   RouterHistory,
   NavigationCallback,
@@ -21,6 +42,12 @@ type PopStateListener = (this: Window, ev: PopStateEvent) => any
 
 let createBaseLocation = () => location.protocol + '//' + location.host
 
+/**
+ * 历史状态条目
+ *
+ * @remarks
+ * 存储在 history.state 中的状态对象。
+ */
 interface StateEntry extends HistoryState {
   back: HistoryLocation | null
   current: HistoryLocation
@@ -31,30 +58,39 @@ interface StateEntry extends HistoryState {
 }
 
 /**
- * Creates a normalized history location from a window.location object
- * @param base - The base path
- * @param location - The window.location object
+ * 从 window.location 创建标准化路径
+ *
+ * @param base - 基础路径
+ * @param location - window.location 对象
+ * @returns 标准化后的路径
  */
 function createCurrentLocation(
   base: string,
   location: Location
 ): HistoryLocation {
   const { pathname, search, hash } = location
-  // allows hash bases like #, /#, #/, #!, #!/, /#!/, or even /folder#end
+
+  // 处理 hash 基础路径
   const hashPos = base.indexOf('#')
   if (hashPos > -1) {
     let slicePos = hash.includes(base.slice(hashPos))
       ? base.slice(hashPos).length
       : 1
     let pathFromHash = hash.slice(slicePos)
-    // prepend the starting slash to hash so the url starts with /#
     if (pathFromHash[0] !== '/') pathFromHash = '/' + pathFromHash
     return stripBase(pathFromHash, '')
   }
+
   const path = stripBase(pathname, base)
   return path + search + hash
 }
 
+/**
+ * 使用历史记录监听器
+ *
+ * @remarks
+ * 管理 popstate 事件监听和历史状态。
+ */
 function useHistoryListeners(
   base: string,
   historyState: ValueContainer<StateEntry>,
@@ -63,10 +99,16 @@ function useHistoryListeners(
 ) {
   let listeners: NavigationCallback[] = []
   let teardowns: Array<() => void> = []
-  // TODO: should it be a stack? a Dict. Check if the popstate listener
-  // can trigger twice
+
+  /** 暂停状态（用于防止某些导航触发监听器） */
   let pauseState: HistoryLocation | null = null
 
+  /**
+   * popstate 事件处理
+   *
+   * @remarks
+   * 当用户点击前进/后退按钮时触发。
+   */
   const popStateHandler: PopStateListener = ({
     state,
   }: {
@@ -81,21 +123,19 @@ function useHistoryListeners(
       currentLocation.value = to
       historyState.value = state
 
-      // ignore the popstate and reset the pauseState
+      // 忽略暂停状态的导航
       if (pauseState && pauseState === from) {
         pauseState = null
         return
       }
+
       delta = fromState ? state.position - fromState.position : 0
     } else {
+      // 无 state 时（直接访问 URL），执行 replace
       replace(to)
     }
 
-    // Here we could also revert the navigation by calling history.go(-delta)
-    // this listener will have to be adapted to not trigger again and to wait for the url
-    // to be updated before triggering the listeners. Some kind of validation function would also
-    // need to be passed to the listeners so the navigation can be accepted
-    // call all listeners
+    // 触发所有监听器
     listeners.forEach(listener => {
       listener(currentLocation.value, from, {
         delta,
@@ -114,7 +154,6 @@ function useHistoryListeners(
   }
 
   function listen(callback: NavigationCallback) {
-    // set up the listener and prepare teardown callbacks
     listeners.push(callback)
 
     const teardown = () => {
@@ -126,6 +165,13 @@ function useHistoryListeners(
     return teardown
   }
 
+  /**
+   * 页面隐藏时保存滚动位置
+   *
+   * @remarks
+   * 使用 pagehide 和 visibilitychange 事件替代 beforeunload
+   *（iOS Safari 不触发 beforeunload）
+   */
   function beforeUnloadListener() {
     if (document.visibilityState === 'hidden') {
       const { history } = window
@@ -145,11 +191,8 @@ function useHistoryListeners(
     document.removeEventListener('visibilitychange', beforeUnloadListener)
   }
 
-  // set up the listeners and prepare teardown callbacks
+  // 设置监听器
   window.addEventListener('popstate', popStateHandler)
-  // https://developer.chrome.com/blog/page-lifecycle-api/
-  // note: iOS safari does not fire beforeunload, so we
-  // use pagehide and visibilitychange instead
   window.addEventListener('pagehide', beforeUnloadListener)
   document.addEventListener('visibilitychange', beforeUnloadListener)
 
@@ -161,7 +204,7 @@ function useHistoryListeners(
 }
 
 /**
- * Creates a state object
+ * 创建状态对象
  */
 function buildState(
   back: HistoryLocation | null,
@@ -180,15 +223,21 @@ function buildState(
   }
 }
 
+/**
+ * 历史状态导航
+ *
+ * @remarks
+ * 管理 pushState/replaceState 调用。
+ */
 function useHistoryStateNavigation(base: string) {
   const { history, location } = window
 
-  // private variables
   const currentLocation: ValueContainer<HistoryLocation> = {
     value: createCurrentLocation(base, location),
   }
   const historyState: ValueContainer<StateEntry> = { value: history.state }
-  // build current history entry as this is a fresh navigation
+
+  // 首次导航时创建历史状态
   if (!historyState.value) {
     changeLocation(
       currentLocation.value,
@@ -196,31 +245,25 @@ function useHistoryStateNavigation(base: string) {
         back: null,
         current: currentLocation.value,
         forward: null,
-        // the length is off by one, we need to decrease it
         position: history.length - 1,
         replaced: true,
-        // don't add a scroll as the user may have an anchor, and we want
-        // scrollBehavior to be triggered without a saved position
         scroll: null,
       },
       true
     )
   }
 
+  /**
+   * 更改 URL
+   *
+   * @remarks
+   * 处理 base 标签和 hash 路由的特殊情况。
+   */
   function changeLocation(
     to: HistoryLocation,
     state: StateEntry,
     replace: boolean
   ): void {
-    /**
-     * if a base tag is provided, and we are on a normal domain, we have to
-     * respect the provided `base` attribute because pushState() will use it and
-     * potentially erase anything before the `#` like at
-     * https://github.com/vuejs/router/issues/685 where a base of
-     * `/folder/#` but a base of `/` would erase the `/folder/` section. If
-     * there is no host, the `<base>` tag makes no sense and if there isn't a
-     * base tag we can just use everything after the `#`.
-     */
     const hashIndex = base.indexOf('#')
     const url =
       hashIndex > -1
@@ -228,9 +271,8 @@ function useHistoryStateNavigation(base: string) {
             ? base
             : base.slice(hashIndex)) + to
         : createBaseLocation() + base + to
+
     try {
-      // BROWSER QUIRK
-      // NOTE: Safari throws a SecurityError when calling this function 100 times in 30 seconds
       history[replace ? 'replaceState' : 'pushState'](state, '', url)
       historyState.value = state
     } catch (err) {
@@ -239,7 +281,7 @@ function useHistoryStateNavigation(base: string) {
       } else {
         console.error(err)
       }
-      // Force the navigation, this also resets the call count
+      // 降级使用 location.assign/replace
       location[replace ? 'replace' : 'assign'](url)
     }
   }
@@ -250,7 +292,6 @@ function useHistoryStateNavigation(base: string) {
       history.state,
       buildState(
         historyState.value.back,
-        // keep back and forward entries but override current position
         to,
         historyState.value.forward,
         true
@@ -264,14 +305,9 @@ function useHistoryStateNavigation(base: string) {
   }
 
   function push(to: HistoryLocation, data?: HistoryState) {
-    // Add to current entry the information of where we are going
-    // as well as saving the current position
+    // 保存当前位置到 forward
     const currentState = assign(
       {},
-      // use current history state to gracefully handle a wrong call to
-      // history.replaceState
-      // https://github.com/vuejs/router/issues/366
-      historyState.value,
       history.state as Partial<StateEntry> | null,
       {
         forward: to,
@@ -281,9 +317,7 @@ function useHistoryStateNavigation(base: string) {
 
     if (__DEV__ && !history.state) {
       warn(
-        `history.state seems to have been manually replaced without preserving the necessary values. Make sure to preserve existing history state if you are manually calling history.replaceState:\n\n` +
-          `history.replaceState(history.state, '', url)\n\n` +
-          `You can find more information at https://router.vuejs.org/guide/migration/#Usage-of-history-state`
+        `history.state seems to have been manually replaced without preserving the necessary values.`
       )
     }
 
@@ -310,9 +344,12 @@ function useHistoryStateNavigation(base: string) {
 }
 
 /**
- * Creates an HTML5 history. Most common history for single page applications.
+ * 创建 HTML5 History
  *
- * @param base -
+ * @remarks
+ * 最常用的历史记录实现，适用于单页面应用。
+ *
+ * @param base - 基础路径，默认为 normalizeBase() 返回值
  */
 export function createWebHistory(base?: string): RouterHistory {
   base = normalizeBase(base)
@@ -324,6 +361,7 @@ export function createWebHistory(base?: string): RouterHistory {
     historyNavigation.location,
     historyNavigation.replace
   )
+
   function go(delta: number, triggerListeners = true) {
     if (!triggerListeners) historyListeners.pauseListeners()
     history.go(delta)
@@ -331,7 +369,6 @@ export function createWebHistory(base?: string): RouterHistory {
 
   const routerHistory: RouterHistory = assign(
     {
-      // it's overridden right after
       location: '',
       base,
       go,
@@ -342,6 +379,7 @@ export function createWebHistory(base?: string): RouterHistory {
     historyListeners
   )
 
+  // 使用 defineProperty 使 location 和 state 成为 getter
   Object.defineProperty(routerHistory, 'location', {
     enumerable: true,
     get: () => historyNavigation.location.value,

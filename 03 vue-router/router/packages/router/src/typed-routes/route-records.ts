@@ -1,3 +1,8 @@
+/**
+ * 类型化路由记录类型
+ *
+ * 本模块定义类型安全的路由记录相关类型。
+ */
 import type {
   RouteLocation,
   RouteLocationNormalized,
@@ -8,6 +13,7 @@ import type { RouteMap, RouteMapGeneric } from './route-map'
 
 /**
  * @internal
+ * 路由记录重定向选项类型
  */
 export type RouteRecordRedirectOption =
   | RouteLocationRaw
@@ -18,11 +24,13 @@ export type RouteRecordRedirectOption =
 
 /**
  * Generic version of {@link RouteRecordName}.
+ * 路由记录名称的泛型版本
  */
 export type RouteRecordNameGeneric = string | symbol | undefined
 
 /**
  * Possible values for a route record **after normalization**
+ * 路由记录名称的可能值
  *
  * NOTE: since `RouteRecordName` is a type, it evaluates too early and it's often the generic version {@link RouteRecordNameGeneric}. If you need a typed version of all of the names of routes, use {@link RouteMap | `keyof RouteMap`}
  */
@@ -32,6 +40,7 @@ export type RouteRecordName = RouteMapGeneric extends RouteMap
 
 /**
  * @internal
+ * 路由记录 props 类型
  */
 export type _RouteRecordProps<Name extends keyof RouteMap = keyof RouteMap> =
   | boolean

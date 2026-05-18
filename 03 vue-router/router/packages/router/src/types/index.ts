@@ -1,3 +1,16 @@
+/**
+ * Vue Router 类型定义模块
+ * ========================
+ *
+ * 本模块定义 Vue Router 的核心类型。
+ *
+ * 主要类型分类：
+ * 1. 路由记录类型（RouteRecord*）
+ * 2. 路由位置类型（RouteLocation*）
+ * 3. 参数类型（RouteParams*）
+ * 4. 匹配器类型（MatcherLocation*）
+ */
+
 import type { LocationQuery, LocationQueryRaw } from '../query'
 import type { PathParserOptions } from '../matcher'
 import type { Ref, Component, DefineComponent } from 'vue'
@@ -12,242 +25,166 @@ import type {
 } from '../typed-routes'
 import type { _Awaitable } from './utils'
 
+/** 懒加载组件类型 */
 export type Lazy<T> = () => Promise<T>
+
+/** 类型覆盖工具 */
 export type Override<T, U> = Pick<T, Exclude<keyof T, keyof U>> & U
 
-// TODO: find a better way to type readonly types. Readonly<T> is non recursive, maybe we should use it at multiple places. It would also allow preventing the problem Immutable create.
+/** 不可变类型 */
 export type Immutable<T> = {
   readonly [P in keyof T]: Immutable<T[P]>
 }
 
-/**
- * Type to transform a static object into one that allows passing Refs as
- * values.
- * @internal
- */
+/** VueUse 选项类型（支持 Ref 或普通值） */
 export type VueUseOptions<T> = {
   [k in keyof T]: Ref<T[k]> | T[k]
 }
 
 export type TODO = any
 
-/**
- * @internal
- */
+/** 路由参数值类型 */
 export type RouteParamValue = string
-/**
- * @internal
- */
+
+/** 原始路由参数值类型 */
 export type RouteParamValueRaw = RouteParamValue | number | null | undefined
+
+/** 路由参数字典 */
 export type RouteParamsGeneric = Record<
   string,
   RouteParamValue | RouteParamValue[]
 >
+
+/** 原始路由参数字典 */
 export type RouteParamsRawGeneric = Record<
   string,
   RouteParamValueRaw | Exclude<RouteParamValueRaw, null | undefined>[]
 >
 
-/**
- * @internal
- */
+/** 查询参数和 hash */
 export interface RouteQueryAndHash {
   query?: LocationQueryRaw
   hash?: string
 }
 
-/**
- * @internal
- */
+/** 按路径匹配的路由位置 */
 export interface MatcherLocationAsPath {
   path: string
 }
 
-/**
- * @internal
- */
+/** 按名称匹配的路由位置 */
 export interface MatcherLocationAsName {
   name: RouteRecordNameGeneric
-  // to allow checking location.path == null
-  /**
-   * Ignored path property since we are dealing with a relative location. Only `undefined` is allowed.
-   */
   path?: undefined
   params?: RouteParamsGeneric
 }
 
-/**
- * @internal
- */
+/** 相对路由位置 */
 export interface MatcherLocationAsRelative {
-  // to allow checking location.path == null
-  /**
-   * Ignored path property since we are dealing with a relative location. Only `undefined` is allowed.
-   */
   path?: undefined
   params?: RouteParamsGeneric
 }
 
-/**
- * @internal
- */
+/** 相对路由位置（原始） */
 export interface LocationAsRelativeRaw {
   name?: RouteRecordNameGeneric
-  // to allow checking location.path == null
-  /**
-   * Ignored path property since we are dealing with a relative location. Only `undefined` is allowed.
-   */
   path?: undefined
   params?: RouteParamsRawGeneric
 }
 
 /**
- * Common options for all navigation methods.
+ * 导航选项
  */
 export interface RouteLocationOptions {
-  /**
-   * Replace the entry in the history instead of pushing a new entry
-   */
+  /** 在历史记录中替换而非添加新条目 */
   replace?: boolean
-  /**
-   * Triggers the navigation even if the location is the same as the current one.
-   * Note this will also add a new entry to the history unless `replace: true`
-   * is passed.
-   */
+
+  /** 强制触发导航，即使位置相同 */
   force?: boolean
-  /**
-   * State to save using the History API. This cannot contain any reactive
-   * values and some primitives like Symbols are forbidden. More info at
-   * https://developer.mozilla.org/en-US/docs/Web/API/History/state
-   */
+
+  /** 使用 History API 保存的状态 */
   state?: HistoryState
 }
 
-/**
- * Route Location that can infer the necessary params based on the name.
- *
- * @internal
- */
+/** 按名称解析的路由位置 */
 export interface RouteLocationNamedRaw
   extends RouteQueryAndHash, LocationAsRelativeRaw, RouteLocationOptions {}
 
-/**
- * Route Location that can infer the possible paths.
- *
- * @internal
- */
+/** 按路径解析的路由位置 */
 export interface RouteLocationPathRaw
   extends RouteQueryAndHash, MatcherLocationAsPath, RouteLocationOptions {}
 
-// TODO: rename in next major to RouteRecordMatched?
+/** 匹配的路由位置 */
 export interface RouteLocationMatched extends RouteRecordNormalized {
-  // components cannot be Lazy<RouteComponent>
   components: Record<string, RouteComponent> | null | undefined
 }
 
-/**
- * Base properties for a normalized route location.
- *
- * @internal
- */
+/** 标准化路由位置的基础属性 */
 export interface _RouteLocationBase extends Pick<
   MatcherLocation,
   'name' | 'path' | 'params' | 'meta'
 > {
-  /**
-   * The whole location including the `search` and `hash`. This string is
-   * percentage encoded.
-   */
+  /** 完整路径（包含 search 和 hash，已编码） */
   fullPath: string
-  /**
-   * Object representation of the `search` property of the current location.
-   */
+
+  /** 查询参数对象 */
   query: LocationQuery
-  /**
-   * Hash of the current location. If present, starts with a `#`.
-   */
+
+  /** hash 值，以 # 开头 */
   hash: string
-  /**
-   * Contains the location we were initially trying to access before ending up
-   * on the current location.
-   */
+
+  /** 重定向来源 */
   redirectedFrom: RouteLocation | undefined
 }
 
-/**
- * Allowed Component in {@link RouteLocationMatched}
- */
+/** 路由组件类型 */
 export type RouteComponent = Component | DefineComponent
-/**
- * Allowed Component definitions in route records provided by the user
- */
+
+/** 用户提供的路由组件类型 */
 export type RawRouteComponent = RouteComponent | Lazy<RouteComponent>
 
-// TODO: could this be moved to matcher? YES, it's on the way
 /**
- * Internal type for common properties among all kind of {@link RouteRecordRaw}.
+ * 路由记录基类
+ *
+ * @remarks
+ * 所有路由记录类型的公共接口。
  */
 export interface _RouteRecordBase extends PathParserOptions {
-  /**
-   * Path of the record. Should start with `/` unless the record is the child of
-   * another record.
-   *
-   * @example `/users/:id` matches `/users/1` as well as `/users/posva`.
-   */
+  /** 路径（以 / 开头） */
   path: string
 
-  /**
-   * Where to redirect if the route is directly matched. The redirection happens
-   * before any navigation guard and triggers a new navigation with the new
-   * target location.
-   */
+  /** 重定向目标 */
   redirect?: RouteRecordRedirectOption
 
-  /**
-   * Aliases for the record. Allows defining extra paths that will behave like a
-   * copy of the record. Allows having paths shorthands like `/users/:id` and
-   * `/u/:id`. All `alias` and `path` values must share the same params.
-   */
+  /** 别名 */
   alias?: string | string[]
 
-  /**
-   * Name for the route record. Must be unique.
-   */
+  /** 路由名称（唯一） */
   name?: RouteRecordNameGeneric
 
-  /**
-   * Before Enter guard specific to this record. Note `beforeEnter` has no
-   * effect if the record has a `redirect` property.
-   */
+  /** 路由独享守卫 */
   beforeEnter?:
     | NavigationGuardWithThis<undefined>
     | NavigationGuardWithThis<undefined>[]
 
-  /**
-   * Arbitrary data attached to the record.
-   */
+  /** 自定义元数据 */
   meta?: RouteMeta
 
-  /**
-   * Array of nested routes.
-   */
+  /** 子路由数组 */
   children?: RouteRecordRaw[]
 
-  /**
-   * Allow passing down params as props to the component rendered by `router-view`.
-   */
+  /** 是否将参数作为 props 传递 */
   props?: _RouteRecordProps | Record<string, _RouteRecordProps>
 }
 
 /**
- * Interface to type `meta` fields in route records.
+ * 路由记录元数据类型
+ *
+ * @remarks
+ * 用于扩展路由记录的 meta 字段类型。
  *
  * @example
- *
- * ```ts
- * // typings.d.ts or router.ts
- * import 'vue-router';
- *
+ * ```typescript
  * declare module 'vue-router' {
  *   interface RouteMeta {
  *     requiresAuth?: boolean
@@ -257,88 +194,41 @@ export interface _RouteRecordBase extends PathParserOptions {
  */
 export interface RouteMeta extends Record<PropertyKey, unknown> {}
 
-/**
- * Route Record defining one single component with the `component` option.
- */
+/** 单视图路由记录 */
 export interface RouteRecordSingleView extends _RouteRecordBase {
-  /**
-   * Component to display when the URL matches this route.
-   */
   component: RawRouteComponent
   components?: never
   children?: never
   redirect?: never
-
-  /**
-   * Allow passing down params as props to the component rendered by `router-view`.
-   */
   props?: _RouteRecordProps
 }
 
-/**
- * Route Record defining one single component with a nested view. Differently
- * from {@link RouteRecordSingleView}, this record has children and allows a
- * `redirect` option.
- */
+/** 带子路由的单视图路由记录 */
 export interface RouteRecordSingleViewWithChildren extends _RouteRecordBase {
-  /**
-   * Component to display when the URL matches this route.
-   */
   component?: RawRouteComponent | null | undefined
   components?: never
-
   children: RouteRecordRaw[]
-
-  /**
-   * Allow passing down params as props to the component rendered by `router-view`.
-   */
   props?: _RouteRecordProps
 }
 
-/**
- * Route Record defining multiple named components with the `components` option.
- */
+/** 多视图路由记录 */
 export interface RouteRecordMultipleViews extends _RouteRecordBase {
-  /**
-   * Components to display when the URL matches this route. Allow using named views.
-   */
   components: Record<string, RawRouteComponent>
   component?: never
   children?: never
   redirect?: never
-
-  /**
-   * Allow passing down params as props to the component rendered by
-   * `router-view`. Should be an object with the same keys as `components` or a
-   * boolean to be applied to every component.
-   */
   props?: Record<string, _RouteRecordProps> | boolean
 }
 
-/**
- * Route Record defining multiple named components with the `components` option and children.
- */
+/** 带子路由的多视图路由记录 */
 export interface RouteRecordMultipleViewsWithChildren extends _RouteRecordBase {
-  /**
-   * Components to display when the URL matches this route. Allow using named views.
-   */
   components?: Record<string, RawRouteComponent> | null | undefined
   component?: never
-
   children: RouteRecordRaw[]
-
-  /**
-   * Allow passing down params as props to the component rendered by
-   * `router-view`. Should be an object with the same keys as `components` or a
-   * boolean to be applied to every component.
-   */
   props?: Record<string, _RouteRecordProps> | boolean
 }
 
-/**
- * Route Record that defines a redirect. Cannot have `component` or `components`
- * as it is never rendered.
- */
+/** 重定向路由记录 */
 export interface RouteRecordRedirect extends _RouteRecordBase {
   redirect: RouteRecordRedirectOption
   component?: never
@@ -346,6 +236,7 @@ export interface RouteRecordRedirect extends _RouteRecordBase {
   props?: never
 }
 
+/** 路由记录联合类型 */
 export type RouteRecordRaw =
   | RouteRecordSingleView
   | RouteRecordSingleViewWithChildren
@@ -353,16 +244,8 @@ export type RouteRecordRaw =
   | RouteRecordMultipleViewsWithChildren
   | RouteRecordRedirect
 
-// make matched non-enumerable for easy printing
-// NOTE: commented for tests at RouterView.spec
-// Object.defineProperty(START_LOCATION_NORMALIZED, 'matched', {
-//   enumerable: false,
-// })
-
-// Matcher types
-// the matcher doesn't care about query and hash
 /**
- * Route location that can be passed to the matcher.
+ * 传递给匹配器的路由位置
  */
 export type MatcherLocationRaw =
   | MatcherLocationAsPath
@@ -370,39 +253,28 @@ export type MatcherLocationRaw =
   | MatcherLocationAsRelative
 
 /**
- * Normalized/resolved Route location that returned by the matcher.
+ * 匹配器返回的标准化路由位置
  */
 export interface MatcherLocation {
-  /**
-   * Name of the matched record
-   */
+  /** 匹配的路由名称 */
   name: RouteRecordNameGeneric | null | undefined
 
-  /**
-   * Percentage encoded pathname section of the URL.
-   */
+  /** URL 路径（已编码） */
   path: string
 
-  /**
-   * Object of decoded params extracted from the `path`.
-   */
+  /** 解码后的参数 */
   params: RouteParamsGeneric
 
-  /**
-   * Merged `meta` properties from all the matched route records.
-   */
+  /** 合并后的 meta */
   meta: RouteMeta
 
-  /**
-   * Array of {@link RouteRecord} containing components as they were
-   * passed when adding records. It can also contain redirect records. This
-   * can't be used directly
-   */
-  matched: RouteRecord[] // non-enumerable
+  /** 匹配的路由记录数组 */
+  matched: RouteRecord[]
 }
 
 export * from './typeGuards'
 
+/** 可变类型（移除 readonly） */
 export type Mutable<T> = {
   -readonly [P in keyof T]: T[P]
 }

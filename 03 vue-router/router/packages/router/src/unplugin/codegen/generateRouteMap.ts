@@ -1,3 +1,18 @@
+/**
+ * 路由名称映射生成器
+ * ======================
+ *
+ * 本模块生成类型安全的路由名称映射（RouteNamedMap）和路由记录信息（RouteRecordInfo）。
+ *
+ * 输出示例：
+ * ```typescript
+ * export interface RouteNamedMap {
+ *   'users': RouteRecordInfo<'users', '/users', { id: string }, { id: number }, []>,
+ *   'users-id': RouteRecordInfo<'users-id', '/users/:id', { id: string }, { id: number }, ['users']>,
+ * }
+ * ```
+ */
+
 import type { TreeNode, TreeNodeNamed } from '../core/tree'
 import type { ResolvedOptions } from '../options'
 import type { ParamParsersMap } from './generateParamParsers'
@@ -8,6 +23,12 @@ import {
 } from './generateRouteParams'
 import { pad, formatMultilineUnion, toStringLiteral } from '../utils'
 
+/**
+ * 生成 RouteNamedMap
+ *
+ * @remarks
+ * 遍历路由树，生成所有命名路由的映射。
+ */
 export function generateRouteNamedMap(
   node: TreeNode,
   options: ResolvedOptions,
@@ -22,8 +43,7 @@ ${node
   }
 
   return (
-    // if the node has a filePath, it's a component, it has a routeName and it should be referenced in the RouteNamedMap
-    // otherwise it should be skipped to avoid navigating to a route that doesn't render anything
+    // 有组件且命名的节点才添加到 RouteNamedMap
     (node.value.components.size && node.isNamed()
       ? pad(
           2,
@@ -39,6 +59,12 @@ ${node
   )
 }
 
+/**
+ * 生成单个 RouteRecordInfo 类型
+ *
+ * @remarks
+ * RouteRecordInfo 包含：名称、完整路径、路径参数类型、查询参数类型、子路由名称数组
+ */
 export function generateRouteRecordInfo(
   node: TreeNodeNamed,
   options: ResolvedOptions,
@@ -60,17 +86,12 @@ export function generateRouteRecordInfo(
       : generateRouteParams(node, false),
   ]
 
+  // 收集所有后代路由名称
   const childRouteNames: string[] =
     node.children.size > 0
-      ? // TODO: remove Array.from() once Node 20 support is dropped
-        Array.from(node.getChildrenDeep())
-          // skip routes that are not added to the types
-          .reduce<string[]>((acc, childRoute) => {
-            if (childRoute.value.components.size && childRoute.isNamed()) {
-              acc.push(childRoute.name)
-            }
-            return acc
-          }, [])
+      ? Array.from(node.getChildrenDeep())
+          .filter(childRoute => childRoute.value.components.size && childRoute.isNamed())
+          .map(childRoute => childRoute.name)
           .sort()
       : []
 

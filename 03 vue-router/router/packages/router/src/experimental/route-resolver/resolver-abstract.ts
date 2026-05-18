@@ -1,3 +1,8 @@
+/**
+ * 路由解析器抽象接口
+ *
+ * 本模块定义路由解析器的基础接口，负责路由的解析和参数处理。
+ */
 import { type LocationQueryRaw } from '../../query'
 import { encodeQueryValue as _encodeQueryValue } from '../../encoding'
 import type { MatcherParamsFormatted } from './matchers/matcher-pattern'

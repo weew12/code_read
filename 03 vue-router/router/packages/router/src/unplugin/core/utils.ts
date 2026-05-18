@@ -1,3 +1,17 @@
+/**
+ * Unplugin 核心工具函数
+ * ====================
+ *
+ * 本模块提供文件路由生成插件的通用工具函数。
+ *
+ * 主要功能：
+ * - 路径操作（joinPath、trimExtension）
+ * - 树结构可视化（printTree、logTree）
+ * - 路由名称生成（getPascalCaseRouteName、getFileBasedRouteName）
+ * - 配置合并（mergeRouteRecordOverride）
+ * - 节流函数（throttle）
+ */
+
 import type { TreeNode } from './tree'
 import type { RouteRecordOverride, TreePathParam } from './treeNodeValue'
 import { pascalCase } from 'scule'

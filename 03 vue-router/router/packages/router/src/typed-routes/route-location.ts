@@ -1,3 +1,8 @@
+/**
+ * 类型化路由位置类型
+ *
+ * 本模块提供类型安全的路由位置相关类型。
+ */
 import type {
   RouteLocationOptions,
   RouteQueryAndHash,
@@ -17,6 +22,7 @@ import type { RouteRecordNameGeneric } from './route-records'
 
 /**
  * Generic version of {@link RouteLocation}. It is used when no {@link RouteMap} is provided.
+ * 路由位置的泛型版本
  */
 export interface RouteLocationGeneric
   extends _RouteLocationBase, RouteLocationOptions {
@@ -30,6 +36,7 @@ export interface RouteLocationGeneric
 
 /**
  * Helper to generate a type safe version of the {@link RouteLocation} type.
+ * 生成类型安全路由位置的帮助类型
  */
 export interface RouteLocationTyped<
   RouteMap extends { [K in keyof RouteMap]: RouteRecordInfoGeneric },
@@ -53,6 +60,7 @@ export type RouteLocationTypedList<
 
 /**
  * Generic version of {@link RouteLocationNormalized} that is used when no {@link RouteMap} is provided.
+ * 已规范化路由位置的泛型版本
  */
 export interface RouteLocationNormalizedGeneric extends _RouteLocationBase {
   name: RouteRecordNameGeneric
@@ -128,6 +136,7 @@ export type RouteLocationNormalizedLoadedTypedList<
 
 /**
  * Generic version of {@link RouteLocationAsRelative}. It is used when no {@link RouteMap} is provided.
+ * 相对路由位置的泛型版本
  */
 export interface RouteLocationAsRelativeGeneric
   extends RouteQueryAndHash, RouteLocationOptions {
@@ -164,6 +173,7 @@ export type RouteLocationAsRelativeTypedList<
 
 /**
  * Generic version of {@link RouteLocationAsPath}. It is used when no {@link RouteMap} is provided.
+ * 路径路由位置的泛型版本
  */
 export interface RouteLocationAsPathGeneric
   extends RouteQueryAndHash, RouteLocationOptions {
@@ -220,6 +230,7 @@ export type RouteLocationAsStringTypedList<
 
 /**
  * Generic version of {@link RouteLocationResolved}. It is used when no {@link RouteMap} is provided.
+ * 已解析路由位置的泛型版本
  */
 export interface RouteLocationResolvedGeneric extends RouteLocationGeneric {
   /**

@@ -1,3 +1,9 @@
+/**
+ * Pinia Colada 数据加载器
+ *
+ * 本模块提供与 Pinia Colada 集成的数据加载器。
+ * 支持基于 Pinia Query Cache 的数据管理和缓存。
+ */
 import {
   type DataLoaderContextBase,
   type DataLoaderEntryBase,
@@ -47,6 +53,7 @@ import type { LocationQuery } from '../../query'
 
 /**
  * Creates a Pinia Colada data loader with `data` is always defined.
+ * 创建数据始终有值的 Pinia Colada 数据加载器
  *
  * @param name - name of the route to have typed routes
  * @param options - options to configure the data loader
@@ -58,6 +65,7 @@ export function defineColadaLoader<Name extends keyof RouteMap, Data>(
 
 /**
  * Creates a Pinia Colada data loader with `data` is possibly `undefined`.
+ * 创建数据可能为 undefined 的 Pinia Colada 数据加载器
  *
  * @param name - name of the route to have typed routes
  * @param options - options to configure the data loader

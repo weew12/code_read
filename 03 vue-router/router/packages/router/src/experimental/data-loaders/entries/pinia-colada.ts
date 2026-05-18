@@ -1,3 +1,8 @@
+/**
+ * Pinia-Colada 数据加载器导出
+ *
+ * 导出 defineColadaLoader 及其相关类型（与 Pinia 集成）
+ */
 export { defineColadaLoader } from '../defineColadaLoader'
 export type {
   DataLoaderColadaEntry,
@@ -11,16 +16,3 @@ export type {
   // deprecated
   DefineDataColadaLoaderOptions,
 } from '../defineColadaLoader'
-
-// export type {
-//   UseDataLoader,
-//   UseDataLoaderInternals,
-//   UseDataLoaderResult,
-//   DataLoaderContextBase,
-//   DataLoaderEntryBase,
-//   DefineDataLoaderOptionsBase,
-//   DefineLoaderFn,
-//   _DataMaybeLazy,
-//   DefineDataLoader,
-//   DefineDataLoaderCommit,
-// } from '../createDataLoader'

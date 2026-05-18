@@ -1,3 +1,8 @@
+/**
+ * 实验性 Router 实现
+ *
+ * 本模块提供 Vue Router 的实验性实现，支持类型安全的路由解析。
+ */
 import type { NavigationRedirectError } from '../errors'
 import {
   createRouterError,

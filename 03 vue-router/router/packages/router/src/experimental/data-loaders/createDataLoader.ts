@@ -1,3 +1,13 @@
+/**
+ * 数据加载器核心实现
+ *
+ * 本模块定义了数据加载器的基础类型和创建函数。
+ *
+ * 核心概念：
+ * - DataLoaderEntry: 存储加载状态（data、error、isLoading 等）
+ * - UseDataLoader: 组件中使用的组合式函数
+ * - 加载策略: immediate（立即提交）/ after-load（所有加载器完成后提交）
+ */
 import { type ShallowRef } from 'vue'
 import type { IS_USE_DATA_LOADER_KEY, STAGED_NO_VALUE } from './meta-extensions'
 import { type _PromiseMerged } from './utils'
@@ -9,6 +19,7 @@ import type { Router } from '../../router'
 
 /**
  * Base type for a data loader entry. Each Data Loader has its own entry in the `loaderEntries` (accessible via `[LOADER_ENTRIES_KEY]`) map.
+ * 数据加载器条目基础类型
  */
 export interface DataLoaderEntryBase<
   TData = unknown,
@@ -175,14 +186,109 @@ export const toLazyValue = (
  * When the data should be committed to the entry.
  * - `immediate`: the data is committed as soon as it is loaded.
  * - `after-load`: the data is committed after all non-lazy loaders have finished loading.
+ * 数据提交时机：immediate（立即）/ after-load（所有非懒加载器完成后）
  */
 export type DefineDataLoaderCommit = 'immediate' | 'after-load'
 
+/**
+ * 数据加载器上下文基础接口
+ */
 export interface DataLoaderContextBase {
   /**
    * Signal associated with the current navigation. It is aborted when the navigation is canceled or an error occurs.
+   * 当前导航关联的信号，导航取消或出错时 abort
    */
   signal: AbortSignal | undefined
+}
+
+/**
+ * Data Loader composable returned by `defineLoader()`.
+ * defineLoader() 返回的数据加载器组合式函数
+ */
+export interface UseDataLoader<Data = unknown, TError = unknown> {
+  [IS_USE_DATA_LOADER_KEY]: true
+
+  /**
+   * Data Loader composable returned by `defineLoader()`.
+   *
+   * @example
+   * Returns the Data loader data, isLoading, error etc. Meant to be used in `setup()` or `<script setup>` **without `await`**:
+   * ```vue
+   * <script setup>
+   * const { data, isLoading, error } = useUserData()
+   * </script>
+   * ```
+   *
+   * @example
+   * It also returns a promise of the data when used in nested loaders. Note this `data` is **not a ref**. This is not meant to be used in `setup()` or `<script setup>`.
+   * ```ts
+   * export const useUserConnections = defineLoader(async () => {
+   *   const user = await useUserData()
+   *   return fetchUserConnections(user.id)
+   * })
+   * ```
+   */
+  (): _PromiseMerged<
+    Exclude<Data, NavigationResult | undefined>,
+    UseDataLoaderResult<Exclude<Data, NavigationResult>, TError>
+  >
+
+  /**
+   * Internals of the data loader.
+   * @internal
+   */
+  _: UseDataLoaderInternals<Exclude<Data, NavigationResult | undefined>, TError>
+}
+
+/**
+ * Return value of a loader composable defined with `defineLoader()`.
+ * defineLoader() 返回的加载器结果类型
+ */
+export interface UseDataLoaderResult<TData = unknown, TError = ErrorDefault> {
+  /**
+   * Data returned by the loader. If the data loader is lazy, it will be undefined until the first load.
+   * 加载器返回的数据
+   */
+  data: ShallowRef<TData>
+
+  /**
+   * Whether there is an ongoing request.
+   * 是否有正在进行的请求
+   */
+  isLoading: ShallowRef<boolean>
+
+  /**
+   * Error if there was an error.
+   * 加载错误
+   */
+  error: ShallowRef<TError | null>
+
+  /**
+   * Reload the data using the current route location. Returns a promise that resolves when the data is reloaded. This
+   * method should not be called during a navigation as it can conflict with an ongoing load and lead to
+   * inconsistencies.
+   * 使用当前路由重新加载数据
+   */
+  reload(): Promise<void>
+  /**
+   * Reload the data using the route location passed as argument. Returns a promise that resolves when the data is reloaded.
+   * 使用指定路由重新加载数据
+   *
+   * @param route - route location to load the data for
+   */
+  reload(route: RouteLocationNormalizedLoaded): Promise<void>
+}
+
+/**
+ * Loader function that can be passed to `defineLoader()`.
+ * 可传递给 defineLoader() 的加载器函数类型
+ */
+export interface DefineLoaderFn<
+  Data,
+  Context extends DataLoaderContextBase = DataLoaderContextBase,
+  Route = RouteLocationNormalizedLoaded,
+> {
+  (route: Route, context: Context): Promise<Data>
 }
 
 // TODO: remove, not used

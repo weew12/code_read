@@ -1,3 +1,13 @@
+/**
+ * 数据加载器自动导出插件
+ *
+ * 本模块提供 Vite 插件，自动从页面组件中导出数据加载器。
+ *
+ * 功能：
+ * - 解析页面组件的静态导入
+ * - 过滤出数据加载器相关的导入
+ * - 自动生成 __loaders 导出数组
+ */
 import { createFilter } from 'unplugin-utils'
 import type { Plugin } from 'vite'
 import MagicString from 'magic-string'
@@ -6,6 +16,9 @@ import { resolve } from 'pathe'
 import type { StringFilter } from 'unplugin'
 import { type UnpluginOptions } from 'unplugin'
 
+/**
+ * 从代码中提取需要导出的加载器名称
+ */
 export function extractLoadersToExport(
   code: string,
   filterPaths: (id: string) => boolean,
@@ -60,10 +73,10 @@ export interface AutoExportLoadersOptions {
 
 /**
  * Vite Plugin to automatically export loaders from page components.
+ * 自动从页面组件导出加载器的 Vite 插件
  *
  * @param options Options
  * @experimental - This API is experimental and can be changed in the future. It's used internally by `experimental.autoExportsDataLoaders`
-
  */
 export function AutoExportLoaders({
   transformFilter,
@@ -99,6 +112,9 @@ export function AutoExportLoaders({
   }
 }
 
+/**
+ * 创建自动导出插件的 Unplugin 版本
+ */
 export function createAutoExportPlugin(
   options: AutoExportLoadersOptions
 ): UnpluginOptions {

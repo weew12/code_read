@@ -1,3 +1,8 @@
+/**
+ * 运行时宏和类型定义
+ *
+ * 本模块提供 definePage 宏和路由记录合并函数。
+ */
 // TODO: this file should be splitted into different features  since it's not about runtime anymore
 import type { TypesConfig } from '../config'
 import type { RouteRecordRaw } from '../types'
@@ -5,6 +10,7 @@ import type { RouteRecordRaw } from '../types'
 /**
  * Helper to define page properties with file-based routing.
  * **Doesn't do anything**, used for types only.
+ * 文件路由中定义页面属性的帮助函数，仅用于类型推导
  *
  * @param route - route information to be added to this page
  *
@@ -14,6 +20,7 @@ export const definePage = (route: DefinePage) => route
 
 /**
  * Merges route records.
+ * 合并路由记录
  *
  * @internal
  *
@@ -45,6 +52,7 @@ export function _mergeRouteRecord(
 
 /**
  * Type to define a page. Can be augmented to add custom properties.
+ * 页面定义类型
  */
 export interface DefinePage extends Partial<
   Omit<RouteRecordRaw, 'children' | 'components' | 'component' | 'name'>
@@ -57,6 +65,7 @@ export interface DefinePage extends Partial<
 
   /**
    * Custom parameters for the route. Requires `experimental.paramParsers` enabled.
+   * 自定义路由参数
    *
    * @experimental
    */
@@ -80,6 +89,7 @@ export type ParamParserType =
 
 /**
  * Configures how to extract a route param from a specific query parameter.
+ * 配置如何从特定查询参数中提取路由参数
  */
 export interface DefinePageQueryParamOptions<T = unknown> {
   /**
@@ -117,10 +127,3 @@ export interface DefinePageQueryParamOptions<T = unknown> {
    */
   required?: boolean
 }
-
-/**
- * TODO: native parsers ideas:
- * - json -> just JSON.parse(value)
- * - boolean -> 'true' | 'false' -> boolean
- * - number -> Number(value) -> NaN if not a number
- */

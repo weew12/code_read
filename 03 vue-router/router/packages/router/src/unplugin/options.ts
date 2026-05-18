@@ -1,3 +1,8 @@
+/**
+ * Vue Router 文件路由生成插件配置选项
+ *
+ * 本模块定义插件的所有配置选项。
+ */
 import { isPackageExists as isPackageInstalled } from 'local-pkg'
 import { getFileBasedRouteName, isArray, warn } from './core/utils'
 import type { TreeNode } from './core/tree'
@@ -8,6 +13,7 @@ import { type _Awaitable } from './utils'
 
 /**
  * Options for a routes folder.
+ * 路由文件夹选项
  */
 export interface RoutesFolderOption {
   /**

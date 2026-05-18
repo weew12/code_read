@@ -1,43 +1,53 @@
+/**
+ * Vue Router Hash History 实现
+ * ==============================
+ *
+ * 本模块实现基于 URL hash 的路由历史记录管理。
+ *
+ * 适用场景：
+ * 1. 无法配置服务器的静态文件环境（如 file:// 协议）
+ * 2. 无法配置服务器处理任意 URL 的情况
+ *
+ * hash 路由格式：`https://example.com/folder/#/path/to/page`
+ *
+ * 注意：
+ * - base 会影响所有 history.pushState() 调用
+ * - 如果存在 <base> 标签，其 href 值必须与 base 参数匹配
+ */
+
 import type { RouterHistory } from './common'
 import { createWebHistory } from './html5'
 import { warn } from '../warning'
 
 /**
- * Creates a hash history. Useful for web applications with no host (e.g. `file://`) or when configuring a server to
- * handle any URL is not possible.
+ * 创建 Hash History
  *
- * @param base - optional base to provide. Defaults to `location.pathname + location.search` If there is a `<base>` tag
- * in the `head`, its value will be ignored in favor of this parameter **but note it affects all the history.pushState()
- * calls**, meaning that if you use a `<base>` tag, it's `href` value **has to match this parameter** (ignoring anything
- * after the `#`).
+ * @remarks
+ * 实际上是在 HTML5 History 基础上添加 hash 前缀处理。
+ *
+ * @param base - 可选的基础路径
  *
  * @example
- * ```js
- * // at https://example.com/folder
- * createWebHashHistory() // gives a url of `https://example.com/folder#`
- * createWebHashHistory('/folder/') // gives a url of `https://example.com/folder/#`
- * // if the `#` is provided in the base, it won't be added by `createWebHashHistory`
- * createWebHashHistory('/folder/#/app/') // gives a url of `https://example.com/folder/#/app/`
- * // you should avoid doing this because it changes the original url and breaks copying urls
- * createWebHashHistory('/other-folder/') // gives a url of `https://example.com/other-folder/#`
- *
- * // at file:///usr/etc/folder/index.html
- * // for locations with no `host`, the base is ignored
- * createWebHashHistory('/iAmIgnored') // gives a url of `file:///usr/etc/folder/index.html#`
+ * ```typescript
+ * // 在 https://example.com/folder
+ * createWebHashHistory() // => https://example.com/folder/#
+ * createWebHashHistory('/folder/') // => https://example.com/folder/#
+ * createWebHashHistory('/folder/#/app/') // => https://example.com/folder/#/app/
  * ```
  */
 export function createWebHashHistory(base?: string): RouterHistory {
-  // Make sure this implementation is fine in terms of encoding, specially for IE11
-  // for `file://`, directly use the pathname and ignore the base
-  // location.pathname contains an initial `/` even at the root: `https://example.com`
+  // 对于 file:// 协议，忽略 base
   base = location.host ? base || location.pathname + location.search : ''
-  // allow the user to provide a `#` in the middle: `/base/#/app`
+
+  // 确保 base 以 # 结尾
   if (!base.includes('#')) base += '#'
 
+  // 开发环境验证 base 格式
   if (__DEV__ && !base.endsWith('#/') && !base.endsWith('#')) {
     warn(
       `A hash base must end with a "#":\n"${base}" should be "${base.replace(/#.*$/, '#')}".`
     )
   }
+
   return createWebHistory(base)
 }

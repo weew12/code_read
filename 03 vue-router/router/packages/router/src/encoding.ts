@@ -1,62 +1,81 @@
+/**
+ * Vue Router URL 编码解码模块
+ * ==============================
+ *
+ * 本模块处理 URL 各部分的编码和解码逻辑。
+ *
+ * 编码规则（RFC3986 + 浏览器兼容性）：
+ * -----------------------------------
+ * - Path（路径）: 编码 ` ␣ " < > # ? { } `
+ * - Query（查询）: 编码 ` ␣ " < > # & = `
+ * - Hash（哈希）: 编码 ` ␣ " < > ` `
+ *
+ * 额外安全考虑：
+ * - RFC3986 定义了一些额外需要编码的字符
+ * - 大多数浏览器不编码 `!'()*`，但为了安全我们也编码
+ * - 只保留 ASCII 字母数字和 `-._~`
+ * - `\` 需要编码避免与 `/` 混淆
+ * - 反引号 `` ` `` 在不同浏览器中编码行为不一致，需要编码
+ *
+ * + 号的特殊处理：
+ * - 查询中 + 被解码为空格（application/x-www-form-urlencoded 标准）
+ * - 编码时空格转为 +，+ 转为 %2B
+ */
+
 import { warn } from './warning'
 
 /**
- * Encoding Rules (␣ = Space)
- * - Path: ␣ " < > # ? { }
- * - Query: ␣ " < > # & =
- * - Hash: ␣ " < > `
+ * 编码规则说明
  *
- * On top of that, the RFC3986 (https://tools.ietf.org/html/rfc3986#section-2.2)
- * defines some extra characters to be encoded. Most browsers do not encode them
- * in encodeURI https://github.com/whatwg/url/issues/369, so it may be safer to
- * also encode `!'()*`. Leaving un-encoded only ASCII alphanumeric(`a-zA-Z0-9`)
- * plus `-._~`. This extra safety should be applied to query by patching the
- * string returned by encodeURIComponent encodeURI also encodes `[\]^`. `\`
- * should be encoded to avoid ambiguity. Browsers (IE, FF, C) transform a `\`
- * into a `/` if directly typed in. The _backtick_ (`````) should also be
- * encoded everywhere because some browsers like FF encode it when directly
- * written while others don't. Safari and IE don't encode ``"<>{}``` in hash.
+ * - Path（路径）: 编码 ` ␣ " < > # ? { } `
+ * - Query（查询）: 编码 ` ␣ " < > # & = `
+ * - Hash（哈希）: 编码 ` ␣ " < > ` `
+ *
+ * RFC3986 额外字符：
+ * 大多数浏览器不编码 `!'()*`，但为了安全我们也编码。
+ * 只保留 ASCII 字母数字和 `-._~`。
+ *
+ * `\` 需要编码避免与 `/` 混淆。
+ * 反引号 `` ` `` 在不同浏览器中编码行为不一致，需要编码。
  */
-// const EXTRA_RESERVED_RE = /[!'()*]/g
-// const encodeReservedReplacer = (c: string) => '%' + c.charCodeAt(0).toString(16)
 
-const HASH_RE = /#/g // %23
-const AMPERSAND_RE = /&/g // %26
-export const SLASH_RE = /\//g // %2F
-const EQUAL_RE = /=/g // %3D
-const IM_RE = /\?/g // %3F
-export const PLUS_RE = /\+/g // %2B
+const HASH_RE = /#/g
+const AMPERSAND_RE = /&/g
+export const SLASH_RE = /\//g
+const EQUAL_RE = /=/g
+const IM_RE = /\?/g
+export const PLUS_RE = /\+/g
+
 /**
- * NOTE: It's not clear to me if we should encode the + symbol in queries, it
- * seems to be less flexible than not doing so and I can't find out the legacy
- * systems requiring this for regular requests like text/html. In the standard,
- * the encoding of the plus character is only mentioned for
- * application/x-www-form-urlencoded
- * (https://url.spec.whatwg.org/#urlencoded-parsing) and most browsers seems lo
- * leave the plus character as is in queries. To be more flexible, we allow the
- * plus character on the query, but it can also be manually encoded by the user.
+ * 查询字符串中 + 的处理说明
  *
- * Resources:
+ * + 在查询字符串中是特殊字符：
+ * - 解析时 + 被解码为空格（URLSearchParams 行为）
+ * - 编码时空格被编码为 +
+ *
+ * 标准参考：
  * - https://url.spec.whatwg.org/#urlencoded-parsing
  * - https://stackoverflow.com/questions/1634271/url-encoding-the-space-character-or-20
  */
 
-const ENC_BRACKET_OPEN_RE = /%5B/g // [
-const ENC_BRACKET_CLOSE_RE = /%5D/g // ]
-const ENC_CARET_RE = /%5E/g // ^
-const ENC_BACKTICK_RE = /%60/g // `
-const ENC_CURLY_OPEN_RE = /%7B/g // {
-const ENC_PIPE_RE = /%7C/g // |
-const ENC_CURLY_CLOSE_RE = /%7D/g // }
-const ENC_SPACE_RE = /%20/g // }
+const ENC_BRACKET_OPEN_RE = /%5B/g
+const ENC_BRACKET_CLOSE_RE = /%5D/g
+const ENC_CARET_RE = /%5E/g
+const ENC_BACKTICK_RE = /%60/g
+const ENC_CURLY_OPEN_RE = /%7B/g
+const ENC_PIPE_RE = /%7C/g
+const ENC_CURLY_CLOSE_RE = /%7D/g
+const ENC_SPACE_RE = /%20/g
 
 /**
- * Encode characters that need to be encoded on the path, search and hash
- * sections of the URL.
+ * 通用编码函数
  *
- * @internal
- * @param text - string to encode
- * @returns encoded string
+ * @remarks
+ * 编码 Path、Query、Hash 都需要先调用此函数。
+ * 基本使用 encodeURI 编码，然后恢复 RFC3986 保留字符。
+ *
+ * @param text - 要编码的文本
+ * @returns 编码后的字符串
  */
 export function commonEncode(text: string | number | null | undefined): string {
   return text == null
@@ -68,10 +87,13 @@ export function commonEncode(text: string | number | null | undefined): string {
 }
 
 /**
- * Encode characters that need to be encoded on the hash section of the URL.
+ * 编码 Hash 部分
  *
- * @param text - string to encode
- * @returns encoded string
+ * @remarks
+ * Hash 部分的编码规则与 Path 类似，但保留 `{}` 和 `^`。
+ *
+ * @param text - 要编码的文本
+ * @returns 编码后的字符串
  */
 export function encodeHash(text: string): string {
   return commonEncode(text)
@@ -81,16 +103,20 @@ export function encodeHash(text: string): string {
 }
 
 /**
- * Encode characters that need to be encoded query values on the query
- * section of the URL.
+ * 编码查询值
  *
- * @param text - string to encode
- * @returns encoded string
+ * @remarks
+ * 查询值需要额外的编码：
+ * - 空格编码为 +，+ 编码为 %2B（区分原始 +）
+ * - 额外编码 ` ` # & ` { } ^
+ *
+ * @param text - 要编码的文本
+ * @returns 编码后的字符串
  */
 export function encodeQueryValue(text: string | number): string {
   return (
     commonEncode(text)
-      // Encode the space as +, encode the + to differentiate it from the space
+      // 空格编码为 +，原始 + 编码为 %2B
       .replace(PLUS_RE, '%2B')
       .replace(ENC_SPACE_RE, '+')
       .replace(HASH_RE, '%23')
@@ -103,43 +129,55 @@ export function encodeQueryValue(text: string | number): string {
 }
 
 /**
- * Like `encodeQueryValue` but also encodes the `=` character.
+ * 编码查询键
  *
- * @param text - string to encode
+ * @remarks
+ * 与查询值类似，但额外编码 `=` 字符。
+ *
+ * @param text - 要编码的文本
+ * @returns 编码后的字符串
  */
 export function encodeQueryKey(text: string | number): string {
   return encodeQueryValue(text).replace(EQUAL_RE, '%3D')
 }
 
 /**
- * Encode characters that need to be encoded on the path section of the URL.
+ * 编码路径
  *
- * @param text - string to encode
- * @returns encoded string
+ * @remarks
+ * 路径部分需要编码 # 和 ? 字符。
+ *
+ * @param text - 要编码的文本
+ * @returns 编码后的字符串
  */
 export function encodePath(text: string | number | null | undefined): string {
   return commonEncode(text).replace(HASH_RE, '%23').replace(IM_RE, '%3F')
 }
 
 /**
- * Encode characters that need to be encoded on the path section of the URL as a
- * param. This function encodes everything {@link encodePath} does plus the
- * slash (`/`) character. If `text` is `null` or `undefined`, returns an empty
- * string instead.
+ * 编码路径参数
  *
- * @param text - string to encode
- * @returns encoded string
+ * @remarks
+ * 在路径编码基础上，额外编码 `/` 字符。
+ * 用于路由参数值，因为参数可能包含路径。
+ * 如果文本为 null 或 undefined，返回空字符串。
+ *
+ * @param text - 要编码的文本
+ * @returns 编码后的字符串
  */
 export function encodeParam(text: string | number | null | undefined): string {
   return encodePath(text).replace(SLASH_RE, '%2F')
 }
 
 /**
- * Decode text using `decodeURIComponent`. Returns the original text if it
- * fails.
+ * 解码文本
  *
- * @param text - string to decode
- * @returns decoded string
+ * @remarks
+ * 使用 decodeURIComponent 解码。
+ * 如果解码失败（无效的百分号编码），返回原始文本。
+ *
+ * @param text - 要解码的文本
+ * @returns 解码后的字符串，失败时返回原始文本
  */
 export function decode(text: string | number): string
 export function decode(text: null | undefined): null

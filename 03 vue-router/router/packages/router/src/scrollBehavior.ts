@@ -1,15 +1,32 @@
+/**
+ * Vue Router 滚动行为模块
+ * ==========================
+ *
+ * 本模块负责管理路由导航时的页面滚动位置。
+ *
+ * 功能：
+ * 1. 计算当前滚动位置
+ * 2. 保存滚动位置到历史记录
+ * 3. 恢复滚动位置
+ * 4. 执行滚动到指定位置
+ *
+ * 滚动位置类型：
+ * - ScrollPositionCoordinates: { left, top, behavior }
+ * - ScrollPositionElement: { el, offset }
+ */
+
 import type {
   RouteLocationNormalized,
   RouteLocationNormalizedLoaded,
 } from './typed-routes'
 import { warn } from './warning'
 
-// we use types instead of interfaces to make it work with HistoryStateValue type
-
 /**
- * Scroll position similar to
- * {@link https://developer.mozilla.org/en-US/docs/Web/API/ScrollToOptions | `ScrollToOptions`}.
- * Note that not all browsers support `behavior`.
+ * 滚动位置坐标
+ *
+ * @remarks
+ * 类似于 Web API ScrollToOptions。
+ * 注意：并非所有浏览器都支持 behavior 参数。
  */
 export type ScrollPositionCoordinates = {
   behavior?: ScrollOptions['behavior']
@@ -18,8 +35,11 @@ export type ScrollPositionCoordinates = {
 }
 
 /**
- * Internal normalized version of {@link ScrollPositionCoordinates} that always
- * has `left` and `top` coordinates. Must be a type to be assignable to HistoryStateValue.
+ * 标准化后的滚动位置
+ *
+ * @remarks
+ * 内部类型，始终包含 left 和 top 坐标。
+ * 必须是一个类型，以便赋值给 HistoryStateValue。
  *
  * @internal
  */
@@ -30,14 +50,16 @@ export type _ScrollPositionNormalized = {
 }
 
 /**
- * Type of the `scrollBehavior` option that can be passed to `createRouter`.
+ * scrollBehavior 选项的类型
+ *
+ * @remarks
+ * 这是一个函数类型，在每次路由导航时调用。
+ *
+ * @param to - 目标路由位置
+ * @param from - 来源路由位置
+ * @param savedPosition - 保存的位置（浏览器后退时）
  */
 export interface RouterScrollBehavior {
-  /**
-   * @param to - Route location where we are navigating to
-   * @param from - Route location where we are navigating from
-   * @param savedPosition - saved position if it exists, `null` otherwise
-   */
   (
     to: RouteLocationNormalized,
     from: RouteLocationNormalizedLoaded,
@@ -45,26 +67,43 @@ export interface RouterScrollBehavior {
   ): Awaitable<ScrollPosition | false | void>
 }
 
+/**
+ * 元素滚动位置
+ *
+ * @remarks
+ * 通过 CSS 选择器指定要滚动到的元素。
+ *
+ * @example
+ * ```typescript
+ * { el: '#section-id' }
+ * { el: '.class-name' }
+ * { el: document.querySelector('#id') }
+ * ```
+ */
 export interface ScrollPositionElement extends ScrollToOptions {
   /**
-   * A valid CSS selector. Note some characters must be escaped in id selectors (https://mathiasbynens.be/notes/css-escapes).
-   * @example
-   * Here are a few examples:
+   * CSS 选择器或 Element
    *
-   * - `.title`
-   * - `.content:first-child`
-   * - `#marker`
-   * - `#marker\~with\~symbols`
-   * - `#marker.with.dot`: selects `class="with dot" id="marker"`, not `id="marker.with.dot"`
-   *
+   * @remarks
+   * ID 选择器中的特殊字符需要转义：
+   * - `#1-thing` → `#\\31 -thing`
+   * - `#with~symbols` → `#with\\\\~symbols`
    */
   el: string | Element
 }
 
+/**
+ * 滚动位置联合类型
+ */
 export type ScrollPosition = ScrollPositionCoordinates | ScrollPositionElement
 
 type Awaitable<T> = T | PromiseLike<T>
 
+/**
+ * 滚动行为处理器接口
+ *
+ * @internal
+ */
 export interface ScrollBehaviorHandler<T> {
   (
     to: RouteLocationNormalized,
@@ -73,6 +112,13 @@ export interface ScrollBehaviorHandler<T> {
   ): Awaitable<ScrollPosition | false | void>
 }
 
+/**
+ * 计算元素相对于文档的绝对位置
+ *
+ * @param el - DOM 元素
+ * @param offset - 偏移量
+ * @returns 绝对滚动位置
+ */
 function getElementPosition(
   el: Element,
   offset: ScrollPositionCoordinates
@@ -87,11 +133,26 @@ function getElementPosition(
   }
 }
 
+/**
+ * 获取当前滚动位置
+ *
+ * @returns 当前滚动位置
+ */
 export const computeScrollPosition = (): _ScrollPositionNormalized => ({
   left: window.scrollX,
   top: window.scrollY,
 })
 
+/**
+ * 滚动到指定位置
+ *
+ * @remarks
+ * 支持两种位置指定方式：
+ * 1. 直接坐标：{ left, top, behavior }
+ * 2. 元素选择器：{ el, offset }
+ *
+ * ID 选择器需要特殊处理转义字符。
+ */
 export function scrollToPosition(position: ScrollPosition): void {
   let scrollToOptions: ScrollPositionCoordinates
 
@@ -99,26 +160,17 @@ export function scrollToPosition(position: ScrollPosition): void {
     const positionEl = position.el
     const isIdSelector =
       typeof positionEl === 'string' && positionEl.startsWith('#')
+
     /**
-     * `id`s can accept pretty much any characters, including CSS combinators
-     * like `>` or `~`. It's still possible to retrieve elements using
-     * `document.getElementById('~')` but it needs to be escaped when using
-     * `document.querySelector('#\\~')` for it to be valid. The only
-     * requirements for `id`s are them to be unique on the page and to not be
-     * empty (`id=""`). Because of that, when passing an id selector, it should
-     * be properly escaped for it to work with `querySelector`. We could check
-     * for the id selector to be simple (no CSS combinators `+ >~`) but that
-     * would make things inconsistent since they are valid characters for an
-     * `id` but would need to be escaped when using `querySelector`, breaking
-     * their usage and ending up in no selector returned. Selectors need to be
-     * escaped:
+     * ID 选择器的转义说明
      *
-     * - `#1-thing` becomes `#\31 -thing`
-     * - `#with~symbols` becomes `#with\\~symbols`
+     * ID 可以包含几乎任何字符，包括 CSS 选择器组合符如 > 或 ~。
+     * 使用 document.getElementById('~') 可以获取元素，
+     * 但使用 document.querySelector('#\\~') 时需要转义。
      *
-     * - More information about  the topic can be found at
-     *   https://mathiasbynens.be/notes/html5-id-class.
-     * - Practical example: https://mathiasbynens.be/demo/html5-id
+     * 需要转义的例子：
+     * - `#1-thing` → `#\\31 -thing`
+     * - `#with~symbols` → `#with\\~symbols`
      */
     if (__DEV__ && typeof position.el === 'string') {
       if (!isIdSelector || !document.getElementById(position.el.slice(1))) {
@@ -128,14 +180,12 @@ export function scrollToPosition(position: ScrollPosition): void {
             warn(
               `The selector "${position.el}" should be passed as "el: document.querySelector('${position.el}')" because it starts with "#".`
             )
-            // return to avoid other warnings
             return
           }
         } catch {
           warn(
-            `The selector "${position.el}" is invalid. If you are using an id selector, make sure to escape it. You can find more information about escaping characters in selectors at https://mathiasbynens.be/notes/css-escapes or use CSS.escape (https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape).`
+            `The selector "${position.el}" is invalid. If you are using an id selector, make sure to escape it. You can find more information at https://mathiasbynens.be/notes/css-escapes or use CSS.escape.`
           )
-          // return to avoid other warnings
           return
         }
       }
@@ -160,9 +210,11 @@ export function scrollToPosition(position: ScrollPosition): void {
     scrollToOptions = position
   }
 
+  // 检查浏览器是否支持 scrollBehavior
   if ('scrollBehavior' in document.documentElement.style)
     window.scrollTo(scrollToOptions)
   else {
+    // 回退到不支持 behavior 的浏览器
     window.scrollTo(
       scrollToOptions.left != null ? scrollToOptions.left : window.scrollX,
       scrollToOptions.top != null ? scrollToOptions.top : window.scrollY
@@ -170,13 +222,33 @@ export function scrollToPosition(position: ScrollPosition): void {
   }
 }
 
+/**
+ * 生成滚动键
+ *
+ * @remarks
+ * 用于在历史状态中存储和检索滚动位置。
+ *
+ * @param path - 路由路径
+ * @param delta - 步长
+ */
 export function getScrollKey(path: string, delta: number): string {
   const position: number = history.state ? history.state.position - delta : -1
   return position + path
 }
 
+/**
+ * 存储滚动位置的 Map
+ *
+ * @internal
+ */
 export const scrollPositions = new Map<string, _ScrollPositionNormalized>()
 
+/**
+ * 保存滚动位置
+ *
+ * @param key - 滚动键
+ * @param scrollPosition - 滚动位置
+ */
 export function saveScrollPosition(
   key: string,
   scrollPosition: _ScrollPositionNormalized
@@ -184,26 +256,16 @@ export function saveScrollPosition(
   scrollPositions.set(key, scrollPosition)
 }
 
+/**
+ * 获取并清除保存的滚动位置
+ *
+ * @remarks
+ * 获取后会从 Map 中删除，避免重复使用。
+ *
+ * @param key - 滚动键
+ */
 export function getSavedScrollPosition(key: string) {
   const scroll = scrollPositions.get(key)
-  // consume it so it's not used again
   scrollPositions.delete(key)
   return scroll
 }
-
-// TODO: RFC about how to save scroll position
-/**
- * ScrollBehavior instance used by the router to compute and restore the scroll
- * position when navigating.
- */
-// export interface ScrollHandler<ScrollPositionEntry extends HistoryStateValue, ScrollPosition extends ScrollPositionEntry> {
-//   // returns a scroll position that can be saved in history
-//   compute(): ScrollPositionEntry
-//   // can take an extended ScrollPositionEntry
-//   scroll(position: ScrollPosition): void
-// }
-
-// export const scrollHandler: ScrollHandler<ScrollPosition> = {
-//   compute: computeScroll,
-//   scroll: scrollToPosition,
-// }

@@ -1,3 +1,14 @@
+/**
+ * defineBasicLoader 基础实现
+ *
+ * 本模块提供 defineBasicLoader 函数的实现，用于创建基础数据加载器。
+ *
+ * 加载器工作流程：
+ * 1. defineBasicLoader 创建 UseDataLoader 组合式函数
+ * 2. 组件调用 UseDataLoader 获取数据
+ * 3. 导航守卫在 beforeResolve 阶段调用 load 函数加载数据
+ * 4. 数据存储在 entry 中，通过 shallowRef 暴露给组件
+ */
 import {
   type DataLoaderContextBase,
   type DataLoaderEntryBase,
@@ -35,6 +46,7 @@ import { useRoute, useRouter } from '../../useApi'
 
 /**
  * Creates a data loader composable that can be exported by pages to attach the data loading to a route. In this version `data` is always defined.
+ * 创建数据加载器组合式函数，data 始终有值
  *
  * @param name - name of the route
  * @param loader - function that returns a promise with the data

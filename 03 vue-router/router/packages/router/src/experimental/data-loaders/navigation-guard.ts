@@ -1,3 +1,13 @@
+/**
+ * 数据加载器导航守卫
+ *
+ * 本模块负责设置导航守卫以收集和执行路由记录中的数据加载器。
+ *
+ * 核心流程：
+ * 1. beforeEach: 中断之前的导航，设置待处理位置和加载器集合
+ * 2. beforeResolve: 收集所有加载器并执行它们
+ * 3. afterEach: 触发重路由
+ */
 import {
   effectScope,
   inject,
@@ -27,6 +37,7 @@ import type { Router } from '../../router'
 
 /**
  * Key to inject the global loading state for loaders used in `useIsDataLoading`.
+ * 用于 useIsDataLoading 注入全局加载状态
  * @internal
  */
 export const IS_DATA_LOADING_KEY: InjectionKey<ShallowRef<boolean>> = Symbol()
@@ -37,6 +48,7 @@ export const IS_DATA_LOADING_KEY: InjectionKey<ShallowRef<boolean>> = Symbol()
 
 /**
  * Setups the different Navigation Guards to collect the data loaders from the route records and then to execute them.
+ * 设置导航守卫以收集和执行路由记录中的数据加载器
  * @internal used by the `DataLoaderPlugin`
  * @see {@link DataLoaderPlugin}
  *
@@ -112,6 +124,7 @@ export function setupLoaderGuard({
 
     // if we reach this guard, all properties have been set
     // we can collect all loaders from records, modules and components
+    // 到达此守卫时，所有属性已设置完毕，可以收集路由记录、模块和组件中的所有加载器
     for (const record of to.matched) {
       // colect all loaders from the record's meta
       for (const loader of record.meta[LOADER_SET_KEY]!) {
@@ -119,6 +132,7 @@ export function setupLoaderGuard({
       }
 
       // add all the loaders from the components to the set
+      // 从组件模块中收集加载器
       for (const componentName in record.mods) {
         const viewModule = record.mods[componentName] as Record<string, unknown>
 
@@ -154,6 +168,7 @@ export function setupLoaderGuard({
 
     isDataLoading.value = true
 
+    // Promise.all 并行执行所有加载器
     return Promise.all(
       loaders.map(loader => {
         const { server, lazy, errors } = loader._.options
@@ -169,7 +184,7 @@ export function setupLoaderGuard({
         )!
 
         // on client-side, lazy loaders are not awaited, but on server they are
-        // we already checked for the `server` option above
+        // 客户端懒加载不阻塞导航，服务端则等待加载完成
         return !isSSR && toLazyValue(lazy, to, from)
           ? undefined
           : // return the non-lazy loader to commit changes after all loaders are done
@@ -302,6 +317,7 @@ export function setupLoaderGuard({
 
 /**
  * Allows differentiating lazy components from functional components and vue-class-component
+ * 区分懒加载组件、函数式组件和 vue-class-component
  * @internal
  *
  * @param component
@@ -321,21 +337,25 @@ export function isAsyncModule(
 
 /**
  * Options to initialize the data loader guard.
+ * 数据加载器守卫初始化选项
  */
 export interface SetupLoaderGuardOptions extends DataLoaderPluginOptions {
   /**
    * The Vue app instance. Used to access the `provide` and `inject` APIs.
+   * Vue 应用实例，用于访问 provide 和 inject API
    */
   app: App<unknown>
 
   /**
    * The effect scope to use for the data loaders.
+   * 数据加载器使用的 EffectScope
    */
   effect: EffectScope
 }
 
 /**
  * Possible values to change the result of a navigation within a loader
+ * 加载器中可用的导航结果类型（排除取消导航的值）
  * @internal
  */
 export type _DataLoaderRedirectResult = Exclude<
@@ -346,7 +366,7 @@ export type _DataLoaderRedirectResult = Exclude<
 
 /**
  * Allows data loaders to change navigation. Called by {@link reroute}.
- *
+ * 允许数据加载器改变导航结果
  * @internal
  */
 export class NavigationResult {
@@ -356,6 +376,7 @@ export class NavigationResult {
 /**
  * Changes the navigation from within a data loader. Accepts the same values as a navigation
  * guard return: a route location to redirect to, or `false` to cancel the navigation.
+ * 从数据加载器内部改变导航，可接受重定向目标或 false 取消导航
  *
  * @example
  * ```ts
@@ -374,6 +395,7 @@ export function reroute(to: _DataLoaderRedirectResult): never {
 
 /**
  * Data Loader plugin to add data loading support to Vue Router.
+ * 数据加载器插件，为 Vue Router 添加数据加载支持
  *
  * @example
  * ```ts
@@ -402,18 +424,24 @@ export function DataLoaderPlugin(app: App, options: DataLoaderPluginOptions) {
 
 /**
  * Options passed to the DataLoaderPlugin.
+ * DataLoaderPlugin 配置选项
  */
 export interface DataLoaderPluginOptions {
   /**
    * The router instance. Adds the guards to it
+   * 路由器实例
    */
   router: Router
 
+  /**
+   * 是否为服务端渲染模式
+   */
   isSSR?: boolean
 
   /**
    * List of _expected_ errors that shouldn't abort the navigation (for non-lazy loaders). Provide a list of
    * constructors that can be checked with `instanceof` or a custom function that returns `true` for expected errors.
+   * 预期错误列表，这些错误不会中断导航（非懒加载器）
    */
   errors?: Array<new (...args: any) => any> | ((reason?: unknown) => boolean)
 }
@@ -421,6 +449,7 @@ export interface DataLoaderPluginOptions {
 /**
  * Return a ref that reflects the global loading state of all loaders within a navigation.
  * This state doesn't update if `refresh()` is manually called.
+ * 返回反映当前导航中所有加载器全局加载状态的 ref
  */
 export function useIsDataLoading() {
   return inject(IS_DATA_LOADING_KEY)!

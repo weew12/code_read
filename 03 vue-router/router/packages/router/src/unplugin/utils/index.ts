@@ -1,11 +1,18 @@
 /**
+ * Unplugin 通用工具函数
+ *
+ * 本模块提供代码生成和格式化所需的通用工具。
+ */
+ /**
  * Maybe a promise maybe not
+ * 可能为 Promise 或普通值的类型
  * @internal
  */
 export type _Awaitable<T> = T | PromiseLike<T>
 
 /**
  * Creates a union type that still allows autocompletion for strings.
+ * 创建支持自动补全的字符串字面量联合类型
  *@internal
  */
 export type LiteralStringUnion<LiteralType, BaseType extends string = string> =
@@ -17,6 +24,7 @@ export const ts = String.raw
 
 /**
  * Pads a single-line string with spaces.
+ * 字符串左填充
  *
  * @internal
  *
@@ -30,6 +38,7 @@ export function pad(spaces: number, str = ''): string {
 
 /**
  * Formats an array of union items as a multiline union type.
+ * 格式化多行联合类型
  *
  * @internal
  *
@@ -45,6 +54,7 @@ export function formatMultilineUnion(items: string[], spaces: number): string {
 
 /**
  * Converts a string value to a string literal, escaping as necessary.
+ * 将字符串转换为字面量类型
  *
  * @internal
  *

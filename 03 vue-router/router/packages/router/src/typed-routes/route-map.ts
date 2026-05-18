@@ -1,8 +1,14 @@
+/**
+ * 路由地图类型定义
+ *
+ * 本模块定义类型安全的路由映射类型。
+ */
 import type { TypesConfig } from '../config'
 import type { RouteParamsGeneric, RouteParamsRawGeneric } from '../types'
 
 /**
  * Helper type to define a Typed `RouteRecord`
+ * 定义类型化路由记录的帮助类型
  * @see {@link RouteRecord}
  */
 export interface RouteRecordInfo<
@@ -38,8 +44,7 @@ export type RouteRecordInfoGeneric = RouteRecordInfo<
 
 /**
  * Convenience type to get the typed RouteMap or a generic one if not provided.
- * It is extracted from the {@link TypesConfig} if it exists, it becomes
- * {@link RouteMapGeneric} otherwise.
+ * 获取类型化 RouteMap 的便捷类型
  */
 export type RouteMap =
   TypesConfig extends Record<'RouteNamedMap', infer RouteNamedMap>
@@ -48,5 +53,6 @@ export type RouteMap =
 
 /**
  * Generic version of the `RouteMap`.
+ * RouteMap 的泛型版本
  */
 export type RouteMapGeneric = Record<string | symbol, RouteRecordInfoGeneric>

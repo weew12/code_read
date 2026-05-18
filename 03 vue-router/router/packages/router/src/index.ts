@@ -1,7 +1,18 @@
 /**
- * The official Router for Vue 3.
+ * Vue Router 主入口
+ * ==================
  *
- * @packageDocumentation
+ * 这是 Vue Router 的公共 API 导出文件。
+ *
+ * 主要导出：
+ * - createRouter: 创建路由实例
+ * - createWebHistory: HTML5 History 模式
+ * - createWebHashHistory: Hash 模式
+ * - createMemoryHistory: Memory 模式
+ * - RouterLink / RouterView: 组件
+ * - useRouter / useRoute: Composition API
+ * - 导航守卫相关函数
+ * - 类型导出
  */
 
 export { createWebHistory } from './history/html5'
@@ -37,26 +48,16 @@ export {
 
 export { START_LOCATION_NORMALIZED as START_LOCATION } from './location'
 export type {
-  // route location
   _RouteLocationBase,
   MatcherLocationAsPath,
   LocationAsRelativeRaw,
   RouteQueryAndHash,
-
-  // route params
   RouteParamValue,
   RouteParamValueRaw,
-
-  // Partial route location
   RouteLocationNamedRaw,
-  // exported for backwards compat for old RouteLocationRaw
   RouteLocationPathRaw,
   RouteLocationMatched,
-
-  // extra options when navigating
   RouteLocationOptions,
-
-  // route records
   _RouteRecordBase,
   RouteRecordRaw,
   RouteRecordSingleView,
@@ -66,7 +67,6 @@ export type {
   RouteRecordRedirect,
   RouteMeta,
   RouteComponent,
-  // RawRouteComponent,
   RouteParamsGeneric,
   RouteParamsRawGeneric,
   MatcherLocation,
@@ -77,64 +77,46 @@ export type { _Awaitable } from './types/utils'
 export type {
   RouteMap,
   RouteMapGeneric,
-
-  // route location
   RouteLocationRaw,
   RouteLocation,
   RouteLocationGeneric,
   RouteLocationTyped,
   RouteLocationTypedList,
-
-  // RouteLocationNormalized
   RouteLocationNormalizedGeneric,
   RouteLocationNormalized,
   RouteLocationNormalizedTyped,
   RouteLocationNormalizedTypedList,
-
-  // RouteLocationNormalizedLoaded
   RouteLocationNormalizedLoadedGeneric,
   RouteLocationNormalizedLoaded,
   RouteLocationNormalizedLoadedTyped,
   RouteLocationNormalizedLoadedTypedList,
-
-  // RouteLocationResolved
   RouteLocationResolvedGeneric,
   RouteLocationResolved,
   RouteLocationResolvedTyped,
   RouteLocationResolvedTypedList,
-
-  // relative
   RouteLocationAsRelativeGeneric,
   RouteLocationAsRelative,
   RouteLocationAsRelativeTyped,
   RouteLocationAsRelativeTypedList,
-  // string
   RouteLocationAsStringTyped,
   RouteLocationAsString,
   RouteLocationAsStringTypedList,
-  // as path
   RouteLocationAsPathGeneric,
   RouteLocationAsPath,
   RouteLocationAsPathTyped,
   RouteLocationAsPathTypedList,
-
-  // route records
   RouteRecordInfoGeneric,
   RouteRecordInfo,
   RouteRecordNameGeneric,
   RouteRecordName,
   _RouteRecordProps,
   RouteRecordRedirectOption,
-
-  // params
   RouteParams,
   RouteParamsRaw,
   ParamValue,
   ParamValueOneOrMore,
   ParamValueZeroOrMore,
   ParamValueZeroOrOne,
-
-  // navigation guards
   NavigationGuard,
   NavigationGuardWithThis,
   NavigationHookAfter,
@@ -172,7 +154,15 @@ export type { TypesConfig } from './config'
 
 export * from './useApi'
 
-// Global extensions for Vue
+/**
+ * Vue 类型扩展
+ *
+ * @remarks
+ * 为 Vue 添加以下全局扩展：
+ * - ComponentCustomOptions: 组件守卫选项
+ * - ComponentCustomProperties: $route 和 $router
+ * - GlobalComponents: RouterLink 和 RouterView
+ */
 import type { TypesConfig } from './config'
 import type { Router } from './router'
 import type { RouterLink } from './RouterLink'
@@ -186,43 +176,33 @@ import type {
 declare module 'vue' {
   export interface ComponentCustomOptions {
     /**
-     * Guard called when the router is navigating to the route that is rendering
-     * this component from a different route. Differently from `beforeRouteUpdate`
-     * and `beforeRouteLeave`, `beforeRouteEnter` does not have access to the
-     * component instance through `this` because it triggers before the component
-     * is even mounted.
+     * 路由进入守卫
      *
-     * @param to - RouteLocationRaw we are navigating to
-     * @param from - RouteLocationRaw we are navigating from
-     * @param next - function to validate, cancel or modify (by redirecting) the
-     * navigation
+     * @param to - 目标路由
+     * @param from - 来源路由
+     * @param next - 确认回调
      */
     beforeRouteEnter?: TypesConfig extends Record<'beforeRouteEnter', infer T>
       ? T
       : NavigationGuardWithThis<undefined>
 
     /**
-     * Guard called whenever the route that renders this component has changed, but
-     * it is reused for the new route. This allows you to guard for changes in
-     * params, the query or the hash.
+     * 路由更新守卫
      *
-     * @param to - RouteLocationRaw we are navigating to
-     * @param from - RouteLocationRaw we are navigating from
-     * @param next - function to validate, cancel or modify (by redirecting) the
-     * navigation
+     * @param to - 目标路由
+     * @param from - 来源路由
+     * @param next - 确认回调
      */
     beforeRouteUpdate?: TypesConfig extends Record<'beforeRouteUpdate', infer T>
       ? T
       : NavigationGuard
 
     /**
-     * Guard called when the router is navigating away from the current route that
-     * is rendering this component.
+     * 路由离开守卫
      *
-     * @param to - RouteLocationRaw we are navigating to
-     * @param from - RouteLocationRaw we are navigating from
-     * @param next - function to validate, cancel or modify (by redirecting) the
-     * navigation
+     * @param to - 目标路由
+     * @param from - 来源路由
+     * @param next - 确认回调
      */
     beforeRouteLeave?: TypesConfig extends Record<'beforeRouteLeave', infer T>
       ? T
@@ -231,13 +211,14 @@ declare module 'vue' {
 
   export interface ComponentCustomProperties {
     /**
-     * Normalized current location. See {@link RouteLocationNormalizedLoaded}.
+     * 当前路由位置
      */
     $route: TypesConfig extends Record<'$route', infer T>
       ? T
       : RouteLocationNormalizedLoaded
+
     /**
-     * {@link Router} instance used by the application.
+     * Router 实例
      */
     $router: TypesConfig extends Record<'$router', infer T> ? T : Router
   }

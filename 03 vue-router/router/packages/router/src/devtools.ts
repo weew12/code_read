@@ -1,3 +1,16 @@
+/**
+ * Vue Router DevTools 集成
+ * ==========================
+ *
+ * 本模块负责 Vue DevTools 的路由面板集成。
+ *
+ * DevTools 功能：
+ * 1. 组件状态显示 $route
+ * 2. 路由树查看器（inspector）
+ * 3. 导航时间线（timeline）
+ * 4. RouterLink/RouterView 组件标签
+ */
+
 import { setupDevtoolsPlugin } from '@vue/devtools-api'
 import type {
   CustomInspectorNode,
@@ -18,18 +31,16 @@ import { assign, isArray } from './utils'
 import type { RouteLocationNormalized } from './typed-routes'
 
 /**
- * Copies a route location and removes any problematic properties that cannot be shown in devtools (e.g. Vue instances).
+ * 格式化路由位置以便在 DevTools 中显示
  *
- * @param routeLocation - routeLocation to format
- * @param tooltip - optional tooltip
- * @returns a copy of the routeLocation
+ * @remarks
+ * 移除无法序列化的属性（如 Vue 实例）。
  */
 function formatRouteLocation(
   routeLocation: RouteLocationNormalized,
   tooltip?: string
 ) {
   const copy = assign({}, routeLocation, {
-    // remove variables that can contain vue instances
     matched: routeLocation.matched.map(matched =>
       omit(matched, ['instances', 'children', 'aliasOf'])
     ),
@@ -54,17 +65,16 @@ function formatDisplay(display: string) {
   }
 }
 
-// to support multiple router instances
+// 支持多个路由实例
 let routerId = 0
 
+/**
+ * 添加 DevTools 支持
+ */
 export function addDevtools(app: App, router: Router, matcher: RouterMatcher) {
-  // Take over router.beforeEach and afterEach
-
-  // make sure we are not registering the devtool twice
   if ((router as any).__hasDevtools) return
   ;(router as any).__hasDevtools = true
 
-  // increment to support multiple router instances
   const id = routerId++
   setupDevtoolsPlugin(
     {
@@ -77,7 +87,7 @@ export function addDevtools(app: App, router: Router, matcher: RouterMatcher) {
       app,
     },
     api => {
-      // display state added by the router
+      // 在组件中显示 $route
       api.on.inspectComponent(payload => {
         if (payload.instanceData) {
           payload.instanceData.state.push({
@@ -92,7 +102,7 @@ export function addDevtools(app: App, router: Router, matcher: RouterMatcher) {
         }
       })
 
-      // mark router-link as active and display tags on router views
+      // RouterView/RouterLink 组件树标签
       api.on.visitComponentTree(({ treeNode: node, componentInstance }) => {
         if (componentInstance.__vrv_devtools) {
           const info =
@@ -101,11 +111,11 @@ export function addDevtools(app: App, router: Router, matcher: RouterMatcher) {
           node.tags.push({
             label: (info.name ? `${info.name.toString()}: ` : '') + info.path,
             textColor: 0,
-            tooltip: 'This component is rendered by &lt;router-view&gt;',
+            tooltip: 'This component is rendered by <router-view>',
             backgroundColor: PINK_500,
           })
         }
-        // if multiple useLink are used
+
         if (isArray(componentInstance.__vrl_devtools)) {
           componentInstance.__devtoolsApi = api
           ;(
@@ -138,8 +148,8 @@ export function addDevtools(app: App, router: Router, matcher: RouterMatcher) {
         }
       })
 
+      // 监听路由变化
       watch(router.currentRoute, () => {
-        // refresh active state
         refreshRoutesView()
         api.notifyComponentUpdate()
         api.sendInspectorTree(routerInspectorId)
@@ -148,19 +158,14 @@ export function addDevtools(app: App, router: Router, matcher: RouterMatcher) {
 
       const navigationsLayerId = 'router:navigations:' + id
 
+      // 导航时间线层
       api.addTimelineLayer({
         id: navigationsLayerId,
         label: `Router${id ? ' ' + id : ''} Navigations`,
         color: 0x40a8c4,
       })
 
-      // const errorsLayerId = 'router:errors'
-      // api.addTimelineLayer({
-      //   id: errorsLayerId,
-      //   label: 'Router Errors',
-      //   color: 0xea5455,
-      // })
-
+      // 错误处理
       router.onError((error, to) => {
         api.addTimelineEvent({
           layerId: navigationsLayerId,
@@ -175,9 +180,9 @@ export function addDevtools(app: App, router: Router, matcher: RouterMatcher) {
         })
       })
 
-      // attached to `meta` and used to group events
       let navigationId = 0
 
+      // beforeEach 时间线事件
       router.beforeEach((to, from) => {
         const data: TimelineEvent<any, any>['data'] = {
           guard: formatDisplay('beforeEach'),
@@ -188,7 +193,6 @@ export function addDevtools(app: App, router: Router, matcher: RouterMatcher) {
           to: formatRouteLocation(to, 'Target location'),
         }
 
-        // Used to group navigations together, hide from devtools
         Object.defineProperty(to.meta, '__navigationId', {
           value: navigationId++,
         })
@@ -205,6 +209,7 @@ export function addDevtools(app: App, router: Router, matcher: RouterMatcher) {
         })
       })
 
+      // afterEach 时间线事件
       router.afterEach((to, from, failure) => {
         const data: TimelineEvent<any, any>['data'] = {
           guard: formatDisplay('afterEach'),
@@ -225,7 +230,6 @@ export function addDevtools(app: App, router: Router, matcher: RouterMatcher) {
           data.status = formatDisplay('✅')
         }
 
-        // we set here to have the right order
         data.from = formatRouteLocation(
           from,
           'Current Location during this navigation'
@@ -245,10 +249,7 @@ export function addDevtools(app: App, router: Router, matcher: RouterMatcher) {
         })
       })
 
-      /**
-       * Inspector of Existing routes
-       */
-
+      // 路由检查器
       const routerInspectorId = 'router-inspector:' + id
 
       api.addInspector({
@@ -259,31 +260,23 @@ export function addDevtools(app: App, router: Router, matcher: RouterMatcher) {
       })
 
       function refreshRoutesView() {
-        // the routes view isn't active
         if (!activeRoutesPayload) return
         const payload = activeRoutesPayload
 
-        // children routes will appear as nested
         let routes = matcher.getRoutes().filter(
           route =>
             !route.parent ||
-            // these routes have a parent with no component which will not appear in the view
-            // therefore we still need to include them
             !route.parent.record.components
         )
 
-        // reset match state to false
         routes.forEach(resetMatchStateOnRouteRecord)
 
-        // apply a match state if there is a payload
         if (payload.filter) {
           routes = routes.filter(route =>
-            // save matches state based on the payload
             isRouteMatching(route, payload.filter.toLowerCase())
           )
         }
 
-        // mark active routes
         routes.forEach(route =>
           markRouteRecordActive(route, router.currentRoute.value)
         )
@@ -302,9 +295,7 @@ export function addDevtools(app: App, router: Router, matcher: RouterMatcher) {
         }
       })
 
-      /**
-       * Display information about the currently selected route record
-       */
+      // 选中路由记录时显示状态
       api.on.getInspectorState(payload => {
         if (payload.app === app && payload.inspectorId === routerInspectorId) {
           const routes = matcher.getRoutes()
@@ -326,6 +317,9 @@ export function addDevtools(app: App, router: Router, matcher: RouterMatcher) {
   )
 }
 
+/**
+ * 获取参数键的修饰符
+ */
 function modifierForKey(key: PathParser['keys'][number]) {
   if (key.optional) {
     return key.repeatable ? '*' : '?'
@@ -334,6 +328,9 @@ function modifierForKey(key: PathParser['keys'][number]) {
   }
 }
 
+/**
+ * 格式化路由记录状态
+ */
 function formatRouteRecordMatcherForStateInspector(
   route: RouteRecordMatcher
 ): CustomInspectorState[string] {
@@ -411,24 +408,23 @@ function formatRouteRecordMatcherForStateInspector(
   return fields
 }
 
-/**
- * Extracted from tailwind palette
- */
+// Tailwind 调色板颜色
 const PINK_500 = 0xec4899
 const BLUE_600 = 0x2563eb
 const LIME_500 = 0x84cc16
 const CYAN_400 = 0x22d3ee
 const ORANGE_400 = 0xfb923c
-// const GRAY_100 = 0xf4f4f5
 const DARK = 0x666666
 const RED_100 = 0xfee2e2
 const RED_700 = 0xb91c1c
 
+/**
+ * 格式化路由记录以在检查器树中显示
+ */
 function formatRouteRecordForInspector(
   route: RouteRecordMatcher
 ): CustomInspectorNode {
   const tags: InspectorNodeTag[] = []
-
   const { record } = route
 
   if (record.name != null) {
@@ -482,8 +478,7 @@ function formatRouteRecordForInspector(
     })
   }
 
-  // add an id to be able to select it. Using the `path` is not possible because
-  // empty path children would collide with their parents
+  // 添加 ID 以便选择
   let id = (record as any).__vd_id
   if (id == null) {
     id = String(routeRecordId++)
@@ -498,17 +493,17 @@ function formatRouteRecordForInspector(
   }
 }
 
-//  incremental id for route records and inspector state
 let routeRecordId = 0
 
 const EXTRACT_REGEXP_RE = /^\/(.*)\/([a-z]*)$/
 
+/**
+ * 标记路由记录为活跃状态
+ */
 function markRouteRecordActive(
   route: RouteRecordMatcher,
   currentRoute: RouteLocationNormalized
 ) {
-  // no route will be active if matched is empty
-  // reset the matching state
   const isExactActive =
     currentRoute.matched.length &&
     isSameRouteRecord(
@@ -528,37 +523,38 @@ function markRouteRecordActive(
   )
 }
 
+/**
+ * 重置路由记录的匹配状态
+ */
 function resetMatchStateOnRouteRecord(route: RouteRecordMatcher) {
   ;(route as any).__vd_match = false
   route.children.forEach(resetMatchStateOnRouteRecord)
 }
 
+/**
+ * 检查路由是否匹配过滤器
+ */
 function isRouteMatching(route: RouteRecordMatcher, filter: string): boolean {
   const found = String(route.re).match(EXTRACT_REGEXP_RE)
-  // reset the matching state
   ;(route as any).__vd_match = false
+
   if (!found || found.length < 3) {
     return false
   }
 
-  // use a regexp without $ at the end to match nested routes better
   const nonEndingRE = new RegExp(found[1].replace(/\$$/, ''), found[2])
   if (nonEndingRE.test(filter)) {
-    // mark children as matches
     route.children.forEach(child => isRouteMatching(child, filter))
-    // exception case: `/`
     if (route.record.path !== '/' || filter === '/') {
       ;(route as any).__vd_match = route.re.test(filter)
       return true
     }
-    // hide the / route
     return false
   }
 
   const path = route.record.path.toLowerCase()
   const decodedPath = decode(path)
 
-  // also allow partial matching on the path
   if (
     !filter.startsWith('/') &&
     (decodedPath.includes(filter) || path.includes(filter))
@@ -571,6 +567,9 @@ function isRouteMatching(route: RouteRecordMatcher, filter: string): boolean {
   return route.children.some(child => isRouteMatching(child, filter))
 }
 
+/**
+ * 对象属性省略工具
+ */
 function omit<T extends object, K extends [...(keyof T)[]]>(obj: T, keys: K) {
   const ret = {} as {
     [K2 in Exclude<keyof T, K[number]>]: T[K2]

@@ -1,3 +1,8 @@
+/**
+ * 固定路由解析器实现
+ *
+ * 本模块提供路由解析器的具体实现。
+ */
 import { normalizeQuery, parseQuery, stringifyQuery } from '../../query'
 import {
   type LocationNormalized,
@@ -26,6 +31,7 @@ import { warn } from '../../warning'
 
 /**
  * Base interface for a resolver record that can be extended.
+ * 解析器记录基础接口
  */
 export interface EXPERIMENTAL_ResolverRecord_Base {
   /**

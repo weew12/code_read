@@ -1,3 +1,16 @@
+/**
+ * Vue Router Memory History 实现
+ * ================================
+ *
+ * 本模块实现基于内存的路由历史记录管理。
+ * 主要用于 SSR（服务端渲染）环境。
+ *
+ * 特点：
+ * 1. 不依赖浏览器 API，纯内存实现
+ * 2. 初始位置为空（START），需要手动导航到真实位置
+ * 3. 支持队列式的历史记录管理
+ */
+
 import type {
   RouterHistory,
   NavigationCallback,
@@ -14,27 +27,38 @@ import {
 } from './common'
 
 /**
- * Creates an in-memory based history. The main purpose of this history is to handle SSR. It starts in a special location that is nowhere.
- * It's up to the user to replace that location with the starter location by either calling `router.push` or `router.replace`.
+ * 创建 Memory History
  *
- * @param base - Base applied to all urls, defaults to '/'
- * @returns a history object that can be passed to the router constructor
+ * @remarks
+ * 用于 SSR 环境，不依赖浏览器 URL。
+ * 初始时队列只有一个空位置，用户需通过 push/replace 替换。
+ *
+ * @param base - 基础路径，默认 '/'
  */
 export function createMemoryHistory(base: string = ''): RouterHistory {
   let listeners: NavigationCallback[] = []
   let queue: [url: HistoryLocation, state: HistoryState][] = [[START, {}]]
   let position: number = 0
+
   base = normalizeBase(base)
 
+  /**
+   * 设置位置
+   *
+   * @remarks
+   * 如果在队列中间添加，会截断后面的历史。
+   */
   function setLocation(location: HistoryLocation, state: HistoryState = {}) {
     position++
     if (position !== queue.length) {
-      // we are in the middle, we remove everything from here in the queue
       queue.splice(position)
     }
     queue.push([location, state])
   }
 
+  /**
+   * 触发监听器
+   */
   function triggerListeners(
     to: HistoryLocation,
     from: HistoryLocation,
@@ -51,15 +75,12 @@ export function createMemoryHistory(base: string = ''): RouterHistory {
   }
 
   const routerHistory: RouterHistory = {
-    // rewritten by Object.defineProperty
     location: START,
-    // rewritten by Object.defineProperty
     state: {},
     base,
     createHref: createHref.bind(null, base),
 
     replace(to, state?: HistoryState) {
-      // remove current entry and decrement position
       queue.splice(position--, 1)
       setLocation(to, state)
     },
@@ -75,6 +96,7 @@ export function createMemoryHistory(base: string = ''): RouterHistory {
         if (index > -1) listeners.splice(index, 1)
       }
     },
+
     destroy() {
       listeners = []
       queue = [[START, {}]]
@@ -84,11 +106,10 @@ export function createMemoryHistory(base: string = ''): RouterHistory {
     go(delta, shouldTrigger = true) {
       const from = this.location
       const direction: NavigationDirection =
-        // we are considering delta === 0 going forward, but in abstract mode
-        // using 0 for the delta doesn't make sense like it does in html5 where
-        // it reloads the page
         delta < 0 ? NavigationDirection.back : NavigationDirection.forward
+
       position = Math.max(0, Math.min(position + delta, queue.length - 1))
+
       if (shouldTrigger) {
         triggerListeners(this.location, from, {
           direction,
@@ -98,6 +119,7 @@ export function createMemoryHistory(base: string = ''): RouterHistory {
     },
   }
 
+  // 使用 defineProperty 使 location 和 state 成为 getter
   Object.defineProperty(routerHistory, 'location', {
     enumerable: true,
     get: () => queue[position][0],
@@ -108,6 +130,7 @@ export function createMemoryHistory(base: string = ''): RouterHistory {
     get: () => queue[position][1],
   })
 
+  // 测试用 API
   if (__TEST__) {
     // @ts-expect-error: only for tests
     routerHistory.changeURL = function (url: string, state: HistoryState = {}) {

@@ -1,3 +1,11 @@
+/**
+ * 路由记录标准化类型
+ * ======================
+ *
+ * 用户定义的路由配置经标准化后得到的内部类型。
+ * 包含组件实例、守卫、别名等运行时信息。
+ */
+
 import type {
   NavigationGuard,
   NavigationGuardNextCallback,
@@ -10,87 +18,56 @@ import type {
 } from '../types'
 import type { ComponentPublicInstance } from 'vue'
 
-// normalize component/components into components and make every property always present
 /**
- * Normalized version of a {@link RouteRecord | route record}.
+ * 标准化的路由记录
+ *
+ * @remarks
+ * 与用户定义的 RouteRecordRaw 不同，RouteRecordNormalized 是内部使用的类型，
+ * 包含运行时信息和标准化后的数据。
  */
 export interface RouteRecordNormalized {
-  /**
-   * {@inheritDoc _RouteRecordBase.path}
-   */
   path: _RouteRecordBase['path']
-  /**
-   * {@inheritDoc _RouteRecordBase.redirect}
-   */
   redirect: _RouteRecordBase['redirect'] | undefined
-  /**
-   * {@inheritDoc _RouteRecordBase.name}
-   */
   name: _RouteRecordBase['name']
-  /**
-   * {@inheritDoc RouteRecordMultipleViews.components}
-   */
   components: RouteRecordMultipleViews['components'] | null | undefined
 
   /**
-   * Contains the original modules for lazy loaded components.
-   * @internal
+   * 懒加载组件的原始模块
    */
   mods: Record<string, unknown>
 
-  /**
-   * Nested route records.
-   */
   children: RouteRecordRaw[]
-  /**
-   * {@inheritDoc _RouteRecordBase.meta}
-   */
   meta: Exclude<_RouteRecordBase['meta'], void>
-  /**
-   * {@inheritDoc RouteRecordMultipleViews.props}
-   */
   props: Record<string, _RouteRecordProps>
-  /**
-   * Registered beforeEnter guards
-   */
   beforeEnter: _RouteRecordBase['beforeEnter']
+
   /**
-   * Registered leave guards
-   *
-   * @internal
+   * 离开守卫
    */
   leaveGuards: Set<NavigationGuard>
+
   /**
-   * Registered update guards
-   *
-   * @internal
+   * 更新守卫
    */
   updateGuards: Set<NavigationGuard>
+
   /**
-   * Registered beforeRouteEnter callbacks passed to `next` or returned in guards
-   *
-   * @internal
+   * beforeRouteEnter 的回调
    */
   enterCallbacks: Record<string, NavigationGuardNextCallback[]>
+
   /**
-   * Mounted route component instances
-   * Having the instances on the record mean beforeRouteUpdate and
-   * beforeRouteLeave guards can only be invoked with the latest mounted app
-   * instance if there are multiple application instances rendering the same
-   * view, basically duplicating the content on the page, which shouldn't happen
-   * in practice. It will work if multiple apps are rendering different named
-   * views.
+   * 挂载的组件实例
    */
   instances: Record<string, ComponentPublicInstance | undefined | null>
-  // can only be of the same type as this record
+
   /**
-   * Defines if this record is the alias of another one. This property is
-   * `undefined` if the record is the original one.
+   * 是否为别名记录
    */
   aliasOf: RouteRecordNormalized | undefined
 }
 
 /**
- * {@inheritDoc RouteRecordNormalized}
+ * 路由记录类型
  */
 export type RouteRecord = RouteRecordNormalized

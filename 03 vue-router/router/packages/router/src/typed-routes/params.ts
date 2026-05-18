@@ -1,53 +1,57 @@
+/**
+ * 路由参数类型工具
+ * =================
+ *
+ * 本模块提供类型安全的路由参数类型。
+ *
+ * 类型参数 isRaw 控制是否包含原始类型：
+ * - false: string 类型（URL 中的编码值）
+ * - true: string | number（允许原始值）
+ *
+ * 例如路由 `/users/:id`：
+ * - RouteParams<'users'> = { id: string }
+ * - RouteParamsRaw<'users'> = { id: string | number }
+ */
+
 import type { RouteMap } from './route-map'
 
 /**
- * Utility type for raw and non raw params like :id+
- *
+ * 可变参数（:id+）：至少一个参数
  */
 export type ParamValueOneOrMore<isRaw extends boolean> = [
   ParamValue<isRaw>,
-  ...ParamValue<isRaw>[],
+  ...ParamValue<isRaw>[]
 ]
 
 /**
- * Utility type for raw and non raw params like :id*
- *
+ * 可选可变参数（:id*）：零个或多个参数
  */
 export type ParamValueZeroOrMore<isRaw extends boolean> = true extends isRaw
   ? ParamValue<isRaw>[] | undefined | null
   : ParamValue<isRaw>[] | undefined
 
 /**
- * Utility type for raw and non raw params like :id?
- *
+ * 可选参数（:id?）：零个或一个参数
  */
 export type ParamValueZeroOrOne<isRaw extends boolean> = true extends isRaw
   ? string | number | null | undefined
   : string
 
 /**
- * Utility type for raw and non raw params like :id
- *
+ * 标准参数（:id）
  */
 export type ParamValue<isRaw extends boolean> = true extends isRaw
   ? string | number
   : string
 
-// TODO: finish this refactor
-// export type ParamValueOneOrMoreRaw = [ParamValueRaw, ...ParamValueRaw[]]
-// export type ParamValue =  string
-// export type ParamValueRaw = string | number
-
 /**
- * Generate a type safe params for a route location. Requires the name of the route to be passed as a generic.
- * @see {@link RouteParamsGeneric}
+ * 根据路由名称获取类型安全的参数
  */
 export type RouteParams<Name extends keyof RouteMap = keyof RouteMap> =
   RouteMap[Name]['params']
 
 /**
- * Generate a type safe raw params for a route location. Requires the name of the route to be passed as a generic.
- * @see {@link RouteParamsRaw}
+ * 根据路由名称获取类型安全的原始参数
  */
 export type RouteParamsRaw<Name extends keyof RouteMap = keyof RouteMap> =
   RouteMap[Name]['paramsRaw']

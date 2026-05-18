@@ -1,3 +1,14 @@
+/**
+ * 数据加载器导出入口
+ *
+ * 本模块统一导出数据加载器（Data Loader）相关的类型和函数。
+ *
+ * 导出门类：
+ * - 数据加载器核心类型（UseDataLoader 等）
+ * - 新数据获取机制（DataLoaderPlugin、reroute 等）
+ * - 上下文管理（getCurrentContext、withLoaderContext 等）
+ * - 元扩展符号（meta-extensions）
+ */
 export type {
   UseDataLoader,
   UseDataLoaderInternals,
@@ -7,12 +18,10 @@ export type {
   DefineDataLoaderOptionsBase_LaxData,
   DefineDataLoaderOptionsBase_DefinedData,
   DefineLoaderFn,
-  // deprecated
   DefineDataLoaderOptionsBase,
 } from '../createDataLoader'
 export { toLazyValue } from '../createDataLoader'
 
-// new data fetching
 export {
   DataLoaderPlugin,
   NavigationResult,
@@ -37,7 +46,6 @@ export {
   currentContext,
 } from '../utils'
 
-// expose all symbols that could be used by loaders
 export * from '../meta-extensions'
 
 export type { ErrorDefault } from '../types-config'

@@ -1,3 +1,16 @@
+/**
+ * Vue Router 实验性功能
+ * ======================
+ *
+ * 本模块包含实验性功能，可能在未来的稳定版本中发生变化。
+ *
+ * 主要功能：
+ * - 新的 Router 实现（experimental_createRouter）
+ * - 路由解析器（route-resolver）
+ * - 数据加载器（data-loaders）
+ * - definePage 宏
+ */
+
 export { experimental_createRouter, normalizeRouteRecord } from './router'
 export type {
   EXPERIMENTAL_Router_Base,

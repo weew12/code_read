@@ -1,3 +1,8 @@
+/**
+ * 基础数据加载器导出
+ *
+ * 导出 defineBasicLoader 及其相关类型
+ */
 export { defineBasicLoader } from '../defineLoader'
 export type {
   DataLoaderContext,
@@ -10,16 +15,3 @@ export type {
   DefineDataLoaderOptions,
   UseDataLoaderBasic,
 } from '../defineLoader'
-
-// export type {
-//   UseDataLoader,
-//   UseDataLoaderInternals,
-//   UseDataLoaderResult,
-//   DataLoaderContextBase,
-//   DataLoaderEntryBase,
-//   DefineDataLoaderOptionsBase,
-//   DefineLoaderFn,
-//   _DataMaybeLazy,
-//   DefineDataLoader,
-//   DefineDataLoaderCommit,
-// } from '../createDataLoader'

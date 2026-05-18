@@ -1,3 +1,8 @@
+/**
+ * 类型安全导航守卫类型
+ *
+ * 本模块定义导航守卫的返回类型和接口。
+ */
 import type { _Awaitable } from '../types/utils'
 import type {
   RouteLocationNormalizedLoaded,
@@ -9,14 +14,13 @@ import type { ComponentPublicInstance } from 'vue'
 
 /**
  * Return types for a Navigation Guard. Based on `TypesConfig`
- *
- * @see {@link TypesConfig}
+ * 导航守卫的返回类型
  */
 export type NavigationGuardReturn = void | Error | boolean | RouteLocationRaw
 
 /**
  * Navigation Guard with a type parameter for `this`.
- * @see {@link TypesConfig}
+ * 带 this 类型参数的导航守卫
  */
 export interface NavigationGuardWithThis<T> {
   (
@@ -52,6 +56,7 @@ export interface _NavigationGuardResolved {
 
 /**
  * Navigation Guard.
+ * 导航守卫接口
  */
 export interface NavigationGuard {
   (
@@ -67,6 +72,7 @@ export interface NavigationGuard {
 
 /**
  * Navigation hook triggered after a navigation is settled.
+ * 导航完成后触发的钩子
  */
 export interface NavigationHookAfter {
   (
@@ -78,6 +84,7 @@ export interface NavigationHookAfter {
 
 /**
  * Callback passed to navigation guards to continue or abort the navigation.
+ * 传递给导航守卫的回调函数，用于继续或中止导航
  *
  * @deprecated Prefer returning a value from the guard instead of calling
  * `next(value)`. The callback will be removed in a future version of Vue Router.
@@ -88,17 +95,11 @@ export interface NavigationGuardNext {
   (location: RouteLocationRaw): void
   (valid: boolean | undefined): void
   (cb: NavigationGuardNextCallback): void
-  /**
-   * Allows to detect if `next` isn't called in a resolved guard. Used
-   * internally in DEV mode to emit a warning. Commented out to simplify
-   * typings.
-   * @internal
-   */
-  // _called: boolean
 }
 
 /**
  * Callback that can be passed to `next()` in `beforeRouteEnter()` guards.
+ * beforeRouteEnter 守卫中可传递给 next() 的回调
  */
 export type NavigationGuardNextCallback = (
   vm: ComponentPublicInstance

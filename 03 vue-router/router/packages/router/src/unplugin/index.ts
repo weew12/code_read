@@ -1,3 +1,17 @@
+/**
+ * Vue Router 文件路由生成插件
+ * ==============================
+ *
+ * 本模块实现基于文件系统的路由自动生成功能。
+ * 支持 Vite、Webpack、Rollup 等构建工具。
+ *
+ * 核心机制：
+ * 1. 扫描指定目录下的页面文件
+ * 2. 根据文件路径自动生成路由配置
+ * 3. 支持 definePage() 宏定义元数据
+ * 4. 生成类型安全的路由代码
+ */
+
 import { createUnplugin, type UnpluginOptions } from 'unplugin'
 import { createRoutesContext } from './core/context'
 import {

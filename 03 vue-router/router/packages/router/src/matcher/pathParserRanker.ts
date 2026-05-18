@@ -1,97 +1,153 @@
-import type { Token } from './pathTokenizer'
-import { TokenType } from './pathTokenizer'
-import { assign, isArray } from '../utils'
+/**
+ * Vue Router 路径解析器和排名器
+ * ================================
+ *
+ * 本模块负责将 token 数组转换为可执行的正则表达式解析器，
+ * 并提供路由优先级的计算逻辑。
+ *
+ * 核心功能：
+ * 1. 将 token 数组编译成正则表达式（re）
+ * 2. 提供路径解析函数（parse）
+ * 3. 提供路径生成函数（stringify）
+ * 4. 计算路由优先级分数（score）
+ *
+ * 路由优先级规则：
+ * - 静态路径 > 动态路径 > 通配符路径
+ * - 路径段越多优先级越高
+ * - 相同优先级时，子路由优先于父路由
+ */
 
+/**
+ * 路径参数类型
+ *
+ * @remarks
+ * 支持单值和数组值（可重复参数）。
+ */
 export type PathParams = Record<string, string | string[]>
 
 /**
- * A param in a url like `/users/:id`
+ * 路径参数键定义
  */
 interface PathParserParamKey {
+  /** 参数名称 */
   name: string
+  /** 是否可重复（* 或 +） */
   repeatable: boolean
+  /** 是否可选（?、* 或 +） */
   optional: boolean
 }
 
+/**
+ * 路径解析器接口
+ *
+ * @remarks
+ * 由 tokensToParser 创建，提供路径匹配和参数提取能力。
+ */
 export interface PathParser {
   /**
-   * The regexp used to match a url
+   * 匹配路径的正则表达式
    */
   re: RegExp
 
   /**
-   * The score of the parser
+   * 优先级分数数组
+   *
+   * @remarks
+   * 用于比较两个路由的优先级。
+   * 分数越高，优先级越高。
    */
   score: Array<number[]>
 
   /**
-   * Keys that appeared in the path
+   * 路径中的参数键列表
    */
   keys: PathParserParamKey[]
+
   /**
-   * Parses a url and returns the matched params or null if it doesn't match. An
-   * optional param that isn't preset will be an empty string. A repeatable
-   * param will be an array if there is at least one value.
+   * 解析路径并提取参数
    *
-   * @param path - url to parse
-   * @returns a Params object, empty if there are no params. `null` if there is
-   * no match
+   * @param path - 要解析的 URL 路径
+   * @returns 参数对象，解析失败返回 null
+   *
+   * @example
+   * ```typescript
+   * const parser = tokensToParser(tokenizePath('/users/:id'))
+   * parser.parse('/users/123')
+   * // => { id: '123' }
+   * ```
    */
   parse(path: string): PathParams | null
 
   /**
-   * Creates a string version of the url
+   * 从参数生成路径字符串
    *
-   * @param params - object of params
-   * @returns a url
+   * @param params - 参数对象
+   * @returns 路径字符串
+   *
+   * @example
+   * ```typescript
+   * const parser = tokensToParser(tokenizePath('/users/:id'))
+   * parser.stringify({ id: '123' })
+   * // => '/users/123'
+   * ```
    */
   stringify(params: PathParams): string
 }
 
 /**
- * @internal
+ * 路径解析器选项（公开）
  */
 export interface _PathParserOptions {
   /**
-   * Makes the RegExp case-sensitive.
+   * 正则表达式是否大小写敏感
    *
    * @defaultValue `false`
    */
   sensitive?: boolean
 
   /**
-   * Whether to disallow a trailing slash or not.
+   * 是否禁止尾部斜杠
    *
    * @defaultValue `false`
    */
   strict?: boolean
 
   /**
-   * Should the RegExp match from the beginning by prepending a `^` to it.
-   * @internal
+   * 是否从路径开头匹配（添加 ^）
    *
+   * @internal
    * @defaultValue `true`
    */
   start?: boolean
 
   /**
-   * Should the RegExp match until the end by appending a `$` to it.
+   * 是否匹配到路径结尾（添加 $）
    *
-   * @deprecated this option will alsways be `true` in the future. Open a discussion in vuejs/router if you need this to be `false`
-   *
+   * @deprecated 未来版本将始终为 true
    * @defaultValue `true`
    */
   end?: boolean
 }
 
+/**
+ * 路径解析器选项类型（公开部分）
+ */
 export type PathParserOptions = Pick<
   _PathParserOptions,
   'end' | 'sensitive' | 'strict'
 >
 
-// default pattern for a param: non-greedy everything but /
+/**
+ * 参数的默认正则表达式
+ *
+ * @remarks
+ * 匹配除 `/` 之外的任意字符，非贪婪模式。
+ */
 const BASE_PARAM_PATTERN = '[^/]+?'
 
+/**
+ * 默认的路径解析器选项
+ */
 const BASE_PATH_PARSER_OPTIONS: Required<_PathParserOptions> = {
   sensitive: false,
   strict: false,
@@ -99,32 +155,79 @@ const BASE_PATH_PARSER_OPTIONS: Required<_PathParserOptions> = {
   end: true,
 }
 
-// Scoring values used in tokensToParser
+/**
+ * 路由优先级分数枚举
+ *
+ * @remarks
+ * 分数用于确定路由匹配的优先级。
+ * 基础分数乘以 10 以留出奖励空间。
+ *
+ * 排序规则：
+ * 1. 分数高的优先
+ * 2. 分数相同时，路径段多的优先
+ * 3. 仍有相同则子路由优先于父路由
+ */
 const enum PathScore {
+  /** 乘数，用于缩放分数 */
   _multiplier = 10,
-  Root = 9 * _multiplier, // just /
-  Segment = 4 * _multiplier, // /a-segment
-  SubSegment = 3 * _multiplier, // /multiple-:things-in-one-:segment
-  Static = 4 * _multiplier, // /static
-  Dynamic = 2 * _multiplier, // /:someId
-  BonusCustomRegExp = 1 * _multiplier, // /:someId(\\d+)
-  BonusWildcard = -4 * _multiplier - BonusCustomRegExp, // /:namedWildcard(.*) we remove the bonus added by the custom regexp
-  BonusRepeatable = -2 * _multiplier, // /:w+ or /:w*
-  BonusOptional = -0.8 * _multiplier, // /:w? or /:w*
-  // these two have to be under 0.1 so a strict /:page is still lower than /:a-:b
-  BonusStrict = 0.07 * _multiplier, // when options strict: true is passed, as the regex omits \/?
-  BonusCaseSensitive = 0.025 * _multiplier, // when options strict: true is passed, as the regex omits \/?
+  /** 根路径 `/`，最低优先级 */
+  Root = 9 * _multiplier,
+  /** 路径段分数 */
+  Segment = 4 * _multiplier,
+  /** 段内子段分数（多个参数在同一段） */
+  SubSegment = 3 * _multiplier,
+  /** 静态段分数 */
+  Static = 4 * _multiplier,
+  /** 动态参数分数 */
+  Dynamic = 2 * _multiplier,
+  /** 自定义正则表达式奖励 */
+  BonusCustomRegExp = 1 * _multiplier,
+  /** 通配符惩罚（.* 会被减分） */
+  BonusWildcard = -4 * _multiplier - BonusCustomRegExp,
+  /** 可重复参数惩罚 */
+  BonusRepeatable = -2 * _multiplier,
+  /** 可选参数惩罚 */
+  BonusOptional = -0.8 * _multiplier,
+  /** strict 模式奖励（允许尾部斜杠时给更高分数） */
+  BonusStrict = 0.07 * _multiplier,
+  /** 大小写敏感奖励 */
+  BonusCaseSensitive = 0.025 * _multiplier,
 }
 
-// Special Regex characters that must be escaped in static tokens
+/**
+ * 正则表达式特殊字符
+ *
+ * @remarks
+ * 这些字符在静态路径中需要转义。
+ */
 const REGEX_CHARS_RE = /[.+*?^${}()[\]/\\]/g
 
 /**
- * Creates a path parser from an array of Segments (a segment is an array of Tokens)
+ * 将 token 数组转换为路径解析器
  *
- * @param segments - array of segments returned by tokenizePath
- * @param extraOptions - optional options for the regexp
- * @returns a PathParser
+ * @remarks
+ * 这是路径解析的核心函数，将词法分析的结果编译成：
+ * 1. 正则表达式（re）：用于匹配路径
+ * 2. 参数键列表（keys）：记录参数信息
+ * 3. 解析函数（parse）：从路径提取参数
+ * 4. 字符串化函数（stringify）：从参数生成路径
+ * 5. 优先级分数（score）：用于路由排序
+ *
+ * @param segments - tokenizePath 返回的 token 数组
+ * @param extraOptions - 解析器选项
+ * @returns 路径解析器
+ *
+ * @example
+ * ```typescript
+ * const tokens = tokenizePath('/users/:id')
+ * const parser = tokensToParser(tokens, { strict: true })
+ *
+ * parser.parse('/users/123')
+ * // => { id: '123' }
+ *
+ * parser.stringify({ id: '123' })
+ * // => '/users/123'
+ * ```
  */
 export function tokensToParser(
   segments: Array<Token[]>,
@@ -132,43 +235,61 @@ export function tokensToParser(
 ): PathParser {
   const options = assign({}, BASE_PATH_PARSER_OPTIONS, extraOptions)
 
-  // the amount of scores is the same as the length of segments except for the root segment "/"
+  /** 每个段的分数 */
   const score: Array<number[]> = []
-  // the regexp as a string
+  /** 正则表达式字符串 */
   let pattern = options.start ? '^' : ''
-  // extracted keys
+  /** 参数键列表 */
   const keys: PathParserParamKey[] = []
 
   for (const segment of segments) {
-    // the root segment needs special treatment
+    /** 当前段的分数 */
     const segmentScores: number[] = segment.length ? [] : [PathScore.Root]
 
-    // allow trailing slash
+    // strict 模式下，空段需要添加 /
     if (options.strict && !segment.length) pattern += '/'
+
     for (let tokenIndex = 0; tokenIndex < segment.length; tokenIndex++) {
       const token = segment[tokenIndex]
-      // resets the score if we are inside a sub-segment /:a-other-:b
+      /**
+       * 子段分数
+       *
+       * @remarks
+       * 每个 token 都会贡献分数。
+       * 基础分数是 Segment，加上大小写敏感奖励。
+       */
       let subSegmentScore: number =
         PathScore.Segment +
         (options.sensitive ? PathScore.BonusCaseSensitive : 0)
 
+      // ----------------------------------------
+      // 静态 token：直接添加到模式
+      // ----------------------------------------
       if (token.type === TokenType.Static) {
-        // prepend the slash if we are starting a new segment
         if (!tokenIndex) pattern += '/'
+        // 转义正则特殊字符
         pattern += token.value.replace(REGEX_CHARS_RE, '\\$&')
         subSegmentScore += PathScore.Static
+
+      // ----------------------------------------
+      // 参数 token：构建参数捕获组
+      // ----------------------------------------
       } else if (token.type === TokenType.Param) {
         const { value, repeatable, optional, regexp } = token
+
+        // 记录参数键
         keys.push({
           name: value,
           repeatable,
           optional,
         })
+
+        // 使用自定义正则或默认模式
         const re = regexp ? regexp : BASE_PARAM_PATTERN
-        // the user provided a custom regexp /:id(\\d+)
+
+        // 验证自定义正则表达式
         if (re !== BASE_PARAM_PATTERN) {
           subSegmentScore += PathScore.BonusCustomRegExp
-          // make sure the regexp is valid before using it
           try {
             new RegExp(`(${re})`)
           } catch (err) {
@@ -179,17 +300,24 @@ export function tokensToParser(
           }
         }
 
-        // when we repeat we must take care of the repeating leading slash
-        let subPattern = repeatable ? `((?:${re})(?:/(?:${re}))*)` : `(${re})`
+        /**
+         * 构建参数的正则表达式
+         *
+         * @remarks
+         * 可重复参数格式：((?:pattern)(?:/(?:pattern))*)
+         * 可选参数格式：后面添加 ?
+         */
+        let subPattern = repeatable
+          ? `((?:${re})(?:/(?:${re}))*)`
+          : `(${re})`
 
-        // prepend the slash if we are starting a new segment
+        // 段开头添加 /
         if (!tokenIndex)
           subPattern =
-            // avoid an optional / if there are more segments e.g. /:p?-static
-            // or /:p?-:p2
             optional && segment.length < 2
               ? `(?:/${subPattern})`
               : '/' + subPattern
+
         if (optional) subPattern += '?'
 
         pattern += subPattern
@@ -203,47 +331,59 @@ export function tokensToParser(
       segmentScores.push(subSegmentScore)
     }
 
-    // an empty array like /home/ -> [[{home}], []]
-    // if (!segment.length) pattern += '/'
-
     score.push(segmentScores)
   }
 
-  // only apply the strict bonus to the last score
+  // strict 模式奖励仅应用于最后一个分数
   if (options.strict && options.end) {
     const i = score.length - 1
     score[i][score[i].length - 1] += PathScore.BonusStrict
   }
 
-  // TODO: dev only warn double trailing slash
+  // 非 strict 模式允许可选的尾部斜杠
   if (!options.strict) pattern += '/?'
 
   if (options.end) pattern += '$'
-  // allow paths like /dynamic to only match dynamic or dynamic/... but not dynamic_something_else
+  // 非 end 模式允许后续路径
   else if (options.strict && !pattern.endsWith('/')) pattern += '(?:/|$)'
 
   const re = new RegExp(pattern, options.sensitive ? '' : 'i')
 
+  /**
+   * 解析路径
+   *
+   * @param path - URL 路径
+   * @returns 参数对象，失败返回 null
+   */
   function parse(path: string): PathParams | null {
     const match = path.match(re)
     const params: PathParams = {}
 
     if (!match) return null
 
+    // 从正则匹配结果提取参数
     for (let i = 1; i < match.length; i++) {
       const value: string = match[i] || ''
       const key = keys[i - 1]
+      // 可重复参数返回数组
       params[key.name] = value && key.repeatable ? value.split('/') : value
     }
 
     return params
   }
 
+  /**
+   * 从参数生成路径
+   *
+   * @param params - 参数对象
+   * @returns 路径字符串
+   */
   function stringify(params: PathParams): string {
     let path = ''
-    // for optional parameters to allow to be empty
     let avoidDuplicatedSlash: boolean = false
+
     for (const segment of segments) {
+      // 添加路径分隔符
       if (!avoidDuplicatedSlash || !path.endsWith('/')) path += '/'
       avoidDuplicatedSlash = false
 
@@ -255,6 +395,7 @@ export function tokensToParser(
           const param: string | readonly string[] =
             value in params ? params[value] : ''
 
+          // 检查数组参数类型
           if (isArray(param) && !repeatable) {
             throw new Error(
               `Provided param "${value}" is an array but it is not repeatable (* or + modifiers)`
@@ -264,23 +405,24 @@ export function tokensToParser(
           const text: string = isArray(param)
             ? (param as string[]).join('/')
             : (param as string)
+
           if (!text) {
             if (optional) {
-              // if we have more than one optional param like /:a?-static we don't need to care about the optional param
+              // 单一可选参数：移除尾部斜杠
               if (segment.length < 2) {
-                // remove the last slash as we could be at the end
                 if (path.endsWith('/')) path = path.slice(0, -1)
-                // do not append a slash on the next iteration
                 else avoidDuplicatedSlash = true
               }
-            } else throw new Error(`Missing required param "${value}"`)
+            } else {
+              throw new Error(`Missing required param "${value}"`)
+            }
+          } else {
+            path += text
           }
-          path += text
         }
       }
     }
 
-    // avoid empty path when we have multiple optional params
     return path || '/'
   }
 
@@ -294,26 +436,25 @@ export function tokensToParser(
 }
 
 /**
- * Compares an array of numbers as used in PathParser.score and returns a
- * number. This function can be used to `sort` an array
+ * 比较两个分数数组
  *
- * @param a - first array of numbers
- * @param b - second array of numbers
- * @returns 0 if both are equal, < 0 if a should be sorted first, > 0 if b
- * should be sorted first
+ * @param a - 第一个分数数组
+ * @param b - 第二个分数数组
+ * @returns 比较结果（用于排序）
  */
 function compareScoreArray(a: number[], b: number[]): number {
   let i = 0
   while (i < a.length && i < b.length) {
     const diff = b[i] - a[i]
-    // only keep going if diff === 0
     if (diff) return diff
-
     i++
   }
 
-  // if the last subsegment was Static, the shorter segments should be sorted first
-  // otherwise sort the longest segment first
+  /**
+   * 分数相同时的比较逻辑：
+   * 1. 如果较短的是一个静态段，则较短的在前面
+   * 2. 否则，较长的在前面
+   */
   if (a.length < b.length) {
     return a.length === 1 && a[0] === PathScore.Static + PathScore.Segment
       ? -1
@@ -328,11 +469,15 @@ function compareScoreArray(a: number[], b: number[]): number {
 }
 
 /**
- * Compare function that can be used with `sort` to sort an array of PathParser
+ * 比较两个路径解析器的优先级
  *
- * @param a - first PathParser
- * @param b - second PathParser
- * @returns 0 if both are equal, < 0 if a should be sorted first, > 0 if b
+ * @remarks
+ * 用于排序路由数组。
+ * 返回值 < 0：a 在前；> 0：b 在前。
+ *
+ * @param a - 第一个解析器
+ * @param b - 第二个解析器
+ * @returns 优先级比较结果
  */
 export function comparePathParserScore(
   a: Pick<PathParser, 'score'>,
@@ -341,38 +486,46 @@ export function comparePathParserScore(
   let i = 0
   const aScore = a.score
   const bScore = b.score
+
+  // 逐段比较分数
   while (i < aScore.length && i < bScore.length) {
     const comp = compareScoreArray(aScore[i], bScore[i])
-    // do not return if both are equal
     if (comp) return comp
-
     i++
   }
+
+  /**
+   * 分数数组长度差为 1 时的处理
+   *
+   * @remarks
+   * 如果一个路由有额外的段（分数数组更长），
+   * 且较短路由的最后分数为负（可选参数），
+   * 则较长的路由优先。
+   */
   if (Math.abs(bScore.length - aScore.length) === 1) {
     if (isLastScoreNegative(aScore)) return 1
     if (isLastScoreNegative(bScore)) return -1
   }
 
-  // if a and b share the same score entries but b has more, sort b first
+  // 段数多的优先
   return bScore.length - aScore.length
-  // this is the ternary version
-  // return aScore.length < bScore.length
-  //   ? 1
-  //   : aScore.length > bScore.length
-  //   ? -1
-  //   : 0
 }
 
 /**
- * This allows detecting splats at the end of a path: /home/:id(.*)*
+ * 检查最后一个分数是否为负
  *
- * @param score - score to check
- * @returns true if the last entry is negative
+ * @remarks
+ * 负分数表示该段包含可选参数。
+ * 这影响路由排序逻辑。
  */
 function isLastScoreNegative(score: PathParser['score']): boolean {
   const last = score[score.length - 1]
   return score.length > 0 && last[last.length - 1] < 0
 }
+
+/**
+ * 默认的路径解析器选项
+ */
 export const PATH_PARSER_OPTIONS_DEFAULTS: PathParserOptions = {
   strict: false,
   end: true,
