@@ -1,0 +1,44 @@
+{
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.formatOnSave": true,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "[markdown]": {
+    "files.trimTrailingWhitespace": false
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "markdown",
+    "typescript",
+    "typescriptreact",
+    "vue"
+  ],
+  "cSpell.words": [
+    "bumpp",
+    "bundlerutils",
+    "chokidar",
+    "composables",
+    "devtool",
+    "envinfo",
+    "esbuild",
+    "frontmatter",
+    "lightningcss",
+    "mdit",
+    "prefetch",
+    "preload",
+    "slugify",
+    "tinyglobby",
+    "unmount",
+    "upath",
+    "vnode",
+    "vuejs",
+    "vuepress",
+    "vueuse"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
+}

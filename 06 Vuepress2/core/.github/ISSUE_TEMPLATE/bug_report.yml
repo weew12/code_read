@@ -1,0 +1,46 @@
+name: Bug Report
+description: Create a report to help us improve
+title: '[Bug report] '
+body:
+  - type: markdown
+    attributes:
+      value: |
+        NOTICE: This repository is only for VuePress core packages. Please go to the corresponding repository for themes / plugins / documentation issues.
+        - [vuepress/ecosystem](https://github.com/vuepress/ecosystem): Official themes and plugins.
+        - [vuepress/docs](https://github.com/vuepress/docs): Official documentation.
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Description
+      description: A clear and concise description of what the bug is. If applicable, add screenshots to help explain your problem. If you intend to submit a PR for this issue, tell us in the description. Thanks!
+      placeholder: Bug description
+    validations:
+      required: true
+  - type: input
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Please provide a link via [vuepress.vuejs.org/new](https://vuepress.vuejs.org/new) or a link to a repo that can reproduce the problem you ran into. A [minimal reproduction](https://stackoverflow.com/help/minimal-reproducible-example) is required.
+      placeholder: Reproduction
+    validations:
+      required: true
+  - type: dropdown
+    id: package-manager
+    attributes:
+      label: Used Package Manager
+      description: Select the used package manager
+      options:
+        - npm
+        - yarn
+        - pnpm
+    validations:
+      required: true
+  - type: textarea
+    id: system-info
+    attributes:
+      label: System Info
+      description: Output of `vuepress info`
+      render: shell
+      placeholder: Paste output of `vuepress info` here
+    validations:
+      required: true

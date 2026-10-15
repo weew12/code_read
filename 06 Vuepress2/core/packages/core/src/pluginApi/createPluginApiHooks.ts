@@ -1,0 +1,30 @@
+import type { PluginApi } from '../types/index.js'
+import { createHookQueue } from './createHookQueue.js'
+
+/**
+ * Create hooks for plugin api
+ *
+ * @internal
+ */
+export const createPluginApiHooks = (): PluginApi['hooks'] => ({
+  // life cycle hooks
+  onInitialized: createHookQueue('onInitialized'),
+  onPrepared: createHookQueue('onPrepared'),
+  onWatched: createHookQueue('onWatched'),
+  onPageUpdated: createHookQueue('onPageUpdated'),
+  onGenerated: createHookQueue('onGenerated'),
+
+  // extends hooks
+  extendsMarkdownOptions: createHookQueue('extendsMarkdownOptions'),
+  extendsMarkdown: createHookQueue('extendsMarkdown'),
+  extendsPageOptions: createHookQueue('extendsPageOptions'),
+  extendsPage: createHookQueue('extendsPage'),
+  extendsBundlerOptions: createHookQueue('extendsBundlerOptions'),
+
+  // client config file hooks
+  clientConfigFile: createHookQueue('clientConfigFile'),
+
+  // bundler hooks
+  alias: createHookQueue('alias'),
+  define: createHookQueue('define'),
+})
